@@ -10,12 +10,13 @@ namespace LGRegressionTests
     [TestClass]
     public class UnitTest1
     {
-       // private const string TestUserName = "testrunner%40dciartform.com";
-       // private const string TestPassword = "LiveGuide%232727";
+        #region Old Stuff
+        // private const string TestUserName = "testrunner%40dciartform.com";
+        // private const string TestPassword = "LiveGuide%232727";
+        #endregion
 
         private const string TestUserName = "testrunner@dciartform.com";
         private const string TestPassword = "LiveGuide#2727";
-
 
         [TestMethod]
         public void TestMethod1Async()
