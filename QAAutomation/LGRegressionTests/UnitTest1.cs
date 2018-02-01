@@ -27,6 +27,7 @@ namespace LGRegressionTests
                 hc.BaseAddress = new System.Uri(_testUrl);
 
                 string item = GetInfo(hc).GetAwaiter().GetResult();
+                Assert.IsTrue(string.IsNullOrWhiteSpace(item));
             }
         }
 
