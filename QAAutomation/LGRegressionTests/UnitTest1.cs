@@ -15,8 +15,8 @@ namespace LGRegressionTests
         // private const string TestPassword = "LiveGuide%232727";
         #endregion
 
-        private const string TestUserName = "testrunner@dciartform.com";
-        private const string TestPassword = "LiveGuide#2727";
+        private const string _testUserName = "testrunner@dciartform.com";
+        private const string _testPassword = "LiveGuide#2727";
         private const string _testUrl = "https://lg-qa2-appservice-deploytest.azurewebsites.net";
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace LGRegressionTests
         private async Task<string> GetInfo(HttpClient hc)
         {
             string product = string.Empty;
-            HttpResponseMessage response = await hc.GetAsync(HttpUtility.HtmlEncode($"api/AuthToken?username={TestUserName}&password={TestPassword}"));
+            HttpResponseMessage response = await hc.GetAsync(HttpUtility.HtmlEncode($"api/AuthToken?username={_testUserName}&password={_testPassword}"));
             if (response.IsSuccessStatusCode)
             {
                 product = await response.Content.ReadAsStringAsync();
