@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/QAAutomation/.vs/QAAutomation/v15
+/QAAutomation/LGRegressionTests/bin/Debug/netcoreapp2.0
+/QAAutomation/LGRegressionTests/obj
