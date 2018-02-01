@@ -17,13 +17,14 @@ namespace LGRegressionTests
 
         private const string TestUserName = "testrunner@dciartform.com";
         private const string TestPassword = "LiveGuide#2727";
+        private const string _testUrl = "https://lg-qa2-appservice-deploytest.azurewebsites.net";
 
         [TestMethod]
         public void TestMethod1Async()
         {
             using (HttpClient hc = new HttpClient())
             {
-                hc.BaseAddress = new System.Uri("https://lg-qa2-appservice-deploytest.azurewebsites.net");
+                hc.BaseAddress = new System.Uri(_testUrl);
 
                 string item = GetInfo(hc).GetAwaiter().GetResult();
             }
