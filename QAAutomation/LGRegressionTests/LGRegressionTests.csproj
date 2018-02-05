@@ -27,7 +27,7 @@
   <ItemGroup>
     <None Update="test.runsettings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
