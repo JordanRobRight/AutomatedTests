@@ -5,7 +5,7 @@ namespace QAAutomationAPI
 {
     public class UnitTest1
     {
-        [TestCase]
+        //[TestCase]
         public void Test1()
         {
 

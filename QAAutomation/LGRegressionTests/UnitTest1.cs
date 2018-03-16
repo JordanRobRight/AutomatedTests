@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LGRegressionTests
 {
-    [TestClass]
+   // [TestClass]
     public class UnitTest1
     {
         #region Old Stuff
@@ -19,7 +19,7 @@ namespace LGRegressionTests
         private const string _testPassword = "LiveGuide#2727";
         private const string _testUrl = "https://lg-qa2-appservice-deploytest.azurewebsites.net";
 
-        [TestMethod]
+        //[TestMethod]
         public void TestMethod1Async()
         {
             using (HttpClient hc = new HttpClient())

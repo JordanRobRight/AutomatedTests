@@ -7,7 +7,7 @@ using OpenQA.Selenium.Remote;
 namespace QAAutomationUI
 {
 
-    [TestFixture("chrome", "63", "Windows 10", "", "")]
+    //[TestFixture("chrome", "63", "Windows 10", "", "")]
     public class UnitTest1
     {
         private IWebDriver driver;
@@ -30,7 +30,7 @@ namespace QAAutomationUI
             this.deviceOrientation = deviceOrientation;
         }
 
-        [SetUp]
+       // [SetUp]
         public void Init()
         {
             DesiredCapabilities caps = new DesiredCapabilities();
@@ -93,7 +93,7 @@ namespace QAAutomationUI
 
         //}
 
-        [TestCase]
+       // [TestCase]
         public void GoogleTestDotNet()
         {
             driver.Navigate().GoToUrl("http://www.google.com");
@@ -103,7 +103,7 @@ namespace QAAutomationUI
             query.Submit();
         }
 
-        [TearDown]
+        //[TearDown]
         public void CleanUp()
         {
             bool passed = TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Passed;
