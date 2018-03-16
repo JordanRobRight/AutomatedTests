@@ -8,3 +8,15 @@
 /QAAutomation/LGRegressionTests/obj
 /QAAutomation/LGRegressionTests/bin/Release/netcoreapp2.0
 /QAAutomation/LGRegressionTests/LGRegressionTests.csproj.user
+/QAAutomation/.vs/QAAutomation/lut
+/QAAutomation/Common/bin
+/QAAutomation/Common/obj
+/QAAutomation/packages
+/QAAutomation/QAAutomationAPI/bin
+/QAAutomation/QAAutomationAPI/obj
+/QAAutomation/QAAutomationUI/bin
+/QAAutomation/QAAutomationUI/obj
+/QAAutomation/UITest.Net/bin
+/QAAutomation/UITest.Net/obj
+/QAAutomation/Models/bin
+/QAAutomation/Models/obj
