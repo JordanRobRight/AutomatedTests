@@ -46,8 +46,6 @@ namespace QAAutomationUI
             caps.SetCapability(CapabilityType.Platform, os);
             caps.SetCapability("deviceName", deviceName);
             caps.SetCapability("deviceOrientation", deviceOrientation);
-            //caps.SetCapability("username", un);
-            //caps.SetCapability("accessKey", ak);
 
             caps.SetCapability("username", _configuration.SauceLabsUser);
             caps.SetCapability("accessKey", _configuration.SauceLabsKey);
@@ -99,7 +97,10 @@ namespace QAAutomationUI
 
             WaitForElementExists("page-header-container");
 
-            Assert.AreEqual("https://lg-frontend-test.azurewebsites.net/#dashboard", _driver.Url.Trim());
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            Assert.AreEqual("https://lg-frontend-test.azurewebsites.net/#playlists", _driver.Url.Trim());
+
+
         }
 
         [TearDown]
