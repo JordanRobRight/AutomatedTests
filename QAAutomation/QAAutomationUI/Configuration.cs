@@ -5,13 +5,14 @@ using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace UITests
+namespace QA.Automation.UITests
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class TestConfiguration
     {
         [JsonProperty]
-        public string Environment { get; set; }
+        //public string Environment { get; set; }
+        public Common.EnvironmentType Environment { get; set; }
         [JsonProperty]
         public string SauceLabsUser { get; set; }
         [JsonProperty]

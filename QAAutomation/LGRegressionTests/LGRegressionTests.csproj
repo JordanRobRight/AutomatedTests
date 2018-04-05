@@ -6,6 +6,10 @@
     <IsPackable>false</IsPackable>
     
     <StartupObject />
+    
+    <AssemblyName>QA.Automation.LGRegressionTests</AssemblyName>
+    
+    <RootNamespace>QA.Automation.LGRegressionTests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

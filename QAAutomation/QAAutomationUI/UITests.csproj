@@ -4,6 +4,16 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <AssemblyName>QA.Automation.UITests</AssemblyName>
+
+    <RootNamespace>QA.Automation.UITests</RootNamespace>
+
+    <ApplicationIcon />
+
+    <OutputType>Library</OutputType>
+
+    <StartupObject />
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +33,10 @@
     <PackageReference Include="Selenium.WebDriver.IEDriver" Version="3.11.1" />
     <PackageReference Include="Selenium.WebDriver.IEDriver64" Version="3.11.0.1" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
