@@ -5,7 +5,7 @@ using System.Web;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace LGRegressionTests
+namespace QA.Automation.LGRegressionTests
 {
    // [TestClass]
     public class UnitTest1

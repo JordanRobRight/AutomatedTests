@@ -9,7 +9,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 
-namespace QAAutomationUI
+namespace QA.Automation.UITests
 {
     [TestFixture("chrome", "63", "Windows 10", "", "")]
     public class UnitTest1
@@ -83,7 +83,8 @@ namespace QAAutomationUI
         [TestCase]
         public void LiveGuide20()
         {
-            string url = string.Equals(_configuration.Environment, "Prod", StringComparison.OrdinalIgnoreCase) ? string.Format(_configuration.BaseUrl, "") : string.Format(_configuration.BaseUrl, "-" + _configuration.Environment);
+            //            string url = string.Equals(_configuration.Environment, "Prod", StringComparison.OrdinalIgnoreCase) ? string.Format(_configuration.BaseUrl, "") : string.Format(_configuration.BaseUrl, "-" + _configuration.Environment);
+            string url = Common.LGUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl);
 
             _driver.Navigate().GoToUrl(url);
 
