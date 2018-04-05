@@ -11,7 +11,7 @@ namespace QA.Automation.QAAutomationAPI
     //[TestFixture("https://lg-lgm-programsversionservice-test.azurewebsites.net", "63", "Windows 10")]
     public class UnitTest1
     {
-        private static readonly Common.EnvironmentType _env = Common.EnvironmentType.Prod;
+        private static readonly Common.EnvironmentType _env = Common.EnvironmentType.Test;
         public static List<string> items = new List<string>(new string[]
         {
             "LG.LGM.PlayersService",
