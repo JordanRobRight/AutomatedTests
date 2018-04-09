@@ -68,9 +68,13 @@ namespace QA.Automation.QAAutomationAPI
         {
         }
 
-        [TestCase, TestCaseSource("items")]
+        [TestCaseSource("items")]
         [Category("SmokeTests")]
-        
+
+        //public void PingTokenApi()
+        //{
+
+        //}
         public void PingTokenApi(string url)
         {
             string updatedUrl = FormatUrl(url);
