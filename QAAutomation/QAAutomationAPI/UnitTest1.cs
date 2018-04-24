@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 
+using QA.Automation.Common;
+
 namespace QA.Automation.QAAutomationAPI
 {
     //[TestFixture("https://lg-lgm-clientprogramsservice-test.azurewebsites.net", "63", "Windows 10")]
@@ -11,7 +13,8 @@ namespace QA.Automation.QAAutomationAPI
     //[TestFixture("https://lg-lgm-programsversionservice-test.azurewebsites.net", "63", "Windows 10")]
     public class UnitTest1
     {
-        private static readonly Common.EnvironmentType _env = Common.EnvironmentType.Test;
+        //private static readonly Common.EnvironmentType _env = Common.EnvironmentType.Test;
+        private static TestConfiguration _configuration => TestConfiguration.GetTestConfiguration();
         public static List<string> items = new List<string>(new string[]
         {
             "LG.LGM.PlayersService",
@@ -42,8 +45,11 @@ namespace QA.Automation.QAAutomationAPI
             "LG.LGM.DbService"
         });
 
-        private const string _testUserName = "testrunner@dciartform.com";
-        private const string _testPassword = "LiveGuide#2727";
+        //private const string _testUserName = "testrunner@dciartform.com";
+        // private const string _testPassword = "LiveGuide#2727";
+
+        private const string _testUserName = "cbam.lgtest1@dciartform.com";
+        private const string _testPassword = "Cbam#test1";
 
         private string url = string.Empty;
         private string userName = string.Empty;
@@ -77,7 +83,7 @@ namespace QA.Automation.QAAutomationAPI
         //}
         public void PingTokenApi(string url)
         {
-            string updatedUrl = FormatUrl(url);
+            string updatedUrl = FormatUrl(url, _configuration.Environment.ToString());
             string result = string.Empty;
 
             if (!string.IsNullOrEmpty(updatedUrl))
@@ -92,9 +98,9 @@ namespace QA.Automation.QAAutomationAPI
             Console.WriteLine("\r\n");
         }
 
-        private string FormatUrl(string url)
+        private string FormatUrl(string url, string env)
         {
-            return $"https://{url.Replace(".", "-")}" + Common.LGUtils.GetUrlBaseUrl(_env.ToString(),"{0}") + ".azurewebsites.net";
+            return $"https://{url.Replace(".", "-")}" + Common.LGUtils.GetUrlBaseUrl(env.ToString(),"{0}") + ".azurewebsites.net";
         }
     }
 }
