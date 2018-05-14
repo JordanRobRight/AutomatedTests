@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
+using QA.Automation.Common;
 
 namespace QA.Automation.UITests
 {
@@ -22,7 +23,7 @@ namespace QA.Automation.UITests
         private String deviceOrientation;
         //private const int _waitTimeInSeconds = 30;
         //private bool IsRemoteDriver = false;
-        private UITests.TestConfiguration _configuration => UITests.TestConfiguration.GetTestConfiguration();
+        private TestConfiguration _configuration => TestConfiguration.GetTestConfiguration();
 
         //private const string un = @"DCIArtform";
 
