@@ -42,7 +42,8 @@ namespace QA.Automation.QAAutomationAPI
             "LG.LGM.ProgramsService",
             "LG.LGM.FrontEndService",
             "LG.LGM.FinanceService",
-            "LG.LGM.DbService"
+            "LG.LGM.DbService",
+            "LG.LGM.BuildManifestService"
         });
 
         //private const string _testUserName = "testrunner@dciartform.com";
