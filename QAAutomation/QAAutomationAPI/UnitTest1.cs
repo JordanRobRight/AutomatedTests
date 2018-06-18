@@ -4,11 +4,6 @@ using NUnit.Framework;
 
 namespace QA.Automation.QAAutomationAPI
 {
-    //[TestFixture("https://lg-lgm-clientprogramsservice-test.azurewebsites.net", "63", "Windows 10")]
-    //[TestFixture("https://lg-lgm-clientsservice-test.azurewebsites.net", "63", "Windows 10")]
-    //[TestFixture("https://lg-lgm-assetsservice-test.azurewebsites.net", "63", "Windows 10")]
-    //[TestFixture("https://lg-lgm-programsservice-test.azurewebsites.net", "63", "Windows 10")]
-    //[TestFixture("https://lg-lgm-programsversionservice-test.azurewebsites.net", "63", "Windows 10")]
     public class UnitTest1
     {
         private static readonly Common.EnvironmentType _env = Common.EnvironmentType.Test;
@@ -71,10 +66,6 @@ namespace QA.Automation.QAAutomationAPI
         [TestCaseSource("items")]
         [Category("SmokeTests")]
 
-        //public void PingTokenApi()
-        //{
-
-        //}
         public void PingTokenApi(string url)
         {
             string updatedUrl = FormatUrl(url);
@@ -82,7 +73,6 @@ namespace QA.Automation.QAAutomationAPI
 
             if (!string.IsNullOrEmpty(updatedUrl))
             {
-                //Common.WebUtils wu = new Common.WebUtils();
                 result =  new Common.WebUtils().GetAuthInfo(updatedUrl, this.userName, this.password);
             }
             Assert.IsFalse(string.IsNullOrWhiteSpace(result));

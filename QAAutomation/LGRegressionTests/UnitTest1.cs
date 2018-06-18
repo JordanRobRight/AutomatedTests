@@ -7,19 +7,12 @@ using System.Threading.Tasks;
 
 namespace QA.Automation.LGRegressionTests
 {
-   // [TestClass]
     public class UnitTest1
     {
-        #region Old Stuff
-        // private const string TestUserName = "testrunner%40dciartform.com";
-        // private const string TestPassword = "LiveGuide%232727";
-        #endregion
-
         private const string _testUserName = "testrunner@dciartform.com";
         private const string _testPassword = "LiveGuide#2727";
         private const string _testUrl = "https://lg-qa2-appservice-deploytest.azurewebsites.net";
 
-        //[TestMethod]
         public void TestMethod1Async()
         {
             using (HttpClient hc = new HttpClient())
@@ -38,7 +31,6 @@ namespace QA.Automation.LGRegressionTests
             if (response.IsSuccessStatusCode)
             {
                 product = await response.Content.ReadAsStringAsync();
-                    //response.Content.ReadAsStringAsync<string>();
             }
             return product;
         }

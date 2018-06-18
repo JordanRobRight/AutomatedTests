@@ -20,13 +20,7 @@ namespace QA.Automation.UITests
         private String os;
         private String deviceName;
         private String deviceOrientation;
-        //private const int _waitTimeInSeconds = 30;
-        //private bool IsRemoteDriver = false;
         private UITests.TestConfiguration _configuration => UITests.TestConfiguration.GetTestConfiguration();
-
-        //private const string un = @"DCIArtform";
-
-        //private const string ak = @"a4277bd1-3492-4562-99bc-53dd349c52e1";
 
         public UnitTest1 (String browser, String version, String os, String deviceName, String deviceOrientation)
         {
@@ -68,22 +62,10 @@ namespace QA.Automation.UITests
             _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
          }
 
-        /*
-        [TestCase]
-        public void googleTest()
-        {
-            _driver.Navigate().GoToUrl("http://www.google.com");
-            StringAssert.Contains("Google", _driver.Title);
-            IWebElement query = _driver.FindElement(By.Name("q"));
-            query.SendKeys("Sauce Labs");
-            query.Submit();
-        }
-        */
 
         [TestCase]
         public void LiveGuide20()
         {
-            //            string url = string.Equals(_configuration.Environment, "Prod", StringComparison.OrdinalIgnoreCase) ? string.Format(_configuration.BaseUrl, "") : string.Format(_configuration.BaseUrl, "-" + _configuration.Environment);
             string url = Common.LGUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl);
 
             _driver.Navigate().GoToUrl(url);
@@ -100,8 +82,6 @@ namespace QA.Automation.UITests
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             Assert.AreEqual("https://lg-frontend-test.azurewebsites.net/#playlists", _driver.Url.Trim());
-
-
         }
 
         [TearDown]
