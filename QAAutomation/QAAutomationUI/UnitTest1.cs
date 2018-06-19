@@ -84,7 +84,7 @@ namespace QA.Automation.UITests
         [TestCase]
         public void LiveGuide20()
         {
-            //            string url = string.Equals(_configuration.Environment, "Prod", StringComparison.OrdinalIgnoreCase) ? string.Format(_configuration.BaseUrl, "") : string.Format(_configuration.BaseUrl, "-" + _configuration.Environment);
+            //string url = string.Equals(_configuration.Environment, "Prod", StringComparison.OrdinalIgnoreCase) ? string.Format(_configuration.BaseUrl, "") : string.Format(_configuration.BaseUrl, "-" + _configuration.Environment);
             string url = Common.LGUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
 
             _driver.Navigate().GoToUrl(url);
@@ -96,19 +96,12 @@ namespace QA.Automation.UITests
             query = GetElement("login-password");
             query.SendKeys("Cbam#test1");
 
-
-            //finds the submit button and clicks that to represent a users clicking the sign-in button
-            //String signInBtnClassName = "user-login__action__primary button-unstyled";////*[@id="tab-panel-widget-0-tab-panel-0"]/div[3]/button
-            //IWebElement button = _driver.FindElement(By.XPath(signInBtnClassName));
-
-            //button.Click();
-
             query.Submit();
 
             WaitForElementExists("page-header-container");
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-           // Assert.AreEqual("https://lg-frontend-test.azurewebsites.net/#playlists", _driver.Url.Trim());
+           //Assert.AreEqual("https://lg-frontend-test.azurewebsites.net/#playlists", _driver.Url.Trim());
             Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
 
         }
