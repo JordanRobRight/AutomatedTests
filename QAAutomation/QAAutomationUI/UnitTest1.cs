@@ -92,8 +92,16 @@ namespace QA.Automation.UITests
             IWebElement query = GetElement("login-email");
             
             query.SendKeys("cbam.lgtest1@dciartform.com");
+
             query = GetElement("login-password");
             query.SendKeys("Cbam#test1");
+
+
+            //finds the submit button and clicks that to represent a users clicking the sign-in button
+            //String signInBtnClassName = "user-login__action__primary button-unstyled";////*[@id="tab-panel-widget-0-tab-panel-0"]/div[3]/button
+            //IWebElement button = _driver.FindElement(By.XPath(signInBtnClassName));
+
+            //button.Click();
 
             query.Submit();
 
