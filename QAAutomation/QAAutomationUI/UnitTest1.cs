@@ -1,8 +1,6 @@
 using System;
 using System.IO;
-using System.Net;
 using System.Reflection;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -20,7 +18,7 @@ namespace QA.Automation.UITests
         private String os;
         private String deviceName;
         private String deviceOrientation;
-        private UITests.TestConfiguration _configuration => UITests.TestConfiguration.GetTestConfiguration();
+        private readonly UITests.TestConfiguration _configuration = null;
 
         public UnitTest1 (String browser, String version, String os, String deviceName, String deviceOrientation)
         {
@@ -29,6 +27,7 @@ namespace QA.Automation.UITests
             this.os = os;
             this.deviceName = deviceName;
             this.deviceOrientation = deviceOrientation;
+            _configuration = UITests.TestConfiguration.GetTestConfiguration();
         }
 
         [SetUp]
@@ -81,7 +80,8 @@ namespace QA.Automation.UITests
             WaitForElementExists("page-header-container");
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            Assert.AreEqual("https://lg-frontend-test.azurewebsites.net/#playlists", _driver.Url.Trim());
+            Assert.AreEqual("${url}/#playlists", _driver.Url.Trim());
+            //Assert.AreEqual("https://lg-frontend-test.azurewebsites.net/#playlists", _driver.Url.Trim());
         }
 
         [TearDown]

@@ -40,20 +40,19 @@ namespace QA.Automation.QAAutomationAPI
         private const string _testUserName = "testrunner@dciartform.com";
         private const string _testPassword = "LiveGuide#2727";
 
-        private string url = string.Empty;
-        private string userName = string.Empty;
-        private string password = string.Empty;
+        private readonly string url = string.Empty;
+        private readonly string userName = string.Empty;
+        private readonly string password = string.Empty;
 
-        public UnitTest1(string url, string user, string userPassword)
+        public UnitTest1(string userUrl, string userName, string userPassword)
         {
-            this.url = url;
-            this.userName = _testUserName;
-            this.password = _testPassword;
+            this.url = userUrl;
+            this.userName = userName;
+            this.password = userPassword;
         }
 
         public UnitTest1()
         {
-            //this.url = url;
             this.userName = _testUserName;
             this.password = _testPassword;
         }
