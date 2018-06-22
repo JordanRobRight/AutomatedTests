@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
-using System.Text;
 using Newtonsoft.Json;
 
 namespace QA.Automation.UITests
@@ -29,8 +26,8 @@ namespace QA.Automation.UITests
             JsonSerializer serializer = new JsonSerializer();
             FileInfo fi = new FileInfo(Path.Combine(Assembly.GetExecutingAssembly().Location));
 
-            string data = System.IO.File.ReadAllText(Path.Combine(fi.DirectoryName, "Settings.json"));
-            UITests.TestConfiguration deserializedProduct = JsonConvert.DeserializeObject<UITests.TestConfiguration>(data);
+            string data = File.ReadAllText(Path.Combine(fi.DirectoryName, "Settings.json"));
+            TestConfiguration deserializedProduct = JsonConvert.DeserializeObject<UITests.TestConfiguration>(data);
             return deserializedProduct;
         }
     }
