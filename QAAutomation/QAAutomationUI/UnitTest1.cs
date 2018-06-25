@@ -82,7 +82,7 @@ namespace QA.Automation.UITests
         [TestCase]
         public void LiveGuide20()
         {
-            Login();          
+            Login();
 
             WaitForElementExists("page-header-container");
 
@@ -95,9 +95,9 @@ namespace QA.Automation.UITests
         public void LiveguidePlaylists()
         {
             Login();
-            
+
             string addPlaylistsButtonClass = "#playlists-container > div.pm-function-bar.js-playlists-function-bar > div > button";
-            
+
             string saveButtonCSSSelector = "#playlist-info-form > div.lg-modal__actions > button";
             string playlistOpenButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2)";
             string weatherWidgetCSSSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-favorite-widgets.js-drag-drop-favorite-widgets > button:nth-child(1)";
@@ -116,9 +116,13 @@ namespace QA.Automation.UITests
             string videoWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-pinned-widgets.js-drag-drop-pinned-widgets > button.pmfb-function-button.lgfe-cm-new-card.button-unstyled.lgfe-elem-state.js-drag-drop-pinned-widget-item.lgfe-add-video-widget-button";
             string videoAssestSelectionCssSelector = "#asset-video-select-form > div.avsf-image-matrix > div:nth-child(1) > label";
             string videoWidgetDoneButtonCssSelector = "#asset-video-select-form > div.avsf-action-bar > button";
+            string screenFeedWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-pinned-widgets.js-drag-drop-pinned-widgets > button.pmfb-function-button.lgfe-cm-new-card.button-unstyled.lgfe-elem-state.js-drag-drop-pinned-widget-item.lgfe-add-screenfeedvideo-widget-button";
+            string screedFeedSaveButtonCssSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
+            string brandWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-pinned-widgets.js-drag-drop-pinned-widgets > button.pmfb-function-button.lgfe-cm-new-card.button-unstyled.lgfe-elem-state.js-drag-drop-pinned-widget-item.lgfe-add-brand-widget-button";
+            string brandSaveButtonCssSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
 
 
-            
+
 
             IWebElement addPlaylistButton = _driver.FindElement(By.CssSelector(addPlaylistsButtonClass));
             addPlaylistButton.Click();
@@ -135,39 +139,25 @@ namespace QA.Automation.UITests
             IWebElement saveButton = _driver.FindElement(By.CssSelector(saveButtonCSSSelector));
             saveButton.Click();
 
-
-
-
-
             /*Start Playlists TestCase Suite ID 69 with 5 parts*/
 
-            //adding a widget
+            //adding a widget, here this test adds all widgets and uses test dates
 
 
             IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(playlistOpenButtonCSSSelector));
             playlistOpenButton.Click();
 
-
-
             IWebElement weatherWidget = _driver.FindElement(By.CssSelector(weatherWidgetCSSSelector));
             weatherWidget.Click();
-
-
 
             IWebElement weatherZipCodeInput = _driver.FindElement(By.Id(weatherZipCodeInputID));
             weatherZipCodeInput.SendKeys("53142");
 
-
-
             IWebElement weatherWidgetSaveButton = _driver.FindElement(By.CssSelector(weatherWidgetSaveButtonCSSSelector));
             weatherWidgetSaveButton.Click();
 
-
-
             IWebElement playlistSave = _driver.FindElement(By.CssSelector(playlistSaveCSSSelector));
             playlistSave.Click();
-
-
 
             IWebElement financeWidget = _driver.FindElement(By.CssSelector(financeWidgetCSSSelector));
             financeWidget.Click();
@@ -180,7 +170,6 @@ namespace QA.Automation.UITests
 
             IWebElement saveFinanceButton = _driver.FindElement(By.CssSelector(saveFinanceButtonCSSSelector));
             saveFinanceButton.Click();
-
 
             IWebElement trafficWidget = _driver.FindElement(By.CssSelector(trafficWidgetCssSelector));
             trafficWidget.Click();
@@ -211,6 +200,7 @@ namespace QA.Automation.UITests
 
             //var selectDurationBrandElement = new SelectElement(selectDurationTriviaFilter);
             //selectDurationBrandElement.SelectByText("1");
+            //Just taking the default value here I am having a hard time grabbing the value from the drop down
 
             IWebElement triviaSaveButton = _driver.FindElement(By.CssSelector(triviaSaveButtonCssSelector));
             triviaSaveButton.Click();
@@ -241,10 +231,8 @@ namespace QA.Automation.UITests
             IWebElement videoWidgetDoneButton = _driver.FindElement(By.CssSelector(videoWidgetDoneButtonCssSelector));
             videoWidgetDoneButton.Click();
 
-            string screenFeedWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-pinned-widgets.js-drag-drop-pinned-widgets > button.pmfb-function-button.lgfe-cm-new-card.button-unstyled.lgfe-elem-state.js-drag-drop-pinned-widget-item.lgfe-add-screenfeedvideo-widget-button";
             IWebElement screenfeedWidgetButton = _driver.FindElement(By.CssSelector(screenFeedWidgetCssSelector));
             screenfeedWidgetButton.Click();
-
 
             //string screenFeedFilterCssSelector = '//*[@id="select - duration"]';
             IWebElement selectScreenFeedFilter = _driver.FindElement(By.XPath("//*[@id='select-duration']"));
@@ -259,21 +247,52 @@ namespace QA.Automation.UITests
 
             //var selectScreenFeedNumberElement = new SelectElement(selectScreenFeedNumberFilter);
             //selectScreenFeedNumberElement.SelectByText("10");
-            string screedFeedSaveButtonCssSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
 
             IWebElement screenFeedSaveButton = _driver.FindElement(By.CssSelector(screedFeedSaveButtonCssSelector));
             screenFeedSaveButton.Click();
 
-            string brandWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-pinned-widgets.js-drag-drop-pinned-widgets > button.pmfb-function-button.lgfe-cm-new-card.button-unstyled.lgfe-elem-state.js-drag-drop-pinned-widget-item.lgfe-add-brand-widget-button";
-
             IWebElement brandWidgetButton = _driver.FindElement(By.CssSelector(brandWidgetCssSelector));
             brandWidgetButton.Click();
 
-            string brandSaveButtonCssSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
             IWebElement brandSaveButton = _driver.FindElement(By.CssSelector(brandSaveButtonCssSelector));
             brandSaveButton.Click();
 
+            //go back to main playlist screen
+            string playlistSideBarMenuCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a > span";
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(playlistSideBarMenuCssSelector));
+            playlistsSideBarMenuButton.Click();
+
+            //PlaylistSchedule();
+
             //DeleteProtocol();
+            
+        }
+
+        [TestCase]
+        public void PlaylistSchedule()
+        {
+            Login();
+
+            string schedulePlaylistCssSelector = "#playlist-container > div.playlist-content-wrapper.js-playlist-content > div > div.pm-action-bar.pm-action-bar-upper > button:nth-child(2)";
+            string submitScheduleCssSelector = "#asset-info-form > div.lg-modal__actions.schedule-modal-button-wrapper > button:nth-child(1)";
+            string playlistOpenButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2)";
+
+            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(playlistOpenButtonCSSSelector));
+            playlistOpenButton.Click();
+
+            IWebElement schedulePlaylist = _driver.FindElement(By.CssSelector(schedulePlaylistCssSelector));
+            schedulePlaylist.Click();
+
+            IWebElement schedulePlaylistStart = _driver.FindElement(By.Id("asset-begin-date-range"));
+            schedulePlaylistStart.Clear();
+            schedulePlaylistStart.SendKeys("August 1, 2018");
+
+            IWebElement schedulePlaylistEnd = _driver.FindElement(By.Id("asset-end-date-range"));
+            schedulePlaylistEnd.Clear();
+            schedulePlaylistEnd.SendKeys("August 2, 2018");
+
+            IWebElement submitSchedule = _driver.FindElement(By.CssSelector(submitScheduleCssSelector));
+            submitSchedule.Click();
 
 
         }
@@ -322,17 +341,13 @@ namespace QA.Automation.UITests
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
-            //IWebElement playlistClassName = _driver.FindElement(By.ClassName("Automated Playlist Test"));
-
             int i = 0;
-            while(i < 10)
+            while (i < 10)
             {
-
-                IWebElement deletePlaylistButton = _driver.FindElement(By.CssSelector("#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button:nth-child(3)"));
-
-
-                //start the delete protocol
+                string deletePlaylistButtonCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button:nth-child(3)";
                 string newPlaylistDeleteButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button:nth-child(3)";
+
+                IWebElement deletePlaylistButton = _driver.FindElement(By.CssSelector(deletePlaylistButtonCssSelector));
 
                 IWebElement newPlaylistDeleteButton = _driver.FindElement(By.CssSelector(newPlaylistDeleteButtonCSSSelector));
 
@@ -341,7 +356,6 @@ namespace QA.Automation.UITests
                 IAlert alert = _driver.SwitchTo().Alert();
 
                 alert.Accept();
-
 
                 playlistSearch.SendKeys("Automated Playlist Test");
 
