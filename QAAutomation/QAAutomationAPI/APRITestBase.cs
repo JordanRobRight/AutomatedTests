@@ -9,6 +9,8 @@ namespace QA.Automation.APITests
     public class APRITestBase
     {
         private APRIConfigSettings _config = null;
+        public IDictionary<string, string> AuthTokens = new Dictionary<string, string>();
+        private LG20.ApiActions _lgApitAction = null;
 
         public APRITestBase(string userName, string userPassword)
         {
@@ -18,6 +20,9 @@ namespace QA.Automation.APITests
         {
             _config = ConfigurationSettings.GetSettingsConfiguration<APRIConfigSettings>();
         }
+
+
+        public LG20.ApiActions LGApitAction = new LG20.ApiActions();
 
         public APRIConfigSettings Settings => _config;
     }
