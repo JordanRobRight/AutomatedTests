@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using QA.Automation.APITests.Models;
-using QA.Automation.Common;
 
 namespace QA.Automation.APITests.LG20
 {
@@ -56,10 +54,6 @@ namespace QA.Automation.APITests.LG20
         [SetUp]
         public void Init()
         {
-            //if (TestContext.Parameters["AuthKeys"] != null)
-            //{
-            //    TestContext.Parameters["AuthKeys"] = AuthTokens;
-            //}
         }
 
         [TestCaseSource("items")]
@@ -68,6 +62,10 @@ namespace QA.Automation.APITests.LG20
         {
             string updatedUrl = FormatUrl(url);
             string result = string.Empty;
+
+            IApiPage i = new LGMFiltersService();
+
+            
 
             if (!string.IsNullOrEmpty(updatedUrl))
             {
@@ -99,18 +97,13 @@ namespace QA.Automation.APITests.LG20
                 { "authtoken", authKey.Value },
             };
 
-            string result = LGApitAction.GetDocumentInfo(parms);
+            string result = LGApitAction.GetAllDocuments(parms);
             Assert.IsFalse(string.IsNullOrWhiteSpace(result));
         }
 
         [TearDown]
         public void WriteOut()
         {
-            //AuthTokens.Select(a => 
-            //    {
-            //        Console.WriteLine($"Url: {a.Key.ToString()} | AuthKey: {a.Value.ToString()} ");
-            //        return true;
-            //    });
 
         }   
 

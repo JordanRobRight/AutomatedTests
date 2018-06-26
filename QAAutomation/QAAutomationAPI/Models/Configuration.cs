@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Reflection;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace QA.Automation.APITests.Models
 {
