@@ -7,7 +7,7 @@ namespace QA.Automation.APITests.LG20
         private static readonly string _assetsUpdateUserPath = $"{BaseService}/UploadUserAsset";
         private static readonly string _assetsRemovePath = $"{BaseService}/RemoveAsset/{0}";
 
-        public LGMAssetsService()
+        public LGMAssetsService(Common.HttpUtilsHelper httpUtilsHelper) : base (httpUtilsHelper)
         {
 
         }

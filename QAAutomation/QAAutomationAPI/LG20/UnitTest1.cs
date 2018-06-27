@@ -6,40 +6,71 @@ using NUnit.Framework;
 namespace QA.Automation.APITests.LG20
 {
     [TestFixture]
-    public class UnitTest1 : APRITestBase
+    public class UnitTest1 : ApiTestBase
     {
-        public static List<string> items = new List<string>(new string[]
-        {
-            "LG.LGM.PlayersService",
-            "LG.LGM.FiltersService",
-            "LG.LGM.LocationsService",
-            "LG.LGM.ScreenFeedVideoService",
-            "LG.LGM.SSOAuthService",
-            "LG.LGM.ProgramVersionsService",
-            "LG.LGM.AssetsService",
-            "LG.LGM.SSOService",
-            "LG.LGM.PlaylistsService",
-            "LG.LGM.WeatherService",
-            "LG.LGM.WidgetsService",
-            "LG.LGM.UsersService",
-            "LG.LGM.TriviaService",
-            "LG.LGM.TrafficService",
-            "LG.LGM.SubscriptionsService",
-            "LG.LGM.StorageService",
-            "LG.LGM.SocialService",
-            "LG.LGM.ClientsService",
-            "LG.LGM.HealthService",
-            "LG.LGM.LicensesService",
-            "LG.LGM.ChannelsService",
-            "LG.LGM.ClientProgramsService",
-            "LG.LGM.ProgramsService",
-            "LG.LGM.FrontEndService",
-            "LG.LGM.FinanceService",
-            "LG.LGM.DbService",
+        //public static List<string> items = new List<string>(new string[]
+        //{
+        //    "LG.LGM.PlayersService",
+        //    "LG.LGM.FiltersService",
+        //    "LG.LGM.LocationsService",
+        //    "LG.LGM.ScreenFeedVideoService",
+        //    "LG.LGM.SSOAuthService",
+        //    "LG.LGM.ProgramVersionsService",
+        //    "LG.LGM.AssetsService",
+        //    "LG.LGM.SSOService",
+        //    "LG.LGM.PlaylistsService",
+        //    "LG.LGM.WeatherService",
+        //    "LG.LGM.WidgetsService",
+        //    "LG.LGM.UsersService",
+        //    "LG.LGM.TriviaService",
+        //    "LG.LGM.TrafficService",
+        //    "LG.LGM.SubscriptionsService",
+        //    "LG.LGM.StorageService",
+        //    "LG.LGM.SocialService",
+        //    "LG.LGM.ClientsService",
+        //    "LG.LGM.HealthService",
+        //    "LG.LGM.LicensesService",
+        //    "LG.LGM.ChannelsService",
+        //    "LG.LGM.ClientProgramsService",
+        //    "LG.LGM.ProgramsService",
+        //    "LG.LGM.FrontEndService",
+        //    "LG.LGM.FinanceService",
+        //    "LG.LGM.DbService",
 
-           // "LG.LGM.ProfileService"
-        });
+        //   // "LG.LGM.ProfileService"
+        //});
 
+        public static Dictionary<string, string> items = new Dictionary<string, string>
+      {
+            {"LG.LGM.PlayersService", "" },
+            //{"LG.LGM.FiltersService","" },
+            //{"LG.LGM.LocationsService","" },
+            //{"LG.LGM.ScreenFeedVideoService","" },
+            //{"LG.LGM.SSOAuthService","" },
+            //{"LG.LGM.ProgramVersionsService","" },
+            //{"LG.LGM.AssetsService","" },
+            //{"LG.LGM.SSOService","" },
+            //{"LG.LGM.PlaylistsService","" },
+            //{"LG.LGM.WeatherService","" },
+            //{"LG.LGM.WidgetsService","" },
+            //{"LG.LGM.UsersService","" },
+            //{"LG.LGM.TriviaService","" },
+            //{"LG.LGM.TrafficService","" },
+            //{"LG.LGM.SubscriptionsService","" },
+            //{"LG.LGM.StorageService","" },
+            //{"LG.LGM.SocialService","" },
+            //{"LG.LGM.ClientsService","" },
+            //{"LG.LGM.HealthService","" },
+            //{"LG.LGM.LicensesService","" },
+            //{"LG.LGM.ChannelsService","" },
+            //{"LG.LGM.ClientProgramsService","" },
+            //{"LG.LGM.ProgramsService","" },
+            //{"LG.LGM.FrontEndService","" },
+            //{"LG.LGM.FinanceService","" },
+            //{"LG.LGM.DbService","" },
+
+          // "LG.LGM.ProfileService"
+      };
         private readonly string url = string.Empty;
 
         public UnitTest1(string userUrl, string userName, string userPassword) : base(userName, userPassword)
@@ -58,19 +89,24 @@ namespace QA.Automation.APITests.LG20
 
         [TestCaseSource("items")]
         [Category("SmokeTests")]
-        public void GetAuthToken(string url)
+        public void GetAuthToken(KeyValuePair<string,string> item)
         {
-            string updatedUrl = FormatUrl(url);
+            string updatedUrl = FormatUrl(item.Key);
             string result = string.Empty;
 
-            IApiPage i = new LGMFiltersService();
-
-            
+           // IApiPage i = new LGMFiltersService();
 
             if (!string.IsNullOrEmpty(updatedUrl))
             {
-                result = LGApitAction.GetAuthInfo(updatedUrl, Settings.UserName, Settings.Password);
-                AuthTokens.Add(url, result.Trim('"'));
+                Dictionary<string, string> parms = new Dictionary<string, string>()
+                {
+                    { "url", updatedUrl },
+                    { "username", Settings.UserName },
+                    { "password", Settings.Password },
+                };
+                result = LGApitAction.GetAuthInfo(parms);
+                //result = LGApitAction.GetAuthInfo(updatedUrl, Settings.UserName, Settings.Password);
+                AuthTokens.Add(item.Key, result.Trim('"'));
             }
 
             //NUnit.Framework.Internal.TestExecutionContext t = PropertyHelper.GetPrivateFieldValue<NUnit.Framework.Internal.TestExecutionContext>(TestContext.CurrentContext, "_testExecuteContext");
@@ -84,13 +120,13 @@ namespace QA.Automation.APITests.LG20
 
         [TestCaseSource("items")]
         [Category("SmokeTests")]
-        public void GetZAllDocuments(string url)
+        public void GetZAllDocuments(KeyValuePair<string, string> item)
         {
             //var previous = AuthTokens;
 
             //AuthTokens = GetTestToken();
 
-            var authKey = AuthTokens.FirstOrDefault(a => a.Key.Contains(url));
+            var authKey = AuthTokens.FirstOrDefault(a => a.Key.Contains(item.Key));
             Dictionary<string, string> parms = new Dictionary<string, string>()
             {
                 { "url", FormatUrl(authKey.Key) },
@@ -100,6 +136,25 @@ namespace QA.Automation.APITests.LG20
             string result = LGApitAction.GetAllDocuments(parms);
             Assert.IsFalse(string.IsNullOrWhiteSpace(result));
         }
+
+        //[TestCaseSource("items")]
+        //[Category("SmokeTests")]
+        //public void GetZAllDocuments(string url)
+        //{
+        //    //var previous = AuthTokens;
+
+        //    //AuthTokens = GetTestToken();
+
+        //    var authKey = AuthTokens.FirstOrDefault(a => a.Key.Contains(url));
+        //    Dictionary<string, string> parms = new Dictionary<string, string>()
+        //    {
+        //        { "url", FormatUrl(authKey.Key) },
+        //        { "authtoken", authKey.Value },
+        //    };
+
+        //    string result = LGApitAction.GetAllDocuments(parms);
+        //    Assert.IsFalse(string.IsNullOrWhiteSpace(result));
+        //}
 
         [TearDown]
         public void WriteOut()

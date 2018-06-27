@@ -14,7 +14,7 @@ namespace QA.Automation.APITests.LG20
         public static readonly string FilterRemoveDeviceNameFromFilters = $"{BaseService}/actions/removeDeviceNamesFromFilters"; 
         public static readonly string FilterRemoveDeviceNameFromFilter = $"{BaseService}/actions/removeDeviceNamesFromFilter"; 
         public static readonly string FilterMoveDeviceNameToFilter = $"{BaseService}/actions/moveDeviceNamesToFilter"; 
-        public LGMFiltersService()
+        public LGMFiltersService(Common.HttpUtilsHelper httpUtilsHelper) : base(httpUtilsHelper)
         {
 
         }
