@@ -211,7 +211,7 @@ namespace QA.Automation.UITests
             imageWidget.Click();
 
             IWebElement imageAssestLibrarySearchInput = _driver.FindElement(By.Id("asset-search"));
-            imageAssestLibrarySearchInput.SendKeys("road");  //in the future this should grab the whole collection of assests and pick a random asset          
+            imageAssestLibrarySearchInput.SendKeys("chev");  //in the future this should grab the whole collection of assests and pick a random asset          
 
             IWebElement imageAssestSelection = _driver.FindElement(By.CssSelector(assestCssSelector));
             imageAssestSelection.Click();
@@ -223,7 +223,7 @@ namespace QA.Automation.UITests
             videoWidgetButton.Click();
 
             IWebElement videoAssestLibrarySearchInput = _driver.FindElement(By.Id("asset-search"));
-            videoAssestLibrarySearchInput.SendKeys("service");  //in the future this should grab the whole collection of assests and pick a random asset
+            videoAssestLibrarySearchInput.SendKeys("nis");  //in the future this should grab the whole collection of assests and pick a random asset
 
             IWebElement videoAssestSelection = _driver.FindElement(By.CssSelector(videoAssestSelectionCssSelector));
             videoAssestSelection.Click();
@@ -293,6 +293,28 @@ namespace QA.Automation.UITests
 
             IWebElement submitSchedule = _driver.FindElement(By.CssSelector(submitScheduleCssSelector));
             submitSchedule.Click();
+
+
+        }
+
+        [TestCase]
+        public void PlaylistPublish()
+        {
+            Login();
+
+            string playlistPublishButtonCssSelector = "#playlist-container > div.playlist-content-wrapper.js-playlist-content > div > div.pm-action-bar.pm-action-bar-upper > button:nth-child(3)";
+            string publishDoneButtonCssSelector = "#notifications-form > div > button";
+            string playlistOpenButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2)";
+
+            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(playlistOpenButtonCSSSelector));
+            playlistOpenButton.Click();
+
+            IWebElement playlistPublishButton = _driver.FindElement(By.CssSelector(playlistPublishButtonCssSelector));
+            playlistPublishButton.Click();
+
+            IWebElement playlistDonePublishButton = _driver.FindElement(By.CssSelector(publishDoneButtonCssSelector));
+            playlistDonePublishButton.Click();
+
 
 
         }
