@@ -320,6 +320,32 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]
+        public void uploadTest()
+        {
+            Login();
+
+            string playlistOpenButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2)";
+            string uploadButtonCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-pinned-widgets.js-drag-drop-pinned-widgets > button:nth-child(5)";
+            string uploadFromPCCssSelector = "#asset-upload-form > div > div > div > p > button";
+
+            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(playlistOpenButtonCSSSelector));
+            playlistOpenButton.Click();
+
+            IWebElement uploadButton = _driver.FindElement(By.CssSelector(uploadButtonCssSelector));
+            uploadButton.Click();
+
+            IWebElement uploadFromButton = _driver.FindElement(By.CssSelector(uploadFromPCCssSelector));
+            uploadFromButton.Click();
+
+            //String script = "document.getElementById('fileName').value='" + "C:\\\\downloads\\\\file.txt" + "';";
+            //((IJavaScriptExecutor)_driver).ExecuteScript(script);
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
+
+
+        }
+
+        [TestCase]
         public void Login()
         {
             string url = Common.LGUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
@@ -353,7 +379,6 @@ namespace QA.Automation.UITests
         {
             Login();
 
-
             string playlistSideBarMenuCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a > span";
             IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(playlistSideBarMenuCssSelector));
             playlistsSideBarMenuButton.Click();
@@ -385,6 +410,23 @@ namespace QA.Automation.UITests
             }
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
+        }
+
+        [TestCase]
+        public void AssetUploadingImage()
+        {
+            Login();
+
+            string assetLinkCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(2) > a";
+            string assetUploadButtonCssSelector = "#assets-container > div.pm-function-bar.js-playlists-function-bar > div > button";
+
+            IWebElement assetLink = _driver.FindElement(By.CssSelector(assetLinkCssSelector));
+            assetLink.Click();
+
+            IWebElement assetUploadButton = _driver.FindElement(By.CssSelector(assetUploadButtonCssSelector));
+            assetUploadButton.Click();
+
+
         }
 
         [TearDown]
