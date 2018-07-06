@@ -22,3 +22,6 @@
 /QAAutomation/Models/obj
 /QAAutomation/TestResults
 /QAAutomation/.vs/QAAutomation/DesignTimeBuild
+/QAAutomation/MiscLib/bin/Debug
+/QAAutomation/MiscLib/obj/Debug
+/QAAutomation/oldMiscLib/obj/Debug
