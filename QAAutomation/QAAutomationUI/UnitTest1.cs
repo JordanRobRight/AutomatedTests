@@ -10,6 +10,8 @@ using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using QA.Automation.Common;
 
+
+
 namespace QA.Automation.UITests
 {
     [TestFixture("chrome", "63", "Windows 10", "", "")]
@@ -265,7 +267,7 @@ namespace QA.Automation.UITests
             //PlaylistSchedule();
 
             //DeleteProtocol();
-            
+
         }
 
         [TestCase]
@@ -419,6 +421,7 @@ namespace QA.Automation.UITests
 
             string assetLinkCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(2) > a";
             string assetUploadButtonCssSelector = "#assets-container > div.pm-function-bar.js-playlists-function-bar > div > button";
+            string assetBrowseComputerCssSelector = "#asset-upload-form > div > div > div > p > button";
 
             IWebElement assetLink = _driver.FindElement(By.CssSelector(assetLinkCssSelector));
             assetLink.Click();
@@ -426,7 +429,13 @@ namespace QA.Automation.UITests
             IWebElement assetUploadButton = _driver.FindElement(By.CssSelector(assetUploadButtonCssSelector));
             assetUploadButton.Click();
 
+            IWebElement assetBrowseComputer = _driver.FindElement(By.CssSelector(assetBrowseComputerCssSelector));
+            assetBrowseComputer.Click();
 
+            
+
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
         }
 
         [TearDown]
