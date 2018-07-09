@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UITests", "QAAutomationUI\U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UITest.Net", "UITest.Net\UITest.Net.csproj", "{81E93443-49CE-4D29-B8A3-3BEF5964FC09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{CC20185E-2423-4191-A789-ABBB40465938}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{CC20185E-2423-4191-A789-ABBB40465938}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiscLib", "MiscLib\MiscLib.csproj", "{A22B0775-FE18-4CAE-BB6F-F034BB5806AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{CC20185E-2423-4191-A789-ABBB40465938}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC20185E-2423-4191-A789-ABBB40465938}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC20185E-2423-4191-A789-ABBB40465938}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A22B0775-FE18-4CAE-BB6F-F034BB5806AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A22B0775-FE18-4CAE-BB6F-F034BB5806AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A22B0775-FE18-4CAE-BB6F-F034BB5806AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A22B0775-FE18-4CAE-BB6F-F034BB5806AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

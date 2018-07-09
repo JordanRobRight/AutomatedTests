@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace QA.Automation.Common
+﻿namespace QA.Automation.Common
 {
     public enum EnvironmentType
     {
