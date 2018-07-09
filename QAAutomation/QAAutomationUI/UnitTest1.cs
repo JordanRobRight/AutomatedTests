@@ -118,10 +118,6 @@ namespace QA.Automation.UITests
 
         #endregion
 
-        private void SendKeysToModel(string text)
-        {
-            MiscLib.Helper.SendTheKey("This is a test");
-        }
 
         #region -- Public Methods -- 
         //private static WaitForElement(IWebDriver _driver )
