@@ -43,31 +43,32 @@ namespace QA.Automation.APITests.LG20
         public static Dictionary<string, string> items = new Dictionary<string, string>
       {
             {"LG.LGM.PlayersService", "" },
-            //{"LG.LGM.FiltersService","" },
-            //{"LG.LGM.LocationsService","" },
-            //{"LG.LGM.ScreenFeedVideoService","" },
-            //{"LG.LGM.SSOAuthService","" },
-            //{"LG.LGM.ProgramVersionsService","" },
-            //{"LG.LGM.AssetsService","" },
-            //{"LG.LGM.SSOService","" },
-            //{"LG.LGM.PlaylistsService","" },
-            //{"LG.LGM.WeatherService","" },
-            //{"LG.LGM.WidgetsService","" },
-            //{"LG.LGM.UsersService","" },
-            //{"LG.LGM.TriviaService","" },
-            //{"LG.LGM.TrafficService","" },
-            //{"LG.LGM.SubscriptionsService","" },
-            //{"LG.LGM.StorageService","" },
-            //{"LG.LGM.SocialService","" },
-            //{"LG.LGM.ClientsService","" },
-            //{"LG.LGM.HealthService","" },
-            //{"LG.LGM.LicensesService","" },
-            //{"LG.LGM.ChannelsService","" },
-            //{"LG.LGM.ClientProgramsService","" },
-            //{"LG.LGM.ProgramsService","" },
-            //{"LG.LGM.FrontEndService","" },
-            //{"LG.LGM.FinanceService","" },
-            //{"LG.LGM.DbService","" },
+            {"LG.LGM.FiltersService","" },
+            {"LG.LGM.LocationsService","" },
+            {"LG.LGM.ScreenFeedVideoService","" },
+            {"LG.LGM.SSOAuthService","" },
+            {"LG.LGM.ProgramVersionsService","" },
+            {"LG.LGM.AssetsService","" },
+            {"LG.LGM.SSOService","" },
+            {"LG.LGM.PlaylistsService","" },
+            {"LG.LGM.WeatherService","" },
+            {"LG.LGM.WidgetsService","" },
+            {"LG.LGM.UsersService","" },
+            {"LG.LGM.TriviaService","" },
+            {"LG.LGM.TrafficService","" },
+            {"LG.LGM.SubscriptionsService","" },
+            {"LG.LGM.StorageService","" },
+            {"LG.LGM.SocialService","" },
+            {"LG.LGM.ClientsService","" },
+            {"LG.LGM.HealthService","" },
+            {"LG.LGM.LicensesService","" },
+            {"LG.LGM.ChannelsService","" },
+            {"LG.LGM.ClientProgramsService","" },
+            {"LG.LGM.ProgramsService","" },
+            {"LG.LGM.FrontEndService","" },
+            {"LG.LGM.FinanceService","" },
+            {"LG.LGM.DbService","" },
+            {"LG.LGM.AmenitiesService","" },
 
           // "LG.LGM.ProfileService"
       };
@@ -119,22 +120,24 @@ namespace QA.Automation.APITests.LG20
         }
 
         [TestCaseSource("items")]
-        [Category("SmokeTests")]
+        [Category("SmokeTests1")]
         public void GetZAllDocuments(KeyValuePair<string, string> item)
         {
             //var previous = AuthTokens;
-
+            bool isdebug = false;
             //AuthTokens = GetTestToken();
-
-            var authKey = AuthTokens.FirstOrDefault(a => a.Key.Contains(item.Key));
-            Dictionary<string, string> parms = new Dictionary<string, string>()
+            if (isdebug)
+            {
+                var authKey = AuthTokens.FirstOrDefault(a => a.Key.Contains(item.Key));
+                Dictionary<string, string> parms = new Dictionary<string, string>()
             {
                 { "url", FormatUrl(authKey.Key) },
                 { "authtoken", authKey.Value },
             };
 
-            string result = LGApitAction.GetAllDocuments(parms);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(result));
+                string result = LGApitAction.GetAllDocuments(parms);
+                Assert.IsFalse(string.IsNullOrWhiteSpace(result));
+            }
         }
 
         //[TestCaseSource("items")]
