@@ -9,6 +9,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using QA.Automation.Common;
+using AutoItX3Lib;
 
 
 
@@ -339,8 +340,12 @@ namespace QA.Automation.UITests
             IWebElement uploadFromButton = _driver.FindElement(By.CssSelector(uploadFromPCCssSelector));
             uploadFromButton.Click();
 
-            //String script = "document.getElementById('fileName').value='" + "C:\\\\downloads\\\\file.txt" + "';";
-            //((IJavaScriptExecutor)_driver).ExecuteScript(script);
+            AutoItX3 autoIt = new AutoItX3();
+            autoIt.WinActivate("Open");
+
+            autoIt.Send(@"C:\Users\enwright\Desktop\logo.png");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+            autoIt.Send("{ENTER}");
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
 
@@ -422,6 +427,7 @@ namespace QA.Automation.UITests
             string assetLinkCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(2) > a";
             string assetUploadButtonCssSelector = "#assets-container > div.pm-function-bar.js-playlists-function-bar > div > button";
             string assetBrowseComputerCssSelector = "#asset-upload-form > div > div > div > p > button";
+            //string fileLocationString = "C:\\Users\\enwright\\Desktop\\logo.png";
 
             IWebElement assetLink = _driver.FindElement(By.CssSelector(assetLinkCssSelector));
             assetLink.Click();
@@ -429,14 +435,18 @@ namespace QA.Automation.UITests
             IWebElement assetUploadButton = _driver.FindElement(By.CssSelector(assetUploadButtonCssSelector));
             assetUploadButton.Click();
 
-            IWebElement assetBrowseComputer = _driver.FindElement(By.CssSelector(assetBrowseComputerCssSelector));
-            assetBrowseComputer.Click();
-
             
+            IWebElement assetBrowseComputer = _driver.FindElement(By.CssSelector(assetBrowseComputerCssSelector));
+            assetBrowseComputer.Click();         
+      
+
+            //QA.Automation.MiscLib.WindowsFormHelper.SendKeyToForm("C:\\Users\\enwright\\Desktop\\logo.png", true);
+            //QA.Automation.MiscLib.WindowsFormHelper.SendKeyToForm("{ENTER}");
 
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
         }
+
 
         [TearDown]
         public void CleanUp()
