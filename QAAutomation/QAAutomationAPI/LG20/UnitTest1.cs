@@ -5,6 +5,7 @@ using NUnit.Framework;
 
 namespace QA.Automation.APITests.LG20
 {
+    //[TestFixture(Category ="TheSmokeTest")]
     [TestFixture]
     public class UnitTest1 : ApiTestBase
     {
@@ -120,6 +121,7 @@ namespace QA.Automation.APITests.LG20
         }
 
         [TestCaseSource("items")]
+        [Category("SmokeTests")]
         [Category("SmokeTests1")]
         public void GetZAllDocuments(KeyValuePair<string, string> item)
         {
@@ -130,10 +132,10 @@ namespace QA.Automation.APITests.LG20
             {
                 var authKey = AuthTokens.FirstOrDefault(a => a.Key.Contains(item.Key));
                 Dictionary<string, string> parms = new Dictionary<string, string>()
-            {
-                { "url", FormatUrl(authKey.Key) },
-                { "authtoken", authKey.Value },
-            };
+                { 
+                    { "url", FormatUrl(authKey.Key) },
+                    { "authtoken", authKey.Value },
+                };
 
                 string result = LGApitAction.GetAllDocuments(parms);
                 Assert.IsFalse(string.IsNullOrWhiteSpace(result));
