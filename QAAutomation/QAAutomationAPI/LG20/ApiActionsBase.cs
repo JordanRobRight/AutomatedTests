@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using QA.Automation.Common;
 
 namespace QA.Automation.APITests.LG20
@@ -13,9 +14,9 @@ namespace QA.Automation.APITests.LG20
         public static readonly string DocumentSqlQuery = $"{BaseService}/utilities/query";
         public static readonly string DocumentSqlQueryEx = $"{BaseService}/utilities/queryex";
 
-        private Common.HttpUtilsHelper _httpUtilsHelper = null;
+        private readonly HttpUtilsHelper _httpUtilsHelper = null;
 
-        public ApiActionsBase(Common.HttpUtilsHelper httpHelper)
+        public ApiActionsBase(HttpUtilsHelper httpHelper)
         {
             _httpUtilsHelper = httpHelper;
         }
@@ -142,6 +143,11 @@ namespace QA.Automation.APITests.LG20
             return result ?? string.Empty;
         }
 
+        public virtual void DeleteItemsFromApi()
+        {
+            throw new NotImplementedException();
+        }
+
         //public string Get
 
         //private async Task<string> GetApiInfo(string url, string urlQuery, IReadOnlyDictionary<string, string> headers = null, ApiRequestCommandType apiMethod = ApiRequestCommandType.GET)
@@ -186,7 +192,7 @@ namespace QA.Automation.APITests.LG20
         //    }
         //    return resultInfo;
         //}
-      
+
         //private async Task<string> GetApiInfo(string url, string urlQuery)
         //{
         //    string resultInfo = string.Empty;

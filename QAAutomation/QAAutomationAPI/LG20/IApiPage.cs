@@ -19,6 +19,7 @@ namespace QA.Automation.APITests.LG20
         string GetPerformSql(IDictionary<string, string> parms);
         string GetPerformSqlExToken(IDictionary<string, string> parms);
 
+        void DeleteItemsFromApi();
 
     }
 }

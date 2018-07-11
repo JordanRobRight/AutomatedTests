@@ -7,7 +7,7 @@ namespace QA.Automation.APITests.LG20
 {
     //[TestFixture(Category ="TheSmokeTest")]
     [TestFixture]
-    public class UnitTest1 : ApiTestBase
+    public class SmokeTest : ApiTestBase
     {
         //public static List<string> items = new List<string>(new string[]
         //{
@@ -75,12 +75,12 @@ namespace QA.Automation.APITests.LG20
       };
         private readonly string url = string.Empty;
 
-        public UnitTest1(string userUrl, string userName, string userPassword) : base(userName, userPassword)
+        public SmokeTest(string userUrl, string userName, string userPassword) : base(userName, userPassword)
         {
             this.url = userUrl;
         }
 
-        public UnitTest1()
+        public SmokeTest()
         {
         }
 

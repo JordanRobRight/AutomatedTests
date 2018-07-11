@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace QA.Automation.APITests.LG20
+namespace QA.Automation.APITests.LG20.Services
 {
     public class LGMFiltersService : ApiActionsBase, IApiPage
     {

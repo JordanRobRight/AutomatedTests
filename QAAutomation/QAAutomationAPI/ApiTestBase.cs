@@ -1,8 +1,6 @@
 ﻿using QA.Automation.APITests.Models;
 using QA.Automation.Common;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace QA.Automation.APITests
 {
