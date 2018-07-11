@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
+using AutoIt;
 
 namespace QA.Automation.MiscLib
 {
@@ -21,6 +23,16 @@ namespace QA.Automation.MiscLib
             {
 
             }
+        }
+
+        public static void GetAutoIt(string windowName, string textToType, int waitTime = 1)
+        {
+            AutoItX.WinActivate(windowName);
+
+            AutoItX.Send(textToType);
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(waitTime));
+            AutoItX.Send("{ENTER}");
+
         }
     }
 }

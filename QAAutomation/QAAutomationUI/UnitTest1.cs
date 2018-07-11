@@ -9,7 +9,6 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using QA.Automation.Common;
-using AutoItX3Lib;
 
 
 
@@ -340,12 +339,14 @@ namespace QA.Automation.UITests
             IWebElement uploadFromButton = _driver.FindElement(By.CssSelector(uploadFromPCCssSelector));
             uploadFromButton.Click();
 
-            AutoItX3 autoIt = new AutoItX3();
-            autoIt.WinActivate("Open");
+            MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\logo.png");
 
-            autoIt.Send(@"C:\Users\enwright\Desktop\logo.png");
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
-            autoIt.Send("{ENTER}");
+            //AutoItX3 autoIt = new AutoItX3();
+            //autoIt.WinActivate("Open");
+
+            //autoIt.Send(@"C:\Users\enwright\Desktop\logo.png");
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+            //autoIt.Send("{ENTER}");
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
 
