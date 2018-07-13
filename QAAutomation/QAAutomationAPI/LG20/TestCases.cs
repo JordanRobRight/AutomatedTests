@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
+using QA.Automation.APITests.LG20.Services;
+using QA.Automation.Common;
 
 namespace QA.Automation.APITests.LG20
 {
@@ -9,6 +11,7 @@ namespace QA.Automation.APITests.LG20
     public class TestCases : ApiTestBase
     {
         private List<IApiPage> _items = new List<IApiPage>();
+        //private HttpUtilsHelper _httpUtilsHelper = new HttpUtilsHelper();
 
         public TestCases(string userUrl, string userName, string userPassword) : base(userName, userPassword)
         {
@@ -26,9 +29,16 @@ namespace QA.Automation.APITests.LG20
 
 
         //[TestCaseSource("items")]
+        [TestCase]
+        //[TestCaseSource("TestCaseData")]
         [Category("TestCase")]
-        public void TCPlayList1(KeyValuePair<string, string> item)
+        public void TCPlayList1()
         {
+            Guid id = new Guid();
+            LGMPlayListsService lpss = new LGMPlayListsService();
+
+            // d4962ecb-0eff-438e-8236-167a78e4f3b1
+
             //VSTS ID: 46 - Use Case 1:  Create a playlist
 
             // Login
@@ -43,7 +53,7 @@ namespace QA.Automation.APITests.LG20
         {
             //VSTS ID: 74 - Use Case 4:  Uploading images and videos from Assets
 
-            LGMPlayListsService playlist = new LGMPlayListsService(null);
+            //LGMPlayListsService playlist = new LGMPlayListsService(null);
 
             // Get data from data directory
 

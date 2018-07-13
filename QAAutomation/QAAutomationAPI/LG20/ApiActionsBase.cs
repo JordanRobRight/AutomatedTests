@@ -14,13 +14,17 @@ namespace QA.Automation.APITests.LG20
         public static readonly string DocumentSqlQuery = $"{BaseService}/utilities/query";
         public static readonly string DocumentSqlQueryEx = $"{BaseService}/utilities/queryex";
 
-        private readonly HttpUtilsHelper _httpUtilsHelper = null;
+        private readonly HttpUtilsHelper _httpUtilsHelper = new HttpUtilsHelper();
 
         public ApiActionsBase(HttpUtilsHelper httpHelper)
         {
             _httpUtilsHelper = httpHelper;
         }
 
+        public ApiActionsBase()
+        {
+
+        }
         //public virtual string GetAuthInfo(string url, string userName, string password)
         //{
         //    userName = System.Web.HttpUtility.UrlEncode(userName);
@@ -146,6 +150,11 @@ namespace QA.Automation.APITests.LG20
         public virtual void DeleteItemsFromApi()
         {
             throw new NotImplementedException();
+        }
+
+        public HttpUtilsHelper HttpHelper
+        {
+            get { return _httpUtilsHelper;  }
         }
 
         //public string Get
