@@ -10,7 +10,7 @@ namespace QA.Automation.Common
         {
             return GetApiInfo(url, urlQuery, headers, apiMethod).GetAwaiter().GetResult();
         }
-        private async Task<string> GetApiInfo(string url, string urlQuery, IReadOnlyDictionary<string, string> headers = null, RequestCommandType apiMethod = RequestCommandType.GET)
+        private async Task<string> GetApiInfo(string url, string urlQuery, IReadOnlyDictionary<string, string> headers, RequestCommandType apiMethod = RequestCommandType.GET)
         {
             string resultInfo = string.Empty;
             using (HttpClient hc = new HttpClient())
@@ -48,7 +48,7 @@ namespace QA.Automation.Common
                         break;
                 }
 
-                if (response.IsSuccessStatusCode)
+                if (response != null && response.IsSuccessStatusCode)
                 {
                     resultInfo = await response.Content.ReadAsStringAsync();
                 }

@@ -2,7 +2,7 @@
 
 namespace QA.Automation.Common
 {
-    public class LGUtils
+    public class LgUtils
     {
         public static string GetUrlBaseUrl(string env, string url, bool isProdUrl = false)
         {

@@ -7,7 +7,7 @@ namespace QA.Automation.APITests.LG20
 {
     //[TestFixture(Category ="TheSmokeTest")]
     [TestFixture]
-    public class SmokeTest : ApiTestBase
+    public class SmokeTest : APITestBase
     {
         //public static List<string> items = new List<string>(new string[]
         //{
@@ -41,7 +41,7 @@ namespace QA.Automation.APITests.LG20
         //   // "LG.LGM.ProfileService"
         //});
 
-        public static Dictionary<string, string> items = new Dictionary<string, string>
+        public static Dictionary<string, string> Items = new Dictionary<string, string>
       {
             {"LG.LGM.PlayersService", "" },
             {"LG.LGM.FiltersService","" },
@@ -73,11 +73,11 @@ namespace QA.Automation.APITests.LG20
 
           // "LG.LGM.ProfileService"
       };
-        private readonly string url = string.Empty;
+        private readonly string _url = string.Empty;
 
         public SmokeTest(string userUrl, string userName, string userPassword) : base(userName, userPassword)
         {
-            this.url = userUrl;
+            _url = userUrl;
         }
 
         public SmokeTest()
@@ -89,7 +89,7 @@ namespace QA.Automation.APITests.LG20
         {
         }
 
-        [TestCaseSource("items")]
+        [TestCaseSource("Items")]
         [Category("SmokeTests")]
         public void GetAuthToken(KeyValuePair<string,string> item)
         {
@@ -120,7 +120,7 @@ namespace QA.Automation.APITests.LG20
             Console.WriteLine("\r\n");
         }
 
-        [TestCaseSource("items")]
+        [TestCaseSource("Items")]
         [Category("SmokeTests")]
         [Category("SmokeTests1")]
         public void GetZAllDocuments(KeyValuePair<string, string> item)
@@ -178,7 +178,7 @@ namespace QA.Automation.APITests.LG20
 
         private string FormatUrl(string url)
         {
-            return $"https://{url.Replace(".", "-")}" + Common.LGUtils.GetUrlBaseUrl(Settings.Environment.ToString(),"{0}") + ".azurewebsites.net";
+            return $"https://{url.Replace(".", "-")}" + Common.LgUtils.GetUrlBaseUrl(Settings.Environment.ToString(),"{0}") + ".azurewebsites.net";
         }
 
     }

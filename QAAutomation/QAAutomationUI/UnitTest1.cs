@@ -65,7 +65,7 @@ namespace QA.Automation.UITests
         [TestCase]
         public void LiveGuide20()
         {
-            string url = Common.LGUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl);
+            string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl);
 
             _driver.Navigate().GoToUrl(url);
 

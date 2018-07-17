@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MiscLib
+namespace QA.Automation.MiscLib
 {
     public class WindowsFormHelper
     {

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using NUnit.Framework;
 using QA.Automation.APITests.LG20.Services;
-using QA.Automation.Common;
 
 namespace QA.Automation.APITests.LG20
 {
     [TestFixture]
-    public class TestCases : ApiTestBase
+    public class TestCases : APITestBase
     {
         private List<IApiPage> _items = new List<IApiPage>();
         //private HttpUtilsHelper _httpUtilsHelper = new HttpUtilsHelper();
@@ -32,7 +30,7 @@ namespace QA.Automation.APITests.LG20
         [TestCase]
         //[TestCaseSource("TestCaseData")]
         [Category("TestCase")]
-        public void TCPlayList1()
+        public void TcPlayList1()
         {
             Guid id = new Guid();
             LGMPlayListsService lpss = new LGMPlayListsService();
@@ -49,7 +47,7 @@ namespace QA.Automation.APITests.LG20
             // Verify Channel is complete. 
         }
 
-        public void TCAssestList2(KeyValuePair<string, string> item)
+        public void TcAssestList2(KeyValuePair<string, string> item)
         {
             //VSTS ID: 74 - Use Case 4:  Uploading images and videos from Assets
 
@@ -68,7 +66,7 @@ namespace QA.Automation.APITests.LG20
             // Verify Channel is complete. 
         }
 
-        public void TCAssestList3(KeyValuePair<string, string> item)
+        public void TcAssestList3(KeyValuePair<string, string> item)
         {
             //VSTS ID: 75 = Use Case 5: Configuring Uploaded Image and Video Assets
 

@@ -4,7 +4,7 @@ using QA.Automation.Common;
 
 namespace QA.Automation.APITests.LG20
 {
-    public class ApiActionsBase : IApiPage
+    public class APIActionsBase : IApiPage
     {
         public static readonly string BaseService = "/service";
         public static readonly string DocumentExists = $"{BaseService}/exists/{0}"; //{DocumentId}
@@ -16,12 +16,12 @@ namespace QA.Automation.APITests.LG20
 
         private readonly HttpUtilsHelper _httpUtilsHelper = new HttpUtilsHelper();
 
-        public ApiActionsBase(HttpUtilsHelper httpHelper)
+        public APIActionsBase(HttpUtilsHelper httpHelper)
         {
             _httpUtilsHelper = httpHelper;
         }
 
-        public ApiActionsBase()
+        public APIActionsBase()
         {
 
         }
@@ -152,10 +152,7 @@ namespace QA.Automation.APITests.LG20
             throw new NotImplementedException();
         }
 
-        public HttpUtilsHelper HttpHelper
-        {
-            get { return _httpUtilsHelper;  }
-        }
+        public HttpUtilsHelper HttpHelper => _httpUtilsHelper;
 
         //public string Get
 

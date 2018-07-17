@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
 namespace QA.Automation.APITests.LG20
 {
-    public class ApiFactory
+    public class APIFactory
     {
         //private static Dictionary<string, Func<string, IApiPage>> apiPage = new Dictionary<string, Func<string, IApiPage>>
         //{

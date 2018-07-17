@@ -3,14 +3,14 @@ using QA.Automation.Common;
 
 namespace QA.Automation.APITests.LG20.Services
 {
-    public class LGMPlayListsService : ApiActionsBase, IApiPage
+    public class LGMPlayListsService : APIActionsBase, IApiPage
     {
-        private static readonly string _assetsUpdatePath = $"{BaseService}/UploadAsset";
-        private static readonly string _assetsUpdateUserPath = $"{BaseService}/UploadUserAsset";
-        private static readonly string _assetsRemovePath = $"{BaseService}/RemoveAsset/{0}";
-        private static readonly string _playlistById = $"{BaseService}/{0}";
+        private static readonly string AssetsUpdatePath = $"{BaseService}/UploadAsset";
+        private static readonly string AssetsUpdateUserPath = $"{BaseService}/UploadUserAsset";
+        private static readonly string AssetsRemovePath = $"{BaseService}/RemoveAsset/{0}";
+        private static readonly string PlaylistById = $"{BaseService}/{0}";
 
-        public LGMPlayListsService(Common.HttpUtilsHelper httpUtilsHelper) : base (httpUtilsHelper)
+        public LGMPlayListsService(HttpUtilsHelper httpUtilsHelper) : base (httpUtilsHelper)
         {
 
         }
@@ -20,9 +20,9 @@ namespace QA.Automation.APITests.LG20.Services
 
         }
 
-        public int LgmPlayListServiceCreatePlayList(string id)
+        public int LGMPlayListServiceCreatePlayList(string id)
         {
-            string path = string.Format(_playlistById, id);
+            string path = string.Format(PlaylistById, id);
 
             HttpHelper.ApiRequest(path, null, null, RequestCommandType.POST);
             return 0;

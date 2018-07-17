@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace QA.Automation.APITests.LG20.Services
 {
-    public class LGMFiltersService : ApiActionsBase, IApiPage
+    public class LGMFiltersService : APIActionsBase, IApiPage
     {
         public static readonly string FilterPublish = $"{BaseService}/actions/publish/{0}"; // {filterId}
         public static readonly string FilterUnPublish = $"{BaseService}/actions/unpublish/{0}"; // {filterId}
