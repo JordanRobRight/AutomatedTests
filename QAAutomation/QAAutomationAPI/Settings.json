@@ -1,5 +1,6 @@
 ﻿{
   "Environment": "Test",
-  "UserName": "testrunner@dciartform.com",
-  "Password": "LiveGuide#2727"
+  "UserName": "cbam.lgtest1@dciartform.com",
+  "Password": "Cbam#test1",
+  "BaseUrl": "https://lg-frontend{0}.azurewebsites.net/"
 }

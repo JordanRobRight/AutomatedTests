@@ -65,7 +65,8 @@ namespace QA.Automation.UITests
         [TestCase]
         public void LiveGuide20()
         {
-            string url = Common.LGUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl);
+            //            string url = string.Equals(_configuration.Environment, "Prod", StringComparison.OrdinalIgnoreCase) ? string.Format(_configuration.BaseUrl, "") : string.Format(_configuration.BaseUrl, "-" + _configuration.Environment);
+            string url = Common.LGUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl).ToLower();
 
             _driver.Navigate().GoToUrl(url);
 
@@ -80,8 +81,11 @@ namespace QA.Automation.UITests
             WaitForElementExists("page-header-container");
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            Assert.AreEqual("${url}/#playlists", _driver.Url.Trim());
+
             //Assert.AreEqual("https://lg-frontend-test.azurewebsites.net/#playlists", _driver.Url.Trim());
+            Assert.AreEqual($"{url}#playlists", _driver.Url.Trim());
+
+
         }
 
         [TearDown]
