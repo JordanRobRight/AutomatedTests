@@ -1,8 +1,6 @@
 using System;
 using System.IO;
-using System.Net;
 using System.Reflection;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -20,13 +18,7 @@ namespace QA.Automation.UITests
         private String os;
         private String deviceName;
         private String deviceOrientation;
-        //private const int _waitTimeInSeconds = 30;
-        //private bool IsRemoteDriver = false;
-        private UITests.TestConfiguration _configuration => UITests.TestConfiguration.GetTestConfiguration();
-
-        //private const string un = @"DCIArtform";
-
-        //private const string ak = @"a4277bd1-3492-4562-99bc-53dd349c52e1";
+        private readonly UITests.TestConfiguration _configuration = null;
 
         public UnitTest1 (String browser, String version, String os, String deviceName, String deviceOrientation)
         {
@@ -35,6 +27,7 @@ namespace QA.Automation.UITests
             this.os = os;
             this.deviceName = deviceName;
             this.deviceOrientation = deviceOrientation;
+            _configuration = UITests.TestConfiguration.GetTestConfiguration();
         }
 
         [SetUp]
@@ -68,17 +61,6 @@ namespace QA.Automation.UITests
             _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
          }
 
-        /*
-        [TestCase]
-        public void googleTest()
-        {
-            _driver.Navigate().GoToUrl("http://www.google.com");
-            StringAssert.Contains("Google", _driver.Title);
-            IWebElement query = _driver.FindElement(By.Name("q"));
-            query.SendKeys("Sauce Labs");
-            query.Submit();
-        }
-        */
 
         [TestCase]
         public void LiveGuide20()
@@ -139,6 +121,7 @@ namespace QA.Automation.UITests
         }
 
         #endregion
+
 
         #region -- Public Methods -- 
         //private static WaitForElement(IWebDriver _driver )

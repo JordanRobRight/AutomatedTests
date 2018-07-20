@@ -6,8 +6,6 @@ using OpenQA.Selenium.Remote;
 
 namespace QA.Automation.UITest.Net
 {
-
-    //[TestFixture("chrome", "63", "Windows 10", "", "")]
     public class UnitTest1
     {
         private IWebDriver driver;
@@ -30,7 +28,6 @@ namespace QA.Automation.UITest.Net
             this.deviceOrientation = deviceOrientation;
         }
 
-       // [SetUp]
         public void Init()
         {
             DesiredCapabilities caps = new DesiredCapabilities();
@@ -39,8 +36,6 @@ namespace QA.Automation.UITest.Net
             caps.SetCapability(CapabilityType.Platform, os);
             caps.SetCapability("deviceName", deviceName);
             caps.SetCapability("deviceOrientation", deviceOrientation);
-            //caps.SetCapability("username", "SAUCE_USERNAME");
-            //caps.SetCapability("accessKey", "SAUCE_ACCESS_KEY");
             caps.SetCapability("username", un);
             caps.SetCapability("accessKey", ak);
 
@@ -53,13 +48,12 @@ namespace QA.Automation.UITest.Net
             }
             else
             {
-                        ChromeOptions co = new ChromeOptions();    // set the desired browser
-                        co.AddAdditionalCapability("platform", "Windows 7");
+                ChromeOptions co = new ChromeOptions();    // set the desired browser
+                co.AddAdditionalCapability("platform", "Windows 7");
                 //desiredCapability.SetCapability("platform", "Windows 7"); // operating system to use
                 // DesiredCapabilities desiredCapability = co;
 
                 driver = new ChromeDriver();
-                //driver
             }
 
 
@@ -68,32 +62,6 @@ namespace QA.Automation.UITest.Net
 
         }
 
-        //[TestCase]
-        //public void Test1()
-        //{
-        //    bool local = false;
-        //    IWebDriver w = null;
-
-        //    if (local)
-        //    {
-        //        w = new ChromeDriver();
-        //    }
-        //    else
-        //    {
-
-
-        //        //w driver;
-        //        ChromeOptions co = new ChromeOptions();    // set the desired browser
-        //        co.AddAdditionalCapability("platform", "Windows 7");
-        //        //desiredCapability.SetCapability("platform", "Windows 7"); // operating system to use
-        //        // DesiredCapabilities desiredCapability = co;
-        //        w = new RemoteWebDriver(new Uri("http://YOUR_USERNAME:YOUR_ACCESS_KEY@ondemand.saucelabs.com:80/wd/hub"), co);
-        //        // w = new RemoteWebDriver(new Uri("http://YOUR_USERNAME:YOUR_ACCESS_KEY@ondemand.saucelabs.com:80/wd/hub");
-        //    }
-
-        //}
-
-       // [TestCase]
         public void GoogleTestDotNet()
         {
             driver.Navigate().GoToUrl("http://www.google.com");
@@ -103,7 +71,6 @@ namespace QA.Automation.UITest.Net
             query.Submit();
         }
 
-        //[TearDown]
         public void CleanUp()
         {
             bool passed = TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Passed;
@@ -121,7 +88,6 @@ namespace QA.Automation.UITest.Net
                 driver.Quit();
             }
         }
-        //  }
 
     }
 }
