@@ -6,8 +6,9 @@ namespace QA.Automation.Common
     {
         public static string GetUrlBaseUrl(string env, string url)
         {
-            string tempUrl = url;
-            return string.Equals(env, "Prod", StringComparison.OrdinalIgnoreCase) ? string.Format(tempUrl, "") : string.Format(tempUrl, "-" + env);
+            //string tempUrl = url;
+            //return string.Equals(env, "Prod", StringComparison.OrdinalIgnoreCase) ? string.Format(tempUrl, "") : string.Format(tempUrl, "-" + env);
+            return string.Format(url, "-" + env);
         }
     }
 }

@@ -24,3 +24,5 @@
 /QAAutomation/MiscLib/bin/Debug
 /QAAutomation/MiscLib/obj/Debug
 /QAAutomation/TestResults
+/QAAutomation/DataTest
+/QAAutomation/MiscLib/obj/Release
