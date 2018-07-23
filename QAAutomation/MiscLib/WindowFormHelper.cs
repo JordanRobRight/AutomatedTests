@@ -25,7 +25,7 @@ namespace QA.Automation.MiscLib
             }
         }
 
-        public static void GetAutoIt(string windowName, string textToType, int waitTime = 1)
+        public static void GetAutoIt(string windowName, string textToType, int waitTime = 2)
         {
             AutoItX.WinActivate(windowName);
 

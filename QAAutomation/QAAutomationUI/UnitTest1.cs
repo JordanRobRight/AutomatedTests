@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using Newtonsoft.Json;
@@ -65,6 +66,7 @@ namespace QA.Automation.UITests
                 _driver = new ChromeDriver(path);
             }
 
+            _driver.Manage().Window.Maximize();
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
             _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
         }
@@ -98,35 +100,7 @@ namespace QA.Automation.UITests
         {
             Login();
 
-            string addPlaylistsButtonClass = "#playlists-container > div.pm-function-bar.js-playlists-function-bar > div > button";
-
-            string saveButtonCSSSelector = "#playlist-info-form > div.lg-modal__actions > button";
-            string playlistOpenButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2)";
-            string weatherWidgetCSSSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-favorite-widgets.js-drag-drop-favorite-widgets > button:nth-child(1)";
-            string weatherZipCodeInputID = "weather-widget-zip";
-            string weatherWidgetSaveButtonCSSSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
-            string playlistSaveCSSSelector = "#playlist-container > div.playlist-content-wrapper.js-playlist-content > div > div:nth-child(3) > button:nth-child(1)";
-            string financeWidgetCSSSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-favorite-widgets.js-drag-drop-favorite-widgets > button:nth-child(2)";
-            string saveFinanceButtonCSSSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
-            string trafficWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-favorite-widgets.js-drag-drop-favorite-widgets > button:nth-child(3)";
-            string trafficWidgetSaveButtonCssSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
-            string triviaWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-favorite-widgets.js-drag-drop-favorite-widgets > button:nth-child(4)";
-            string triviaSaveButtonCssSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
-            string imageWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-pinned-widgets.js-drag-drop-pinned-widgets > button.pmfb-function-button.lgfe-cm-new-card.button-unstyled.lgfe-elem-state.js-drag-drop-pinned-widget-item.lgfe-add-image-widget-button";
-            string assestCssSelector = "#asset-image-select-form > div.aisf-image-matrix > div:nth-child(2) > label";
-            string assestLibraryDoneButtonCssSelector = "#asset-image-select-form > div.aisf-action-bar > button";
-            string videoWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-pinned-widgets.js-drag-drop-pinned-widgets > button.pmfb-function-button.lgfe-cm-new-card.button-unstyled.lgfe-elem-state.js-drag-drop-pinned-widget-item.lgfe-add-video-widget-button";
-            string videoAssestSelectionCssSelector = "#asset-video-select-form > div.avsf-image-matrix > div:nth-child(1) > label";
-            string videoWidgetDoneButtonCssSelector = "#asset-video-select-form > div.avsf-action-bar > button";
-            string screenFeedWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-pinned-widgets.js-drag-drop-pinned-widgets > button.pmfb-function-button.lgfe-cm-new-card.button-unstyled.lgfe-elem-state.js-drag-drop-pinned-widget-item.lgfe-add-screenfeedvideo-widget-button";
-            string screedFeedSaveButtonCssSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
-            string brandWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-pinned-widgets.js-drag-drop-pinned-widgets > button.pmfb-function-button.lgfe-cm-new-card.button-unstyled.lgfe-elem-state.js-drag-drop-pinned-widget-item.lgfe-add-brand-widget-button";
-            string brandSaveButtonCssSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
-
-
-
-
-            IWebElement addPlaylistButton = _driver.FindElement(By.CssSelector(addPlaylistsButtonClass));
+            IWebElement addPlaylistButton = _driver.FindElement(By.CssSelector(Base.addPlaylistsButtonClass));
             addPlaylistButton.Click();
 
             IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
@@ -138,30 +112,34 @@ namespace QA.Automation.UITests
             var selectElement = new SelectElement(selectFilter);
             selectElement.SelectByText("Chevy TV");
 
-            IWebElement saveButton = _driver.FindElement(By.CssSelector(saveButtonCSSSelector));
+            IWebElement saveButton = _driver.FindElement(By.CssSelector(Base.saveButtonCSSSelector));
             saveButton.Click();
 
             /*Start Playlists TestCase Suite ID 69 with 5 parts*/
-
+            
             //adding a widget, here this test adds all widgets and uses test dates
 
-
-            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(playlistOpenButtonCSSSelector));
+            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
             playlistOpenButton.Click();
 
-            IWebElement weatherWidget = _driver.FindElement(By.CssSelector(weatherWidgetCSSSelector));
+            //IWebElement widgetBarParentElement = _driver.FindElement(By.CssSelector("#playlist-container > div.pm-function-bar.js-playlist-function-bar > div"));
+            //var widgetBarChildren = widgetBarParentElement.FindElements(By.XPath(".//*"));
+
+            //widgetBarChildren.Count();
+
+            IWebElement weatherWidget = _driver.FindElement(By.CssSelector(Base.weatherWidgetCSSSelector));
             weatherWidget.Click();
 
-            IWebElement weatherZipCodeInput = _driver.FindElement(By.Id(weatherZipCodeInputID));
+            IWebElement weatherZipCodeInput = _driver.FindElement(By.Id(Base.weatherZipCodeInputID));
             weatherZipCodeInput.SendKeys("53142");
 
-            IWebElement weatherWidgetSaveButton = _driver.FindElement(By.CssSelector(weatherWidgetSaveButtonCSSSelector));
+            IWebElement weatherWidgetSaveButton = _driver.FindElement(By.CssSelector(Base.weatherWidgetSaveButtonCSSSelector));
             weatherWidgetSaveButton.Click();
 
-            IWebElement playlistSave = _driver.FindElement(By.CssSelector(playlistSaveCSSSelector));
+            IWebElement playlistSave = _driver.FindElement(By.CssSelector(Base.playlistSaveCSSSelector));
             playlistSave.Click();
 
-            IWebElement financeWidget = _driver.FindElement(By.CssSelector(financeWidgetCSSSelector));
+            IWebElement financeWidget = _driver.FindElement(By.CssSelector(Base.financeWidgetCSSSelector));
             financeWidget.Click();
 
             IWebElement selectFinanceFilter = _driver.FindElement(By.Id("select-brand"));
@@ -170,10 +148,10 @@ namespace QA.Automation.UITests
             var selectFinanceElement = new SelectElement(selectFinanceFilter);
             selectFinanceElement.SelectByText("Chevy");
 
-            IWebElement saveFinanceButton = _driver.FindElement(By.CssSelector(saveFinanceButtonCSSSelector));
+            IWebElement saveFinanceButton = _driver.FindElement(By.CssSelector(Base.saveFinanceButtonCSSSelector));
             saveFinanceButton.Click();
 
-            IWebElement trafficWidget = _driver.FindElement(By.CssSelector(trafficWidgetCssSelector));
+            IWebElement trafficWidget = _driver.FindElement(By.CssSelector(Base.trafficWidgetCssSelector));
             trafficWidget.Click();
 
             IWebElement selectTrafficBrandFilter = _driver.FindElement(By.Id("select-brand"));
@@ -185,10 +163,10 @@ namespace QA.Automation.UITests
             IWebElement trafficZipInput = _driver.FindElement(By.Id("traffic-widget-zip"));
             trafficZipInput.SendKeys("53142");
 
-            IWebElement trafficWidgetSaveButton = _driver.FindElement(By.CssSelector(trafficWidgetSaveButtonCssSelector));
+            IWebElement trafficWidgetSaveButton = _driver.FindElement(By.CssSelector(Base.trafficWidgetSaveButtonCssSelector));
             trafficWidgetSaveButton.Click();
 
-            IWebElement triviaWidget = _driver.FindElement(By.CssSelector(triviaWidgetCssSelector));
+            IWebElement triviaWidget = _driver.FindElement(By.CssSelector(Base.triviaWidgetCssSelector));
             triviaWidget.Click();//NOT VISIBLE on half screen
 
             IWebElement selectBrandTriviaFilter = _driver.FindElement(By.Id("select-brand"));
@@ -204,69 +182,65 @@ namespace QA.Automation.UITests
             //selectDurationBrandElement.SelectByText("1");
             //Just taking the default value here I am having a hard time grabbing the value from the drop down
 
-            IWebElement triviaSaveButton = _driver.FindElement(By.CssSelector(triviaSaveButtonCssSelector));
+            IWebElement triviaSaveButton = _driver.FindElement(By.CssSelector(Base.triviaSaveButtonCssSelector));
             triviaSaveButton.Click();
 
             //HEALTH WIDGET TO BE ADDED HERE          
 
-            IWebElement imageWidget = _driver.FindElement(By.CssSelector(imageWidgetCssSelector));
+            IWebElement imageWidget = _driver.FindElement(By.CssSelector(Base.imageWidgetCssSelector));
             imageWidget.Click();
 
             IWebElement imageAssestLibrarySearchInput = _driver.FindElement(By.Id("asset-search"));
             imageAssestLibrarySearchInput.SendKeys("chev");  //in the future this should grab the whole collection of assests and pick a random asset          
 
-            IWebElement imageAssestSelection = _driver.FindElement(By.CssSelector(assestCssSelector));
+            IWebElement imageAssestSelection = _driver.FindElement(By.CssSelector(Base.assestCssSelector));
             imageAssestSelection.Click();
 
-            IWebElement assestLibraryDoneButton = _driver.FindElement(By.CssSelector(assestLibraryDoneButtonCssSelector));
+            IWebElement assestLibraryDoneButton = _driver.FindElement(By.CssSelector(Base.assestLibraryDoneButtonCssSelector));
             assestLibraryDoneButton.Click();
 
-            IWebElement videoWidgetButton = _driver.FindElement(By.CssSelector(videoWidgetCssSelector));
+            IWebElement videoWidgetButton = _driver.FindElement(By.CssSelector(Base.videoWidgetCssSelector));
             videoWidgetButton.Click();
 
             IWebElement videoAssestLibrarySearchInput = _driver.FindElement(By.Id("asset-search"));
             videoAssestLibrarySearchInput.SendKeys("nis");  //in the future this should grab the whole collection of assests and pick a random asset
 
-            IWebElement videoAssestSelection = _driver.FindElement(By.CssSelector(videoAssestSelectionCssSelector));
+            IWebElement videoAssestSelection = _driver.FindElement(By.CssSelector(Base.videoAssestSelectionCssSelector));
             videoAssestSelection.Click();
 
-            IWebElement videoWidgetDoneButton = _driver.FindElement(By.CssSelector(videoWidgetDoneButtonCssSelector));
+            IWebElement videoWidgetDoneButton = _driver.FindElement(By.CssSelector(Base.videoWidgetDoneButtonCssSelector));
             videoWidgetDoneButton.Click();
 
-            IWebElement screenfeedWidgetButton = _driver.FindElement(By.CssSelector(screenFeedWidgetCssSelector));
+            IWebElement screenfeedWidgetButton = _driver.FindElement(By.CssSelector(Base.screenFeedWidgetCssSelector));
             screenfeedWidgetButton.Click();
 
-            //string screenFeedFilterCssSelector = '//*[@id="select - duration"]';
+            
             IWebElement selectScreenFeedFilter = _driver.FindElement(By.XPath("//*[@id='select-duration']"));
-            //create select element object 
 
             var selectScreenFeedElement = new SelectElement(selectScreenFeedFilter);
             selectScreenFeedElement.SelectByText("Action Sports");
 
-            //string screenFeedNumberFilterCssSelector = "//*[@id="select - duration"]";
+           
             IWebElement selectScreenFeedNumberFilter = _driver.FindElement(By.XPath("//*[@id='select-duration']"));
-            //create select element object 
 
-            //var selectScreenFeedNumberElement = new SelectElement(selectScreenFeedNumberFilter);
-            //selectScreenFeedNumberElement.SelectByText("10");
-
-            IWebElement screenFeedSaveButton = _driver.FindElement(By.CssSelector(screedFeedSaveButtonCssSelector));
+            IWebElement screenFeedSaveButton = _driver.FindElement(By.CssSelector(Base.screedFeedSaveButtonCssSelector));
             screenFeedSaveButton.Click();
 
-            IWebElement brandWidgetButton = _driver.FindElement(By.CssSelector(brandWidgetCssSelector));
+            IWebElement brandWidgetButton = _driver.FindElement(By.CssSelector(Base.brandWidgetCssSelector));
             brandWidgetButton.Click();
 
-            IWebElement brandSaveButton = _driver.FindElement(By.CssSelector(brandSaveButtonCssSelector));
+            IWebElement brandSaveButton = _driver.FindElement(By.CssSelector(Base.brandSaveButtonCssSelector));
             brandSaveButton.Click();
 
             //go back to main playlist screen
-            string playlistSideBarMenuCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a > span";
-            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(playlistSideBarMenuCssSelector));
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(Base.playlistSideBarMenuCssSelector));
             playlistsSideBarMenuButton.Click();
 
             //PlaylistSchedule();
 
             //DeleteProtocol();
+
+            Logout();
 
         }
 
@@ -275,14 +249,12 @@ namespace QA.Automation.UITests
         {
             Login();
 
-            string schedulePlaylistCssSelector = "#playlist-container > div.playlist-content-wrapper.js-playlist-content > div > div.pm-action-bar.pm-action-bar-upper > button:nth-child(2)";
-            string submitScheduleCssSelector = "#asset-info-form > div.lg-modal__actions.schedule-modal-button-wrapper > button:nth-child(1)";
-            string playlistOpenButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2)";
+            
 
-            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(playlistOpenButtonCSSSelector));
+            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
             playlistOpenButton.Click();
 
-            IWebElement schedulePlaylist = _driver.FindElement(By.CssSelector(schedulePlaylistCssSelector));
+            IWebElement schedulePlaylist = _driver.FindElement(By.CssSelector(Base.schedulePlaylistCssSelector));
             schedulePlaylist.Click();
 
             IWebElement schedulePlaylistStart = _driver.FindElement(By.Id("asset-begin-date-range"));
@@ -293,7 +265,7 @@ namespace QA.Automation.UITests
             schedulePlaylistEnd.Clear();
             schedulePlaylistEnd.SendKeys("August 2, 2018");
 
-            IWebElement submitSchedule = _driver.FindElement(By.CssSelector(submitScheduleCssSelector));
+            IWebElement submitSchedule = _driver.FindElement(By.CssSelector(Base.submitScheduleCssSelector));
             submitSchedule.Click();
 
 
@@ -304,52 +276,14 @@ namespace QA.Automation.UITests
         {
             Login();
 
-            string playlistPublishButtonCssSelector = "#playlist-container > div.playlist-content-wrapper.js-playlist-content > div > div.pm-action-bar.pm-action-bar-upper > button:nth-child(3)";
-            string publishDoneButtonCssSelector = "#notifications-form > div > button";
-            string playlistOpenButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2)";
-
-            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(playlistOpenButtonCSSSelector));
+            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
             playlistOpenButton.Click();
 
-            IWebElement playlistPublishButton = _driver.FindElement(By.CssSelector(playlistPublishButtonCssSelector));
+            IWebElement playlistPublishButton = _driver.FindElement(By.CssSelector(Base.playlistPublishButtonCssSelector));
             playlistPublishButton.Click();
 
-            IWebElement playlistDonePublishButton = _driver.FindElement(By.CssSelector(publishDoneButtonCssSelector));
+            IWebElement playlistDonePublishButton = _driver.FindElement(By.CssSelector(Base.  publishDoneButtonCssSelector));
             playlistDonePublishButton.Click();
-
-
-
-        }
-
-        [TestCase]
-        public void uploadTest()
-        {
-            Login();
-
-            string playlistOpenButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2)";
-            string uploadButtonCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-pinned-widgets.js-drag-drop-pinned-widgets > button:nth-child(5)";
-            string uploadFromPCCssSelector = "#asset-upload-form > div > div > div > p > button";
-
-            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(playlistOpenButtonCSSSelector));
-            playlistOpenButton.Click();
-
-            IWebElement uploadButton = _driver.FindElement(By.CssSelector(uploadButtonCssSelector));
-            uploadButton.Click();
-
-            IWebElement uploadFromButton = _driver.FindElement(By.CssSelector(uploadFromPCCssSelector));
-            uploadFromButton.Click();
-
-            MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\logo.png");
-
-            //AutoItX3 autoIt = new AutoItX3();
-            //autoIt.WinActivate("Open");
-
-            //autoIt.Send(@"C:\Users\enwright\Desktop\logo.png");
-            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
-            //autoIt.Send("{ENTER}");
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
-
 
         }
 
@@ -380,44 +314,7 @@ namespace QA.Automation.UITests
                 _driver.Navigate().GoToUrl(playlistsUrl);
 
             }
-        }
 
-        [TestCase]
-        public void DeleteProtocol()
-        {
-            Login();
-
-            string playlistSideBarMenuCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a > span";
-            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(playlistSideBarMenuCssSelector));
-            playlistsSideBarMenuButton.Click();
-
-            IWebElement playlistSearch = _driver.FindElement(By.Id("playlists-search"));
-            playlistSearch.SendKeys("Automated Playlist Test");
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
-            int i = 0;
-            while (i < 10)
-            {
-                string deletePlaylistButtonCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button:nth-child(3)";
-                string newPlaylistDeleteButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button:nth-child(3)";
-
-                IWebElement deletePlaylistButton = _driver.FindElement(By.CssSelector(deletePlaylistButtonCssSelector));
-
-                IWebElement newPlaylistDeleteButton = _driver.FindElement(By.CssSelector(newPlaylistDeleteButtonCSSSelector));
-
-                newPlaylistDeleteButton.Click();
-
-                IAlert alert = _driver.SwitchTo().Alert();
-
-                alert.Accept();
-
-                playlistSearch.SendKeys("Automated Playlist Test");
-
-                i++;
-            }
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
         }
 
         [TestCase]
@@ -425,29 +322,125 @@ namespace QA.Automation.UITests
         {
             Login();
 
-            string assetLinkCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(2) > a";
-            string assetUploadButtonCssSelector = "#assets-container > div.pm-function-bar.js-playlists-function-bar > div > button";
-            string assetBrowseComputerCssSelector = "#asset-upload-form > div > div > div > p > button";
-            //string fileLocationString = "C:\\Users\\enwright\\Desktop\\logo.png";
+            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
+            playlistOpenButton.Click();
 
-            IWebElement assetLink = _driver.FindElement(By.CssSelector(assetLinkCssSelector));
-            assetLink.Click();
+            IWebElement uploadButton = _driver.FindElement(By.CssSelector(Base.uploadButtonCssSelector));
+            uploadButton.Click();
 
-            IWebElement assetUploadButton = _driver.FindElement(By.CssSelector(assetUploadButtonCssSelector));
-            assetUploadButton.Click();
+            IWebElement uploadFromButton = _driver.FindElement(By.CssSelector(Base.uploadFromPCCssSelector));
+            uploadFromButton.Click();
 
-            
-            IWebElement assetBrowseComputer = _driver.FindElement(By.CssSelector(assetBrowseComputerCssSelector));
-            assetBrowseComputer.Click();         
-      
+            MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\galaxie.jpg");
 
-            //QA.Automation.MiscLib.WindowsFormHelper.SendKeyToForm("C:\\Users\\enwright\\Desktop\\logo.png", true);
-            //QA.Automation.MiscLib.WindowsFormHelper.SendKeyToForm("{ENTER}");
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
+        }
+        [TestCase]
+        public void AssetUploadingVideo()
+        {
+            Login();
+
+            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
+            playlistOpenButton.Click();
+
+            IWebElement uploadButton = _driver.FindElement(By.CssSelector(Base.uploadButtonCssSelector));
+            uploadButton.Click();
+
+            IWebElement uploadFromButton = _driver.FindElement(By.CssSelector(Base.uploadFromPCCssSelector));
+            uploadFromButton.Click();
+
+            MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\Toy_car.mov");
 
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
         }
 
+
+        public void Logout()
+        {
+
+            string url = Common.LGUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
+            string currentURL = _driver.Url;
+            _driver.Navigate().GoToUrl(url);
+
+            if (currentURL != "https://portal.test.dcimliveguide.com/#playlists")
+            {
+                string playlistsUrl = "https://portal.test.dcimliveguide.com/#playlists";
+
+                _driver.Navigate().GoToUrl(playlistsUrl);
+
+            }
+
+            IWebElement logOutButton = _driver.FindElement(By.CssSelector(Base.logOutButtonCssSelector));
+            logOutButton.Click();
+
+            IWebElement confirmLogOutButton = _driver.FindElement(By.CssSelector(Base.logoutConfirmCssSelector));
+            confirmLogOutButton.Click();
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+        }
+
+        public void DeleteProtocol()
+        {
+            //Login();
+
+
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(Base.playlistSideBarMenuCssSelector));
+            playlistsSideBarMenuButton.Click();
+
+            IWebElement playlistSearch = _driver.FindElement(By.Id("playlists-search"));
+            playlistSearch.SendKeys("Automated Playlist Test");
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            //int i = 0;
+            //while (i < 10)
+            //{
+
+            try
+            {
+
+                IWebElement deletePlaylistButton = _driver.FindElement(By.CssSelector(Base.deletePlaylistButtonCssSelector));
+
+                IWebElement newPlaylistDeleteButton = _driver.FindElement(By.CssSelector(Base.newPlaylistDeleteButtonCSSSelector));
+
+                if (newPlaylistDeleteButton.Displayed)
+                {
+
+                    newPlaylistDeleteButton.Click();
+
+                    IAlert alert = _driver.SwitchTo().Alert();
+
+                    alert.Accept();
+
+                    playlistSearch.SendKeys("Automated Playlist Test");
+
+
+                    //newPlaylistDeleteButton.Click();
+
+                    //_driver.SwitchTo().Alert();
+
+                    //alert.Accept();
+
+                    //playlistSearch.SendKeys("Automated Playlist Test");
+                }
+            }
+            catch (NoSuchElementException)
+            {
+                Logout();
+
+                _driver.Quit();
+            }
+
+            //    i++;
+            //}
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+
+
+            _driver.Quit();
+        }
 
         [TearDown]
         public void CleanUp()
