@@ -41,39 +41,39 @@ namespace QA.Automation.APITests.LG20
         //   // "LG.LGM.ProfileService"
         //});
 
-        public static Dictionary<string, string> Items = new Dictionary<string, string>
-      {
-            {"LG.LGM.PlayersService", "" },
-            {"LG.LGM.FiltersService","" },
-            {"LG.LGM.LocationsService","" },
-            {"LG.LGM.ScreenFeedVideoService","" },
-            {"LG.LGM.SSOAuthService","" },
-            {"LG.LGM.ProgramVersionsService","" },
-            {"LG.LGM.AssetsService","" },
-            {"LG.LGM.SSOService","" },
-            {"LG.LGM.PlaylistsService","" },
-            {"LG.LGM.WeatherService","" },
-            {"LG.LGM.WidgetsService","" },
-            {"LG.LGM.UsersService","" },
-            {"LG.LGM.TriviaService","" },
-            {"LG.LGM.TrafficService","" },
-            {"LG.LGM.SubscriptionsService","" },
-            {"LG.LGM.StorageService","" },
-            {"LG.LGM.SocialService","" },
-            {"LG.LGM.ClientsService","" },
-            {"LG.LGM.HealthService","" },
-            {"LG.LGM.LicensesService","" },
-            {"LG.LGM.ChannelsService","" },
-            {"LG.LGM.ClientProgramsService","" },
-            {"LG.LGM.ProgramsService","" },
-            {"LG.LGM.FrontEndService","" },
-            {"LG.LGM.FinanceService","" },
-            {"LG.LGM.DbService","" },
-            {"LG.LGM.AmenitiesService","" },
+        public static Dictionary<string, string> items = new Dictionary<string, string>
+          {
+                {"LG.LGM.PlayersService", "" },
+                {"LG.LGM.FiltersService","" },
+                {"LG.LGM.LocationsService","" },
+                {"LG.LGM.ScreenFeedVideoService","" },
+                //{"LG.LGM.SSOAuthService","" },
+                {"LG.LGM.ProgramVersionsService","" },
+                {"LG.LGM.AssetsService","" },
+                //{"LG.LGM.SSOService","" },
+                {"LG.LGM.PlaylistsService","" },
+                {"LG.LGM.WeatherService","" },
+                {"LG.LGM.WidgetsService","" },
+                {"LG.LGM.UsersService","" },
+                //{"LG.LGM.TriviaService","" },
+                {"LG.LGM.TrafficService","" },
+                {"LG.LGM.SubscriptionsService","" },
+                {"LG.LGM.StorageService","" },
+                //{"LG.LGM.SocialService","" },
+                {"LG.LGM.ClientsService","" },
+                {"LG.LGM.HealthService","" },
+                {"LG.LGM.LicensesService","" },
+                {"LG.LGM.ChannelsService","" },
+                {"LG.LGM.ClientProgramsService","" },
+                {"LG.LGM.ProgramsService","" },
+                {"LG.LGM.FrontEndService","" },
+                {"LG.LGM.FinanceService","" },
+                {"LG.LGM.DbService","" },
+                {"LG.LGM.AmenitiesService","" },
 
           // "LG.LGM.ProfileService"
       };
-        private readonly string _url = string.Empty;
+        private readonly string url = string.Empty;
 
         public SmokeTest(string userUrl, string userName, string userPassword) : base(userName, userPassword)
         {
