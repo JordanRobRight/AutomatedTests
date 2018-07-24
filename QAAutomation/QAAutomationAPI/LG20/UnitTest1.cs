@@ -41,37 +41,38 @@ namespace QA.Automation.APITests.LG20
         //});
 
         public static Dictionary<string, string> items = new Dictionary<string, string>
-      {
-            {"LG.LGM.PlayersService", "" },
-            {"LG.LGM.FiltersService","" },
-            {"LG.LGM.LocationsService","" },
-            {"LG.LGM.ScreenFeedVideoService","" },
-            //{"LG.LGM.SSOAuthService","" },
-            {"LG.LGM.ProgramVersionsService","" },
-            {"LG.LGM.AssetsService","" },
-            //{"LG.LGM.SSOService","" },
-            {"LG.LGM.PlaylistsService","" },
-            {"LG.LGM.WeatherService","" },
-            {"LG.LGM.WidgetsService","" },
-            {"LG.LGM.UsersService","" },
-            //{"LG.LGM.TriviaService","" },
-            {"LG.LGM.TrafficService","" },
-            {"LG.LGM.SubscriptionsService","" },
-            {"LG.LGM.StorageService","" },
-            //{"LG.LGM.SocialService","" },
-            {"LG.LGM.ClientsService","" },
-            {"LG.LGM.HealthService","" },
-            {"LG.LGM.LicensesService","" },
-            {"LG.LGM.ChannelsService","" },
-            {"LG.LGM.ClientProgramsService","" },
-            {"LG.LGM.ProgramsService","" },
-            {"LG.LGM.FrontEndService","" },
-            {"LG.LGM.FinanceService","" },
-            {"LG.LGM.DbService","" },
-            {"LG.LGM.AmenitiesService","" },
+          {
+                {"LG.LGM.PlayersService", "" },
+                {"LG.LGM.FiltersService","" },
+                {"LG.LGM.LocationsService","" },
+                {"LG.LGM.ScreenFeedVideoService","" },
+                //{"LG.LGM.SSOAuthService","" },
+                {"LG.LGM.ProgramVersionsService","" },
+                {"LG.LGM.AssetsService","" },
+                //{"LG.LGM.SSOService","" },
+                {"LG.LGM.PlaylistsService","" },
+                {"LG.LGM.WeatherService","" },
+                {"LG.LGM.WidgetsService","" },
+                {"LG.LGM.UsersService","" },
+                //{"LG.LGM.TriviaService","" },
+                {"LG.LGM.TrafficService","" },
+                {"LG.LGM.SubscriptionsService","" },
+                {"LG.LGM.StorageService","" },
+                //{"LG.LGM.SocialService","" },
+                {"LG.LGM.ClientsService","" },
+                {"LG.LGM.HealthService","" },
+                {"LG.LGM.LicensesService","" },
+                {"LG.LGM.ChannelsService","" },
+                {"LG.LGM.ClientProgramsService","" },
+                {"LG.LGM.ProgramsService","" },
+                {"LG.LGM.FrontEndService","" },
+                {"LG.LGM.FinanceService","" },
+                {"LG.LGM.DbService","" },
+                {"LG.LGM.AmenitiesService","" },
 
-          // "LG.LGM.ProfileService"
-      };
+              // "LG.LGM.ProfileService"
+          };
+
         private readonly string url = string.Empty;
 
         public UnitTest1(string userUrl, string userName, string userPassword) : base(userName, userPassword)
