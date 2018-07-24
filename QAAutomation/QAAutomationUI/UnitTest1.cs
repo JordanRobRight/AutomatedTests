@@ -66,7 +66,7 @@ namespace QA.Automation.UITests
         public void LiveGuide20()
         {
             //            string url = string.Equals(_configuration.Environment, "Prod", StringComparison.OrdinalIgnoreCase) ? string.Format(_configuration.BaseUrl, "") : string.Format(_configuration.BaseUrl, "-" + _configuration.Environment);
-            string url = Common.LGUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl).ToLower();
+            string url = string.Format(format: _configuration.BaseUrl, arg0: _configuration.Environment.ToString()).ToLower(); // Common.LGUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl).ToLower();
 
             _driver.Navigate().GoToUrl(url);
 
