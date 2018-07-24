@@ -36,6 +36,7 @@ namespace QA.Automation.UITests
         public static string publishDoneButtonCssSelector = "#notifications-form > div > button";
         public static string uploadButtonCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-pinned-widgets.js-drag-drop-pinned-widgets > button:nth-child(5)";
         public static string uploadFromPCCssSelector = "#asset-upload-form > div > div > div > p > button";
+        public static string uploadDialogCloseButtonCssSelector = "#asset-upload-modal > div > div.lg-modal__wrapper > div > button";
         public static string logOutButtonCssSelector = "#interaction-nav-bar-container > div.inbc-help-menu-wrapper > ul > li:nth-child(2) > a > span";
         public static string logoutConfirmCssSelector = "#logout-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div > button:nth-child(2)";
         public static string playlistSideBarMenuCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a > span";

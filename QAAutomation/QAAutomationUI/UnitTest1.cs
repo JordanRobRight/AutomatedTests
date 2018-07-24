@@ -94,17 +94,17 @@ namespace QA.Automation.UITests
 
             Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
         }
-
-        [TestCase]
-        public void LiveguidePlaylists()
+        
+        public void CreatePlaylists()
         {
-            Login();
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(Base.playlistSideBarMenuCssSelector));
+            playlistsSideBarMenuButton.Click();
 
             IWebElement addPlaylistButton = _driver.FindElement(By.CssSelector(Base.addPlaylistsButtonClass));
             addPlaylistButton.Click();
 
             IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
-            playlistAddForm.SendKeys("Automated Playlist Test");
+            playlistAddForm.SendKeys("Automated Playlist Test "+DateTime.Now);
 
             IWebElement selectFilter = _driver.FindElement(By.Id("select-filter"));
             //create select element object 
@@ -115,18 +115,11 @@ namespace QA.Automation.UITests
             IWebElement saveButton = _driver.FindElement(By.CssSelector(Base.saveButtonCSSSelector));
             saveButton.Click();
 
-            /*Start Playlists TestCase Suite ID 69 with 5 parts*/
-            
-            //adding a widget, here this test adds all widgets and uses test dates
-
-            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
-            playlistOpenButton.Click();
-
-            //IWebElement widgetBarParentElement = _driver.FindElement(By.CssSelector("#playlist-container > div.pm-function-bar.js-playlist-function-bar > div"));
-            //var widgetBarChildren = widgetBarParentElement.FindElements(By.XPath(".//*"));
-
-            //widgetBarChildren.Count();
-
+            Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
+        }
+        
+        public void AddWeatherWidget()
+        {
             IWebElement weatherWidget = _driver.FindElement(By.CssSelector(Base.weatherWidgetCSSSelector));
             weatherWidget.Click();
 
@@ -138,7 +131,10 @@ namespace QA.Automation.UITests
 
             IWebElement playlistSave = _driver.FindElement(By.CssSelector(Base.playlistSaveCSSSelector));
             playlistSave.Click();
-
+        }
+        
+        public void AddFinanceWidget()
+        {
             IWebElement financeWidget = _driver.FindElement(By.CssSelector(Base.financeWidgetCSSSelector));
             financeWidget.Click();
 
@@ -150,7 +146,10 @@ namespace QA.Automation.UITests
 
             IWebElement saveFinanceButton = _driver.FindElement(By.CssSelector(Base.saveFinanceButtonCSSSelector));
             saveFinanceButton.Click();
-
+        }
+        
+        public void AddTrafficWidget()
+        {
             IWebElement trafficWidget = _driver.FindElement(By.CssSelector(Base.trafficWidgetCssSelector));
             trafficWidget.Click();
 
@@ -165,7 +164,10 @@ namespace QA.Automation.UITests
 
             IWebElement trafficWidgetSaveButton = _driver.FindElement(By.CssSelector(Base.trafficWidgetSaveButtonCssSelector));
             trafficWidgetSaveButton.Click();
-
+        }
+        
+        public void AddTriviaWidget()
+        {
             IWebElement triviaWidget = _driver.FindElement(By.CssSelector(Base.triviaWidgetCssSelector));
             triviaWidget.Click();//NOT VISIBLE on half screen
 
@@ -184,9 +186,15 @@ namespace QA.Automation.UITests
 
             IWebElement triviaSaveButton = _driver.FindElement(By.CssSelector(Base.triviaSaveButtonCssSelector));
             triviaSaveButton.Click();
+        }
+        
+        public void AddHealthWidget()
+        {
 
-            //HEALTH WIDGET TO BE ADDED HERE          
-
+        }
+        
+        public void AddImageWidget()
+        {
             IWebElement imageWidget = _driver.FindElement(By.CssSelector(Base.imageWidgetCssSelector));
             imageWidget.Click();
 
@@ -198,7 +206,10 @@ namespace QA.Automation.UITests
 
             IWebElement assestLibraryDoneButton = _driver.FindElement(By.CssSelector(Base.assestLibraryDoneButtonCssSelector));
             assestLibraryDoneButton.Click();
+        }
 
+        public void AddVideoWidget()
+        {
             IWebElement videoWidgetButton = _driver.FindElement(By.CssSelector(Base.videoWidgetCssSelector));
             videoWidgetButton.Click();
 
@@ -210,49 +221,39 @@ namespace QA.Automation.UITests
 
             IWebElement videoWidgetDoneButton = _driver.FindElement(By.CssSelector(Base.videoWidgetDoneButtonCssSelector));
             videoWidgetDoneButton.Click();
-
+        }
+        
+        public void AddScreenFeedWidget()
+        {
             IWebElement screenfeedWidgetButton = _driver.FindElement(By.CssSelector(Base.screenFeedWidgetCssSelector));
             screenfeedWidgetButton.Click();
 
-            
+
             IWebElement selectScreenFeedFilter = _driver.FindElement(By.XPath("//*[@id='select-duration']"));
 
             var selectScreenFeedElement = new SelectElement(selectScreenFeedFilter);
             selectScreenFeedElement.SelectByText("Action Sports");
 
-           
+
             IWebElement selectScreenFeedNumberFilter = _driver.FindElement(By.XPath("//*[@id='select-duration']"));
 
             IWebElement screenFeedSaveButton = _driver.FindElement(By.CssSelector(Base.screedFeedSaveButtonCssSelector));
             screenFeedSaveButton.Click();
-
+        }
+        
+        public void AddBrandWidget()
+        {
             IWebElement brandWidgetButton = _driver.FindElement(By.CssSelector(Base.brandWidgetCssSelector));
             brandWidgetButton.Click();
 
             IWebElement brandSaveButton = _driver.FindElement(By.CssSelector(Base.brandSaveButtonCssSelector));
             brandSaveButton.Click();
-
-            //go back to main playlist screen
-            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(Base.playlistSideBarMenuCssSelector));
-            playlistsSideBarMenuButton.Click();
-
-            //PlaylistSchedule();
-
-            //DeleteProtocol();
-
-            Logout();
-
         }
 
-        [TestCase]
         public void PlaylistSchedule()
         {
-            Login();
-
-            
-
-            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
-            playlistOpenButton.Click();
+            //IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
+            //playlistOpenButton.Click();
 
             IWebElement schedulePlaylist = _driver.FindElement(By.CssSelector(Base.schedulePlaylistCssSelector));
             schedulePlaylist.Click();
@@ -271,21 +272,56 @@ namespace QA.Automation.UITests
 
         }
 
-        [TestCase]
         public void PlaylistPublish()
         {
+            IWebElement playlistPublishButton = _driver.FindElement(By.CssSelector(Base.playlistPublishButtonCssSelector));
+            playlistPublishButton.Click();
+
+            IWebElement playlistDonePublishButton = _driver.FindElement(By.CssSelector(Base.publishDoneButtonCssSelector));
+            playlistDonePublishButton.Click();
+
+        }
+
+        [TestCase]
+        public void LiveguidePlaylists()
+        {
             Login();
+            
+            /*Start Playlists TestCase Suite ID 69 with 5 parts*/
+
+            CreatePlaylists();
 
             IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
             playlistOpenButton.Click();
 
-            IWebElement playlistPublishButton = _driver.FindElement(By.CssSelector(Base.playlistPublishButtonCssSelector));
-            playlistPublishButton.Click();
+            AddWeatherWidget();
 
-            IWebElement playlistDonePublishButton = _driver.FindElement(By.CssSelector(Base.  publishDoneButtonCssSelector));
-            playlistDonePublishButton.Click();
+            AddFinanceWidget();
+
+            AddTrafficWidget();
+
+            AddTriviaWidget();
+
+            //AddHealthWidget(); HEALTH WIDGET TO BE ADDED HERE
+
+            AddImageWidget();
+
+            AddVideoWidget();
+
+            AddScreenFeedWidget();
+
+            AddBrandWidget();
+
+            PlaylistSchedule();
+
+            PlaylistPublish();
+
+            //DeleteProtocol();
+
+            Logout();
 
         }
+        
 
         [TestCase]
         public void Login()
@@ -318,10 +354,22 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]
-        public void AssetUploadingImage()
+        public void LiveguideAssets()
         {
             Login();
 
+            //IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(Base.playlistSideBarMenuCssSelector));
+            //playlistsSideBarMenuButton.Click();
+
+            IWebElement playlistSearch = _driver.FindElement(By.Id("playlists-search"));
+            playlistSearch.SendKeys("Automated Playlist Test");
+
+            AssetUploadingImage();
+
+            AssetUploadingVideo();
+        }
+        public void AssetUploadingImage()
+        {
             IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
             playlistOpenButton.Click();
 
@@ -333,16 +381,16 @@ namespace QA.Automation.UITests
 
             MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\galaxie.jpg");
 
+            IWebElement uploadDialogCloseButton = _driver.FindElement(By.CssSelector(Base.uploadDialogCloseButtonCssSelector));
+            uploadDialogCloseButton.Click();
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
         }
-        [TestCase]
+        
         public void AssetUploadingVideo()
         {
-            Login();
-
-            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
-            playlistOpenButton.Click();
+            //IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
+            //playlistOpenButton.Click();
 
             IWebElement uploadButton = _driver.FindElement(By.CssSelector(Base.uploadButtonCssSelector));
             uploadButton.Click();
@@ -352,10 +400,11 @@ namespace QA.Automation.UITests
 
             MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\Toy_car.mov");
 
+            IWebElement uploadDialogCloseButton = _driver.FindElement(By.CssSelector(Base.uploadDialogCloseButtonCssSelector));
+            uploadDialogCloseButton.Click();
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
         }
-
 
         public void Logout()
         {
@@ -381,10 +430,10 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
         }
 
+        [TestCase]
         public void DeleteProtocol()
         {
-            //Login();
-
+            Login();
 
             IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(Base.playlistSideBarMenuCssSelector));
             playlistsSideBarMenuButton.Click();
@@ -393,10 +442,6 @@ namespace QA.Automation.UITests
             playlistSearch.SendKeys("Automated Playlist Test");
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
-            //int i = 0;
-            //while (i < 10)
-            //{
 
             try
             {
@@ -436,7 +481,7 @@ namespace QA.Automation.UITests
             //    i++;
             //}
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
 
             _driver.Quit();
