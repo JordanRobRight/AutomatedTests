@@ -3,6 +3,6 @@
   "SauceLabsUser": "DCIArtform",
   "SauceLabsKey": "a4277bd1-3492-4562-99bc-53dd349c52e1",
   "IsRemoteDriver": true,
-  "BaseUrl": "https://portal{0}.dcimliveguide.com/",
+  "BaseUrl": "https://portal.{0}.dcimliveguide.com/",
   "WaitTimeInSeconds": 30
 }
