@@ -73,7 +73,7 @@ namespace QA.Automation.APITests.LG20
 
           // "LG.LGM.ProfileService"
       };
-        private readonly string url = string.Empty;
+        private readonly string _url = string.Empty;
 
         public SmokeTest(string userUrl, string userName, string userPassword) : base(userName, userPassword)
         {
@@ -87,6 +87,67 @@ namespace QA.Automation.APITests.LG20
         [SetUp]
         public void Init()
         {
+        }
+
+
+        //[TestCaseSource("Items")]
+        [TestCase("lg-lgm-programversionsservice")]
+        [Category("SmokeTests")]
+//        public void GetEnv(KeyValuePair<string, string> item)
+        public void GetEnv(string data)
+        {
+            /*
+             var apiUrl = @"https://lg-lgm-programversionsservice-test.azurewebsites.net/swagger/v1/swagger.json";
+
+            QA.Automation.Common.HttpUtilsHelper helper = new QA.Automation.Common.HttpUtilsHelper();
+
+            data = helper.ApiRequest(apiUrl,string.Empty);
+
+            JsonConvert.DeserializeObject(data);
+            JObject appSettingsData = JsonConvert.DeserializeObject<JObject>(data);
+
+            var info = appSettingsData.SelectTokens("info.title").ToList();
+            var info1 = appSettingsData.SelectToken("info.title");
+
+            if (info1 != null)
+            {
+                Match m = Regex.Match(info1.Value<string>(), @".*\((?<Test>\w+)\)");
+                if (m.Success)
+                {
+                    string envData = m.Groups["Test"].Value;
+                }
+            }
+
+            foreach (var ch in appSettingsData.Children())
+            {
+                var test = ch.SelectToken("info");
+            }
+            string updatedUrl = FormatUrl(data);
+            string result = string.Empty;
+
+            // IApiPage i = new LGMFiltersService();
+
+            if (!string.IsNullOrEmpty(updatedUrl))
+            {
+                Dictionary<string, string> parms = new Dictionary<string, string>()
+                {
+                    { "url", updatedUrl },
+                    { "username", Settings.UserName },
+                    { "password", Settings.Password },
+                };
+                result = LGApitAction.GetAuthInfo(parms);
+                //result = LGApitAction.GetAuthInfo(updatedUrl, Settings.UserName, Settings.Password);
+                AuthTokens.Add(data.Key, result.Trim('"'));
+            }
+
+            //NUnit.Framework.Internal.TestExecutionContext t = PropertyHelper.GetPrivateFieldValue<NUnit.Framework.Internal.TestExecutionContext>(TestContext.CurrentContext, "_testExecuteContext");
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(result));
+
+            Console.WriteLine($"Url: {updatedUrl}");
+            Console.WriteLine($"Result: {result}");
+            Console.WriteLine("\r\n");
+            */
         }
 
         [TestCaseSource("Items")]
