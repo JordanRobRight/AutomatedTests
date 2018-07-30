@@ -89,68 +89,47 @@ namespace QA.Automation.APITests.LG20
         {
         }
 
-
-        //[TestCaseSource("Items")]
-        [TestCase("lg-lgm-programversionsservice")]
+        [TestCaseSource("items")]
         [Category("SmokeTests")]
-//        public void GetEnv(KeyValuePair<string, string> item)
-        public void GetEnv(string data)
+        public void GetEnv(KeyValuePair<string, string> item)
         {
+            var apiUrl = $@"{FormatUrl(item.Key)}/swagger/v1/swagger.json";
+            var helper = new Common.HttpUtilsHelper();
+
+            var data = helper.ApiRequest(apiUrl,string.Empty);
+
+            var m =  Common.JsonHelper.GetMatchFromRegEx(Common.JsonHelper.GetTokenByPath(Common.JsonHelper.GetJsonJObjectFromString(data), "info.title"), @".*\((?<Test>\w+)\)");
+            var envData = m != null && m.Success ? m.Groups["Test"].Value : string.Empty;
+
+            Assert.AreEqual(envData.ToLower(), Settings.Environment.ToString().ToLower());
+
             /*
-             var apiUrl = @"https://lg-lgm-programversionsservice-test.azurewebsites.net/swagger/v1/swagger.json";
+           // IApiPage i = new LGMFiltersService();
 
-            QA.Automation.Common.HttpUtilsHelper helper = new QA.Automation.Common.HttpUtilsHelper();
+           if (!string.IsNullOrEmpty(updatedUrl))
+           {
+               Dictionary<string, string> parms = new Dictionary<string, string>()
+               {
+                   { "url", updatedUrl },
+                   { "username", Settings.UserName },
+                   { "password", Settings.Password },
+               };
+               result = LGApitAction.GetAuthInfo(parms);
+               //result = LGApitAction.GetAuthInfo(updatedUrl, Settings.UserName, Settings.Password);
+               AuthTokens.Add(data.Key, result.Trim('"'));
+           }
 
-            data = helper.ApiRequest(apiUrl,string.Empty);
+           //NUnit.Framework.Internal.TestExecutionContext t = PropertyHelper.GetPrivateFieldValue<NUnit.Framework.Internal.TestExecutionContext>(TestContext.CurrentContext, "_testExecuteContext");
 
-            JsonConvert.DeserializeObject(data);
-            JObject appSettingsData = JsonConvert.DeserializeObject<JObject>(data);
+           Assert.IsFalse(string.IsNullOrWhiteSpace(result));
 
-            var info = appSettingsData.SelectTokens("info.title").ToList();
-            var info1 = appSettingsData.SelectToken("info.title");
-
-            if (info1 != null)
-            {
-                Match m = Regex.Match(info1.Value<string>(), @".*\((?<Test>\w+)\)");
-                if (m.Success)
-                {
-                    string envData = m.Groups["Test"].Value;
-                }
-            }
-
-            foreach (var ch in appSettingsData.Children())
-            {
-                var test = ch.SelectToken("info");
-            }
-            string updatedUrl = FormatUrl(data);
-            string result = string.Empty;
-
-            // IApiPage i = new LGMFiltersService();
-
-            if (!string.IsNullOrEmpty(updatedUrl))
-            {
-                Dictionary<string, string> parms = new Dictionary<string, string>()
-                {
-                    { "url", updatedUrl },
-                    { "username", Settings.UserName },
-                    { "password", Settings.Password },
-                };
-                result = LGApitAction.GetAuthInfo(parms);
-                //result = LGApitAction.GetAuthInfo(updatedUrl, Settings.UserName, Settings.Password);
-                AuthTokens.Add(data.Key, result.Trim('"'));
-            }
-
-            //NUnit.Framework.Internal.TestExecutionContext t = PropertyHelper.GetPrivateFieldValue<NUnit.Framework.Internal.TestExecutionContext>(TestContext.CurrentContext, "_testExecuteContext");
-
-            Assert.IsFalse(string.IsNullOrWhiteSpace(result));
-
-            Console.WriteLine($"Url: {updatedUrl}");
-            Console.WriteLine($"Result: {result}");
-            Console.WriteLine("\r\n");
-            */
+           Console.WriteLine($"Url: {updatedUrl}");
+           Console.WriteLine($"Result: {result}");
+           Console.WriteLine("\r\n");
+           */
         }
 
-        [TestCaseSource("Items")]
+        [TestCaseSource("items")]
         [Category("SmokeTests")]
         public void GetAuthToken(KeyValuePair<string,string> item)
         {
