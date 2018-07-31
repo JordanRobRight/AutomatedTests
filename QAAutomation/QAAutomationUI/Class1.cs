@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -44,7 +45,8 @@ namespace QA.Automation.UITests
         public static string newPlaylistDeleteButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button:nth-child(3)";
         public static string assetLinkCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(2) > a";
         public static string assetUploadButtonCssSelector = "#assets-container > div.pm-function-bar.js-playlists-function-bar > div > button";
-        public static string assetBrowseComputerCssSelector = "#asset-upload-form > div > div > div > p > button";
+        public static string assetBrowseComputerCssSelector = "#asset-upload-form > div > div > div > p > button";//weatherEditButtonCssSelector
+        //public static string weatherEditButtonCssSelector = "#playlist-container > div.playlist-content-wrapper.js-playlist-content > div > div.lgfe-card-matrix.js-drag-drop-playlist.lgfe-card-matrix--layout-row > div:nth-child(3) > div > div.\\5b.lgfe-cm-utilities.lgfe-cm-utilities--column.\\5d.lgfe-cm-description > div > button.lgfe-cm-utility-button.button-unstyled.js-playlist-edit";
         //string playlistSideBarMenuCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a > span";
     }
 }
