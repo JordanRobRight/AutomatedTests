@@ -5,6 +5,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 
 namespace QA.Automation.UITests
@@ -76,10 +77,10 @@ namespace QA.Automation.UITests
 
             _driver.Navigate().GoToUrl(url);
 
-            IWebElement query = GetElement("login-email");
+            IWebElement query = GetElement(ByEnumType.Id, "login-email");
             
             query.SendKeys("cbam.lgtest1@dciartform.com");
-            query = GetElement("login-password");
+            query = GetElement(ByEnumType.Id, "login-password");
             query.SendKeys("Cbam#test1");
 
             query.Submit();
@@ -114,10 +115,37 @@ namespace QA.Automation.UITests
         }
 
         #region -- Private Methods ---
-
-        private IWebElement GetElement(string element)
+        
+        private IWebElement GetElement(ByEnumType byType, string element)
         {
-            IWebElement query = _driver.FindElement(By.Id(element));
+            By selector = null;
+            IWebElement query = null;
+
+            switch (byType)
+            {
+                case ByEnumType.Css:
+                    selector = By.CssSelector(element);
+                    break;
+                case ByEnumType.Id:
+                    selector = By.Id(element);
+                    break;
+                case ByEnumType.Xml:
+                    selector = By.XPath(element);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(byType), byType, null);
+            }
+
+            try
+            {
+                query = _driver.FindElement(selector);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
             return query;
         }
 
@@ -183,5 +211,13 @@ namespace QA.Automation.UITests
             }
         }
         #endregion 
+    }
+
+    public enum ByEnumType
+    {
+        Css = 1,
+        Xml = 2,
+        Id = 3, 
+        
     }
 }
