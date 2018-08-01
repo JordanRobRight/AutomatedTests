@@ -388,11 +388,11 @@ namespace QA.Automation.UITests
 
             //TODO: Assert here that you are at the login page for the correct environment.
 
-            IWebElement query = GetElement("login-email");
+            IWebElement query = GetElement(By.Id("login-email"));
 
             query.SendKeys("cbam.lgtest1@dciartform.com");
 
-            query = GetElement("login-password");
+            query = GetElement(By.Id("login-password"));
             query.SendKeys("Cbam#test1");
 
             query.Submit();
@@ -587,7 +587,7 @@ namespace QA.Automation.UITests
 
         #region -- Private Methods ---
 
-        private IWebElement GetElement(By selector, string element)
+        private IWebElement GetElement(By selector, string element = "")
         {
             IWebElement query = null;
 
