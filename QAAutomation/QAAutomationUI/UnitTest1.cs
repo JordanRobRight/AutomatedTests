@@ -8,13 +8,13 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 using QA.Automation.Common;
 
-
-
 namespace QA.Automation.UITests
 {
+    //TODO: Need a better way to pass in these items. 
     [TestFixture("chrome", "63", "Windows 10", "", "")]
     public class UnitTest1
     {
@@ -92,6 +92,8 @@ namespace QA.Automation.UITests
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
+            //TODO: Update this assert to take into account the environment.
+
             Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
         }
 
@@ -104,7 +106,11 @@ namespace QA.Automation.UITests
             addPlaylistButton.Click();
 
             IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
-            playlistAddForm.SendKeys("Automated Playlist Test " + DateTime.Now);
+
+            //TODO: Need to make the name a bit more specific like add a date to it so you can delete it later. 
+            string playlistName = "Automated Playlist Test " + DateTime.Now;
+
+            playlistAddForm.SendKeys(playlistName);
 
             IWebElement selectFilter = _driver.FindElement(By.Id("select-filter"));
             //create select element object 
@@ -115,6 +121,10 @@ namespace QA.Automation.UITests
             IWebElement saveButton = _driver.FindElement(By.CssSelector(Base.saveButtonCSSSelector));
             saveButton.Click();
 
+            //TODO: Assert to check if the playlist was actually playlist got created. 
+            //TODO: Assert calling API.
+
+            //TODO: Update this assert to take into account the environment.
             Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
         }
 
@@ -132,6 +142,8 @@ namespace QA.Automation.UITests
 
             IWebElement playlistSave = _driver.FindElement(By.CssSelector(Base.playlistSaveCSSSelector));
             playlistSave.Click();
+
+            //TODO: Assert that the saved worked.
         }
         //[TestCase]
         //public void EditWeatherWidget()
@@ -173,6 +185,8 @@ namespace QA.Automation.UITests
 
             IWebElement saveFinanceButton = _driver.FindElement(By.CssSelector(Base.saveFinanceButtonCSSSelector));
             saveFinanceButton.Click();
+
+            //TODO: Assert that the saved worked.
         }
 
         public void AddTrafficWidget()
@@ -191,6 +205,8 @@ namespace QA.Automation.UITests
 
             IWebElement trafficWidgetSaveButton = _driver.FindElement(By.CssSelector(Base.trafficWidgetSaveButtonCssSelector));
             trafficWidgetSaveButton.Click();
+
+            //TODO: Assert that the saved worked.
         }
 
         public void AddTriviaWidget()
@@ -213,6 +229,8 @@ namespace QA.Automation.UITests
 
             IWebElement triviaSaveButton = _driver.FindElement(By.CssSelector(Base.triviaSaveButtonCssSelector));
             triviaSaveButton.Click();
+
+            //TODO: Assert that the saved worked.
         }
 
         public void AddHealthWidget()
@@ -233,6 +251,8 @@ namespace QA.Automation.UITests
 
             IWebElement assestLibraryDoneButton = _driver.FindElement(By.CssSelector(Base.assestLibraryDoneButtonCssSelector));
             assestLibraryDoneButton.Click();
+
+            //TODO: Assert that the saved worked.
         }
 
         public void AddVideoWidget()
@@ -248,6 +268,8 @@ namespace QA.Automation.UITests
 
             IWebElement videoWidgetDoneButton = _driver.FindElement(By.CssSelector(Base.videoWidgetDoneButtonCssSelector));
             videoWidgetDoneButton.Click();
+
+            //TODO: Assert that the saved worked.
         }
 
         public void AddScreenFeedWidget()
@@ -266,6 +288,8 @@ namespace QA.Automation.UITests
 
             IWebElement screenFeedSaveButton = _driver.FindElement(By.CssSelector(Base.screedFeedSaveButtonCssSelector));
             screenFeedSaveButton.Click();
+
+            //TODO: Assert that the saved worked.
         }
 
         public void AddBrandWidget()
@@ -275,6 +299,8 @@ namespace QA.Automation.UITests
 
             IWebElement brandSaveButton = _driver.FindElement(By.CssSelector(Base.brandSaveButtonCssSelector));
             brandSaveButton.Click();
+
+            //TODO: Assert that the saved worked.
         }
 
         public void PlaylistSchedule()
@@ -287,6 +313,7 @@ namespace QA.Automation.UITests
 
             IWebElement schedulePlaylistStart = _driver.FindElement(By.Id("asset-begin-date-range"));
             schedulePlaylistStart.Clear();
+            
             schedulePlaylistStart.SendKeys("August 1, 2018");
 
             IWebElement schedulePlaylistEnd = _driver.FindElement(By.Id("asset-end-date-range"));
@@ -296,6 +323,7 @@ namespace QA.Automation.UITests
             IWebElement submitSchedule = _driver.FindElement(By.CssSelector(Base.submitScheduleCssSelector));
             submitSchedule.Click();
 
+            //TODO: Assert that the saved worked.
 
         }
 
@@ -307,6 +335,7 @@ namespace QA.Automation.UITests
             IWebElement playlistDonePublishButton = _driver.FindElement(By.CssSelector(Base.publishDoneButtonCssSelector));
             playlistDonePublishButton.Click();
 
+            //TODO: Assert that the published worked. Might be an API call.
         }
 
         [TestCase]
@@ -357,6 +386,8 @@ namespace QA.Automation.UITests
             string currentURL = _driver.Url;
             _driver.Navigate().GoToUrl(url);
 
+            //TODO: Assert here that you are at the login page for the correct environment.
+
             IWebElement query = GetElement("login-email");
 
             query.SendKeys("cbam.lgtest1@dciartform.com");
@@ -369,6 +400,8 @@ namespace QA.Automation.UITests
             WaitForElementExists("page-header-container");
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            //TODO: Why are we doing this?? 
 
             if (currentURL != "https://portal.test.dcimliveguide.com/#playlists")
             {
@@ -388,12 +421,17 @@ namespace QA.Automation.UITests
             //IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(Base.playlistSideBarMenuCssSelector));
             //playlistsSideBarMenuButton.Click();
 
+            //TODO: Assert that we are on the playlist page
+
             IWebElement playlistSearch = _driver.FindElement(By.Id("playlists-search"));
             playlistSearch.SendKeys("Automated Playlist Test");
+
+            //TODO: Assert that a model is up. 
 
             AssetUploadingImage();
 
             AssetUploadingVideo();
+
         }
         public void AssetUploadingImage()
         {
@@ -406,10 +444,14 @@ namespace QA.Automation.UITests
             IWebElement uploadFromButton = _driver.FindElement(By.CssSelector(Base.uploadFromPCCssSelector));
             uploadFromButton.Click();
 
+            //TODO: Need a better way to get a file to upload. Maybe define a data folder in the solution for now.
+
             MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\galaxie.jpg");
 
             IWebElement uploadDialogCloseButton = _driver.FindElement(By.CssSelector(Base.uploadDialogCloseButtonCssSelector));
             uploadDialogCloseButton.Click();
+
+            //TODO: Assert here to see if the images are uploaded.
 
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
         }
@@ -425,11 +467,14 @@ namespace QA.Automation.UITests
             IWebElement uploadFromButton = _driver.FindElement(By.CssSelector(Base.uploadFromPCCssSelector));
             uploadFromButton.Click();
 
+            //TODO: Need a better way to get a file to upload. Maybe define a data folder in the solution for now.
             MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\Toy_car.mov");
+
 
             IWebElement uploadDialogCloseButton = _driver.FindElement(By.CssSelector(Base.uploadDialogCloseButtonCssSelector));
             uploadDialogCloseButton.Click();
 
+            //TODO: Assert here to see if the images are uploaded.
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
         }
 
@@ -439,6 +484,8 @@ namespace QA.Automation.UITests
             string url = Common.LGUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
             string currentURL = _driver.Url;
             _driver.Navigate().GoToUrl(url);
+
+            //TODO: Why are we checking for this? 
 
             if (currentURL != "https://portal.test.dcimliveguide.com/#playlists")
             {
@@ -455,6 +502,8 @@ namespace QA.Automation.UITests
             confirmLogOutButton.Click();
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            //TODO: Assert that we are logged out based on URL and maybe the Username/password fields.
         }
 
         [TestCase]
@@ -488,6 +537,7 @@ namespace QA.Automation.UITests
 
                     playlistSearch.SendKeys("Automated Playlist Test");
 
+                    //TODO: Validate the playlist has been deleted. 
 
                     //newPlaylistDeleteButton.Click();
 
@@ -500,6 +550,8 @@ namespace QA.Automation.UITests
             }
             catch (NoSuchElementException)
             {
+       
+                //TODO: These statements can be removed since the Cleanup method will be called automatically. But we should throw an assert still.
                 Logout();
 
                 _driver.Quit();

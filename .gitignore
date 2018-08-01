@@ -25,3 +25,6 @@
 /QAAutomation/MiscLib/bin/Debug
 /QAAutomation/MiscLib/obj/Debug
 /QAAutomation/oldMiscLib/obj/Debug
+/QAAutomation/DataTest/bin/Debug/netcoreapp2.0
+/QAAutomation/DataTest/obj
+/QAAutomation/MiscLib/obj/Release
