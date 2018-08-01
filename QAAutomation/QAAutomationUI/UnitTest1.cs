@@ -470,7 +470,7 @@ namespace QA.Automation.UITests
         public void Logout()
         {
 
-            string url = Common.LGUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
+            string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
             string currentURL = _driver.Url;
             _driver.Navigate().GoToUrl(url);
 
