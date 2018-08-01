@@ -318,10 +318,10 @@ namespace QA.Automation.UITests
             IWebElement playlistPublishButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistPublishButtonCssSelector));
             playlistPublishButton.Click();
 
-            if (_configuration.Environment == Common.EnvironmentType.Prod)
-            {
-                url = url.Replace(".prod", string.Empty);
-            }
+            //if (_configuration.Environment == Common.EnvironmentType.Prod)
+            //{
+            //    url = url.Replace(".prod", string.Empty);
+            //}
             //            url = (_configuration.Environment == Common.EnvironmentType.Prod) ?  : url;
 
             IWebElement playlistDonePublishButton = _driver.FindElement(By.CssSelector(BaseStrings.publishDoneButtonCssSelector));
@@ -374,7 +374,7 @@ namespace QA.Automation.UITests
         [TestCase]
         public void Login()
         {
-            string url = Common.LGUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
+            string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
             string currentURL = _driver.Url;
             _driver.Navigate().GoToUrl(url);
 
