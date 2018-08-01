@@ -99,10 +99,10 @@ namespace QA.Automation.UITests
 
         public void CreatePlaylists()
         {
-            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(Base.playlistSideBarMenuCssSelector));
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             playlistsSideBarMenuButton.Click();
 
-            IWebElement addPlaylistButton = _driver.FindElement(By.CssSelector(Base.addPlaylistsButtonClass));
+            IWebElement addPlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
             addPlaylistButton.Click();
 
             IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
@@ -118,7 +118,7 @@ namespace QA.Automation.UITests
             var selectElement = new SelectElement(selectFilter);
             selectElement.SelectByText("Chevy TV");
 
-            IWebElement saveButton = _driver.FindElement(By.CssSelector(Base.saveButtonCSSSelector));
+            IWebElement saveButton = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
             saveButton.Click();
 
             //TODO: Assert to check if the playlist was actually playlist got created. 
@@ -130,17 +130,17 @@ namespace QA.Automation.UITests
 
         public void AddWeatherWidget()
         {
-            IWebElement weatherWidget = _driver.FindElement(By.CssSelector(Base.weatherWidgetCSSSelector));
+            IWebElement weatherWidget = _driver.FindElement(By.CssSelector(BaseStrings.weatherWidgetCSSSelector));
 
             weatherWidget.Click();
 
-            IWebElement weatherZipCodeInput = _driver.FindElement(By.Id(Base.weatherZipCodeInputID));
+            IWebElement weatherZipCodeInput = _driver.FindElement(By.Id(BaseStrings.weatherZipCodeInputID));
             weatherZipCodeInput.SendKeys("53142");
 
-            IWebElement weatherWidgetSaveButton = _driver.FindElement(By.CssSelector(Base.weatherWidgetSaveButtonCSSSelector));
+            IWebElement weatherWidgetSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.weatherWidgetSaveButtonCSSSelector));
             weatherWidgetSaveButton.Click();
 
-            IWebElement playlistSave = _driver.FindElement(By.CssSelector(Base.playlistSaveCSSSelector));
+            IWebElement playlistSave = _driver.FindElement(By.CssSelector(BaseStrings.playlistSaveCSSSelector));
             playlistSave.Click();
 
             //TODO: Assert that the saved worked.
@@ -174,7 +174,7 @@ namespace QA.Automation.UITests
 
         public void AddFinanceWidget()
         {
-            IWebElement financeWidget = _driver.FindElement(By.CssSelector(Base.financeWidgetCSSSelector));
+            IWebElement financeWidget = _driver.FindElement(By.CssSelector(BaseStrings.financeWidgetCSSSelector));
             financeWidget.Click();
 
             IWebElement selectFinanceFilter = _driver.FindElement(By.Id("select-brand"));
@@ -183,7 +183,7 @@ namespace QA.Automation.UITests
             var selectFinanceElement = new SelectElement(selectFinanceFilter);
             selectFinanceElement.SelectByText("Chevy");
 
-            IWebElement saveFinanceButton = _driver.FindElement(By.CssSelector(Base.saveFinanceButtonCSSSelector));
+            IWebElement saveFinanceButton = _driver.FindElement(By.CssSelector(BaseStrings.saveFinanceButtonCSSSelector));
             saveFinanceButton.Click();
 
             //TODO: Assert that the saved worked.
@@ -191,7 +191,7 @@ namespace QA.Automation.UITests
 
         public void AddTrafficWidget()
         {
-            IWebElement trafficWidget = _driver.FindElement(By.CssSelector(Base.trafficWidgetCssSelector));
+            IWebElement trafficWidget = _driver.FindElement(By.CssSelector(BaseStrings.trafficWidgetCssSelector));
             trafficWidget.Click();
 
             IWebElement selectTrafficBrandFilter = _driver.FindElement(By.Id("select-brand"));
@@ -203,7 +203,7 @@ namespace QA.Automation.UITests
             IWebElement trafficZipInput = _driver.FindElement(By.Id("traffic-widget-zip"));
             trafficZipInput.SendKeys("53142");
 
-            IWebElement trafficWidgetSaveButton = _driver.FindElement(By.CssSelector(Base.trafficWidgetSaveButtonCssSelector));
+            IWebElement trafficWidgetSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.trafficWidgetSaveButtonCssSelector));
             trafficWidgetSaveButton.Click();
 
             //TODO: Assert that the saved worked.
@@ -211,7 +211,7 @@ namespace QA.Automation.UITests
 
         public void AddTriviaWidget()
         {
-            IWebElement triviaWidget = _driver.FindElement(By.CssSelector(Base.triviaWidgetCssSelector));
+            IWebElement triviaWidget = _driver.FindElement(By.CssSelector(BaseStrings.triviaWidgetCssSelector));
             triviaWidget.Click();//NOT VISIBLE on half screen
 
             IWebElement selectBrandTriviaFilter = _driver.FindElement(By.Id("select-brand"));
@@ -227,7 +227,7 @@ namespace QA.Automation.UITests
             //selectDurationBrandElement.SelectByText("1");
             //Just taking the default value here I am having a hard time grabbing the value from the drop down
 
-            IWebElement triviaSaveButton = _driver.FindElement(By.CssSelector(Base.triviaSaveButtonCssSelector));
+            IWebElement triviaSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.triviaSaveButtonCssSelector));
             triviaSaveButton.Click();
 
             //TODO: Assert that the saved worked.
@@ -240,16 +240,16 @@ namespace QA.Automation.UITests
 
         public void AddImageWidget()
         {
-            IWebElement imageWidget = _driver.FindElement(By.CssSelector(Base.imageWidgetCssSelector));
+            IWebElement imageWidget = _driver.FindElement(By.CssSelector(BaseStrings.imageWidgetCssSelector));
             imageWidget.Click();
 
             IWebElement imageAssestLibrarySearchInput = _driver.FindElement(By.Id("asset-search"));
             imageAssestLibrarySearchInput.SendKeys("chev");  //in the future this should grab the whole collection of assests and pick a random asset          
 
-            IWebElement imageAssestSelection = _driver.FindElement(By.CssSelector(Base.assestCssSelector));
+            IWebElement imageAssestSelection = _driver.FindElement(By.CssSelector(BaseStrings.assestCssSelector));
             imageAssestSelection.Click();
 
-            IWebElement assestLibraryDoneButton = _driver.FindElement(By.CssSelector(Base.assestLibraryDoneButtonCssSelector));
+            IWebElement assestLibraryDoneButton = _driver.FindElement(By.CssSelector(BaseStrings.assestLibraryDoneButtonCssSelector));
             assestLibraryDoneButton.Click();
 
             //TODO: Assert that the saved worked.
@@ -257,16 +257,16 @@ namespace QA.Automation.UITests
 
         public void AddVideoWidget()
         {
-            IWebElement videoWidgetButton = _driver.FindElement(By.CssSelector(Base.videoWidgetCssSelector));
+            IWebElement videoWidgetButton = _driver.FindElement(By.CssSelector(BaseStrings.videoWidgetCssSelector));
             videoWidgetButton.Click();
 
             IWebElement videoAssestLibrarySearchInput = _driver.FindElement(By.Id("asset-search"));
             videoAssestLibrarySearchInput.SendKeys("nis");  //in the future this should grab the whole collection of assests and pick a random asset
 
-            IWebElement videoAssestSelection = _driver.FindElement(By.CssSelector(Base.videoAssestSelectionCssSelector));
+            IWebElement videoAssestSelection = _driver.FindElement(By.CssSelector(BaseStrings.videoAssestSelectionCssSelector));
             videoAssestSelection.Click();
 
-            IWebElement videoWidgetDoneButton = _driver.FindElement(By.CssSelector(Base.videoWidgetDoneButtonCssSelector));
+            IWebElement videoWidgetDoneButton = _driver.FindElement(By.CssSelector(BaseStrings.videoWidgetDoneButtonCssSelector));
             videoWidgetDoneButton.Click();
 
             //TODO: Assert that the saved worked.
@@ -274,7 +274,7 @@ namespace QA.Automation.UITests
 
         public void AddScreenFeedWidget()
         {
-            IWebElement screenfeedWidgetButton = _driver.FindElement(By.CssSelector(Base.screenFeedWidgetCssSelector));
+            IWebElement screenfeedWidgetButton = _driver.FindElement(By.CssSelector(BaseStrings.screenFeedWidgetCssSelector));
             screenfeedWidgetButton.Click();
 
 
@@ -286,7 +286,7 @@ namespace QA.Automation.UITests
 
             IWebElement selectScreenFeedNumberFilter = _driver.FindElement(By.XPath("//*[@id='select-duration']"));
 
-            IWebElement screenFeedSaveButton = _driver.FindElement(By.CssSelector(Base.screedFeedSaveButtonCssSelector));
+            IWebElement screenFeedSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.screedFeedSaveButtonCssSelector));
             screenFeedSaveButton.Click();
 
             //TODO: Assert that the saved worked.
@@ -294,10 +294,10 @@ namespace QA.Automation.UITests
 
         public void AddBrandWidget()
         {
-            IWebElement brandWidgetButton = _driver.FindElement(By.CssSelector(Base.brandWidgetCssSelector));
+            IWebElement brandWidgetButton = _driver.FindElement(By.CssSelector(BaseStrings.brandWidgetCssSelector));
             brandWidgetButton.Click();
 
-            IWebElement brandSaveButton = _driver.FindElement(By.CssSelector(Base.brandSaveButtonCssSelector));
+            IWebElement brandSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.brandSaveButtonCssSelector));
             brandSaveButton.Click();
 
             //TODO: Assert that the saved worked.
@@ -308,7 +308,7 @@ namespace QA.Automation.UITests
             //IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
             //playlistOpenButton.Click();
 
-            IWebElement schedulePlaylist = _driver.FindElement(By.CssSelector(Base.schedulePlaylistCssSelector));
+            IWebElement schedulePlaylist = _driver.FindElement(By.CssSelector(BaseStrings.schedulePlaylistCssSelector));
             schedulePlaylist.Click();
 
             IWebElement schedulePlaylistStart = _driver.FindElement(By.Id("asset-begin-date-range"));
@@ -320,7 +320,7 @@ namespace QA.Automation.UITests
             schedulePlaylistEnd.Clear();
             schedulePlaylistEnd.SendKeys("August 2, 2018");
 
-            IWebElement submitSchedule = _driver.FindElement(By.CssSelector(Base.submitScheduleCssSelector));
+            IWebElement submitSchedule = _driver.FindElement(By.CssSelector(BaseStrings.submitScheduleCssSelector));
             submitSchedule.Click();
 
             //TODO: Assert that the saved worked.
@@ -329,10 +329,10 @@ namespace QA.Automation.UITests
 
         public void PlaylistPublish()
         {
-            IWebElement playlistPublishButton = _driver.FindElement(By.CssSelector(Base.playlistPublishButtonCssSelector));
+            IWebElement playlistPublishButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistPublishButtonCssSelector));
             playlistPublishButton.Click();
 
-            IWebElement playlistDonePublishButton = _driver.FindElement(By.CssSelector(Base.publishDoneButtonCssSelector));
+            IWebElement playlistDonePublishButton = _driver.FindElement(By.CssSelector(BaseStrings.publishDoneButtonCssSelector));
             playlistDonePublishButton.Click();
 
             //TODO: Assert that the published worked. Might be an API call.
@@ -347,7 +347,7 @@ namespace QA.Automation.UITests
 
             CreatePlaylists();
 
-            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
+            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
             playlistOpenButton.Click();
 
             AddWeatherWidget();
@@ -435,20 +435,20 @@ namespace QA.Automation.UITests
         }
         public void AssetUploadingImage()
         {
-            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
+            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
             playlistOpenButton.Click();
 
-            IWebElement uploadButton = _driver.FindElement(By.CssSelector(Base.uploadButtonCssSelector));
+            IWebElement uploadButton = _driver.FindElement(By.CssSelector(BaseStrings.uploadButtonCssSelector));
             uploadButton.Click();
 
-            IWebElement uploadFromButton = _driver.FindElement(By.CssSelector(Base.uploadFromPCCssSelector));
+            IWebElement uploadFromButton = _driver.FindElement(By.CssSelector(BaseStrings.uploadFromPCCssSelector));
             uploadFromButton.Click();
 
             //TODO: Need a better way to get a file to upload. Maybe define a data folder in the solution for now.
 
             MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\galaxie.jpg");
 
-            IWebElement uploadDialogCloseButton = _driver.FindElement(By.CssSelector(Base.uploadDialogCloseButtonCssSelector));
+            IWebElement uploadDialogCloseButton = _driver.FindElement(By.CssSelector(BaseStrings.uploadDialogCloseButtonCssSelector));
             uploadDialogCloseButton.Click();
 
             //TODO: Assert here to see if the images are uploaded.
@@ -461,17 +461,17 @@ namespace QA.Automation.UITests
             //IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
             //playlistOpenButton.Click();
 
-            IWebElement uploadButton = _driver.FindElement(By.CssSelector(Base.uploadButtonCssSelector));
+            IWebElement uploadButton = _driver.FindElement(By.CssSelector(BaseStrings.uploadButtonCssSelector));
             uploadButton.Click();
 
-            IWebElement uploadFromButton = _driver.FindElement(By.CssSelector(Base.uploadFromPCCssSelector));
+            IWebElement uploadFromButton = _driver.FindElement(By.CssSelector(BaseStrings.uploadFromPCCssSelector));
             uploadFromButton.Click();
 
             //TODO: Need a better way to get a file to upload. Maybe define a data folder in the solution for now.
             MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\Toy_car.mov");
 
 
-            IWebElement uploadDialogCloseButton = _driver.FindElement(By.CssSelector(Base.uploadDialogCloseButtonCssSelector));
+            IWebElement uploadDialogCloseButton = _driver.FindElement(By.CssSelector(BaseStrings.uploadDialogCloseButtonCssSelector));
             uploadDialogCloseButton.Click();
 
             //TODO: Assert here to see if the images are uploaded.
@@ -495,10 +495,10 @@ namespace QA.Automation.UITests
 
             }
 
-            IWebElement logOutButton = _driver.FindElement(By.CssSelector(Base.logOutButtonCssSelector));
+            IWebElement logOutButton = _driver.FindElement(By.CssSelector(BaseStrings.logOutButtonCssSelector));
             logOutButton.Click();
 
-            IWebElement confirmLogOutButton = _driver.FindElement(By.CssSelector(Base.logoutConfirmCssSelector));
+            IWebElement confirmLogOutButton = _driver.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector));
             confirmLogOutButton.Click();
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
@@ -511,7 +511,7 @@ namespace QA.Automation.UITests
         {
             Login();
 
-            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(Base.playlistSideBarMenuCssSelector));
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             playlistsSideBarMenuButton.Click();
 
             IWebElement playlistSearch = _driver.FindElement(By.Id("playlists-search"));
@@ -522,9 +522,9 @@ namespace QA.Automation.UITests
             try
             {
 
-                IWebElement deletePlaylistButton = _driver.FindElement(By.CssSelector(Base.deletePlaylistButtonCssSelector));
+                IWebElement deletePlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.deletePlaylistButtonCssSelector));
 
-                IWebElement newPlaylistDeleteButton = _driver.FindElement(By.CssSelector(Base.newPlaylistDeleteButtonCSSSelector));
+                IWebElement newPlaylistDeleteButton = _driver.FindElement(By.CssSelector(BaseStrings.newPlaylistDeleteButtonCSSSelector));
 
                 if (newPlaylistDeleteButton.Displayed)
                 {

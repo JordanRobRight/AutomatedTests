@@ -5,8 +5,8 @@ using System.Text;
 
 namespace QA.Automation.UITests
 {
-    //TODO: Rename class to something other than base.
-    public class Base
+    
+    public class BaseStrings
     {
         public static string addPlaylistsButtonClass = "#playlists-container > div.pm-function-bar.js-playlists-function-bar > div > button";
         public static string saveButtonCSSSelector = "#playlist-info-form > div.lg-modal__actions > button";
