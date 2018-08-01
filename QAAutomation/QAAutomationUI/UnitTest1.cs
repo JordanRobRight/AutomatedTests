@@ -587,10 +587,24 @@ namespace QA.Automation.UITests
 
         #region -- Private Methods ---
 
-        private IWebElement GetElement(string element)
+        private IWebElement GetElement(By selector, string element)
         {
-            IWebElement query = _driver.FindElement(By.Id(element));
-            return query;
+            IWebElement query = null;
+
+            try
+            {
+                query = _driver.FindElement(selector);
+            }
+            catch (NoSuchElementException nsex)
+            {
+                Console.WriteLine("Element couldn't be found: " + nsex);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: GetElement() {e}");
+            }
+           
+            return query ?? throw new Exception("GetElement returned a null value.");
         }
 
         private void WaitForElementExists(string element)
