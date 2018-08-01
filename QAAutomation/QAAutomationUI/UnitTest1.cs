@@ -77,10 +77,10 @@ namespace QA.Automation.UITests
 
             _driver.Navigate().GoToUrl(url);
 
-            IWebElement query = GetElement(ByEnumType.Id, "login-email");
+            IWebElement query = GetElement(ByType.Id, "login-email");
             
             query.SendKeys("cbam.lgtest1@dciartform.com");
-            query = GetElement(ByEnumType.Id, "login-password");
+            query = GetElement(ByType.Id, "login-password");
             query.SendKeys("Cbam#test1");
 
             query.Submit();
@@ -116,20 +116,20 @@ namespace QA.Automation.UITests
 
         #region -- Private Methods ---
         
-        private IWebElement GetElement(ByEnumType byType, string element)
+        private IWebElement GetElement(ByType byType, string element)
         {
             By selector = null;
             IWebElement query = null;
 
             switch (byType)
             {
-                case ByEnumType.Css:
+                case ByType.Css:
                     selector = By.CssSelector(element);
                     break;
-                case ByEnumType.Id:
+                case ByType.Id:
                     selector = By.Id(element);
                     break;
-                case ByEnumType.Xml:
+                case ByType.Xml:
                     selector = By.XPath(element);
                     break;
                 default:
@@ -213,7 +213,7 @@ namespace QA.Automation.UITests
         #endregion 
     }
 
-    public enum ByEnumType
+    public enum ByType
     {
         Css = 1,
         Xml = 2,
