@@ -122,6 +122,11 @@ namespace QA.Automation.UITests
 
             //TODO: Assert to check if the playlist was actually playlist got created. 
 
+            IWebElement newPlaylist = GetElement(By.ClassName("lgfe-cm-card"));
+
+            Assert.IsTrue(newPlaylist.Displayed);
+            Assert.AreEqual(newPlaylist.Text.ToLower(), "Automated Playlist Test**".ToLower());
+
             //TODO: Assert calling API.
 
             //TODO: Update this assert to take into account the environment.
@@ -347,7 +352,7 @@ namespace QA.Automation.UITests
 
             CreatePlaylists();
 
-            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
+            IWebElement playlistOpenButton = GetElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
             playlistOpenButton.Click();
 
             AddWeatherWidget();
@@ -388,11 +393,11 @@ namespace QA.Automation.UITests
 
             //TODO: Assert here that you are at the login page for the correct environment.
 
-            IWebElement query = GetElement("login-email");
+            IWebElement query = GetElement(By.Id("login-email"));
 
             query.SendKeys("cbam.lgtest1@dciartform.com");
 
-            query = GetElement("login-password");
+            query = GetElement(By.Id("login-password"));
             query.SendKeys("Cbam#test1");
 
             query.Submit();
@@ -400,16 +405,6 @@ namespace QA.Automation.UITests
             WaitForElementExists("page-header-container");
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
-            //TODO: Why are we doing this?? 
-
-            if (currentURL != "https://portal.test.dcimliveguide.com/#playlists")
-            {
-                string playlistsUrl = "https://portal.test.dcimliveguide.com/#playlists";
-
-                _driver.Navigate().GoToUrl(playlistsUrl);
-
-            }
 
         }
 
@@ -533,6 +528,9 @@ namespace QA.Automation.UITests
 
                 playlistSearch.SendKeys("Automated Playlist Test");
 
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+                Assert.IsTrue(newPlaylistDeleteButton.Displayed);
                 //TODO: Validate the playlist has been deleted. 
             }
 
@@ -565,7 +563,7 @@ namespace QA.Automation.UITests
 
         #region -- Private Methods ---
 
-        private IWebElement GetElement(By selector, string element)
+        private IWebElement GetElement(By selector, string element = "")
         {
             IWebElement query = null;
 
