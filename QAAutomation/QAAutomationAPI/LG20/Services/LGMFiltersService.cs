@@ -1,4 +1,6 @@
 ﻿
+using QA.Automation.APITests.Models;
+
 namespace QA.Automation.APITests.LG20.Services
 {
     public class LGMFiltersService : APIActionsBase, IApiPage
@@ -11,7 +13,7 @@ namespace QA.Automation.APITests.LG20.Services
         public static readonly string FilterRemoveDeviceNameFromFilters = $"{BaseService}/actions/removeDeviceNamesFromFilters"; 
         public static readonly string FilterRemoveDeviceNameFromFilter = $"{BaseService}/actions/removeDeviceNamesFromFilter"; 
         public static readonly string FilterMoveDeviceNameToFilter = $"{BaseService}/actions/moveDeviceNamesToFilter"; 
-        public LGMFiltersService(Common.HttpUtilsHelper httpUtilsHelper) : base(httpUtilsHelper)
+        public LGMFiltersService(Common.HttpUtilsHelper httpUtilsHelper, APRIConfigSettings config) : base(httpUtilsHelper, config)
         {
 
         }

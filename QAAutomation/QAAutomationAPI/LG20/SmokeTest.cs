@@ -140,13 +140,13 @@ namespace QA.Automation.APITests.LG20
 
             if (!string.IsNullOrEmpty(updatedUrl))
             {
-                Dictionary<string, string> parms = new Dictionary<string, string>()
-                {
-                    { "url", updatedUrl },
-                    { "username", Settings.UserName },
-                    { "password", Settings.Password },
-                };
-                result = LGApitAction.GetAuthInfo(parms);
+                //Dictionary<string, string> parms = new Dictionary<string, string>()
+                //{
+                //    { "url", updatedUrl },
+                //    { "username", Settings.UserName },
+                //    { "password", Settings.Password },
+                //};
+                result = LGApitAction.GetAuthInfo(updatedUrl, Settings.UserName, Settings.Password);
                 //result = LGApitAction.GetAuthInfo(updatedUrl, Settings.UserName, Settings.Password);
                 AuthTokens.Add(item.Key, result.Trim('"'));
             }
@@ -205,7 +205,12 @@ namespace QA.Automation.APITests.LG20
         public void WriteOut()
         {
 
-        }   
+        }
+
+        public static string GetPlayListByName(string playlistName)
+        {
+            return "Playlist";
+        }
 
         private Dictionary<string, string> GetTestToken()
         {

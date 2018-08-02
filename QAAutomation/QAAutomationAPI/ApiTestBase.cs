@@ -8,6 +8,7 @@ namespace QA.Automation.APITests
     {
         private readonly APRIConfigSettings _config = null;
         public IDictionary<string, string> AuthTokens = new Dictionary<string, string>();
+        private LG20.APIActionsBase _apiActionBase = null;
         //private LG20.ApiActionsBase _lgApitAction = null;
 
         public APITestBase(string userName, string userPassword)
@@ -19,7 +20,19 @@ namespace QA.Automation.APITests
             _config = ConfigurationSettings.GetSettingsConfiguration<APRIConfigSettings>();
         }
 
-        public LG20.APIActionsBase LGApitAction = new LG20.APIActionsBase(new HttpUtilsHelper());
+        public LG20.APIActionsBase LGApitAction
+        {
+            get
+            {
+                if (_apiActionBase == null)
+                {
+                    _apiActionBase = new LG20.APIActionsBase(new HttpUtilsHelper(), _config);
+                }
+
+                return _apiActionBase;
+            }
+
+        }
 
         public APRIConfigSettings Settings => _config;
     }

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using APITests;
+using QA.Automation.APITests.Models;
 using QA.Automation.Common;
 
 namespace QA.Automation.APITests.LG20
@@ -14,17 +17,30 @@ namespace QA.Automation.APITests.LG20
         public static readonly string DocumentSqlQuery = $"{BaseService}/utilities/query";
         public static readonly string DocumentSqlQueryEx = $"{BaseService}/utilities/queryex";
 
+        private string _authKey = string.Empty;
+
+        private APRIConfigSettings _config = null;
+
         private readonly HttpUtilsHelper _httpUtilsHelper = new HttpUtilsHelper();
 
-        public APIActionsBase(HttpUtilsHelper httpHelper)
+        public APIActionsBase(HttpUtilsHelper httpHelper, APRIConfigSettings config)
         {
             _httpUtilsHelper = httpHelper;
+            _config = config;
         }
+
+        public APIActionsBase(HttpUtilsHelper httpHelper, APRIConfigSettings config, string authKey) : this(httpHelper, config)
+        {
+            _authKey = authKey;
+        }
+
 
         public APIActionsBase()
         {
 
         }
+
+
         //public virtual string GetAuthInfo(string url, string userName, string password)
         //{
         //    userName = System.Web.HttpUtility.UrlEncode(userName);
@@ -33,11 +49,12 @@ namespace QA.Automation.APITests.LG20
         //    return result ?? string.Empty;
         //}
 
-        public virtual string GetAuthInfo(IDictionary<string, string> parms)
+//        public virtual string GetAuthInfo(IDictionary<string, string> parms)
+        public virtual string GetAuthInfo(string serviceUrl, string userName, string passWord)
         {
-            var userName = System.Web.HttpUtility.UrlEncode(parms["username"]);
-            var password = System.Web.HttpUtility.UrlEncode(parms["password"]);
-            var result = _httpUtilsHelper.ApiRequest(parms["url"], $"api/AuthToken?username={userName}&password={password}");
+            var usernameEncode = System.Web.HttpUtility.UrlEncode(userName);
+            var passwordEncode = System.Web.HttpUtility.UrlEncode(passWord);
+            var result = _httpUtilsHelper.ApiRequest(serviceUrl, $"api/AuthToken?username={usernameEncode}&password={passwordEncode}");
             return result ?? string.Empty;
         }
 
@@ -153,6 +170,21 @@ namespace QA.Automation.APITests.LG20
         }
 
         public HttpUtilsHelper HttpHelper => _httpUtilsHelper;
+
+        public string AuthToken
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_authKey))
+                {
+                    _authKey = GetAuthInfo(string.Empty, _config.UserName, _config.Password);
+                }
+               // else
+               // {
+                    return _authKey;
+               // }
+            }
+        }
 
         //public string Get
 

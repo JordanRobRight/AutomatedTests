@@ -1,4 +1,5 @@
 ﻿
+using QA.Automation.APITests.Models;
 using QA.Automation.Common;
 
 namespace QA.Automation.APITests.LG20.Services
@@ -10,7 +11,7 @@ namespace QA.Automation.APITests.LG20.Services
         private static readonly string AssetsRemovePath = $"{BaseService}/RemoveAsset/{0}";
         private static readonly string PlaylistById = $"{BaseService}/{0}";
 
-        public LGMPlayListsService(HttpUtilsHelper httpUtilsHelper) : base (httpUtilsHelper)
+        public LGMPlayListsService(HttpUtilsHelper httpUtilsHelper, APRIConfigSettings config) : base (httpUtilsHelper, config)
         {
 
         }

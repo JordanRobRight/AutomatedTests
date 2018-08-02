@@ -93,7 +93,6 @@ namespace QA.Automation.UITests
 
             IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
 
-            //TODO: Need to make the name a bit more specific like add a date to it so you can delete it later. 
             string playlistName = "Automated Playlist Test " + DateTime.Now;
 
             playlistAddForm.SendKeys(playlistName);
@@ -108,7 +107,16 @@ namespace QA.Automation.UITests
             saveButton.Click();
 
             //TODO: Assert to check if the playlist was actually playlist got created. 
+
+            IWebElement newPlaylist = GetElement(ByType.ClassName, "lgfe-cm-card");
+
+            Assert.IsTrue(newPlaylist.Displayed);
+            Assert.AreEqual(newPlaylist.Text.ToLower(), "Automated Playlist Test**".ToLower());
+
             //TODO: Assert calling API.
+            string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist");
+
+            Assert.Equals(newPlaylist, apiPlayList);
 
             //TODO: Update this assert to take into account the environment.
             Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
@@ -139,7 +147,7 @@ namespace QA.Automation.UITests
         //    IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(Base.playlistOpenButtonCSSSelector));
         //    playlistOpenButton.Click();
         //    AddWeatherWidget();
-            
+
         //    //IWebElement weatherEditButton = _driver.FindElement(By.TagName("button"));
 
         //    //weatherEditButton.Click();
@@ -299,7 +307,7 @@ namespace QA.Automation.UITests
 
             IWebElement schedulePlaylistStart = _driver.FindElement(By.Id("asset-begin-date-range"));
             schedulePlaylistStart.Clear();
-            
+
             schedulePlaylistStart.SendKeys("August 1, 2018");
 
             IWebElement schedulePlaylistEnd = _driver.FindElement(By.Id("asset-end-date-range"));
@@ -339,7 +347,7 @@ namespace QA.Automation.UITests
 
             CreatePlaylists();
 
-            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
+            IWebElement playlistOpenButton = GetElement(ByType.Css, BaseStrings.playlistOpenButtonCSSSelector);
             playlistOpenButton.Click();
 
             AddWeatherWidget();
@@ -389,16 +397,6 @@ namespace QA.Automation.UITests
             WaitForElementExists("page-header-container");
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
-            //TODO: Why are we doing this?? 
-
-            if (currentURL != "https://portal.test.dcimliveguide.com/#playlists")
-            {
-                string playlistsUrl = "https://portal.test.dcimliveguide.com/#playlists";
-
-                _driver.Navigate().GoToUrl(playlistsUrl);
-
-            }
 
         }
 
@@ -508,46 +506,27 @@ namespace QA.Automation.UITests
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
-            try
-            {
+            IWebElement newPlaylistDeleteButton = _driver.FindElement(By.CssSelector(BaseStrings.newPlaylistDeleteButtonCSSSelector));
 
+            if (newPlaylistDeleteButton.Displayed)
+            {
                 IWebElement deletePlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.deletePlaylistButtonCssSelector));
+                
+                deletePlaylistButton.Click();
 
-                IWebElement newPlaylistDeleteButton = _driver.FindElement(By.CssSelector(BaseStrings.newPlaylistDeleteButtonCSSSelector));
+                IAlert alert = _driver.SwitchTo().Alert();
 
-                if (newPlaylistDeleteButton.Displayed)
-                {
+                alert.Accept();
 
-                    newPlaylistDeleteButton.Click();
+                playlistSearch.SendKeys("Automated Playlist Test");
 
-                    IAlert alert = _driver.SwitchTo().Alert();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
-                    alert.Accept();
-
-                    playlistSearch.SendKeys("Automated Playlist Test");
-
-                    //TODO: Validate the playlist has been deleted. 
-
-                    //newPlaylistDeleteButton.Click();
-
-                    //_driver.SwitchTo().Alert();
-
-                    //alert.Accept();
-
-                    //playlistSearch.SendKeys("Automated Playlist Test");
-                }
-            }
-            catch (NoSuchElementException)
-            {
-       
-                //TODO: These statements can be removed since the Cleanup method will be called automatically. But we should throw an assert still.
-                Logout();
-
-                _driver.Quit();
+                Assert.IsTrue(newPlaylistDeleteButton.Displayed);
+                //TODO: Validate the playlist has been deleted. 
             }
 
-            //    i++;
-            //}
+
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
@@ -591,6 +570,9 @@ namespace QA.Automation.UITests
                     break;
                 case ByType.Xml:
                     selector = By.XPath(element);
+                    break;
+                case ByType.ClassName:
+                    selector = By.ClassName(element);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(byType), byType, null);
@@ -678,6 +660,8 @@ namespace QA.Automation.UITests
         Css = 1,
         Xml = 2,
         Id = 3, 
+        ClassName = 4,
+
         
     }
 }

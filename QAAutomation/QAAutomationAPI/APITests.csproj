@@ -8,6 +8,12 @@
     <RootNamespace>QA.Automation.APITests</RootNamespace>
 
     <AssemblyName>QA.Automation.APITests</AssemblyName>
+
+    <ApplicationIcon />
+
+    <OutputType>WinExe</OutputType>
+
+    <StartupObject />
   </PropertyGroup>
 
   <ItemGroup>
