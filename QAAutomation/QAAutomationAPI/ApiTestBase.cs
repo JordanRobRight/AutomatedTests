@@ -20,19 +20,19 @@ namespace QA.Automation.APITests
             _config = ConfigurationSettings.GetSettingsConfiguration<APRIConfigSettings>();
         }
 
-        public LG20.APIActionsBase LGApitAction
-        {
-            get
-            {
-                if (_apiActionBase == null)
-                {
-                    _apiActionBase = new LG20.APIActionsBase(new HttpUtilsHelper(), _config);
-                }
+        //public LG20.APIActionsBase LGApitAction
+        //{
+        //    get
+        //    {
+        //        if (_apiActionBase == null)
+        //        {
+        //            _apiActionBase = new LG20.APIActionsBase(new HttpUtilsHelper(), _config);
+        //        }
 
-                return _apiActionBase;
-            }
+        //        return _apiActionBase;
+        //    }
 
-        }
+        //}
 
         public APRIConfigSettings Settings => _config;
     }

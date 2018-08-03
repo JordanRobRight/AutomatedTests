@@ -6,9 +6,7 @@ namespace QA.Automation.APITests.LG20.Services
 {
     public class LGMPlaylistsService : APIActionsBase, IApiPage
     {
-        private static readonly string AssetsUpdatePath = $"{BaseService}/UploadAsset";
-        private static readonly string AssetsUpdateUserPath = $"{BaseService}/UploadUserAsset";
-        private static readonly string AssetsRemovePath = $"{BaseService}/RemoveAsset/{0}";
+        
         private static readonly string PlaylistById = $"{BaseService}/{0}";
 
         private static readonly string _serviceName = "LG.LGM.PlaylistsService";
@@ -24,6 +22,16 @@ namespace QA.Automation.APITests.LG20.Services
 
             HttpHelper.ApiRequest(path, null, null, RequestCommandType.POST);
             return 0;
+        }
+
+        public string LGMPlaylistServiceById(string id)
+        {
+            return string.Empty;
+        }
+
+        public string LGMPlaylistServiceByName(string Name)
+        {
+            return string.Empty;
         }
 
     }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using QA.Automation.APITests.LG20.Services;
+using QA.Automation.APITests.Models;
+using QA.Automation.Common;
 
 namespace QA.Automation.APITests.LG20
 {
@@ -10,40 +12,6 @@ namespace QA.Automation.APITests.LG20
     [TestFixture]
     public class SmokeTest : APITestBase
     {
-        /*
-        //public static List<string> items = new List<string>(new string[]
-        //{
-        //    "LG.LGM.PlayersService",
-        //    "LG.LGM.FiltersService",
-        //    "LG.LGM.LocationsService",
-        //    "LG.LGM.ScreenFeedVideoService",
-        //    "LG.LGM.SSOAuthService",
-        //    "LG.LGM.ProgramVersionsService",
-        //    "LG.LGM.AssetsService",
-        //    "LG.LGM.SSOService",
-        //    "LG.LGM.PlaylistsService",
-        //    "LG.LGM.WeatherService",
-        //    "LG.LGM.WidgetsService",
-        //    "LG.LGM.UsersService",
-        //    "LG.LGM.TriviaService",
-        //    "LG.LGM.TrafficService",
-        //    "LG.LGM.SubscriptionsService",
-        //    "LG.LGM.StorageService",
-        //    "LG.LGM.SocialService",
-        //    "LG.LGM.ClientsService",
-        //    "LG.LGM.HealthService",
-        //    "LG.LGM.LicensesService",
-        //    "LG.LGM.ChannelsService",
-        //    "LG.LGM.ClientProgramsService",
-        //    "LG.LGM.ProgramsService",
-        //    "LG.LGM.FrontEndService",
-        //    "LG.LGM.FinanceService",
-        //    "LG.LGM.DbService",
-
-        //   // "LG.LGM.ProfileService"
-        //});
-        */
-
         public static Dictionary<LGMServiceType, string> items = new Dictionary<LGMServiceType, string>
           {
                 {LGMServiceType.PlayersService, "" },
@@ -96,7 +64,7 @@ namespace QA.Automation.APITests.LG20
         [Category("SmokeTests")]
         public void GetEnv(KeyValuePair<string, string> item)
         {
-            var apiUrl = $@"{FormatUrl(item.Key)}/swagger/v1/swagger.json";
+            var apiUrl = $@"{FormatUrl(item.Key, Settings)}/swagger/v1/swagger.json";
             var helper = new Common.HttpUtilsHelper();
 
             var data = helper.ApiRequest(apiUrl,string.Empty);
@@ -140,10 +108,10 @@ namespace QA.Automation.APITests.LG20
             string result = string.Empty;
             string updatedUrl = string.Empty;
 
-            using (IApiPage page = APIFactory.ApiFactory(item.Key, Settings.UserName, Settings.Password))
+            using (IApiPage page = APIFactory.ApiFactory(item.Key, Settings))
             {
 
-                updatedUrl = FormatUrl(page.ServiceName);
+                updatedUrl = FormatUrl(page.ServiceName, Settings);
 
                 // IApiPage i = new LGMFiltersService();
 
@@ -217,12 +185,12 @@ namespace QA.Automation.APITests.LG20
                 var authKey = AuthTokens.FirstOrDefault(a => a.Key.Contains(item.Key));
                 Dictionary<string, string> parms = new Dictionary<string, string>()
                 { 
-                    { "url", FormatUrl(authKey.Key) },
+                    { "url", FormatUrl(authKey.Key, Settings) },
                     { "authtoken", authKey.Value },
                 };
 
-                string result = LGApitAction.GetAllDocuments(parms);
-                Assert.IsFalse(string.IsNullOrWhiteSpace(result));
+                //string result = LGApitAction.GetAllDocuments(parms);
+                //Assert.IsFalse(string.IsNullOrWhiteSpace(result));
             }
         }
 
@@ -251,8 +219,47 @@ namespace QA.Automation.APITests.LG20
 
         }
 
-        public static string GetPlayListByName(string playlistName)
+        public static string GetPlayListByName(string playlistName, string userName, string passWord, EnvironmentType env)
         {
+            APRIConfigSettings config = new APRIConfigSettings
+            {
+                UserName = userName,
+                Password = passWord,
+                Environment =  env
+            };
+
+            string result = string.Empty;
+            string updatedUrl = string.Empty;
+
+            using (IApiPage page = APIFactory.ApiFactory(LGMServiceType.PlaylistsService, config))
+            {
+                updatedUrl = FormatUrl(page.ServiceName, config);
+
+                // IApiPage i = new LGMFiltersService();
+
+                if (!string.IsNullOrEmpty(updatedUrl))
+                {
+                    //Dictionary<string, string> parms = new Dictionary<string, string>()
+                    //{
+                    //    { "url", updatedUrl },
+                    //    { "username", Settings.UserName },
+                    //    { "password", Settings.Password },
+                    //};
+                    result = ((LGMPlaylistsService) page).LGMPlaylistServiceByName(playlistName);
+
+                    //result = LGApitAction.GetAuthInfo(updatedUrl, Settings.UserName, Settings.Password);
+                    //result = LGApitAction.GetAuthInfo(updatedUrl, Settings.UserName, Settings.Password);
+                    //AuthTokens.Add(item.Key.ToString(), result.Trim('"'));
+                }
+            }
+            //NUnit.Framework.Internal.TestExecutionContext t = PropertyHelper.GetPrivateFieldValue<NUnit.Framework.Internal.TestExecutionContext>(TestContext.CurrentContext, "_testExecuteContext");
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(result));
+
+            Console.WriteLine($"Url: {updatedUrl}");
+            Console.WriteLine($"Result: {result}");
+            Console.WriteLine("\r\n");
+
             return "Playlist";
         }
 
@@ -265,9 +272,9 @@ namespace QA.Automation.APITests.LG20
    
         }
 
-        private string FormatUrl(string url)
+        private static string FormatUrl(string url, APRIConfigSettings settings)
         {
-            return $"https://{url.Replace(".", "-")}" + Common.LgUtils.GetUrlBaseUrl(Settings.Environment.ToString(),"{0}") + ".azurewebsites.net";
+            return $"https://{url.Replace(".", "-")}" + Common.LgUtils.GetUrlBaseUrl(settings.Environment.ToString(),"{0}") + ".azurewebsites.net";
         }
 
     }

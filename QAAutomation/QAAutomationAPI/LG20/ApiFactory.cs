@@ -41,43 +41,53 @@ namespace QA.Automation.APITests.LG20
             {LGMServiceType.AmenitiesService, a => new LGMAmenitiesService(a)},
         };
 
-        private static IApiPage GetPage(LGMServiceType service, string userName, string passWord)
-        {
-           // Common.HttpUtilsHelper htppHelper = new HttpUtilsHelper();
-            Models.APRIConfigSettings config = new APRIConfigSettings
-            {
-                UserName = userName,
-                Password = passWord
-            };
-            IApiPage page = null;
+        //private static IApiPage GetPage(LGMServiceType service, string userName, string passWord)
+        //{
+        //    APRIConfigSettings config = new APRIConfigSettings
+        //    {
+        //        UserName = userName,
+        //        Password = passWord
+        //    };
+        //    IApiPage page = null;
 
-            switch (service)
-            {
-                  case LGMServiceType.AssetsService:
-                      page = new LGMAssetsService(config);
-                      break;
+        //    switch (service)
+        //    {
+        //          case LGMServiceType.AssetsService:
+        //              page = new LGMAssetsService(config);
+        //              break;
                
-            }
+        //    }
 
-            return page;
-        }
+        //    return page;
+        //}
 
         public static IApiPage ApiFactory(LGMServiceType service, string userUser, string password)
-        {
-            Models.APRIConfigSettings config = new APRIConfigSettings
+        { 
+            APRIConfigSettings config = new APRIConfigSettings
             {
                 UserName = userUser,
                 Password = password
             };
 
-            //IApiPage page = null;
+            return ApiFactory(service, config);
+        }
 
-            Func<APRIConfigSettings, IApiPage> page;
-            
-            apiPage.TryGetValue(service, out page);
+        public static IApiPage ApiFactory(LGMServiceType service, APRIConfigSettings config)
+        {
+            IApiPage returnPage = null;
 
-            IApiPage returnPage = page(config);
+            try
+            {
+                apiPage.TryGetValue(service, out var page);
 
+                returnPage = page != null ? page(config) : new APIActionsBase(config);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
+           
             //IApiPage page = GetPage(service, userUser, password);
 
             return returnPage;
