@@ -13,11 +13,18 @@ namespace QA.Automation.APITests.LG20.Services
         public static readonly string FilterRemoveDeviceNameFromFilters = $"{BaseService}/actions/removeDeviceNamesFromFilters"; 
         public static readonly string FilterRemoveDeviceNameFromFilter = $"{BaseService}/actions/removeDeviceNamesFromFilter"; 
         public static readonly string FilterMoveDeviceNameToFilter = $"{BaseService}/actions/moveDeviceNamesToFilter"; 
+
+        private static readonly string _serviceName = "LG.LGM.FiltersService";
+
         public LGMFiltersService(Common.HttpUtilsHelper httpUtilsHelper, APRIConfigSettings config) : base(httpUtilsHelper, config)
         {
 
         }
 
+        public LGMFiltersService(APRIConfigSettings config) : base (config)
+        {
+            config.ServiceName = _serviceName;
+        }
 
     }
 }

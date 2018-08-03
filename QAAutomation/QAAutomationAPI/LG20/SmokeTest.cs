@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using QA.Automation.APITests.LG20.Services;
 
 namespace QA.Automation.APITests.LG20
 {
@@ -9,6 +10,7 @@ namespace QA.Automation.APITests.LG20
     [TestFixture]
     public class SmokeTest : APITestBase
     {
+        /*
         //public static List<string> items = new List<string>(new string[]
         //{
         //    "LG.LGM.PlayersService",
@@ -40,36 +42,37 @@ namespace QA.Automation.APITests.LG20
 
         //   // "LG.LGM.ProfileService"
         //});
+        */
 
-        public static Dictionary<string, string> items = new Dictionary<string, string>
+        public static Dictionary<LGMServiceType, string> items = new Dictionary<LGMServiceType, string>
           {
-                {"LG.LGM.PlayersService", "" },
-                {"LG.LGM.FiltersService","" },
-                {"LG.LGM.LocationsService","" },
-                {"LG.LGM.ScreenFeedVideoService","" },
-                //{"LG.LGM.SSOAuthService","" },
-                {"LG.LGM.ProgramVersionsService","" },
-                {"LG.LGM.AssetsService","" },
-                //{"LG.LGM.SSOService","" },
-                {"LG.LGM.PlaylistsService","" },
-                {"LG.LGM.WeatherService","" },
-                {"LG.LGM.WidgetsService","" },
-                {"LG.LGM.UsersService","" },
-                //{"LG.LGM.TriviaService","" },
-                {"LG.LGM.TrafficService","" },
-                {"LG.LGM.SubscriptionsService","" },
-                {"LG.LGM.StorageService","" },
-                //{"LG.LGM.SocialService","" },
-                {"LG.LGM.ClientsService","" },
-                {"LG.LGM.HealthService","" },
-                {"LG.LGM.LicensesService","" },
-                {"LG.LGM.ChannelsService","" },
-                {"LG.LGM.ClientProgramsService","" },
-                {"LG.LGM.ProgramsService","" },
-                {"LG.LGM.FrontEndService","" },
-                {"LG.LGM.FinanceService","" },
-                {"LG.LGM.DbService","" },
-                {"LG.LGM.AmenitiesService","" },
+                {LGMServiceType.PlayersService, "" },
+                {LGMServiceType.FiltersService,"" },
+                {LGMServiceType.LocationsService,"" },
+                {LGMServiceType.ScreenFeedVideoService,"" },
+                //{LGMServiceType.SSOAuthService,"" },
+                {LGMServiceType.ProgramVersionsService,"" },
+                {LGMServiceType.AssetsService,"" },
+                //{LGMServiceType.SOService,"" },
+                {LGMServiceType.PlaylistsService,"" },
+                {LGMServiceType.WeatherService,"" },
+                {LGMServiceType.WidgetsService,"" },
+                {LGMServiceType.UsersService,"" },
+                //{LGMServiceType.TriviaService,"" },
+                {LGMServiceType.TrafficService,"" },
+                {LGMServiceType.SubscriptionsService,"" },
+                {LGMServiceType.StorageService,"" },
+                //{LGMServiceType.SocialService,"" },
+                {LGMServiceType.ClientsService,"" },
+                {LGMServiceType.HealthService,"" },
+                {LGMServiceType.LicensesService,"" },
+                {LGMServiceType.ChannelsService,"" },
+                {LGMServiceType.ClientProgramsService,"" },
+                {LGMServiceType.ProgramsService,"" },
+                {LGMServiceType.FrontEndService,"" },
+                {LGMServiceType.FinanceService,"" },
+                {LGMServiceType.DbService,"" },
+                {LGMServiceType.AmenitiesService,"" },
 
           // "LG.LGM.ProfileService"
       };
@@ -131,6 +134,46 @@ namespace QA.Automation.APITests.LG20
 
         [TestCaseSource("items")]
         [Category("SmokeTests")]
+        public void GetAuthTokenByPage(KeyValuePair<LGMServiceType,string> item)
+        {
+            //string updatedUrl = FormatUrl(item.Key);
+            string result = string.Empty;
+            string updatedUrl = string.Empty;
+
+            using (IApiPage page = APIFactory.ApiFactory(item.Key, Settings.UserName, Settings.Password))
+            {
+
+                updatedUrl = FormatUrl(page.ServiceName);
+
+                // IApiPage i = new LGMFiltersService();
+
+                if (!string.IsNullOrEmpty(updatedUrl))
+                {
+                    //Dictionary<string, string> parms = new Dictionary<string, string>()
+                    //{
+                    //    { "url", updatedUrl },
+                    //    { "username", Settings.UserName },
+                    //    { "password", Settings.Password },
+                    //};
+                    result = page.GetAuthInfo(updatedUrl);
+
+                    //result = LGApitAction.GetAuthInfo(updatedUrl, Settings.UserName, Settings.Password);
+                    //result = LGApitAction.GetAuthInfo(updatedUrl, Settings.UserName, Settings.Password);
+                    //AuthTokens.Add(item.Key.ToString(), result.Trim('"'));
+                }
+            }
+            //NUnit.Framework.Internal.TestExecutionContext t = PropertyHelper.GetPrivateFieldValue<NUnit.Framework.Internal.TestExecutionContext>(TestContext.CurrentContext, "_testExecuteContext");
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(result));
+
+            Console.WriteLine($"Url: {updatedUrl}");
+            Console.WriteLine($"Result: {result}");
+            Console.WriteLine("\r\n");
+        }
+
+        /*
+        [TestCaseSource("items")]
+        [Category("SmokeTests")]
         public void GetAuthToken(KeyValuePair<string,string> item)
         {
             string updatedUrl = FormatUrl(item.Key);
@@ -159,6 +202,7 @@ namespace QA.Automation.APITests.LG20
             Console.WriteLine($"Result: {result}");
             Console.WriteLine("\r\n");
         }
+        */
 
         [TestCaseSource("Items")]
         [Category("SmokeTests")]

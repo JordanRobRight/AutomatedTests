@@ -13,6 +13,8 @@ namespace QA.Automation.APITests.Models
         public string UserName { get; set; }
         [JsonProperty]
         public string Password { get; set; }
+
+        public string ServiceName { get; set; }
     }
 }
 

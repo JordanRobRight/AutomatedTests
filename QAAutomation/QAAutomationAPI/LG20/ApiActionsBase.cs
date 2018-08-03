@@ -7,7 +7,7 @@ using QA.Automation.Common;
 
 namespace QA.Automation.APITests.LG20
 {
-    public class APIActionsBase : IApiPage
+    public class APIActionsBase : IApiPage, IDisposable
     {
         public static readonly string BaseService = "/service";
         public static readonly string DocumentExists = $"{BaseService}/exists/{0}"; //{DocumentId}
@@ -21,16 +21,23 @@ namespace QA.Automation.APITests.LG20
 
         private APRIConfigSettings _config = null;
 
-        private readonly HttpUtilsHelper _httpUtilsHelper = new HttpUtilsHelper();
+        private HttpUtilsHelper _httpUtilsHelper = new HttpUtilsHelper();
 
         public APIActionsBase(HttpUtilsHelper httpHelper, APRIConfigSettings config)
         {
             _httpUtilsHelper = httpHelper;
             _config = config;
+           
+        }
+        public APIActionsBase(APRIConfigSettings config)
+        {
+            _config = config;
+           
         }
 
-        public APIActionsBase(HttpUtilsHelper httpHelper, APRIConfigSettings config, string authKey) : this(httpHelper, config)
+        public APIActionsBase(APRIConfigSettings config, string authKey) //: this(httpHelper, config)
         {
+            _config = config;
             _authKey = authKey;
         }
 
@@ -40,6 +47,11 @@ namespace QA.Automation.APITests.LG20
 
         }
 
+        public virtual void Dispose()
+        {
+            _httpUtilsHelper = null;
+
+        }
 
         //public virtual string GetAuthInfo(string url, string userName, string password)
         //{
@@ -57,6 +69,15 @@ namespace QA.Automation.APITests.LG20
             var result = _httpUtilsHelper.ApiRequest(serviceUrl, $"api/AuthToken?username={usernameEncode}&password={passwordEncode}");
             return result ?? string.Empty;
         }
+
+        public virtual string GetAuthInfo(string serviceUrl)
+        {
+            var usernameEncode = System.Web.HttpUtility.UrlEncode(_config.UserName);
+            var passwordEncode = System.Web.HttpUtility.UrlEncode(_config.Password);
+            var result = _httpUtilsHelper.ApiRequest(serviceUrl, $"api/AuthToken?username={usernameEncode}&password={passwordEncode}");
+            return result ?? string.Empty;
+        }
+
 
         public string GetAllDocuments(IDictionary<string, string> parms)
         {
@@ -185,6 +206,8 @@ namespace QA.Automation.APITests.LG20
                // }
             }
         }
+
+        public string ServiceName => _config.ServiceName;
 
         //public string Get
 

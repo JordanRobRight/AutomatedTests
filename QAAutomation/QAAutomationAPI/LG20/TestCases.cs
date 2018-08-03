@@ -33,7 +33,7 @@ namespace QA.Automation.APITests.LG20
         public void TcPlayList1()
         {
             Guid id = new Guid();
-            LGMPlayListsService lpss = new LGMPlayListsService();
+            //LGMPlayListsService lpss = new LGMPlayListsService();
 
             // d4962ecb-0eff-438e-8236-167a78e4f3b1
 
