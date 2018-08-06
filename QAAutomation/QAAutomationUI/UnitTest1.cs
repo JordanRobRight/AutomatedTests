@@ -130,6 +130,9 @@ namespace QA.Automation.UITests
             //Assert.AreEqual(newPlaylist, "Automated Playlist Test");
 
             //TODO: Assert calling API.
+            string apiPlayList = QAAutomationAPI.UnitTest1.GetPlayListByName("newPlaylist");
+
+            Assert.Equals(newPlaylist, apiPlayList);
 
 
             //TODO: Update this assert to take into account the environment.

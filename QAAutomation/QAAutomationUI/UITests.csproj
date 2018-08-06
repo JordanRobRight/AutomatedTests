@@ -42,6 +42,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\MiscLib\MiscLib.csproj" />
+    <ProjectReference Include="..\QAAutomationAPI\APITests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

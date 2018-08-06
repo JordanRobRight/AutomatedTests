@@ -99,6 +99,11 @@ namespace QA.Automation.QAAutomationAPI
             Console.WriteLine("\r\n");
         }
 
+        public static string GetPlayListByName(string playlistName)
+        {
+            return "Playlist";
+        }
+
         private string FormatUrl(string url, string env)
         {
             return $"https://{url.Replace(".", "-")}" + Common.LGUtils.GetUrlBaseUrl(env.ToString(),"{0}") + ".azurewebsites.net";
