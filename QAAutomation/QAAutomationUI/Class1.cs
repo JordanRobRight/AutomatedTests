@@ -8,6 +8,7 @@ namespace QA.Automation.UITests
     
     public class BaseStrings
     {
+        public static string newPlaylistDiv = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div";
         public static string addPlaylistsButtonClass = "#playlists-container > div.pm-function-bar.js-playlists-function-bar > div > button";
         public static string saveButtonCSSSelector = "#playlist-info-form > div.lg-modal__actions > button";
         public static string playlistOpenButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2)";
