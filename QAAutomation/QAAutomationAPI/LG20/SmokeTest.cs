@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Xml.Linq;
 using NUnit.Framework;
 using QA.Automation.APITests.LG20.Services;
 using QA.Automation.APITests.Models;
@@ -61,7 +63,7 @@ namespace QA.Automation.APITests.LG20
         }
 
         [TestCaseSource("items")]
-        [Category("SmokeTests")]
+        [NUnit.Framework.Category("SmokeTests")]
         public void GetEnv(KeyValuePair<string, string> item)
         {
             var apiUrl = $@"{FormatUrl(item.Key, Settings)}/swagger/v1/swagger.json";
@@ -101,7 +103,7 @@ namespace QA.Automation.APITests.LG20
         }
 
         [TestCaseSource("items")]
-        [Category("SmokeTests")]
+        [NUnit.Framework.Category("SmokeTests")]
         public void GetAuthTokenByPage(KeyValuePair<LGMServiceType,string> item)
         {
             //string updatedUrl = FormatUrl(item.Key);
@@ -173,8 +175,8 @@ namespace QA.Automation.APITests.LG20
         */
 
         [TestCaseSource("Items")]
-        [Category("SmokeTests")]
-        [Category("SmokeTests1")]
+        [NUnit.Framework.Category("SmokeTests")]
+        [NUnit.Framework.Category("SmokeTests1")]
         public void GetZAllDocuments(KeyValuePair<string, string> item)
         {
             //var previous = AuthTokens;
@@ -221,6 +223,8 @@ namespace QA.Automation.APITests.LG20
 
         public static string GetPlayListByName(string playlistName, string userName, string passWord, EnvironmentType env)
         {
+
+            
             APRIConfigSettings config = new APRIConfigSettings
             {
                 UserName = userName,
