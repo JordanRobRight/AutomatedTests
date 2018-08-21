@@ -124,7 +124,7 @@ namespace QA.Automation.UITests
 
             IWebElement newPlaylist = GetElement(By.ClassName("lgfe-cm-card"));
 
-            
+
 
             //Assert.IsTrue(newPlaylist.Displayed);
             //Assert.AreEqual(newPlaylist, "Automated Playlist Test");
@@ -132,7 +132,7 @@ namespace QA.Automation.UITests
             //TODO: Assert calling API.
             string apiPlayList = QAAutomationAPI.UnitTest1.GetPlayListByName("newPlaylist");
 
-            Assert.Equals(newPlaylist, apiPlayList);
+            //Assert.AreEqual(newPlaylist, apiPlayList);
 
 
             //TODO: Update this assert to take into account the environment.
@@ -154,7 +154,7 @@ namespace QA.Automation.UITests
             IWebElement playlistSave = _driver.FindElement(By.CssSelector(BaseStrings.playlistSaveCSSSelector));
             playlistSave.Click();
 
-           
+
 
             //TODO: Assert that the saved worked.
         }
@@ -394,7 +394,7 @@ namespace QA.Automation.UITests
 
             DeleteProtocolWITHOUTlogin();
 
-           // Logout();
+            // Logout();
 
         }
 
@@ -421,43 +421,39 @@ namespace QA.Automation.UITests
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
+            //test for playlists
+            string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
+            IWebElement playlistDiv = GetElement(By.CssSelector(playlistDivCssSelector));
+            //if playlists is empty find profile dropdown 
+
+            if(playlistDiv.Text.Contains(""))
+            {
+               
+
+                IWebElement playerChannelDropdown = GetElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+
+                playerChannelDropdown.Click();
+
+                IWebElement gmChannelSelection = GetElement(By.CssSelector(BaseStrings.gmChannelSelectionCssSelector));
+
+                gmChannelSelection.Click();
+            }
+            if (!playlistDiv.Displayed)
+            {
+                IWebElement playerChannelDropdown = GetElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+
+                playerChannelDropdown.Click();
+
+                IWebElement gmChannelSelection = GetElement(By.CssSelector(BaseStrings.gmChannelSelectionCssSelector));
+
+                gmChannelSelection.Click();
+            }
+            //    -select GM\
+            //test for playlist again
+
+
+
         }
-
-        //[TestCase]
-        //public void LoginExtension()
-        //{
-        //    string url = "https://extensioninc.bullhorntimecards.com/go/Account/LogOn?ReturnUrl=%2fgo%2fHome%2fIndex";
-        //    //string currentURL = _driver.Url;
-        //    _driver.Navigate().GoToUrl(url);
-
-        //    //TODO: Assert here that you are at the login page for the correct environment.
-
-        //    IWebElement query = GetElement(By.Id("UserName"));
-
-        //    query.SendKeys("JordanEnwright@gmail.com");
-
-        //    query = GetElement(By.Id("Password"));
-        //    query.SendKeys("Winter18@");
-
-        //    query.Submit();
-
-        //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
-        //    query = GetElement(By.CssSelector("#home > div > div.three_div_panel_content > table > tbody > tr > td:nth-child(1) > table > tbody > tr > td.summary_list_desc > button"));
-        //    query.Click();
-
-        //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
-        //   DateTime submitWorkHours = DateTime.Now;
-        //    if (submitWorkHours.ToString() != "8/3/2018 5:22:46 PM")
-        //    {
-        //        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-        //    }
-
-        //    query = GetElement(By.CssSelector("#submitall > span"));
-        //    query.Click();
-
-        //}
 
 
         [TestCase]
@@ -539,7 +535,6 @@ namespace QA.Automation.UITests
                 string playlistsUrl = "https://portal.test.dcimliveguide.com/#playlists";
 
                 _driver.Navigate().GoToUrl(playlistsUrl);
-
             }
 
             IWebElement logOutButton = _driver.FindElement(By.CssSelector(BaseStrings.logOutButtonCssSelector));
@@ -556,7 +551,7 @@ namespace QA.Automation.UITests
         [TestCase]
         public void DeleteProtocol()
         {
-            //Login();
+            Login();
 
             IWebElement playlistsSideBarMenuButton = GetElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             playlistsSideBarMenuButton.Click();
@@ -581,7 +576,7 @@ namespace QA.Automation.UITests
                 playlistSearch.SendKeys("Automated Playlist Test");
 
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-                
+
                 //TODO: Validate the playlist has been deleted. API??
             }
 
@@ -589,7 +584,7 @@ namespace QA.Automation.UITests
 
             _driver.Quit();
         }
-
+        //[TestCase]
         public void DeleteProtocolWITHOUTlogin()
         {
             //Login();
@@ -603,27 +598,133 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
             IWebElement newPlaylistDeleteButton = GetElement(By.CssSelector(BaseStrings.newPlaylistDeleteButtonCSSSelector));
+            String expectedMessage = "Automated Playlist Test";
+            String message = _driver.FindElement(By.CssSelector(BaseStrings.newPlaylistDiv)).Text;
+            Assert.True(message.Contains(expectedMessage));
 
-            if (newPlaylistDeleteButton.Displayed)
+            if (message.Contains(expectedMessage))
             {
-                IWebElement deletePlaylistButton = GetElement(By.CssSelector(BaseStrings.deletePlaylistButtonCssSelector));
+                String newPlaylistDiv = _driver.FindElement(By.CssSelector(BaseStrings.newPlaylistDiv)).Text;
+                Assert.True(newPlaylistDiv.Contains(expectedMessage));
 
-                deletePlaylistButton.Click();
+                if (newPlaylistDiv.Contains(expectedMessage))// && (newPlaylistDiv =="")
+                {
+                    IWebElement playlistArea = GetElement(By.ClassName("playlists-content"));
 
-                IAlert alert = _driver.SwitchTo().Alert();
+                    var playlistContext = playlistArea.Text;
 
-                alert.Accept();
+                    if (playlistContext.Contains(expectedMessage))
+                    {
+                        IWebElement deletePlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.deletePlaylistButtonCssSelector));
 
-                playlistSearch.SendKeys("Automated Playlist Test");
+                        deletePlaylistButton.Click();
 
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                        IAlert alert = _driver.SwitchTo().Alert();
 
-                //TODO: Validate the playlist has been deleted. API??
+                        alert.Accept();
+
+                        playlistSearch.SendKeys("Automated Playlist Test");
+
+                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+                        //TODO: Validate the playlist has been deleted. API??
+                    }
+                    else
+                    {
+                        Logout();
+                    }
+                }
+                else
+                {
+                    Logout();
+                }
+            }
+            else
+            {
+                Logout();
             }
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
-            _driver.Quit();
+            Logout();
+        }
+
+        [TestCase]
+        public void ContactUsWithrequiredFields()
+        {
+            Login();
+
+            string contactUsLinkCssSelector = "#interaction-nav-bar-container > div.inbc-help-menu-wrapper > ul > li:nth-child(1) > a";
+            IWebElement contactUsLink = GetElement(By.CssSelector(contactUsLinkCssSelector));
+            contactUsLink.Click();
+
+            IWebElement EmailUsFullNameInput = GetElement(By.Id("full-name"));
+            EmailUsFullNameInput.SendKeys("Automated Tester");
+
+            Logout();
+        }
+
+        [TestCase]
+        public void ContactUsWithAllFields()
+        {
+            Login();
+
+            string contactUsLinkCssSelector = "#interaction-nav-bar-container > div.inbc-help-menu-wrapper > ul > li:nth-child(1) > a";           
+            string sendButtonCssSelector = "#contact-us-container > form > div.lg-modal__actions > button";
+
+            IWebElement contactUsLink = GetElement(By.CssSelector(contactUsLinkCssSelector));
+            contactUsLink.Click();
+
+            IWebElement EmailUsFullNameInput = GetElement(By.Id("full-name"));
+            EmailUsFullNameInput.SendKeys("Automated Tester");
+
+            IWebElement EmailUsTitleInput = GetElement(By.Id("title"));
+            EmailUsTitleInput.SendKeys("Automated Tester");
+
+            IWebElement EmailUsCompanyInput = GetElement(By.Id("company"));
+            EmailUsCompanyInput.SendKeys("Automated Tester");
+
+            IWebElement EmailUsPhoneNumberInput = GetElement(By.Id("phone"));
+            EmailUsPhoneNumberInput.SendKeys("Automated Tester");
+
+            IWebElement EmailUsEmialInput = GetElement(By.Id("email"));
+            EmailUsEmialInput.SendKeys("Automated Tester");
+
+            IWebElement EmailUsCommentsInput = GetElement(By.Id("comments"));
+            EmailUsCommentsInput.SendKeys("Automated Tester");
+
+            IWebElement sendButton = GetElement(By.CssSelector(sendButtonCssSelector));        
+            sendButton.Click();
+
+            var newHtml =  _driver.PageSource;
+
+            if (newHtml.Contains("error"))
+            {
+                
+            }
+
+            if (EmailUsFullNameInput.Displayed)
+            {
+                var errorFullName = GetElement(By.CssSelector("#contact-us-container > form > div:nth-child(2)")).Text;
+              
+                
+
+                if (errorFullName.Contains("error"))
+                {
+
+                }
+            }
+            else if (EmailUsTitleInput.Displayed)
+            {
+
+            }
+            else if (EmailUsPhoneNumberInput.Displayed)
+            {
+
+            }
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Logout();
         }
 
         [TearDown]

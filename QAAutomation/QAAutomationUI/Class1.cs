@@ -42,12 +42,14 @@ namespace QA.Automation.UITests
         public static string uploadDialogCloseButtonCssSelector = "#asset-upload-modal > div > div.lg-modal__wrapper > div > button";
         public static string logOutButtonCssSelector = "#interaction-nav-bar-container > div.inbc-help-menu-wrapper > ul > li:nth-child(2) > a > span";
         public static string logoutConfirmCssSelector = "#logout-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div > button:nth-child(2)";
-        public static string playlistSideBarMenuCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a > span";
+        public static string playlistSideBarMenuCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a";
         public static string deletePlaylistButtonCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button:nth-child(3)";
         public static string newPlaylistDeleteButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button:nth-child(3)";
         public static string assetLinkCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(2) > a";
         public static string assetUploadButtonCssSelector = "#assets-container > div.pm-function-bar.js-playlists-function-bar > div > button";
         public static string assetBrowseComputerCssSelector = "#asset-upload-form > div > div > div > p > button";//weatherEditButtonCssSelector
+        public static string playerChannelDropdownCssSelector = "#interaction-info-bar-container > div > div > div > div.iibcu-name > span:nth-child(2) > span.iibcun-client";
+        public static string gmChannelSelectionCssSelector = "#interaction-info-bar-container > div > div > div > div.iibcuinow-menu-wrapper > ul > li:nth-child(3) > a > span";
         //public static string weatherEditButtonCssSelector = "#playlist-container > div.playlist-content-wrapper.js-playlist-content > div > div.lgfe-card-matrix.js-drag-drop-playlist.lgfe-card-matrix--layout-row > div:nth-child(3) > div > div.\\5b.lgfe-cm-utilities.lgfe-cm-utilities--column.\\5d.lgfe-cm-description > div > button.lgfe-cm-utility-button.button-unstyled.js-playlist-edit";
         //string playlistSideBarMenuCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a > span";
     }
