@@ -672,7 +672,25 @@ namespace QA.Automation.UITests
 
             return query ?? throw new Exception("GetElement returned a null value.");
         }
+        private IWebElement GetElement(By selector, string element = "")
+        {
+            IWebElement query = null;
 
+            try
+            {
+                query = _driver.FindElement(selector);
+            }
+            catch (NoSuchElementException nsex)
+            {
+                Console.WriteLine("Element couldn't be found: " + nsex);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: GetElement() {e}");
+            }
+
+            return query ?? throw new Exception("GetElement returned a null value.");
+        }
         private void WaitForElementExists(string element)
         {
             WaitUntilElementExists(_driver, By.Id(element));
