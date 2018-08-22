@@ -107,7 +107,7 @@ namespace QA.Automation.UITests
 
             IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
 
-            string playlistName = "Automated Playlist Test "/* + DateTime.Now*/;
+            string playlistName = "Automated Playlist Test " + DateTime.Now/* + DateTime.Now*/;
 
             playlistAddForm.SendKeys(playlistName);
 
@@ -365,25 +365,25 @@ namespace QA.Automation.UITests
 
             AddWeatherWidget();
 
-            //AddFinanceWidget();
+            AddFinanceWidget();
 
-            //AddTrafficWidget();
+            AddTrafficWidget();
 
-            //AddTriviaWidget();
+            AddTriviaWidget();
 
-            ////AddHealthWidget(); HEALTH WIDGET TO BE ADDED HERE
+            //AddHealthWidget(); HEALTH WIDGET TO BE ADDED HERE
 
-            //AddImageWidget();
+            AddImageWidget();
 
-            //AddVideoWidget();
+            AddVideoWidget();
 
-            //AddScreenFeedWidget();
+            AddScreenFeedWidget();
 
-            //AddBrandWidget();
+            AddBrandWidget();
 
-            //PlaylistSchedule();
+            PlaylistSchedule();
 
-            //PlaylistPublish();
+            PlaylistPublish();
 
             IWebElement playlistsSideBarMenuButton = GetElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             playlistsSideBarMenuButton.Click();
@@ -394,7 +394,7 @@ namespace QA.Automation.UITests
 
             DeleteProtocolWITHOUTlogin();
 
-            // Logout();
+            Logout();
 
         }
 
@@ -421,15 +421,12 @@ namespace QA.Automation.UITests
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
-            //test for playlists
             string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
             IWebElement playlistDiv = GetElement(By.CssSelector(playlistDivCssSelector));
             //if playlists is empty find profile dropdown 
 
-            if(playlistDiv.Text.Contains(""))
+            if (playlistDiv.Text.Contains(""))
             {
-               
-
                 IWebElement playerChannelDropdown = GetElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
 
                 playerChannelDropdown.Click();
@@ -438,6 +435,7 @@ namespace QA.Automation.UITests
 
                 gmChannelSelection.Click();
             }
+
             if (!playlistDiv.Displayed)
             {
                 IWebElement playerChannelDropdown = GetElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
@@ -447,12 +445,7 @@ namespace QA.Automation.UITests
                 IWebElement gmChannelSelection = GetElement(By.CssSelector(BaseStrings.gmChannelSelectionCssSelector));
 
                 gmChannelSelection.Click();
-            }
-            //    -select GM\
-            //test for playlist again
-
-
-
+            }         
         }
 
 
