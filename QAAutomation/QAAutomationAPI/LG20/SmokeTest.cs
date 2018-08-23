@@ -64,9 +64,10 @@ namespace QA.Automation.APITests.LG20
 
         [TestCaseSource("items")]
         [NUnit.Framework.Category("SmokeTests")]
-        public void GetEnv(KeyValuePair<string, string> item)
+        //public void GetEnv(KeyValuePair<string, string> item)
+        public void GetEnv(KeyValuePair<LGMServiceType,string> item)
         {
-            var apiUrl = $@"{FormatUrl(item.Key, Settings)}/swagger/v1/swagger.json";
+            var apiUrl = $@"{FormatUrl("LG-LGM-" + item.Key.ToString(), Settings)}/swagger/v1/swagger.json";
             var helper = new Common.HttpUtilsHelper();
 
             var data = helper.ApiRequest(apiUrl,string.Empty);

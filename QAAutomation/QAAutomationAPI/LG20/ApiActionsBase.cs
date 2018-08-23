@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
-using APITests;
 using QA.Automation.APITests.Models;
 using QA.Automation.Common;
 
