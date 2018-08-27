@@ -99,23 +99,34 @@ namespace QA.Automation.UITests
 
         public void CreatePlaylists()
         {
+            IWebElement mainContainerMask = GetElement(By.Id("main-container-mask"));
             IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForElementExists("main-container-mask");
             playlistsSideBarMenuButton.Click();
+            
+           
 
             IWebElement addPlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
             addPlaylistButton.Click();
 
             IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
-
+            //TODO: send to base strings
             string playlistName = "Automated Playlist Test " + DateTime.Now/* + DateTime.Now*/;
 
             playlistAddForm.SendKeys(playlistName);
 
-            IWebElement selectFilter = _driver.FindElement(By.Id("select-filter"));
-            //create select element object 
+            string filterID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
 
-            var selectElement = new SelectElement(selectFilter);
-            selectElement.SelectByText("Chevy TV");
+            IWebElement selectFilter = GetElement(By.XPath(filterID));
+            if (selectFilter.Displayed)
+            {
+                //create select element object 
+                selectFilter.SendKeys("chevy" + Keys.Enter);
+
+                var selectElement = new SelectElement(selectFilter);
+                selectElement.SelectByText("Chevy TV");
+            }
+            
 
             IWebElement saveButton = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
             saveButton.Click();
@@ -152,6 +163,7 @@ namespace QA.Automation.UITests
             weatherWidgetSaveButton.Click();
 
             IWebElement playlistSave = _driver.FindElement(By.CssSelector(BaseStrings.playlistSaveCSSSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistSave.Click();
 
 
@@ -188,6 +200,7 @@ namespace QA.Automation.UITests
         public void AddFinanceWidget()
         {
             IWebElement financeWidget = _driver.FindElement(By.CssSelector(BaseStrings.financeWidgetCSSSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             financeWidget.Click();
 
             IWebElement selectFinanceFilter = _driver.FindElement(By.Id("select-brand"));
@@ -197,6 +210,7 @@ namespace QA.Automation.UITests
             selectFinanceElement.SelectByText("Chevy");
 
             IWebElement saveFinanceButton = _driver.FindElement(By.CssSelector(BaseStrings.saveFinanceButtonCSSSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             saveFinanceButton.Click();
 
             //TODO: Assert that the saved worked.
@@ -205,6 +219,7 @@ namespace QA.Automation.UITests
         public void AddTrafficWidget()
         {
             IWebElement trafficWidget = _driver.FindElement(By.CssSelector(BaseStrings.trafficWidgetCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             trafficWidget.Click();
 
             IWebElement selectTrafficBrandFilter = _driver.FindElement(By.Id("select-brand"));
@@ -217,6 +232,7 @@ namespace QA.Automation.UITests
             trafficZipInput.SendKeys("53142");
 
             IWebElement trafficWidgetSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.trafficWidgetSaveButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             trafficWidgetSaveButton.Click();
 
             //TODO: Assert that the saved worked.
@@ -225,6 +241,7 @@ namespace QA.Automation.UITests
         public void AddTriviaWidget()
         {
             IWebElement triviaWidget = _driver.FindElement(By.CssSelector(BaseStrings.triviaWidgetCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             triviaWidget.Click();//NOT VISIBLE on half screen
 
             IWebElement selectBrandTriviaFilter = _driver.FindElement(By.Id("select-brand"));
@@ -241,6 +258,7 @@ namespace QA.Automation.UITests
             //Just taking the default value here I am having a hard time grabbing the value from the drop down
 
             IWebElement triviaSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.triviaSaveButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             triviaSaveButton.Click();
 
             //TODO: Assert that the saved worked.
@@ -254,15 +272,18 @@ namespace QA.Automation.UITests
         public void AddImageWidget()
         {
             IWebElement imageWidget = _driver.FindElement(By.CssSelector(BaseStrings.imageWidgetCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             imageWidget.Click();
 
             IWebElement imageAssestLibrarySearchInput = _driver.FindElement(By.Id("asset-search"));
             imageAssestLibrarySearchInput.SendKeys("chev");  //in the future this should grab the whole collection of assests and pick a random asset          
 
             IWebElement imageAssestSelection = _driver.FindElement(By.CssSelector(BaseStrings.assestCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             imageAssestSelection.Click();
 
             IWebElement assestLibraryDoneButton = _driver.FindElement(By.CssSelector(BaseStrings.assestLibraryDoneButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             assestLibraryDoneButton.Click();
 
             //TODO: Assert that the saved worked.
@@ -274,12 +295,14 @@ namespace QA.Automation.UITests
             videoWidgetButton.Click();
 
             IWebElement videoAssestLibrarySearchInput = _driver.FindElement(By.Id("asset-search"));
-            videoAssestLibrarySearchInput.SendKeys("nis");  //in the future this should grab the whole collection of assests and pick a random asset
+            videoAssestLibrarySearchInput.SendKeys("a");  //in the future this should grab the whole collection of assests and pick a random asset
 
             IWebElement videoAssestSelection = _driver.FindElement(By.CssSelector(BaseStrings.videoAssestSelectionCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             videoAssestSelection.Click();
 
             IWebElement videoWidgetDoneButton = _driver.FindElement(By.CssSelector(BaseStrings.videoWidgetDoneButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             videoWidgetDoneButton.Click();
 
             //TODO: Assert that the saved worked.
@@ -308,6 +331,7 @@ namespace QA.Automation.UITests
         public void AddBrandWidget()
         {
             IWebElement brandWidgetButton = _driver.FindElement(By.CssSelector(BaseStrings.brandWidgetCssSelector));
+            WaitUntilElementClickable(_driver, By.CssSelector(BaseStrings.brandWidgetCssSelector), 10);
             brandWidgetButton.Click();
 
             IWebElement brandSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.brandSaveButtonCssSelector));
