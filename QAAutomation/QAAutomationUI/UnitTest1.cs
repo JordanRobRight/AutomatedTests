@@ -127,7 +127,7 @@ namespace QA.Automation.UITests
             //Assert.AreEqual(newPlaylist, "Automated Playlist Test");
 
             //TODO: Assert calling API.
-            string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
+            //string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
 
             //Assert.AreEqual(newPlaylist, apiPlayList);
 
