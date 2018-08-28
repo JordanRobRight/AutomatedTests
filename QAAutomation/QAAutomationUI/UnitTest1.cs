@@ -97,7 +97,7 @@ namespace QA.Automation.UITests
 
             IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
             //TODO: send to base strings
-            string playlistName = "Automated Playlist Test " + DateTime.Now/* + DateTime.Now*/;
+            string playlistName = "Automated Playlist Test " + DateTime.Now;
 
             playlistAddForm.SendKeys(playlistName);
 
