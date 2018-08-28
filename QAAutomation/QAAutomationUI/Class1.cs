@@ -21,6 +21,7 @@ namespace QA.Automation.UITests
         public static string trafficWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-favorite-widgets.js-drag-drop-favorite-widgets > button:nth-child(3)";
         public static string trafficWidgetSaveButtonCssSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
         public static string triviaWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-favorite-widgets.js-drag-drop-favorite-widgets > button:nth-child(4)";
+//# playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-favorite-widgets.js-drag-drop-favorite-widgets > button:nth-child(4) > span.\5b.fa.fa-lightbulb-o.\5d
         public static string triviaSaveButtonCssSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
         public static string imageWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-pinned-widgets.js-drag-drop-pinned-widgets > button.pmfb-function-button.lgfe-cm-new-card.button-unstyled.lgfe-elem-state.js-drag-drop-pinned-widget-item.lgfe-add-image-widget-button";
         public static string assestCssSelector = "#asset-image-select-form > div.aisf-image-matrix > div:nth-child(2) > label";
