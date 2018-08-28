@@ -97,7 +97,7 @@ namespace QA.Automation.UITests
 
             IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
             //TODO: send to base strings
-            string playlistName = "Automated Playlist Test " + DateTime.Now/* + DateTime.Now*/;
+            string playlistName = "Automated Playlist Test " + DateTime.Now;
 
             playlistAddForm.SendKeys(playlistName);
 
@@ -127,7 +127,7 @@ namespace QA.Automation.UITests
             //Assert.AreEqual(newPlaylist, "Automated Playlist Test");
 
             //TODO: Assert calling API.
-            string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
+            //string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
 
             //Assert.AreEqual(newPlaylist, apiPlayList);
 
