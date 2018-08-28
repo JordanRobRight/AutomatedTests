@@ -1,0 +1,38 @@
+﻿{
+  "id": "d4962ecb-0eff-438e-8236-167a78e4f3b1",
+  "name": "Rob Auto 2",
+  "program": "",
+  "channel": "Chevy-Buick-GMC TV",
+  "created": 1531519325961,
+  "createdtimestamp": "07/13/2018 17:02:05 PM",
+  "duration": "00:00:00",
+  "description": "playlist created: 7/13/2018 5:02:05 PM",
+  "author": "RKos@dciartform.com",
+  "tags": [],
+  "favorite": false,
+  "order": 0,
+  "widgets": {},
+  "newPlaylist": false,
+  "filter": {
+    "id": "Chevy-Buick-GMC TV",
+    "display": "Chevy, Buick & GMC Guest TV"
+  },
+  "color": "",
+  "selectedFilter": {
+    "id": "Chevy-Buick-GMC TV",
+    "display": "Chevy, Buick & GMC Guest TV"
+  },
+  "selectedLocation": "default",
+  "channelName": "Chevy-Buick-GMC TV",
+  "ref": {
+    "clientId": "DciMarketing",
+    "clientProgramId": "8dbee89a-593d-4a2d-8c11-b1893e90ed23",
+    "clientProgramName": "Guest TV",
+    "subscriptionId": "tempSubscriptionId",
+    "subscriptionLevel": "tempSubscriptionLevel",
+    "channelId": "tempChannelId",
+    "channelName": "tempChannelName",
+    "userId": "no user id provided",
+    "userName": "RKos@dciartform.com"
+  }
+}

@@ -1,27 +1,38 @@
 ﻿using QA.Automation.APITests.Models;
 using QA.Automation.Common;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace QA.Automation.APITests
 {
-    public class ApiTestBase
+    public class APITestBase
     {
-        private APRIConfigSettings _config = null;
+        private readonly APRIConfigSettings _config = null;
         public IDictionary<string, string> AuthTokens = new Dictionary<string, string>();
-        private LG20.ApiActionsBase _lgApitAction = null;
+        private LG20.APIActionsBase _apiActionBase = null;
+        //private LG20.ApiActionsBase _lgApitAction = null;
 
-        public ApiTestBase(string userName, string userPassword)
+        public APITestBase(string userName, string userPassword)
         {
             _config = new APRIConfigSettings { UserName = userName, Password = userPassword };
         }
-        public ApiTestBase()
+        public APITestBase()
         {
             _config = ConfigurationSettings.GetSettingsConfiguration<APRIConfigSettings>();
         }
 
-        public LG20.ApiActionsBase LGApitAction = new LG20.ApiActionsBase(new HttpUtilsHelper());
+        //public LG20.APIActionsBase LGApitAction
+        //{
+        //    get
+        //    {
+        //        if (_apiActionBase == null)
+        //        {
+        //            _apiActionBase = new LG20.APIActionsBase(new HttpUtilsHelper(), _config);
+        //        }
+
+        //        return _apiActionBase;
+        //    }
+
+        //}
 
         public APRIConfigSettings Settings => _config;
     }

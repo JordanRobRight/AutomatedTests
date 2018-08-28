@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace QA.Automation.APITests.LG20
 {
-    interface IApiPage
+    public interface IApiPage : IDisposable
     {
+        string GetAuthInfo(string serviceUrl, string userName, string passWord);
+        string GetAuthInfo(string serviceUrl);
         string GetAllDocuments(IDictionary<string, string> parms);
         string DeleteDocumentInfo(IDictionary<string, string> parms);
         string GetDoesDocumentExists(IDictionary<string, string> parms);
@@ -19,6 +20,9 @@ namespace QA.Automation.APITests.LG20
         string GetPerformSql(IDictionary<string, string> parms);
         string GetPerformSqlExToken(IDictionary<string, string> parms);
 
+        void DeleteItemsFromApi();
+
+        string ServiceName { get; }
 
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Models
+﻿namespace QA.Automation.Models
 {
     public class PageFactory
     {

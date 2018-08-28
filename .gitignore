@@ -23,6 +23,9 @@
 /QAAutomation/.vs/QAAutomation/DesignTimeBuild
 /QAAutomation/MiscLib/bin/Debug
 /QAAutomation/MiscLib/obj/Debug
-/QAAutomation/TestResults
-/QAAutomation/DataTest
 /QAAutomation/MiscLib/obj/Release
+/QAAutomation/DataTest/obj
+/QAAutomation/DataTest/bin/Debug/netcoreapp2.0
+/QAAutomation/TestResults
+/QAAutomation/.vs/QAAutomation/DesignTimeBuild
+/NuGet

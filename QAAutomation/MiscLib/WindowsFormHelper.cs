@@ -1,9 +1,12 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
+using AutoIt;
 
-namespace MiscLib
+namespace QA.Automation.MiscLib
 {
     public class WindowsFormHelper
     {
+
         public static void SendKeyToForm(string text, bool isWaiting = false)
         {
             try
@@ -21,6 +24,15 @@ namespace MiscLib
             {
 
             }
+        }
+        public static void GetAutoIt(string windowName, string textToType, int waitTime = 2)
+        {
+            AutoItX.WinActivate(windowName);
+
+            AutoItX.Send(textToType);
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(waitTime));
+            AutoItX.Send("{ENTER}");
+
         }
     }
 }

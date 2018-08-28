@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Dynamic;
+using QA.Automation.APITests.Models;
 using QA.Automation.Common;
 
 namespace QA.Automation.APITests.LG20
 {
-    public class ApiActionsBase : IApiPage
+    public class APIActionsBase : IApiPage, IDisposable
     {
         public static readonly string BaseService = "/service";
         public static readonly string DocumentExists = $"{BaseService}/exists/{0}"; //{DocumentId}
@@ -13,11 +16,40 @@ namespace QA.Automation.APITests.LG20
         public static readonly string DocumentSqlQuery = $"{BaseService}/utilities/query";
         public static readonly string DocumentSqlQueryEx = $"{BaseService}/utilities/queryex";
 
-        private Common.HttpUtilsHelper _httpUtilsHelper = null;
+        private string _authKey = string.Empty;
 
-        public ApiActionsBase(Common.HttpUtilsHelper httpHelper)
+        private APRIConfigSettings _config = null;
+
+        private HttpUtilsHelper _httpUtilsHelper = new HttpUtilsHelper();
+
+        public APIActionsBase(HttpUtilsHelper httpHelper, APRIConfigSettings config)
         {
             _httpUtilsHelper = httpHelper;
+            _config = config;
+           
+        }
+        public APIActionsBase(APRIConfigSettings config)
+        {
+            _config = config;
+           
+        }
+
+        public APIActionsBase(APRIConfigSettings config, string authKey) //: this(httpHelper, config)
+        {
+            _config = config;
+            _authKey = authKey;
+        }
+
+
+        public APIActionsBase()
+        {
+
+        }
+
+        public virtual void Dispose()
+        {
+            _httpUtilsHelper = null;
+
         }
 
         //public virtual string GetAuthInfo(string url, string userName, string password)
@@ -28,13 +60,23 @@ namespace QA.Automation.APITests.LG20
         //    return result ?? string.Empty;
         //}
 
-        public virtual string GetAuthInfo(IDictionary<string, string> parms)
+//        public virtual string GetAuthInfo(IDictionary<string, string> parms)
+        public virtual string GetAuthInfo(string serviceUrl, string userName, string passWord)
         {
-            var userName = System.Web.HttpUtility.UrlEncode(parms["username"]);
-            var password = System.Web.HttpUtility.UrlEncode(parms["password"]);
-            var result = _httpUtilsHelper.ApiRequest(parms["url"], $"api/AuthToken?username={userName}&password={password}");
+            var usernameEncode = System.Web.HttpUtility.UrlEncode(userName);
+            var passwordEncode = System.Web.HttpUtility.UrlEncode(passWord);
+            var result = _httpUtilsHelper.ApiRequest(serviceUrl, $"api/AuthToken?username={usernameEncode}&password={passwordEncode}");
             return result ?? string.Empty;
         }
+
+        public virtual string GetAuthInfo(string serviceUrl)
+        {
+            var usernameEncode = System.Web.HttpUtility.UrlEncode(_config.UserName);
+            var passwordEncode = System.Web.HttpUtility.UrlEncode(_config.Password);
+            var result = _httpUtilsHelper.ApiRequest(serviceUrl, $"api/AuthToken?username={usernameEncode}&password={passwordEncode}");
+            return result ?? string.Empty;
+        }
+
 
         public string GetAllDocuments(IDictionary<string, string> parms)
         {
@@ -142,6 +184,30 @@ namespace QA.Automation.APITests.LG20
             return result ?? string.Empty;
         }
 
+        public virtual void DeleteItemsFromApi()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpUtilsHelper HttpHelper => _httpUtilsHelper;
+
+        public string AuthToken
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_authKey))
+                {
+                    _authKey = GetAuthInfo(string.Empty, _config.UserName, _config.Password);
+                }
+               // else
+               // {
+                    return _authKey;
+               // }
+            }
+        }
+
+        public string ServiceName => _config.ServiceName;
+
         //public string Get
 
         //private async Task<string> GetApiInfo(string url, string urlQuery, IReadOnlyDictionary<string, string> headers = null, ApiRequestCommandType apiMethod = ApiRequestCommandType.GET)
@@ -186,7 +252,7 @@ namespace QA.Automation.APITests.LG20
         //    }
         //    return resultInfo;
         //}
-      
+
         //private async Task<string> GetApiInfo(string url, string urlQuery)
         //{
         //    string resultInfo = string.Empty;
