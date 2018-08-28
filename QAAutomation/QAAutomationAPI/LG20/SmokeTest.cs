@@ -174,7 +174,7 @@ namespace QA.Automation.APITests.LG20
             Console.WriteLine("\r\n");
         }
         */
-
+        /*
         [TestCaseSource("Items")]
         [NUnit.Framework.Category("SmokeTests")]
         [NUnit.Framework.Category("SmokeTests1")]
@@ -196,6 +196,7 @@ namespace QA.Automation.APITests.LG20
                 //Assert.IsFalse(string.IsNullOrWhiteSpace(result));
             }
         }
+        */
 
         //[TestCaseSource("items")]
         //[Category("SmokeTests")]

@@ -25,7 +25,7 @@ namespace QA.Automation.APITests.LG20
         {
         }
 
-
+        /*
         //[TestCaseSource("items")]
         [TestCase]
         //[TestCaseSource("TestCaseData")]
@@ -46,6 +46,7 @@ namespace QA.Automation.APITests.LG20
             // Save
             // Verify Channel is complete. 
         }
+        */
 
         public void TcAssestList2(KeyValuePair<string, string> item)
         {
