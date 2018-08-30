@@ -307,9 +307,9 @@ namespace QA.Automation.UITests
         public void AddScreenFeedWidget()
         {
             IWebElement screenfeedWidgetButton = _driver.FindElement(By.CssSelector(BaseStrings.screenFeedWidgetCssSelector));
+            WaitForMaskModal();
             screenfeedWidgetButton.Click();
-
-
+            
             IWebElement selectScreenFeedFilter = _driver.FindElement(By.XPath("//*[@id='select-duration']"));
 
             var selectScreenFeedElement = new SelectElement(selectScreenFeedFilter);
@@ -409,21 +409,21 @@ namespace QA.Automation.UITests
 
             AddWeatherWidget();
 
-            //AddFinanceWidget();
+            AddFinanceWidget();
 
-            //AddTrafficWidget();
+            AddTrafficWidget();
 
-            //AddTriviaWidget();
+            AddTriviaWidget();
 
             //AddHealthWidget(); HEALTH WIDGET TO BE ADDED HERE
 
-            //AddImageWidget();
+            AddImageWidget();
 
-            //AddVideoWidget();
+            AddVideoWidget();
 
-            //AddScreenFeedWidget();
+            AddScreenFeedWidget();
 
-            //AddBrandWidget();
+            AddBrandWidget();
 
             PlaylistSchedule();
 
@@ -652,10 +652,11 @@ namespace QA.Automation.UITests
 
                     var playlistContext = playlistArea.Text;
 
-                    if (playlistContext.Contains(expectedMessage))
-                    {
-                        IWebElement deletePlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.deletePlaylistButtonCssSelector));
+                    IWebElement deletePlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.deletePlaylistButtonCssSelector));
 
+                    while (playlistContext.Contains(expectedMessage))
+                    {
+                       
                         WaitForMaskModal();
 
                         deletePlaylistButton.Click();
@@ -664,16 +665,19 @@ namespace QA.Automation.UITests
 
                         alert.Accept();
 
+                        WaitForMaskModal();
+
                         playlistSearch.SendKeys("Automated Playlist Test");
+
+                        WaitForMaskModal();
 
                         System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
                         //TODO: Validate the playlist has been deleted. API??
                     }
-                    else
-                    {
+                   
                         Logout();
-                    }
+                    
                 }
                 else
                 {
