@@ -51,17 +51,17 @@ namespace QA.Automation.UITests
             caps.SetCapability("accessKey", _configuration.SauceLabsKey);
             caps.SetCapability("name", TestContext.CurrentContext.Test.Name);
 
-            //if (_configuration.IsRemoteDriver)
-            //{
-            //    _driver = new RemoteWebDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, TimeSpan.FromSeconds(600));
-            //}
-            //else
-            //{
+            if (_configuration.IsRemoteDriver)
+            {
+                _driver = new RemoteWebDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, TimeSpan.FromSeconds(600));
+            }
+            else
+            {
                 ChromeOptions co = new ChromeOptions();    // set the desired browser
                 co.AddAdditionalCapability("platform", "Windows 7");
                 string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 _driver = new ChromeDriver(path);
-            //}
+            }
 
             _driver.Manage().Window.Maximize();
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
@@ -775,20 +775,20 @@ namespace QA.Automation.UITests
         [TearDown]
         public void CleanUp()
         {
-        //    bool passed = TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Passed;
-        //    try
-        //    {
-        //        // Logs the result to Sauce Labs
-        //        if (_configuration.IsRemoteDriver)
-        //    {
-        //        ((IJavaScriptExecutor)_driver).ExecuteScript("sauce:job-result=" + (passed ? "passed" : "failed"));
-        //    }
-        //}
-        //    finally
-        //    {
+            bool passed = TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Passed;
+            try
+            {
+                // Logs the result to Sauce Labs
+                if (_configuration.IsRemoteDriver)
+                {
+                    ((IJavaScriptExecutor)_driver).ExecuteScript("sauce:job-result=" + (passed ? "passed" : "failed"));
+                }
+            }
+            finally
+            {
                 // Terminates the remote webdriver session
                 _driver.Quit();
-            //}
+            }
         }
 
         #region -- Private Methods ---
