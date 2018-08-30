@@ -85,7 +85,7 @@ namespace QA.Automation.UITests
         public void WaitForMaskModal()
         {
             IWebElement maskModal = _driver.FindElement(By.ClassName("main-container-mask"));
-            IWebElement overLayModal = _driver.FindElement(By.ClassName("lg-modal__overlay"));
+            //IWebElement overLayModal = _driver.FindElement(By.ClassName("lg-modal__overlay"));
 
             while (maskModal.Displayed)
             {
@@ -102,31 +102,27 @@ namespace QA.Automation.UITests
             IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
             playlistsSideBarMenuButton.Click();
-
-
+            WaitForMaskModal();
 
             IWebElement addPlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
             addPlaylistButton.Click();
 
             IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
             //TODO: send to base strings
-            string playlistName = "Automated Playlist Test " + DateTime.Now;
+            string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
 
             playlistAddForm.SendKeys(playlistName);
 
             string filterID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
 
             IWebElement selectFilter = GetElement(By.XPath(filterID));
-            if (selectFilter.Displayed)
-            {
-                //create select element object 
-                selectFilter.SendKeys("chevy" + Keys.Enter);
 
-                var selectElement = new SelectElement(selectFilter);
-                selectElement.SelectByText("Chevy TV");
-            }
+            //create select element object 
+            selectFilter.SendKeys("chevy" + Keys.Enter);
 
-
+            var selectElement = new SelectElement(selectFilter);
+            selectElement.SelectByText("Chevy TV");
+            
             IWebElement saveButton = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
             saveButton.Click();
 
@@ -297,12 +293,13 @@ namespace QA.Automation.UITests
             videoAssestLibrarySearchInput.SendKeys("a");  //in the future this should grab the whole collection of assests and pick a random asset
 
             IWebElement videoAssestSelection = _driver.FindElement(By.CssSelector(BaseStrings.videoAssestSelectionCssSelector));
-            WaitForMaskModal();
+            //WaitForMaskModal();
             videoAssestSelection.Click();
 
             IWebElement videoWidgetDoneButton = _driver.FindElement(By.CssSelector(BaseStrings.videoWidgetDoneButtonCssSelector));
-            //WaitForMaskModal();
+            //
             videoWidgetDoneButton.Click();
+            WaitForMaskModal();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
             //TODO: Assert that the saved worked.
         }
@@ -360,15 +357,17 @@ namespace QA.Automation.UITests
             schedulePlaylistEnd.Clear();
             schedulePlaylistEnd.SendKeys(dateInputEnd.ToString("MM/dd/yyyy"/*+Keys.Enter*/));
 
-            IWebElement allDayCheckBox = _driver.FindElement(By.CssSelector("#asset-info-form > div.lg-modal__field.schedule-modal-time-wrapper > div:nth-child(1) > label > span.lgfe-input-checkbox__custom-input"));
+            IWebElement allDayCheckBox = _driver.FindElement(By.CssSelector("#asset-info-form > div.lg-modal__field.schedule-modal-time-wrapper > div:nth-child(1) > label"));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             allDayCheckBox.Click();
 
 
             IWebElement submitSchedule = _driver.FindElement(By.CssSelector(BaseStrings.submitScheduleCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));//not waiting on mask modal clicking the calendar pop up
-            
-            submitSchedule.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));//not waiting on mask modal clicking the calendar pop up
 
+            submitSchedule.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            WaitForMaskModal();
             //TODO: Assert that the saved worked.
 
         }
@@ -410,21 +409,21 @@ namespace QA.Automation.UITests
 
             AddWeatherWidget();
 
-            AddFinanceWidget();
+            //AddFinanceWidget();
 
-            AddTrafficWidget();
+            //AddTrafficWidget();
 
-            AddTriviaWidget();
+            //AddTriviaWidget();
 
             //AddHealthWidget(); HEALTH WIDGET TO BE ADDED HERE
 
-            AddImageWidget();
+            //AddImageWidget();
 
-            AddVideoWidget();
+            //AddVideoWidget();
 
-            AddScreenFeedWidget();
+            //AddScreenFeedWidget();
 
-            AddBrandWidget();
+            //AddBrandWidget();
 
             PlaylistSchedule();
 
@@ -469,31 +468,31 @@ namespace QA.Automation.UITests
             IWebElement playlistDiv = GetElement(By.CssSelector(playlistDivCssSelector));
             //if playlists is empty find profile dropdown 
 
-            if (playlistDiv.Text.Contains(""))
-            {
-                IWebElement playerChannelDropdown = GetElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            //if (playlistDiv.Text.Contains(""))
+            //{
+            IWebElement playerChannelDropdown = GetElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
 
-                playerChannelDropdown.Click();
-          
-                IWebElement gmChannelSelection = GetElement(By.XPath(BaseStrings.gmChannelSelectionXPath));
+            playerChannelDropdown.Click();
 
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            IWebElement gmChannelSelection = GetElement(By.XPath(BaseStrings.gmChannelSelectionXPath));
 
-                gmChannelSelection.Click();
-            }
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
-            if (!playlistDiv.Displayed)
-            {
-                IWebElement playerChannelDropdown = GetElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            gmChannelSelection.Click();
+            //}
 
-                playerChannelDropdown.Click();
+            //if (!playlistDiv.Displayed)
+            //{
+            //    IWebElement playerChannelDropdown = GetElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
 
-                IWebElement gmChannelSelection = GetElement(By.XPath(BaseStrings.gmChannelSelectionXPath));
+            //    playerChannelDropdown.Click();
 
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //    IWebElement gmChannelSelection = GetElement(By.XPath(BaseStrings.gmChannelSelectionXPath));
 
-                gmChannelSelection.Click();
-            }
+            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+            //    gmChannelSelection.Click();
+            //}
         }
 
 
@@ -597,7 +596,7 @@ namespace QA.Automation.UITests
             playlistsSideBarMenuButton.Click();
 
             IWebElement playlistSearch = GetElement(By.Id("playlists-search"));
-            playlistSearch.SendKeys("Automated Playlist Test");           
+            playlistSearch.SendKeys("Automated Playlist Test");
 
             IWebElement newPlaylistDeleteButton = GetElement(By.CssSelector(BaseStrings.newPlaylistDeleteButtonCSSSelector));
 
