@@ -51,17 +51,17 @@ namespace QA.Automation.UITests
             caps.SetCapability("accessKey", _configuration.SauceLabsKey);
             caps.SetCapability("name", TestContext.CurrentContext.Test.Name);
 
-            if (_configuration.IsRemoteDriver)
-            {
-                _driver = new RemoteWebDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, TimeSpan.FromSeconds(600));
-            }
-            else
-            {
+            //if (_configuration.IsRemoteDriver)
+            //{
+            //    _driver = new RemoteWebDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, TimeSpan.FromSeconds(600));
+            //}
+            //else
+            //{
                 ChromeOptions co = new ChromeOptions();    // set the desired browser
                 co.AddAdditionalCapability("platform", "Windows 7");
                 string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 _driver = new ChromeDriver(path);
-            }
+            //}
 
             _driver.Manage().Window.Maximize();
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
@@ -297,13 +297,13 @@ namespace QA.Automation.UITests
             videoAssestLibrarySearchInput.SendKeys("a");  //in the future this should grab the whole collection of assests and pick a random asset
 
             IWebElement videoAssestSelection = _driver.FindElement(By.CssSelector(BaseStrings.videoAssestSelectionCssSelector));
-            WaitForMaskModal(); WaitForMaskModal();
+            WaitForMaskModal();
             videoAssestSelection.Click();
 
             IWebElement videoWidgetDoneButton = _driver.FindElement(By.CssSelector(BaseStrings.videoWidgetDoneButtonCssSelector));
-            WaitForMaskModal();
+            //WaitForMaskModal();
             videoWidgetDoneButton.Click();
-
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
             //TODO: Assert that the saved worked.
         }
 
@@ -358,12 +358,16 @@ namespace QA.Automation.UITests
 
             IWebElement schedulePlaylistEnd = _driver.FindElement(By.Id("asset-end-date-range"));
             schedulePlaylistEnd.Clear();
-            schedulePlaylistEnd.SendKeys(dateInputEnd.ToString("MM/dd/yyyy"+Keys.Enter));
+            schedulePlaylistEnd.SendKeys(dateInputEnd.ToString("MM/dd/yyyy"/*+Keys.Enter*/));
 
-            //IWebElement submitSchedule = _driver.FindElement(By.CssSelector(BaseStrings.submitScheduleCssSelector));
-            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));//not waiting on mask modal clicking the calendar pop up
+            IWebElement allDayCheckBox = _driver.FindElement(By.CssSelector("#asset-info-form > div.lg-modal__field.schedule-modal-time-wrapper > div:nth-child(1) > label > span.lgfe-input-checkbox__custom-input"));
+            allDayCheckBox.Click();
+
+
+            IWebElement submitSchedule = _driver.FindElement(By.CssSelector(BaseStrings.submitScheduleCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));//not waiting on mask modal clicking the calendar pop up
             
-            //submitSchedule.Click();
+            submitSchedule.Click();
 
             //TODO: Assert that the saved worked.
 
@@ -771,20 +775,20 @@ namespace QA.Automation.UITests
         [TearDown]
         public void CleanUp()
         {
-            bool passed = TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Passed;
-            try
-            {
-                // Logs the result to Sauce Labs
-                if (_configuration.IsRemoteDriver)
-            {
-                ((IJavaScriptExecutor)_driver).ExecuteScript("sauce:job-result=" + (passed ? "passed" : "failed"));
-            }
-        }
-            finally
-            {
+        //    bool passed = TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Passed;
+        //    try
+        //    {
+        //        // Logs the result to Sauce Labs
+        //        if (_configuration.IsRemoteDriver)
+        //    {
+        //        ((IJavaScriptExecutor)_driver).ExecuteScript("sauce:job-result=" + (passed ? "passed" : "failed"));
+        //    }
+        //}
+        //    finally
+        //    {
                 // Terminates the remote webdriver session
                 _driver.Quit();
-            }
+            //}
         }
 
         #region -- Private Methods ---
