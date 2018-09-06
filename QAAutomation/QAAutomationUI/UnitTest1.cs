@@ -266,6 +266,8 @@ namespace QA.Automation.UITests
 
         public void AddImageWidget()
         {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(15));
+
             IWebElement imageWidget = _driver.FindElement(By.CssSelector(BaseStrings.imageWidgetCssSelector));
             WaitForMaskModal();
             imageWidget.Click();
@@ -286,21 +288,28 @@ namespace QA.Automation.UITests
 
         public void AddVideoWidget()
         {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(30));
+
             IWebElement videoWidgetButton = _driver.FindElement(By.CssSelector(BaseStrings.videoWidgetCssSelector));
+
             videoWidgetButton.Click();
 
             IWebElement videoAssestLibrarySearchInput = _driver.FindElement(By.Id("asset-search"));
             videoAssestLibrarySearchInput.SendKeys("a");  //in the future this should grab the whole collection of assests and pick a random asset
 
-            IWebElement videoAssestSelection = _driver.FindElement(By.CssSelector(BaseStrings.videoAssestSelectionCssSelector));
+            IWebElement videoAssestSelection = _driver.FindElement(By.XPath(BaseStrings.videoAssestSelectionXPath));
+            IWebElement videoWidgetDoneButton = _driver.FindElement(By.XPath(BaseStrings.videoWidgetDoneButtonXpath));
             //WaitForMaskModal();
             videoAssestSelection.Click();
 
-            IWebElement videoWidgetDoneButton = _driver.FindElement(By.CssSelector(BaseStrings.videoWidgetDoneButtonCssSelector));
-            //
+            
+            IWebElement videoPlayIcon = _driver.FindElement(By.XPath(BaseStrings.videoPlayIconXpath));
+            videoPlayIcon.Click();
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+
             videoWidgetDoneButton.Click();
-            WaitForMaskModal();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            WaitForMaskModal();
             //TODO: Assert that the saved worked.
         }
 
@@ -360,10 +369,14 @@ namespace QA.Automation.UITests
             IWebElement allDayCheckBox = _driver.FindElement(By.CssSelector("#asset-info-form > div.lg-modal__field.schedule-modal-time-wrapper > div:nth-child(1) > label"));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             allDayCheckBox.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));//not waiting on mask modal clicking the calendar pop up
 
+            IWebElement submitSchedule = _driver.FindElement(By.XPath(BaseStrings.submitScheduleCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));//not waiting on mask modal clicking the calendar pop up
 
-            IWebElement submitSchedule = _driver.FindElement(By.CssSelector(BaseStrings.submitScheduleCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));//not waiting on mask modal clicking the calendar pop up
+            IWebElement gearIcon = _driver.FindElement(By.XPath(BaseStrings.gearIconXpath));
+            gearIcon.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(30));
 
             submitSchedule.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
@@ -406,31 +419,42 @@ namespace QA.Automation.UITests
             WaitForMaskModal();
 
             playlistOpenButton.Click();
-
+            WaitForMaskModal();
             AddWeatherWidget();
+            WaitForMaskModal();
 
             AddFinanceWidget();
+            WaitForMaskModal();
 
             AddTrafficWidget();
+            WaitForMaskModal();
 
             AddTriviaWidget();
+            WaitForMaskModal();
 
             //AddHealthWidget(); HEALTH WIDGET TO BE ADDED HERE
-
+            //WaitForMaskModal();
             AddImageWidget();
+            WaitForMaskModal();
 
             AddVideoWidget();
+            WaitForMaskModal();
 
             AddScreenFeedWidget();
+            WaitForMaskModal();
 
             AddBrandWidget();
+            WaitForMaskModal();
 
             PlaylistSchedule();
+            WaitForMaskModal();
 
             PlaylistPublish();
+            WaitForMaskModal();
 
             IWebElement playlistsSideBarMenuButton = GetElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistsSideBarMenuButton.Click();
 
@@ -620,13 +644,11 @@ namespace QA.Automation.UITests
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
-            _driver.Quit();
+            //_driver.Quit();
         }
         //[TestCase]
         public void DeleteProtocolWITHOUTlogin()
         {
-            //Login();
-
             IWebElement playlistsSideBarMenuButton = GetElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
             playlistsSideBarMenuButton.Click();
@@ -654,7 +676,7 @@ namespace QA.Automation.UITests
 
                     IWebElement deletePlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.deletePlaylistButtonCssSelector));
 
-                    while (playlistContext.Contains(expectedMessage))
+                    if (playlistContext.Contains(expectedMessage))
                     {
                        
                         WaitForMaskModal();
@@ -676,17 +698,17 @@ namespace QA.Automation.UITests
                         //TODO: Validate the playlist has been deleted. API??
                     }
                    
-                        Logout();
-                    
+                        //Logout();//here
+
                 }
                 else
                 {
-                    Logout();
+                    //Logout();//here
                 }
             }
             else
             {
-                Logout();
+                //Logout(); //here
             }
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
