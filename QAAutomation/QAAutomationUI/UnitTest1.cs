@@ -122,7 +122,7 @@ namespace QA.Automation.UITests
 
             var selectElement = new SelectElement(selectFilter);
             selectElement.SelectByText("Chevy TV");
-            
+
             IWebElement saveButton = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
             saveButton.Click();
 
@@ -302,7 +302,7 @@ namespace QA.Automation.UITests
             //WaitForMaskModal();
             videoAssestSelection.Click();
 
-            
+
             IWebElement videoPlayIcon = _driver.FindElement(By.XPath(BaseStrings.videoPlayIconXpath));
             videoPlayIcon.Click();
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
@@ -318,7 +318,7 @@ namespace QA.Automation.UITests
             IWebElement screenfeedWidgetButton = _driver.FindElement(By.CssSelector(BaseStrings.screenFeedWidgetCssSelector));
             WaitForMaskModal();
             screenfeedWidgetButton.Click();
-            
+
             IWebElement selectScreenFeedFilter = _driver.FindElement(By.XPath("//*[@id='select-duration']"));
 
             var selectScreenFeedElement = new SelectElement(selectScreenFeedFilter);
@@ -678,7 +678,7 @@ namespace QA.Automation.UITests
 
                     if (playlistContext.Contains(expectedMessage))
                     {
-                       
+
                         WaitForMaskModal();
 
                         deletePlaylistButton.Click();
@@ -697,8 +697,8 @@ namespace QA.Automation.UITests
 
                         //TODO: Validate the playlist has been deleted. API??
                     }
-                   
-                        //Logout();//here
+
+                    //Logout();//here
 
                 }
                 else
@@ -764,36 +764,68 @@ namespace QA.Automation.UITests
 
             IWebElement sendButton = GetElement(By.CssSelector(sendButtonCssSelector));
             WaitForMaskModal();
+
             sendButton.Click();
 
             var newHtml = _driver.PageSource;
 
-            if (newHtml.Contains("error"))
+
+            newHtml.ToString();
+
+
+
+            if (newHtml.Contains("contactErrorInput"))
             {
+                Console.WriteLine("oops");
+
+                EmailUsFullNameInput.Clear();
+                EmailUsFullNameInput.SendKeys("Automated Tester 2");
+
+                EmailUsTitleInput.Clear();
+                EmailUsTitleInput.SendKeys("AutomatedTester@mailinator.com");
+
+                EmailUsCompanyInput.Clear();
+                EmailUsCompanyInput.SendKeys("Automated Tester 2");
+
+                EmailUsPhoneNumberInput.Clear();
+                EmailUsPhoneNumberInput.SendKeys("123-123-1234");
+
+                EmailUsEmialInput.Clear();
+                EmailUsEmialInput.SendKeys("AutomatedTester@mailinator.com");
+
+                EmailUsCommentsInput.Clear();
+                EmailUsCommentsInput.SendKeys("Automated Tester 2");
+
+                sendButton.Click();
 
             }
 
-            if (EmailUsFullNameInput.Displayed)
-            {
-                var errorFullName = GetElement(By.CssSelector("#contact-us-container > form > div:nth-child(2)")).Text;
+            WaitForMaskModal();
+
+            IWebElement ContactUsDoneButton = _driver.FindElement(By.CssSelector("#notifications-form > div > button"));
+            ContactUsDoneButton.Click();
+
+            //if (EmailUsFullNameInput.Displayed)
+            //{
+            //    var errorFullName = GetElement(By.CssSelector("#contact-us-container > form > div:nth-child(2)")).Text;
 
 
 
-                if (errorFullName.Contains("error"))
-                {
+            //    if (errorFullName.Contains("error"))
+            //    {
 
-                }
-            }
-            else if (EmailUsTitleInput.Displayed)
-            {
+            //    }
+            //}
+            //else if (EmailUsTitleInput.Displayed)
+            //{
 
-            }
-            else if (EmailUsPhoneNumberInput.Displayed)
-            {
+            //}
+            //else if (EmailUsPhoneNumberInput.Displayed)
+            //{
 
-            }
+            //}
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(20));
             //Logout();
         }
 
