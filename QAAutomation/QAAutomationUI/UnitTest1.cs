@@ -6,6 +6,7 @@ using System.Reflection;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
@@ -85,9 +86,9 @@ namespace QA.Automation.UITests
         public void WaitForMaskModal()
         {
             IWebElement maskModal = _driver.FindElement(By.ClassName("main-container-mask"));
-            //IWebElement overLayModal = _driver.FindElement(By.ClassName("lg-modal__overlay"));
+            IWebElement overLayModal = _driver.FindElement(By.ClassName("lg-modal__overlay"));
 
-            while (maskModal.Displayed)
+            while (maskModal.Displayed || overLayModal.Displayed)
             {
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
             }
@@ -273,7 +274,7 @@ namespace QA.Automation.UITests
             imageWidget.Click();
 
             IWebElement imageAssestLibrarySearchInput = _driver.FindElement(By.Id("asset-search"));
-            imageAssestLibrarySearchInput.SendKeys("chev");  //in the future this should grab the whole collection of assests and pick a random asset          
+            imageAssestLibrarySearchInput.SendKeys("dci");  //in the future this should grab the whole collection of assests and pick a random asset          
 
             IWebElement imageAssestSelection = _driver.FindElement(By.CssSelector(BaseStrings.assestCssSelector));
             WaitForMaskModal();
@@ -611,6 +612,79 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]
+        public void LogoutAfterLogin()//postive test for Test case 1456
+        {
+            //step 1
+            Login();
+
+            string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
+            string currentURL = _driver.Url;
+            _driver.Navigate().GoToUrl(url);
+
+            IWebElement logOutButton = _driver.FindElement(By.CssSelector(BaseStrings.logOutButtonCssSelector));
+            WaitForMaskModal();
+            //step 2
+            logOutButton.Click();
+
+            IWebElement logOutCancelButton = _driver.FindElement(By.CssSelector(BaseStrings.logOutCancelButtonCssSelector));
+            WaitForMaskModal();
+            //step 3
+            logOutCancelButton.Click();
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //Step 4
+            logOutButton.Click();
+
+
+            IWebElement confirmLogOutButton = _driver.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector));
+            WaitForMaskModal();
+            //step 5
+            confirmLogOutButton.Click();
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 6
+            Login();
+
+            IWebElement playerChannelDropdown = GetElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+
+            WaitForMaskModal();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 7
+            playerChannelDropdown.Click();
+
+            IWebElement LogOutChannelSelection = GetElement(By.XPath(BaseStrings.logOutChannelSelectionXPath));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 8
+            LogOutChannelSelection.Click();
+
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+            IWebElement logOutCancelButton2 = _driver.FindElement(By.CssSelector(BaseStrings.logOutCancelButtonCssSelector2));
+            WaitForMaskModal();
+            logOutCancelButton2.Click();//step 9
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            playerChannelDropdown.Click();
+            IWebElement LogOutChannelSelection2 = GetElement(By.XPath(BaseStrings.logOutChannelSelectionXPath2));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            LogOutChannelSelection2.Click();//step 10
+
+            IWebElement confirmLogOutButton2 = _driver.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector2));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            confirmLogOutButton2.Click();//step 11 
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            Login();//step 12
+
+            _driver.Quit();
+
+
+            //TODO: Assert that we are logged out based on URL and maybe the Username/password fields.
+        }
+
+        [TestCase]
         public void DeleteProtocol()
         {
             Login();
@@ -719,90 +793,196 @@ namespace QA.Automation.UITests
         [TestCase]
         public void ContactUsWithrequiredFields()
         {
+            //step 1
             Login();
-
-            string contactUsLinkCssSelector = "#interaction-nav-bar-container > div.inbc-help-menu-wrapper > ul > li:nth-child(1) > a";
-            IWebElement contactUsLink = GetElement(By.CssSelector(contactUsLinkCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            IWebElement contactUsLink = GetElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
             WaitForMaskModal();
+
+            //step 2
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             contactUsLink.Click();
 
+            IWebElement sendButton = GetElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
+            WaitForMaskModal();
+
+            //step 3 
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            sendButton.Click();
+
+            // step 4
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             IWebElement EmailUsFullNameInput = GetElement(By.Id("full-name"));
             EmailUsFullNameInput.SendKeys("Automated Tester");
+
+            //step 5
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            sendButton.Click();
+
+            //Step 6
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            IWebElement EmailUsPhoneNumberInput = GetElement(By.Id("phone"));
+            EmailUsPhoneNumberInput.SendKeys("Auto Test");
+
+            //step 7
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            sendButton.Click();
+
+            //Step 8
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            EmailUsPhoneNumberInput.Clear();
+            EmailUsPhoneNumberInput.SendKeys("1234567890");
+
+            //Step 9
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            sendButton.Click();
+
+            //Step 10
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            IWebElement EmailUsEmialInput = GetElement(By.Id("email"));
+            EmailUsEmialInput.SendKeys("Automated Tester");
+
+            //Step 11
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            sendButton.Click();
+
+            //Step 12
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            EmailUsEmialInput.Clear();
+            EmailUsEmialInput.SendKeys("test@");
+
+            //Step 13
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            sendButton.Click();
+
+            //Step 14
+            EmailUsEmialInput.Clear();
+            EmailUsEmialInput.SendKeys("test@dci");
+
+            //Step 15
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            sendButton.Click();
+
+            //Step 16
+            EmailUsEmialInput.Clear();
+            EmailUsEmialInput.SendKeys("test@dci.");
+
+            //Step 17
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            sendButton.Click();
+
+            //Step 18
+            EmailUsEmialInput.Clear();
+            EmailUsEmialInput.SendKeys("test@dci.c");
+
+            //Step 19
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            sendButton.Click();
+
+            //Step 20
+            EmailUsEmialInput.Clear();
+            EmailUsEmialInput.SendKeys("test@dci.com");
+
+            //Step 21
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            sendButton.Click();
+
+            //Step 22
+            IWebElement EmailUsCommentsInput = GetElement(By.Id("comments"));
+            EmailUsCommentsInput.SendKeys("Automated Tester");
+
+            //Step 23
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            sendButton.Click();
+
+            //Step 24
+            IWebElement ContactUsDoneButton = _driver.FindElement(By.CssSelector("#notifications-form > div > button"));
+            ContactUsDoneButton.Click();
 
             Logout();
         }
 
-        [TestCase]
+        [TestCase]//Test Case #1459
         public void ContactUsWithAllFields()
         {
+            //Step 1
             Login();
 
-            string contactUsLinkCssSelector = "#interaction-nav-bar-container > div.inbc-help-menu-wrapper > ul > li:nth-child(1) > a";
-            string sendButtonCssSelector = "#contact-us-container > form > div.lg-modal__actions > button";
-
-            IWebElement contactUsLink = GetElement(By.CssSelector(contactUsLinkCssSelector));
+            //Step 2
+            IWebElement contactUsLink = GetElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
             WaitForMaskModal();
             contactUsLink.Click();
 
+            //Step 3
             IWebElement EmailUsFullNameInput = GetElement(By.Id("full-name"));
             EmailUsFullNameInput.SendKeys("Automated Tester");
 
+            //Step 4
             IWebElement EmailUsTitleInput = GetElement(By.Id("title"));
             EmailUsTitleInput.SendKeys("Automated Tester");
 
+            //Step 5
             IWebElement EmailUsCompanyInput = GetElement(By.Id("company"));
             EmailUsCompanyInput.SendKeys("Automated Tester");
 
+            //Step 6
             IWebElement EmailUsPhoneNumberInput = GetElement(By.Id("phone"));
-            EmailUsPhoneNumberInput.SendKeys("Automated Tester");
+            EmailUsPhoneNumberInput.SendKeys("9876543210");
 
+            //Step 7
             IWebElement EmailUsEmialInput = GetElement(By.Id("email"));
-            EmailUsEmialInput.SendKeys("Automated Tester");
+            EmailUsEmialInput.SendKeys("AutomatedTester@dcim.com");
 
+            //Step 8
             IWebElement EmailUsCommentsInput = GetElement(By.Id("comments"));
             EmailUsCommentsInput.SendKeys("Automated Tester");
 
-            IWebElement sendButton = GetElement(By.CssSelector(sendButtonCssSelector));
+            IWebElement sendButton = GetElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
             WaitForMaskModal();
-
+            //Step 9
             sendButton.Click();
 
-            var newHtml = _driver.PageSource;
+            //var newHtml = _driver.PageSource;
 
 
-            newHtml.ToString();
+            //newHtml.ToString();
 
 
 
-            if (newHtml.Contains("contactErrorInput"))
-            {
-                Console.WriteLine("oops");
+            //if (newHtml.Contains("contactErrorInput"))
+            //{
+            //    EmailUsFullNameInput.Clear();
+            //    EmailUsFullNameInput.SendKeys("Automated Tester 2");
 
-                EmailUsFullNameInput.Clear();
-                EmailUsFullNameInput.SendKeys("Automated Tester 2");
+            //    EmailUsTitleInput.Clear();
+            //    EmailUsTitleInput.SendKeys("AutomatedTester@mailinator.com");
 
-                EmailUsTitleInput.Clear();
-                EmailUsTitleInput.SendKeys("AutomatedTester@mailinator.com");
+            //    EmailUsCompanyInput.Clear();
+            //    EmailUsCompanyInput.SendKeys("Automated Tester 2");
 
-                EmailUsCompanyInput.Clear();
-                EmailUsCompanyInput.SendKeys("Automated Tester 2");
+            //    EmailUsPhoneNumberInput.Clear();
+            //    EmailUsPhoneNumberInput.SendKeys("123-123-1234");
 
-                EmailUsPhoneNumberInput.Clear();
-                EmailUsPhoneNumberInput.SendKeys("123-123-1234");
+            //    EmailUsEmialInput.Clear();
+            //    EmailUsEmialInput.SendKeys("AutomatedTester@mailinator.com");
 
-                EmailUsEmialInput.Clear();
-                EmailUsEmialInput.SendKeys("AutomatedTester@mailinator.com");
+            //    EmailUsCommentsInput.Clear();
+            //    EmailUsCommentsInput.SendKeys("Automated Tester 2");
 
-                EmailUsCommentsInput.Clear();
-                EmailUsCommentsInput.SendKeys("Automated Tester 2");
-
-                sendButton.Click();
-
-            }
+            //    sendButton.Click();
+            //}
 
             WaitForMaskModal();
 
             IWebElement ContactUsDoneButton = _driver.FindElement(By.CssSelector("#notifications-form > div > button"));
+            //Step 10
             ContactUsDoneButton.Click();
 
             //if (EmailUsFullNameInput.Displayed)
@@ -825,9 +1005,275 @@ namespace QA.Automation.UITests
 
             //}
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(20));
-            //Logout();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 11
+            Logout();
         }
+
+        [TestCase]//Test Case #1460
+        public void PlayersStatus()
+        {
+            //Step 1
+            Login();
+
+            //Step 2 select players tab
+            IWebElement playersTab = _driver.FindElement(By.CssSelector("#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(3) > a > span"));
+            playersTab.Click();
+            WaitForMaskModal();
+
+            //Step 3 confirm that each player contains one status---needs work TODO
+            string playersGraph = _driver.FindElement(By.CssSelector("#players-table > tbody")).Text;
+
+            String expectedMessage = "ONLINE";
+            Assert.True(playersGraph.Contains(expectedMessage));
+
+            //Step 4 select a player
+            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-LG-QAROB"));
+            playerSelect.Click();
+
+            //Step 5
+            playersTab.Click();
+            WaitForMaskModal();
+
+            //Step 6
+            IWebElement playerSelect2 = _driver.FindElement(By.CssSelector("#player-LG-SCOTT"));
+            playerSelect2.Click();
+
+            //Step 7
+            playersTab.Click();
+            WaitForMaskModal();
+
+            //Step 8 select a player that is not set up...---needs work TODO
+
+            //Step 9
+            playersTab.Click();
+            WaitForMaskModal();
+
+            //Step 10
+            Logout();
+        }
+
+        [TestCase]// test case $ 1463
+        public void PlayerEdits()
+        {
+            //Step 1
+            Login();
+
+            //step 2
+            IWebElement playersTab = _driver.FindElement(By.CssSelector(BaseStrings.playersTabCssSelector));
+            playersTab.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+            //Step 3 
+            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-LG-QAROB"));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playerSelect.Click();
+
+            //Step 4 
+            IWebElement playerInfoDownArrow = _driver.FindElement(By.CssSelector(BaseStrings.playerInfoDownArrowCssSelectors));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playerInfoDownArrow.Click();
+
+            //Step 5
+            IWebElement playerInfoUpArrow = _driver.FindElement(By.CssSelector(BaseStrings.playerInfoUpArrowCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            playerInfoUpArrow.Click();
+
+            //Step 6
+            IWebElement playerInfoX = _driver.FindElement(By.CssSelector(BaseStrings.playerInfoXCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playerInfoX.Click();
+
+            //Step 7,8,& 9 are skipped since there isnt a products section right now
+            //Step 10
+            IWebElement deviceDownArrow = _driver.FindElement(By.CssSelector(BaseStrings.deviceDownArrowCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            deviceDownArrow.Click();
+
+            //Step 11
+            IWebElement deviceUpArrow = _driver.FindElement(By.CssSelector(BaseStrings.deviceUpArrowCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            deviceUpArrow.Click();
+
+            //Step 12 
+            IWebElement xOnDevice = _driver.FindElement(By.CssSelector(BaseStrings.xOnDeviceCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            xOnDevice.Click();
+
+            //Step 13 select down arrow for location
+            IWebElement locationDownArrow = _driver.FindElement(By.CssSelector(BaseStrings.locationDownArrowCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            locationDownArrow.Click();
+
+            //Step 14 
+            IWebElement locationUpArrow = _driver.FindElement(By.CssSelector(BaseStrings.locationUpArrowCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            locationUpArrow.Click();
+
+            //Step 15
+            IWebElement locationXButton = _driver.FindElement(By.CssSelector(BaseStrings.locationXButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            locationXButton.Click();
+
+            //Step 16
+            IWebElement playlistsButton = _driver.FindElement(By.XPath(BaseStrings.playlistsButtonXPath));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistsButton.Click();
+
+            //Step 17
+            IWebElement whatsPlayingDownArrow = _driver.FindElement(By.CssSelector(BaseStrings.whatsPlayingDownArrowCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            whatsPlayingDownArrow.Click();
+
+            //Step 18
+            IWebElement whatsPlayingUPArrow = _driver.FindElement(By.CssSelector(BaseStrings.whatsPlayingUpArrowCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            whatsPlayingUPArrow.Click();
+
+            //Step 19
+            IWebElement whatsPlayingXButton = _driver.FindElement(By.CssSelector(BaseStrings.whatsPlayingXButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            whatsPlayingXButton.Click();
+
+            //Step 20
+            IWebElement playlistInfoDownArrow = _driver.FindElement(By.CssSelector(BaseStrings.playlistInfoDownArrowCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistInfoDownArrow.Click();
+
+            //Step 21
+            IWebElement playlistInfoUpArrow = _driver.FindElement(By.XPath(BaseStrings.playlistInfoUpArrowXpath));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistInfoUpArrow.Click();
+
+            //Step 22
+            IWebElement playlistInfoXButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistInfoXButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistInfoXButton.Click();
+
+            //Step 23,24,25,26,27,28,29,30,31 are not present on frontend that i can see as of 09/18/18
+
+            //Step 31
+            Logout();
+        }
+
+        [TestCase]
+        public void PlayerEditDevice()
+        {
+            //Step 1
+            Login();
+
+            //Step 2 select player tab
+            IWebElement playersTab = _driver.FindElement(By.CssSelector(BaseStrings.playersTabCssSelector));
+            playersTab.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+            //Step 3 Select Any player
+            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-LG-QAROB"));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playerSelect.Click();
+
+            //Step 4 From the Device card, slect the ping device button
+            IWebElement devicePingDeviceButton = _driver.FindElement(By.XPath(BaseStrings.devicePingDeviceButtonXPath));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            devicePingDeviceButton.Click();
+
+            //Step 5 Double click on the image that display under the Ping Data
+            IWebElement pingDataImage = _driver.FindElement(By.Id("sampleScreen"));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //new SelectElement(_driver.FindElement(By.Id("sampleScreen")).Click());
+            new Actions(_driver).DoubleClick(_driver.FindElement(By.Id("sampleScreen"))).Perform();
+
+            //Step 6 Select cancel
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            IAlert alert = _driver.SwitchTo().Alert();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            alert.Dismiss();
+
+            //Step 7 Double click on the image that display under ping data
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            new Actions(_driver).DoubleClick(_driver.FindElement(By.Id("sampleScreen"))).Perform();
+
+            //Step 8 Select Ok
+            IAlert alert2 = _driver.SwitchTo().Alert();
+            alert2.Accept();
+
+            //Step 9 Select refresh button
+            IWebElement pageRefreshButton = _driver.FindElement(By.CssSelector(BaseStrings.pageRefreshButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            pageRefreshButton.Click();
+
+            //Step 10 from the device card , select the refresh app button
+            IWebElement deviceRefreshAppButton = _driver.FindElement(By.CssSelector(BaseStrings.deviceRefreshAppButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            deviceRefreshAppButton.Click();
+            IAlert alert3 = _driver.SwitchTo().Alert();
+            alert3.Accept();
+            //Step 11 From the device card select the restart app button
+            IWebElement deviceRestartAppButton = _driver.FindElement(By.CssSelector(BaseStrings.deviceRestartAppButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            deviceRestartAppButton.Click();
+            IAlert alert4 = _driver.SwitchTo().Alert();
+            alert4.Accept();
+
+            //Step 12 From the device card, select the restart device button
+            IWebElement deviceRestartDeviceButton = _driver.FindElement(By.CssSelector(BaseStrings.deviceRestartDeviceButtonCssSelector));
+            
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            deviceRestartDeviceButton.Click();
+            IAlert alert5 = _driver.SwitchTo().Alert();
+            alert5.Accept();
+
+            //Step 13 LOGout
+            Logout();
+
+        }
+
+        [TestCase]
+        public void PlayerAddNewChannel()
+        {
+            //step 1
+            Login();
+            //Step 2 select player tab
+            IWebElement playersTab = _driver.FindElement(By.CssSelector(BaseStrings.playersTabCssSelector));
+            playersTab.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 3 Select Any player
+            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-LG-QAROB"));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playerSelect.Click();
+            //step 4 channelJoinButtonCssSelector
+            IWebElement channelJoinButton = _driver.FindElement(By.CssSelector(BaseStrings.channelJoinButtonCssSelector));//nothing should happen
+            //Step 5
+            IWebElement channelFilterInput = _driver.FindElement(By.Id("channel-input"));
+            channelFilterInput.SendKeys("test");
+            //Step 6
+            channelJoinButton.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            IAlert alert = _driver.SwitchTo().Alert();
+            alert.Accept();
+
+            //Step 7 \
+            channelFilterInput.Clear();
+            channelFilterInput.SendKeys("test filter");
+            //Step 8 
+            channelJoinButton.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //IAlert wishToJoinDeviceAlert = _driver.SwitchTo().Alert();
+            alert.Accept();
+            //Step 9
+            channelFilterInput.SendKeys("test filter 2");
+            //Step 10
+            channelJoinButton.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            alert.Accept();
+            //Step 11  
+            IWebElement pageRefreshButton = _driver.FindElement(By.CssSelector(BaseStrings.pageRefreshButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            pageRefreshButton.Click();
+            //step 12
+            Logout();
+        }
+
 
         [TearDown]
         public void CleanUp()
@@ -872,6 +1318,9 @@ namespace QA.Automation.UITests
                 default:
                     throw new ArgumentOutOfRangeException(nameof(byType), byType, null);
             }
+
+           
+
 
             try
             {

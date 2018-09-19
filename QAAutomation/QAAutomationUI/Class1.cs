@@ -5,7 +5,7 @@ using System.Text;
 
 namespace QA.Automation.UITests
 {
-    
+
     public class BaseStrings
     {
         public static string newPlaylistDiv = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div";
@@ -43,7 +43,10 @@ namespace QA.Automation.UITests
         public static string uploadFromPCCssSelector = "#asset-upload-form > div > div > div > p > button";
         public static string uploadDialogCloseButtonCssSelector = "#asset-upload-modal > div > div.lg-modal__wrapper > div > button";
         public static string logOutButtonCssSelector = "#interaction-nav-bar-container > div.inbc-help-menu-wrapper > ul > li:nth-child(2) > a > span";
+        public static string logOutCancelButtonCssSelector = "#logout-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div > button:nth-child(1)";
+        public static string logOutCancelButtonCssSelector2 = "#logout-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div > button:nth-child(1)";
         public static string logoutConfirmCssSelector = "#logout-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div > button:nth-child(2)";
+        public static string logoutConfirmCssSelector2 = "#logout-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div > button:nth-child(2)";
         public static string playlistSideBarMenuCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a";
         public static string deletePlaylistButtonCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button:nth-child(3)";
         public static string newPlaylistDeleteButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button:nth-child(3)";
@@ -52,7 +55,32 @@ namespace QA.Automation.UITests
         public static string assetBrowseComputerCssSelector = "#asset-upload-form > div > div > div > p > button";//weatherEditButtonCssSelector
         public static string playerChannelDropdownCssSelector = "#interaction-info-bar-container > div > div > div > div.iibcu-name > span:nth-child(2) > span.iibcun-client";
         public static string gmChannelSelectionXPath = "//*[@id='interaction-info-bar-container']/div/div/div/div[3]/ul/li[3]/a/span";
-        //public static string weatherEditButtonCssSelector = "#playlist-container > div.playlist-content-wrapper.js-playlist-content > div > div.lgfe-card-matrix.js-drag-drop-playlist.lgfe-card-matrix--layout-row > div:nth-child(3) > div > div.\\5b.lgfe-cm-utilities.lgfe-cm-utilities--column.\\5d.lgfe-cm-description > div > button.lgfe-cm-utility-button.button-unstyled.js-playlist-edit";
-        //string playlistSideBarMenuCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a > span";
+        public static string logOutChannelSelectionXPath = "//*[@id='interaction-info-bar-container']/div/div/div/div[3]/ul/li[2]/a/span";
+        public static string logOutChannelSelectionXPath2 = "//*[@id='interaction-info-bar-container']/div/div/div/div[3]/ul/li[2]/a/span";
+        public static string contactUsLinkCssSelector = "#interaction-nav-bar-container > div.inbc-help-menu-wrapper > ul > li:nth-child(1) > a";
+        public static string sendButtonCssSelector = "#contact-us-container > form > div.lg-modal__actions > button";
+        public static string playersTabCssSelector = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(3) > a > span";
+        public static string playerInfoDownArrowCssSelectors = "#player-container > div > div.lgfe-tile-grid-wrapper > div.lgfe-tile.lgfe-tile-grid-item.lgfe-tile-grid-top-item > div.lgfe-tile-button-wrapper > div:nth-child(2) > i";
+        public static string playerInfoUpArrowCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div.lgfe-tile.lgfe-tile-grid-item.lgfe-tile-grid-top-item > div.lgfe-tile-button-wrapper > div:nth-child(3) > i";
+        public static string playerInfoXCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div.lgfe-tile.lgfe-tile-grid-item.lgfe-tile-grid-top-item > div.lgfe-tile-button-wrapper > div:nth-child(4) > i";
+        public static string deviceDownArrowCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div.lgfe-tile-button-wrapper > div:nth-child(1) > i";
+        public static string deviceUpArrowCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div.lgfe-tile-button-wrapper > div:nth-child(2) > i";
+        public static string xOnDeviceCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div.lgfe-tile-button-wrapper > div:nth-child(3) > i";
+        public static string locationDownArrowCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div.lgfe-tile-button-wrapper > div:nth-child(1) > i";
+        public static string locationUpArrowCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div.lgfe-tile-button-wrapper > div:nth-child(2) > i";
+        public static string locationXButtonCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div.lgfe-tile-button-wrapper > div:nth-child(3) > i";
+        public static string playlistsButtonXPath = "//*[@id='player-container']/div/div[1]/div[2]/button[2]/div";
+        public static string whatsPlayingDownArrowCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(3) > div:nth-child(1) > div > div.lgfe-tile-button-wrapper > div:nth-child(1) > i";
+        public static string whatsPlayingUpArrowCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(3) > div:nth-child(1) > div > div.lgfe-tile-button-wrapper > div:nth-child(2) > i";
+        public static string whatsPlayingXButtonCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(3) > div:nth-child(1) > div > div.lgfe-tile-button-wrapper > div:nth-child(3) > i";
+        public static string playlistInfoDownArrowCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(3) > div:nth-child(2) > div > div.lgfe-tile-button-wrapper > div:nth-child(1) > i";
+        public static string playlistInfoUpArrowXpath = "//*[@id='player-container']/div/div[2]/div[3]/div[2]/div/div[1]/div[2]/i";
+        public static string playlistInfoXButtonCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(3) > div:nth-child(2) > div > div.lgfe-tile-button-wrapper > div:nth-child(3) > i";
+        public static string devicePingDeviceButtonXPath = "//*[@id='player-container']/div/div[2]/div[2]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]";
+        public static string deviceRefreshAppButtonCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div.lgfe-tile-grid-item-content-wrapper.lgfe-tile-max > div:nth-child(1) > div.device-button-wrapper > div:nth-child(2)";
+        public static string pageRefreshButtonCssSelector = "#player-container > div > div.pdw-utility-row > div.pdw-utility-row-bottom > div > div > i";
+        public static string deviceRestartAppButtonCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div.lgfe-tile-grid-item-content-wrapper.lgfe-tile-max > div:nth-child(1) > div.device-button-wrapper > div:nth-child(2)";
+        public static string deviceRestartDeviceButtonCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div.lgfe-tile-grid-item-content-wrapper.lgfe-tile-max > div:nth-child(1) > div.device-button-wrapper > div:nth-child(4)";
+        public static string channelJoinButtonCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div.lgfe-tile-grid-item-content-wrapper.lgfe-tile-max > div.lgfe-tile-grid-item-label-text-wrapper.player-filter-entry-wrapper > button";
     }
 }
