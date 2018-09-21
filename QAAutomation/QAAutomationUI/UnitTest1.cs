@@ -98,15 +98,45 @@ namespace QA.Automation.UITests
             //}
         }
 
+        [TestCase] //Test case #46
         public void CreatePlaylists()
         {
+            //step 1 login
+            Login();//remove to do full test
+            
             IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
             playlistsSideBarMenuButton.Click();
             WaitForMaskModal();
-
+            //step 2
             IWebElement addPlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
             addPlaylistButton.Click();
+            //Step 3 spell check all content (fields/values), including place holder text
+            //Step 4 Select 'X' to close window
+            IWebElement playlistAddXButton = _driver.FindElement(By.CssSelector(BaseStrings.playListXoutCssSelector));
+            playlistAddXButton.Click();
+            //Step 5 Select '+' to add new playlist
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            addPlaylistButton.Click();
+            //Step 6 Click outside the window to close it 
+            IWebElement sideBarClick = _driver.FindElement(By.CssSelector(BaseStrings.sideBarClickCssSelector));
+            sideBarClick.Click();
+            //Step 7 Select '+' to add new playlist
+            addPlaylistButton.Click();
+            //Step 8 Select Create a Custom Playlist - Filtered Check box
+
+            //Step 9 Select Save
+            //Step 10 Select Ok
+            //Step 11 Enter a playlist name
+            //Step 12 Select save
+            //Step 13 Enter location name
+            //Step 14 Select save
+            //Step 15 Select device drop down 
+            //Step 16 Select all devices
+            //Step 17 Select save
+            //Step 18 New playlist has been created
+            //Step 19 Select '+' to add a new playlist
+            //Step 20 Logout
 
             IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
             //TODO: send to base strings
@@ -469,7 +499,6 @@ namespace QA.Automation.UITests
 
         }
 
-
         [TestCase]
         public void Login()
         {
@@ -520,7 +549,6 @@ namespace QA.Automation.UITests
             //}
         }
 
-
         [TestCase]
         public void LiveguideAssets()
         {
@@ -541,6 +569,7 @@ namespace QA.Automation.UITests
             AssetUploadingVideo();
 
         }
+
         public void AssetUploadingImage()
         {
             IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
@@ -1228,7 +1257,7 @@ namespace QA.Automation.UITests
 
         }
 
-        [TestCase]
+        [TestCase]//Test case #1469
         public void PlayerAddNewChannel()
         {
             //step 1
@@ -1249,23 +1278,31 @@ namespace QA.Automation.UITests
             //Step 6
             channelJoinButton.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            IAlert alert = _driver.SwitchTo().Alert();
-            alert.Accept();
-
-            //Step 7 \
+            //IAlert alert = _driver.SwitchTo().Alert();
+            //alert.Accept();
+            //IWebElement xDeleteFilterButton = _driver.FindElement(By.CssSelector(BaseStrings.xOutButtonCssSelector));
+            //xDeleteFilterButton.Click();
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //alert.Accept();
+            //Step 7 
             channelFilterInput.Clear();
             channelFilterInput.SendKeys("test filter");
             //Step 8 
             channelJoinButton.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //IAlert wishToJoinDeviceAlert = _driver.SwitchTo().Alert();
-            alert.Accept();
+            //alert.Accept();
+            //xDeleteFilterButton.Click();
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 9
+            channelFilterInput.Clear();
             channelFilterInput.SendKeys("test filter 2");
             //Step 10
             channelJoinButton.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            alert.Accept();
+            //alert.Accept();
+            //xDeleteFilterButton.Click();
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 11  
             IWebElement pageRefreshButton = _driver.FindElement(By.CssSelector(BaseStrings.pageRefreshButtonCssSelector));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
@@ -1274,6 +1311,74 @@ namespace QA.Automation.UITests
             Logout();
         }
 
+        [TestCase]//Test case 1487
+        public void PlayerDeleteChannel()
+        {
+            //step 1
+            Login();
+            //Step 2 select player tab
+            IWebElement playersTab = _driver.FindElement(By.CssSelector(BaseStrings.playersTabCssSelector));
+            playersTab.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 3 Select Any player
+            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-LG-QAROB"));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playerSelect.Click();
+            //Step 4 
+            IWebElement xOutButton1 = _driver.FindElement(By.CssSelector(BaseStrings.xOutButton1CssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(15));
+            xOutButton1.Click();
+            IAlert alert = _driver.SwitchTo().Alert();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            alert.Dismiss();
+            //Step 5
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(15));
+            xOutButton1.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            alert.Dismiss();
+            //Step 6
+            IWebElement pageRefreshButton = _driver.FindElement(By.CssSelector(BaseStrings.pageRefreshButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            pageRefreshButton.Click();
+            //Step 7
+            Logout();
+        }
+
+        [TestCase]//Test case 1488
+        public void PlayerScreenConnect()
+        {
+            //Step 1
+            Login();
+            //Step 2 select player tab
+            IWebElement playersTab = _driver.FindElement(By.CssSelector(BaseStrings.playersTabCssSelector));
+            playersTab.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 3 Hover over the screen connect icon
+            //step 4
+            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-LG-QAROB"));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playerSelect.Click();
+            //Step 5 Hover over screen connect icon
+            //Step 6
+            IWebElement screenConnectButton = _driver.FindElement(By.CssSelector(BaseStrings.screenConnectCssSelector));
+            screenConnectButton.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 7
+            string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
+            string currentURL = _driver.Url;
+            _driver.Navigate().GoToUrl(url);
+
+            var tabs = _driver.WindowHandles;
+            if (tabs.Count > 1)
+            {
+                _driver.SwitchTo().Window(tabs[1]);
+                _driver.Close();
+                _driver.SwitchTo().Window(tabs[0]);
+            }
+            //Step 8
+            Logout();
+
+        }
 
         [TearDown]
         public void CleanUp()
