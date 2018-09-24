@@ -86,6 +86,7 @@ namespace QA.Automation.UITests
         public static string xOutButton1CssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div.lgfe-tile-grid-item-content-wrapper.lgfe-tile-max > div:nth-child(1) > div.lg-modal__field > div > div:nth-child(2) > button > span";
         public static string screenConnectCssSelector = "#player-container > div > div.pdw-utility-row > div.pdw-utility-row-top > div.pdwurt-status-wrapper > div > a > i";
         public static string playListXoutCssSelector = "#playlist-info-modal > div > div > div.lg-modal__container > button > span";
-        public static string sideBarClickCssSelector = "#interaction-nav-bar-container > div.site-info";
+        public static string offClickCssSelector = "#playlist-info-modal > div > div > div.lg-modal__overlay";
+        public static string createCustomPlaylistCssSelector = "#playlist-info-form > div.lg-modal__section > div.lg-modal__field.lgfe-input-checkbox > label > span.lgfe-input-checkbox__custom-input";
     }
 }

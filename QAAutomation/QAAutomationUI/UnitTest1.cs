@@ -103,7 +103,7 @@ namespace QA.Automation.UITests
         {
             //step 1 login
             Login();//remove to do full test
-            
+
             IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
             playlistsSideBarMenuButton.Click();
@@ -117,63 +117,121 @@ namespace QA.Automation.UITests
             playlistAddXButton.Click();
             //Step 5 Select '+' to add new playlist
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            addPlaylistButton.Click();
+            IWebElement addPlaylistButton1 = _driver.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
+            addPlaylistButton1.Click();
             //Step 6 Click outside the window to close it 
-            IWebElement sideBarClick = _driver.FindElement(By.CssSelector(BaseStrings.sideBarClickCssSelector));
-            sideBarClick.Click();
+            IWebElement offClick = _driver.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
+            offClick.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 7 Select '+' to add new playlist
-            addPlaylistButton.Click();
+            IWebElement addPlaylistButton2 = _driver.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
+            addPlaylistButton2.Click();
             //Step 8 Select Create a Custom Playlist - Filtered Check box
+            IWebElement createCustomPlaylistCheckbox = _driver.FindElement(By.CssSelector(BaseStrings.createCustomPlaylistCssSelector));
+            createCustomPlaylistCheckbox.Click();
 
             //Step 9 Select Save
-            //Step 10 Select Ok
-            //Step 11 Enter a playlist name
-            //Step 12 Select save
-            //Step 13 Enter location name
-            //Step 14 Select save
-            //Step 15 Select device drop down 
-            //Step 16 Select all devices
-            //Step 17 Select save
-            //Step 18 New playlist has been created
-            //Step 19 Select '+' to add a new playlist
-            //Step 20 Logout
-
-            IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
-            //TODO: send to base strings
-            string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
-
-            playlistAddForm.SendKeys(playlistName);
-
-            string filterID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
-
-            IWebElement selectFilter = GetElement(By.XPath(filterID));
-
-            //create select element object 
-            selectFilter.SendKeys("chevy" + Keys.Enter);
-
-            var selectElement = new SelectElement(selectFilter);
-            selectElement.SelectByText("Chevy TV");
-
             IWebElement saveButton = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
             saveButton.Click();
+            //Step 10 Select Ok
+            IAlert alert = _driver.SwitchTo().Alert();
+            alert.Accept();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
-            //TODO: Assert to check if the playlist was actually playlist got created. 
+            //Step 11 Enter a playlist name
+            string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
+            IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
+            playlistAddForm.SendKeys(playlistName);
 
-            IWebElement newPlaylist = GetElement(ByType.ClassName, "lgfe-cm-card");
+            //Step 12 Select save
+            saveButton.Click();
+            IAlert mustSelectLocaiton = _driver.SwitchTo().Alert();
+            mustSelectLocaiton.Accept();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+
+            //Step 13 Enter location name
+            IWebElement locationInput = _driver.FindElement(By.Id("select-filter-location"));
+            locationInput.SendKeys("System Test Location Two Buick");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            IWebElement selectLocationFromDropDown = _driver.FindElement(By.CssSelector("#eac-container-select-filter-location > ul > li"));
+            selectLocationFromDropDown.Click();
+            /* locationInput.SendKeys(Keys.Down);
+             //IWebElement selectLocationFilter = _driver.FindElement(By.Id("select-filter-location-device"));
+             ////create select element object 
+             //var selectLocationElement = new SelectElement(selectLocationFilter);
+             //selectLocationElement.SelectByText("Test");
+
+             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+             //string filterID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
+             //IWebElement selectFilter = GetElement(By.XPath(filterID));
+             //create select element object 
+             //selectFilter.SendKeys("chevy" + Keys.Enter);
+             */
+
+            //Step 14 Select save
+            IWebElement saveButton1 = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+            saveButton1.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            IAlert alert1 = _driver.SwitchTo().Alert();
+            alert1.Accept();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+            //Step 15 Select device drop down
+            IWebElement selectLocationDeviceFilter = _driver.FindElement(By.Id("select-filter-location-device"));
+            //create select element object 
+            var selectLocationDeviceElement = new SelectElement(selectLocationDeviceFilter);
+
+            //Step 16 Select all devices
+            selectLocationDeviceElement.SelectByValue("all");
+            //Step 17 Select save
+            saveButton.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 18 New playlist has been created
+
+            //Step 19 Select '+' to add a new playlist
+            IWebElement addPlaylistButton3 = _driver.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            addPlaylistButton3.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 20 Logout
+            Logout();
+
+            //TODO: send to base strings
+            //string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
+
+            //playlistAddForm.SendKeys(playlistName);
+
+            //string filterID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
+
+            //IWebElement selectFilter = GetElement(By.XPath(filterID));
+
+            ////create select element object 
+            //selectFilter.SendKeys("chevy" + Keys.Enter);
+
+            //var selectElement = new SelectElement(selectFilter);
+            //selectElement.SelectByText("Chevy TV");
+
+            ////IWebElement saveButton = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+            //saveButton.Click();
+
+            ////TODO: Assert to check if the playlist was actually playlist got created. 
+
+            //IWebElement newPlaylist = GetElement(ByType.ClassName, "lgfe-cm-card");
 
 
 
-            //Assert.IsTrue(newPlaylist.Displayed);
-            //Assert.AreEqual(newPlaylist, "Automated Playlist Test");
+            ////Assert.IsTrue(newPlaylist.Displayed);
+            ////Assert.AreEqual(newPlaylist, "Automated Playlist Test");
 
-            //TODO: Assert calling API.
-            //string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
+            ////TODO: Assert calling API.
+            ////string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
 
-            //Assert.AreEqual(newPlaylist, apiPlayList);
+            ////Assert.AreEqual(newPlaylist, apiPlayList);
 
 
-            //TODO: Update this assert to take into account the environment.
-            Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
+            ////TODO: Update this assert to take into account the environment.
+            //Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
+            //Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
         }
 
         public void AddWeatherWidget()
@@ -1246,7 +1304,7 @@ namespace QA.Automation.UITests
 
             //Step 12 From the device card, select the restart device button
             IWebElement deviceRestartDeviceButton = _driver.FindElement(By.CssSelector(BaseStrings.deviceRestartDeviceButtonCssSelector));
-            
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             deviceRestartDeviceButton.Click();
             IAlert alert5 = _driver.SwitchTo().Alert();
@@ -1424,7 +1482,7 @@ namespace QA.Automation.UITests
                     throw new ArgumentOutOfRangeException(nameof(byType), byType, null);
             }
 
-           
+
 
 
             try
