@@ -98,7 +98,7 @@ namespace QA.Automation.UITests
             //}
         }
 
-        [TestCase] //Test case #46
+        [TestCase] //Test case #580
         public void CreatePlaylists()
         {
             //step 1 login
@@ -196,40 +196,20 @@ namespace QA.Automation.UITests
             //Step 20 Logout
             Logout();
 
-            //TODO: send to base strings
-            //string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
+            
+            //TODO: Assert to check if the playlist was actually playlist got created. 
 
-            //playlistAddForm.SendKeys(playlistName);
+            //IWebElement newPlaylist = GetElement(ByType.ClassName, "lgfe-cm-card");          
 
-            //string filterID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
+            //Assert.IsTrue(newPlaylist.Displayed);
+            //Assert.AreEqual(newPlaylist, "Automated Playlist Test");
 
-            //IWebElement selectFilter = GetElement(By.XPath(filterID));
+            //TODO: Assert calling API.
+            //string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
 
-            ////create select element object 
-            //selectFilter.SendKeys("chevy" + Keys.Enter);
+            //Assert.AreEqual(newPlaylist, apiPlayList);
 
-            //var selectElement = new SelectElement(selectFilter);
-            //selectElement.SelectByText("Chevy TV");
-
-            ////IWebElement saveButton = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
-            //saveButton.Click();
-
-            ////TODO: Assert to check if the playlist was actually playlist got created. 
-
-            //IWebElement newPlaylist = GetElement(ByType.ClassName, "lgfe-cm-card");
-
-
-
-            ////Assert.IsTrue(newPlaylist.Displayed);
-            ////Assert.AreEqual(newPlaylist, "Automated Playlist Test");
-
-            ////TODO: Assert calling API.
-            ////string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
-
-            ////Assert.AreEqual(newPlaylist, apiPlayList);
-
-
-            ////TODO: Update this assert to take into account the environment.
+            //TODO: Update this assert to take into account the environment.
             //Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
             //Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
         }
