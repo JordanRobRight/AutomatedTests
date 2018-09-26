@@ -76,40 +76,78 @@ namespace QA.Automation.UITests
             Login();
             //Step 2 select edit icon
             IWebElement playlistEditButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistEditButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistEditButton.Click();
             //Step 3 spell check all content
 
             //step 4 select playlist name text box and edit name
             IWebElement playlistTitleInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistTitleInputCssSelector));
             playlistTitleInput.Clear();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistTitleInput.SendKeys("Edited Automated Test Playlist");
             //Step 5 select save
             IWebElement playlistSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistEditSaveButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistSaveButton.Click();
             //Step 6 Select edit for any playlist
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
             playlistEditButton.Click();
             //step 7 select playlist description text box and edit description
             IWebElement playlistDescriptionTextArea = _driver.FindElement(By.CssSelector("#form-textarea"));
+            playlistDescriptionTextArea.SendKeys("this is a test");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //step 8 select save
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistSaveButton.Click();
             //step 9 select edit icon for any playlist
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
             playlistEditButton.Click();
             //step 10 select add tag text box and enter any tag name
             IWebElement playlistEditTagsSection = _driver.FindElement(By.CssSelector(BaseStrings.playlistTagSectionCssSelector));
             playlistEditTagsSection.Clear();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistEditTagsSection.SendKeys("Edited Tags Section");
 
             //step 11 select add button
             IWebElement playlistTagAddButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistTagAddButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
             playlistTagAddButton.Click();
             //step 12 select save
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            playlistSaveButton.Click();
             //step 13 Select edit icon
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            playlistEditButton.Click();
             //step 14 Delete any tag
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistEditTagsSection.Clear();
             //step 15 select save
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            playlistSaveButton.Click();
             //step 16 select edit icon for same playlist
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            playlistEditButton.Click();
             //step 17 close 'x' edit window
+            IWebElement playlistEditCloseButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistEditCloseButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            playlistEditCloseButton.Click();
             //step 18 select edit icon for same playlist
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            playlistEditButton.Click();
             //Step 19 click outside window
+            IWebElement offClick = _driver.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            offClick.Click();
             //step 20 logout
             Logout();
 

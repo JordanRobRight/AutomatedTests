@@ -93,5 +93,7 @@ namespace QA.Automation.UITests
         public static string playlistEditSaveButtonCssSelector = "#playlist-info-form > div.lg-modal__actions > button";
         public static string playlistTagSectionCssSelector = "#form-tags";
         public static string playlistTagAddButtonCssSelector = "#playlist-info-form > div:nth-child(2) > div:nth-child(4) > div.pim-tags-wrapper > button";
+        public static string playlistEditCloseButtonCssSelector = "#playlist-info-modal > div > div > div.lg-modal__container > button > span";
+
     }
 }
