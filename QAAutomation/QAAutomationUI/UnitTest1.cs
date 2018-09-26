@@ -69,6 +69,51 @@ namespace QA.Automation.UITests
             _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
         }
 
+        [TestCase]//Test case 586 edit playlist
+        public void EditPlaylist()
+        {
+            //Step 1
+            Login();
+            //Step 2 select edit icon
+            IWebElement playlistEditButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistEditButtonCssSelector));
+            playlistEditButton.Click();
+            //Step 3 spell check all content
+
+            //step 4 select playlist name text box and edit name
+            IWebElement playlistTitleInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistTitleInputCssSelector));
+            playlistTitleInput.Clear();
+            playlistTitleInput.SendKeys("Edited Automated Test Playlist");
+            //Step 5 select save
+            IWebElement playlistSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistEditSaveButtonCssSelector));
+            playlistSaveButton.Click();
+            //Step 6 Select edit for any playlist
+            playlistEditButton.Click();
+            //step 7 select playlist description text box and edit description
+            IWebElement playlistDescriptionTextArea = _driver.FindElement(By.CssSelector("#form-textarea"));
+            //step 8 select save
+            playlistSaveButton.Click();
+            //step 9 select edit icon for any playlist
+            playlistEditButton.Click();
+            //step 10 select add tag text box and enter any tag name
+            IWebElement playlistEditTagsSection = _driver.FindElement(By.CssSelector(BaseStrings.playlistTagSectionCssSelector));
+            playlistEditTagsSection.Clear();
+            playlistEditTagsSection.SendKeys("Edited Tags Section");
+
+            //step 11 select add button
+            IWebElement playlistTagAddButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistTagAddButtonCssSelector));
+            playlistTagAddButton.Click();
+            //step 12 select save
+            //step 13 Select edit icon
+            //step 14 Delete any tag
+            //step 15 select save
+            //step 16 select edit icon for same playlist
+            //step 17 close 'x' edit window
+            //step 18 select edit icon for same playlist
+            //Step 19 click outside window
+            //step 20 logout
+            Logout();
+
+        }
 
         [TestCase]
         public void LiveGuide20()
@@ -196,7 +241,7 @@ namespace QA.Automation.UITests
             //Step 20 Logout
             Logout();
 
-            
+
             //TODO: Assert to check if the playlist was actually playlist got created. 
 
             //IWebElement newPlaylist = GetElement(ByType.ClassName, "lgfe-cm-card");          
@@ -212,6 +257,38 @@ namespace QA.Automation.UITests
             //TODO: Update this assert to take into account the environment.
             //Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
             //Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
+        }
+
+        [TestCase]// test Case #46
+        public void CreateAPlaylistHappyPath()
+        {
+            //Step 1 login 
+            Login();
+            //Step 2 select '+' to make a new playlist
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton.Click();
+            WaitForMaskModal();
+            IWebElement addPlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
+            addPlaylistButton.Click();
+            //Step 3 enter playlist name
+            string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
+            IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
+            playlistAddForm.SendKeys(playlistName);
+            //Step 4 Select a channel
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            string filterID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
+            IWebElement selectFilter = GetElement(By.XPath(filterID));
+            //create select element object 
+            selectFilter.SendKeys("chevy" + Keys.Enter);
+            //Step 5  select save
+            IWebElement saveButton = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+            saveButton.Click();
+            //Step 6 select done---does not exist currently (09/26/2018)
+            //Step 7 new playlist has been created
+            //Step 8 logout
+            Logout();
+
         }
 
         public void AddWeatherWidget()
@@ -750,6 +827,39 @@ namespace QA.Automation.UITests
 
             //TODO: Assert that we are logged out based on URL and maybe the Username/password fields.
         }
+        [TestCase]//Test case 585
+        public void DeletePlaylist()
+        {
+            //Step 1
+            Login();
+            //Step 2
+            IWebElement deletePlaylistButton = GetElement(By.CssSelector(BaseStrings.deletePlaylistButtonCssSelector));
+            deletePlaylistButton.Click();
+            //Step 3 spell check
+            //Step 4 select cancel
+            IAlert cancel = _driver.SwitchTo().Alert();
+            cancel.Dismiss();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 5
+            deletePlaylistButton.Click();
+            //Step 6
+            IAlert accept = _driver.SwitchTo().Alert();
+            accept.Accept();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 7 refresh screen
+            _driver.Navigate().Refresh();
+            //Step 8 logout
+            Logout();
+            //Step 9
+            Login();
+            //Step 10
+            IWebElement playlistsSideBarMenuButton = GetElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton.Click();
+            //Step 11
+            Logout();
+        }
+    
 
         [TestCase]
         public void DeleteProtocol()
@@ -1120,7 +1230,7 @@ namespace QA.Automation.UITests
             Logout();
         }
 
-        [TestCase]// test case $ 1463
+        [TestCase]// test case #1463
         public void PlayerEdits()
         {
             //Step 1
