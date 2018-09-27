@@ -75,11 +75,10 @@ namespace QA.Automation.UITests
             //Step 1
             Login();
             //Step 2 select edit icon
-            IWebElement playlistEditButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistEditButtonCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            IWebElement playlistEditButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistEditButtonCssSelector));            
             playlistEditButton.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));            
             //Step 3 spell check all content
-
             //step 4 select playlist name text box and edit name
             IWebElement playlistTitleInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistTitleInputCssSelector));
             playlistTitleInput.Clear();
@@ -109,26 +108,24 @@ namespace QA.Automation.UITests
             playlistEditTagsSection.Clear();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistEditTagsSection.SendKeys("Edited Tags Section");
-
             //step 11 select add button
             IWebElement playlistTagAddButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistTagAddButtonCssSelector));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
             playlistTagAddButton.Click();
             //step 12 select save
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
             playlistSaveButton.Click();
             //step 13 Select edit icon
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //WaitForMaskModal();
             playlistEditButton.Click();
             //step 14 Delete any tag
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            IWebElement tagDeleteButton = _driver.FindElement(By.CssSelector(BaseStrings.tagDeleteButtonCssSelector));
             playlistEditTagsSection.Clear();
+            tagDeleteButton.Click();
             //step 15 select save
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
             playlistSaveButton.Click();
             //step 16 select edit icon for same playlist
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
@@ -137,22 +134,81 @@ namespace QA.Automation.UITests
             //step 17 close 'x' edit window
             IWebElement playlistEditCloseButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistEditCloseButtonCssSelector));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
             playlistEditCloseButton.Click();
             //step 18 select edit icon for same playlist
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
             playlistEditButton.Click();
             //Step 19 click outside window
             IWebElement offClick = _driver.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
-            offClick.Click();
+            var element = _driver.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
+            new Actions(_driver).MoveToElement(element).MoveByOffset(10, 10).Click().Perform();
             //step 20 logout
             Logout();
-
         }
 
+        [TestCase] //Test Case 9182
+        public void FavoritePlaylist()
+        {
+            //Step 1 login
+            Login();
+            IWebElement playlistSearch = _driver.FindElement(By.Id("playlists-search"));
+            playlistSearch.SendKeys("Automated Playlist Test");
+            //Step 2 Hover over a Favorite icon (heart) thats in black
+            IWebElement favoritIconHeart = _driver.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
+            Actions action = new Actions(_driver);
+            action.MoveToElement(favoritIconHeart).Perform();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //Step 3 Hover over a Favorite icon (heart) thats in red
+            IWebElement favoritIconHeart1 = _driver.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
+            Actions action1 = new Actions(_driver);
+            action1.MoveToElement(favoritIconHeart1).Perform();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 4 Search for any existing Playlist and select favorite icon (heart)            
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //IWebElement favoritIconHeart = _driver.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
+            IWebElement favoritIconHeart2 = _driver.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
+            favoritIconHeart2.Click();            
+            //Step 5 Refresh screen
+            _driver.Navigate().Refresh();
+            //Step 6 Select the favorite icon again from the test step 2 above
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement favoritIconHeart3 = _driver.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
+            favoritIconHeart3.Click();
+            //Step 7 refresh page
+            _driver.Navigate().Refresh();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //Step 8 add new playlist, select '+'
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton.Click();
+            WaitForMaskModal();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 9 enter all required field values and select save
+            IWebElement addPlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
+            addPlaylistButton.Click();
+            string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
+            IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
+            playlistAddForm.SendKeys(playlistName);
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));        
+            string categoryID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
+            IWebElement selectCategory = _driver.FindElement(By.XPath(categoryID));            
+            selectCategory.SendKeys("chevy" + Keys.Enter);
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement saveButton = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+            saveButton.Click();
+            //Step 10 Select favorite icon for new playlist created in test step 7 
+            IWebElement favoritIconHeart4 = _driver.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            favoritIconHeart4.Click();
+            //step 11 refresh page
+            _driver.Navigate().Refresh();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 12 select favorite icon again for new playlist in test step 7
+            //step 13 refresh screen
+            //Step 14 logout
+            Logout();
+        }
         [TestCase]
         public void LiveGuide20()
         {
@@ -246,7 +302,7 @@ namespace QA.Automation.UITests
 
              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
              //string filterID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
-             //IWebElement selectFilter = GetElement(By.XPath(filterID));
+             //IWebElement selectFilter = _driver.FindElement(By.XPath(filterID));
              //create select element object 
              //selectFilter.SendKeys("chevy" + Keys.Enter);
              */
@@ -316,7 +372,7 @@ namespace QA.Automation.UITests
             //Step 4 Select a channel
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
             string filterID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
-            IWebElement selectFilter = GetElement(By.XPath(filterID));
+            IWebElement selectFilter = _driver.FindElement(By.XPath(filterID));
             //create select element object 
             selectFilter.SendKeys("chevy" + Keys.Enter);
             //Step 5  select save
@@ -598,7 +654,7 @@ namespace QA.Automation.UITests
 
             CreatePlaylists();
 
-            IWebElement playlistOpenButton = GetElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
+            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
 
             WaitForMaskModal();
 
@@ -636,7 +692,7 @@ namespace QA.Automation.UITests
             PlaylistPublish();
             WaitForMaskModal();
 
-            IWebElement playlistsSideBarMenuButton = GetElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
@@ -672,16 +728,16 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
             string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
-            IWebElement playlistDiv = GetElement(By.CssSelector(playlistDivCssSelector));
+            IWebElement playlistDiv = _driver.FindElement(By.CssSelector(playlistDivCssSelector));
             //if playlists is empty find profile dropdown 
 
             //if (playlistDiv.Text.Contains(""))
             //{
-            IWebElement playerChannelDropdown = GetElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            IWebElement playerChannelDropdown = _driver.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
 
             playerChannelDropdown.Click();
 
-            IWebElement gmChannelSelection = GetElement(By.XPath(BaseStrings.gmChannelSelectionXPath));
+            IWebElement gmChannelSelection = _driver.FindElement(By.XPath(BaseStrings.gmChannelSelectionXPath));
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
@@ -827,14 +883,14 @@ namespace QA.Automation.UITests
             //step 6
             Login();
 
-            IWebElement playerChannelDropdown = GetElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            IWebElement playerChannelDropdown = _driver.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
 
             WaitForMaskModal();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //step 7
             playerChannelDropdown.Click();
 
-            IWebElement LogOutChannelSelection = GetElement(By.XPath(BaseStrings.logOutChannelSelectionXPath));
+            IWebElement LogOutChannelSelection = _driver.FindElement(By.XPath(BaseStrings.logOutChannelSelectionXPath));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //step 8
             LogOutChannelSelection.Click();
@@ -848,7 +904,7 @@ namespace QA.Automation.UITests
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             playerChannelDropdown.Click();
-            IWebElement LogOutChannelSelection2 = GetElement(By.XPath(BaseStrings.logOutChannelSelectionXPath2));
+            IWebElement LogOutChannelSelection2 = _driver.FindElement(By.XPath(BaseStrings.logOutChannelSelectionXPath2));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             LogOutChannelSelection2.Click();//step 10
 
@@ -871,7 +927,7 @@ namespace QA.Automation.UITests
             //Step 1
             Login();
             //Step 2
-            IWebElement deletePlaylistButton = GetElement(By.CssSelector(BaseStrings.deletePlaylistButtonCssSelector));
+            IWebElement deletePlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.deletePlaylistButtonCssSelector));
             deletePlaylistButton.Click();
             //Step 3 spell check
             //Step 4 select cancel
@@ -891,7 +947,7 @@ namespace QA.Automation.UITests
             //Step 9
             Login();
             //Step 10
-            IWebElement playlistsSideBarMenuButton = GetElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
             playlistsSideBarMenuButton.Click();
             //Step 11
@@ -904,18 +960,18 @@ namespace QA.Automation.UITests
         {
             Login();
 
-            IWebElement playlistsSideBarMenuButton = GetElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
             playlistsSideBarMenuButton.Click();
 
-            IWebElement playlistSearch = GetElement(By.Id("playlists-search"));
+            IWebElement playlistSearch = _driver.FindElement(By.Id("playlists-search"));
             playlistSearch.SendKeys("Automated Playlist Test");
 
-            IWebElement newPlaylistDeleteButton = GetElement(By.CssSelector(BaseStrings.newPlaylistDeleteButtonCSSSelector));
+            IWebElement newPlaylistDeleteButton = _driver.FindElement(By.CssSelector(BaseStrings.newPlaylistDeleteButtonCSSSelector));
 
             if (newPlaylistDeleteButton.Displayed)
             {
-                IWebElement deletePlaylistButton = GetElement(By.CssSelector(BaseStrings.deletePlaylistButtonCssSelector));
+                IWebElement deletePlaylistButton = _driver.FindElement(By.CssSelector(BaseStrings.deletePlaylistButtonCssSelector));
 
                 deletePlaylistButton.Click();
 
@@ -935,19 +991,20 @@ namespace QA.Automation.UITests
 
             //_driver.Quit();
         }
-        //[TestCase]
+        [TestCase]
         public void DeleteProtocolWITHOUTlogin()
         {
-            IWebElement playlistsSideBarMenuButton = GetElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            Login();
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
             playlistsSideBarMenuButton.Click();
 
-            IWebElement playlistSearch = GetElement(By.Id("playlists-search"));
+            IWebElement playlistSearch = _driver.FindElement(By.Id("playlists-search"));
             playlistSearch.SendKeys("Automated Playlist Test");
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
-            IWebElement newPlaylistDeleteButton = GetElement(By.CssSelector(BaseStrings.newPlaylistDeleteButtonCSSSelector));
+            IWebElement newPlaylistDeleteButton = _driver.FindElement(By.CssSelector(BaseStrings.newPlaylistDeleteButtonCSSSelector));
             String expectedMessage = "Automated Playlist Test";
             String message = _driver.FindElement(By.CssSelector(BaseStrings.newPlaylistDiv)).Text;
             Assert.True(message.Contains(expectedMessage));
@@ -959,7 +1016,7 @@ namespace QA.Automation.UITests
 
                 if (newPlaylistDiv.Contains(expectedMessage))
                 {
-                    IWebElement playlistArea = GetElement(By.ClassName("playlists-content"));
+                    IWebElement playlistArea = _driver.FindElement(By.ClassName("playlists-content"));
 
                     var playlistContext = playlistArea.Text;
 
@@ -1011,14 +1068,14 @@ namespace QA.Automation.UITests
             //step 1
             Login();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            IWebElement contactUsLink = GetElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
+            IWebElement contactUsLink = _driver.FindElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
             WaitForMaskModal();
 
             //step 2
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             contactUsLink.Click();
 
-            IWebElement sendButton = GetElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
+            IWebElement sendButton = _driver.FindElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
             WaitForMaskModal();
 
             //step 3 
@@ -1027,7 +1084,7 @@ namespace QA.Automation.UITests
 
             // step 4
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            IWebElement EmailUsFullNameInput = GetElement(By.Id("full-name"));
+            IWebElement EmailUsFullNameInput = _driver.FindElement(By.Id("full-name"));
             EmailUsFullNameInput.SendKeys("Automated Tester");
 
             //step 5
@@ -1037,7 +1094,7 @@ namespace QA.Automation.UITests
 
             //Step 6
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            IWebElement EmailUsPhoneNumberInput = GetElement(By.Id("phone"));
+            IWebElement EmailUsPhoneNumberInput = _driver.FindElement(By.Id("phone"));
             EmailUsPhoneNumberInput.SendKeys("Auto Test");
 
             //step 7
@@ -1058,7 +1115,7 @@ namespace QA.Automation.UITests
             //Step 10
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             WaitForMaskModal();
-            IWebElement EmailUsEmialInput = GetElement(By.Id("email"));
+            IWebElement EmailUsEmialInput = _driver.FindElement(By.Id("email"));
             EmailUsEmialInput.SendKeys("Automated Tester");
 
             //Step 11
@@ -1110,7 +1167,7 @@ namespace QA.Automation.UITests
             sendButton.Click();
 
             //Step 22
-            IWebElement EmailUsCommentsInput = GetElement(By.Id("comments"));
+            IWebElement EmailUsCommentsInput = _driver.FindElement(By.Id("comments"));
             EmailUsCommentsInput.SendKeys("Automated Tester");
 
             //Step 23
@@ -1131,35 +1188,35 @@ namespace QA.Automation.UITests
             Login();
 
             //Step 2
-            IWebElement contactUsLink = GetElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
+            IWebElement contactUsLink = _driver.FindElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
             WaitForMaskModal();
             contactUsLink.Click();
 
             //Step 3
-            IWebElement EmailUsFullNameInput = GetElement(By.Id("full-name"));
+            IWebElement EmailUsFullNameInput = _driver.FindElement(By.Id("full-name"));
             EmailUsFullNameInput.SendKeys("Automated Tester");
 
             //Step 4
-            IWebElement EmailUsTitleInput = GetElement(By.Id("title"));
+            IWebElement EmailUsTitleInput = _driver.FindElement(By.Id("title"));
             EmailUsTitleInput.SendKeys("Automated Tester");
 
             //Step 5
-            IWebElement EmailUsCompanyInput = GetElement(By.Id("company"));
+            IWebElement EmailUsCompanyInput = _driver.FindElement(By.Id("company"));
             EmailUsCompanyInput.SendKeys("Automated Tester");
 
             //Step 6
-            IWebElement EmailUsPhoneNumberInput = GetElement(By.Id("phone"));
+            IWebElement EmailUsPhoneNumberInput = _driver.FindElement(By.Id("phone"));
             EmailUsPhoneNumberInput.SendKeys("9876543210");
 
             //Step 7
-            IWebElement EmailUsEmialInput = GetElement(By.Id("email"));
+            IWebElement EmailUsEmialInput = _driver.FindElement(By.Id("email"));
             EmailUsEmialInput.SendKeys("AutomatedTester@dcim.com");
 
             //Step 8
-            IWebElement EmailUsCommentsInput = GetElement(By.Id("comments"));
+            IWebElement EmailUsCommentsInput = _driver.FindElement(By.Id("comments"));
             EmailUsCommentsInput.SendKeys("Automated Tester");
 
-            IWebElement sendButton = GetElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
+            IWebElement sendButton = _driver.FindElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
             WaitForMaskModal();
             //Step 9
             sendButton.Click();
@@ -1202,7 +1259,7 @@ namespace QA.Automation.UITests
 
             //if (EmailUsFullNameInput.Displayed)
             //{
-            //    var errorFullName = GetElement(By.CssSelector("#contact-us-container > form > div:nth-child(2)")).Text;
+            //    var errorFullName = _driver.FindElement(By.CssSelector("#contact-us-container > form > div:nth-child(2)")).Text;
 
 
 
