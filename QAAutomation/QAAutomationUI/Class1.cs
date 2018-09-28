@@ -96,6 +96,9 @@ namespace QA.Automation.UITests
         public static string playlistEditCloseButtonCssSelector = "#playlist-info-modal > div > div > div.lg-modal__container > button > span";
         public static string tagDeleteButtonCssSelector = "#playlist-info-form > div:nth-child(2) > div:nth-child(4) > div.pim-all-tags-wrapper > div > button > span";
         public static string favoriteIconHeartCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button:nth-child(1) > span.\\5b.fa.fa-heart.\\5d";
+        public static string copyPlaylistButtonCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button:nth-child(4)";
+        public static string playlistCopyTitleNameCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-information > h3";
+        public static string playlistSearchInputCssSelector = "#playlists-search";
 
     }
 }

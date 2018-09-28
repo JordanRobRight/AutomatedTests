@@ -991,10 +991,10 @@ namespace QA.Automation.UITests
 
             //_driver.Quit();
         }
-        [TestCase]
+        //[TestCase]
         public void DeleteProtocolWITHOUTlogin()
         {
-            Login();
+            //Login();
             IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
             playlistsSideBarMenuButton.Click();
@@ -1620,6 +1620,49 @@ namespace QA.Automation.UITests
             }
             //Step 8
             Logout();
+
+        }
+
+
+        [TestCase]//Test case
+        public void CopyPlaylist()
+        {
+            //step1
+            Login();
+            //step 2 search for any  existing playlist and select copy icon (dbl papers)            
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton.Click();
+            WaitForMaskModal();
+            IWebElement playlistSearchInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            playlistSearchInput.SendKeys("Automated");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement playlistCopyButton = _driver.FindElement(By.CssSelector(BaseStrings.copyPlaylistButtonCssSelector));
+            playlistCopyButton.Click();
+            //step 3 select save
+            IWebElement saveButton = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+            saveButton.Click();
+            //step 4 refresh screen
+            _driver.Navigate().Refresh();
+            //step 5 confirm that the new copy created contains the following from the original playlist:Name remains with (Copy 1) at the end of playlist name time stamp will vary channel tags and estimated duration will carry over
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement playlistsSideBarMenuButton2 = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton2.Click();
+            WaitForMaskModal();
+            IWebElement playlistSearchInput2 = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            playlistSearchInput2.SendKeys("Automated");
+            IWebElement playlistCopyName = _driver.FindElement(By.CssSelector(BaseStrings.playlistCopyTitleNameCssSelector));            
+            string copyName = playlistCopyName.Text;
+            //Console.Write(copyName);
+            Assert.IsTrue(copyName.Contains("Copy"));
+            //step 6 select copy icon for the same copied playlist (copy 1) form above
+
+            //step 7 select save
+            //step 8 confirm that the new copy created contains the following from the original playlist;Name remains with copy 2 at end of playlist name, time stamp will vary channel tags estimated duration will carry over
+            //Step 9
+            Logout();
+
 
         }
 
