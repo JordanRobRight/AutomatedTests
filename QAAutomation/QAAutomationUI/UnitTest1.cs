@@ -75,9 +75,9 @@ namespace QA.Automation.UITests
             //Step 1
             Login();
             //Step 2 select edit icon
-            IWebElement playlistEditButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistEditButtonCssSelector));            
+            IWebElement playlistEditButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistEditButtonCssSelector));
             playlistEditButton.Click();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));            
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 3 spell check all content
             //step 4 select playlist name text box and edit name
             IWebElement playlistTitleInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistTitleInputCssSelector));
@@ -168,7 +168,7 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //IWebElement favoritIconHeart = _driver.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
             IWebElement favoritIconHeart2 = _driver.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
-            favoritIconHeart2.Click();            
+            favoritIconHeart2.Click();
             //Step 5 Refresh screen
             _driver.Navigate().Refresh();
             //Step 6 Select the favorite icon again from the test step 2 above
@@ -190,9 +190,9 @@ namespace QA.Automation.UITests
             string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
             IWebElement playlistAddForm = _driver.FindElement(By.Id("form-name"));
             playlistAddForm.SendKeys(playlistName);
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));        
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             string categoryID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
-            IWebElement selectCategory = _driver.FindElement(By.XPath(categoryID));            
+            IWebElement selectCategory = _driver.FindElement(By.XPath(categoryID));
             selectCategory.SendKeys("chevy" + Keys.Enter);
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             IWebElement saveButton = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
@@ -953,7 +953,7 @@ namespace QA.Automation.UITests
             //Step 11
             Logout();
         }
-    
+
 
         [TestCase]
         public void DeleteProtocol()
@@ -1624,7 +1624,7 @@ namespace QA.Automation.UITests
         }
 
 
-        [TestCase]//Test case
+        [TestCase]//Test case #8
         public void CopyPlaylist()
         {
             //step1
@@ -1652,17 +1652,70 @@ namespace QA.Automation.UITests
             WaitForMaskModal();
             IWebElement playlistSearchInput2 = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
             playlistSearchInput2.SendKeys("Automated");
-            IWebElement playlistCopyName = _driver.FindElement(By.CssSelector(BaseStrings.playlistCopyTitleNameCssSelector));            
+            IWebElement playlistCopyName = _driver.FindElement(By.CssSelector(BaseStrings.playlistCopyTitleNameCssSelector));
             string copyName = playlistCopyName.Text;
-            //Console.Write(copyName);
+            WaitForMaskModal();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             Assert.IsTrue(copyName.Contains("Copy"));
             //step 6 select copy icon for the same copied playlist (copy 1) form above
-
+            IWebElement playlistCopySearchInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            playlistCopySearchInput.SendKeys("Copy");
+            WaitForMaskModal();
+            IWebElement playlistCopyButton1 = _driver.FindElement(By.CssSelector(BaseStrings.copyPlaylistButtonCssSelector));
+            playlistCopyButton1.Click();
             //step 7 select save
+            IWebElement saveButton1 = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+            saveButton1.Click();
             //step 8 confirm that the new copy created contains the following from the original playlist;Name remains with copy 2 at end of playlist name, time stamp will vary channel tags estimated duration will carry over
+            IWebElement playlistCopy2SearchInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            playlistCopy2SearchInput.SendKeys("Copy");
+            WaitForMaskModal();
             //Step 9
             Logout();
 
+
+        }
+
+        [TestCase]//Test case #9
+        public void OpenPlaylist()
+        {
+            //Step 1
+            Login();
+            //Step 2 Select any playlist that contains no widgets and select the open button
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton.Click();
+            WaitForMaskModal();
+            IWebElement playlistSearchInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            playlistSearchInput.SendKeys("Automated");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement durationSection = _driver.FindElement(By.CssSelector(BaseStrings.durationSectionCssSelector));
+            string duration = durationSection.Text;
+            WaitForMaskModal();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //Assert.IsTrue(duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"));
+            if (duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
+            {
+                IWebElement playlistOpenButton1 = _driver.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
+                playlistOpenButton1.Click();
+            }
+            IWebElement playlistOpenButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
+            playlistOpenButton.Click();
+            //Step 3 Selectplaylist from main menu
+            IWebElement playlistsSideBarMenuButton1 = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton1.Click();
+            //Step 4 select any playlist that contains widgets and select the open button
+            if (duration != "<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>")
+            {
+                IWebElement playlistOpenButton2 = _driver.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
+                playlistOpenButton2.Click();
+            }
+            //Step 5 select  playlists from main menu
+            IWebElement playlistsSideBarMenuButton2 = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton2.Click();
+            Logout();
 
         }
 
