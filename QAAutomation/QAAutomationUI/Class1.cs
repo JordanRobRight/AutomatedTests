@@ -100,6 +100,11 @@ namespace QA.Automation.UITests
         public static string playlistCopyTitleNameCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-information > h3";
         public static string playlistSearchInputCssSelector = "#playlists-search";
         public static string durationSectionCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-information > p.lgfe-cm-duration > span.pmppid-time";
+        public static string editButtonCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button.lgfe-cm-utility-button.button-unstyled.js-playlist-edit > span.\\5b.fa.fa-pencil.\\5d";
+        public static string filterButtonCssSelector = "#select-filter";
+        public static string gridIconButtonCssSelector = "#playlists-container > div.pm-utility-bar.js-playlists-utility-bar > div > div:nth-child(2) > label > span.\\5b.fa.fa-th-large.\\5d";
+        public static string gridOpenButtonCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2) > button";
+        public static string rowOpenButtonCssSelector = "#playlists-container > div.pm-utility-bar.js-playlists-utility-bar > div > div:nth-child(1) > label";
 
     }
 }

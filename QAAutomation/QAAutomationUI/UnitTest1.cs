@@ -1624,7 +1624,7 @@ namespace QA.Automation.UITests
         }
 
 
-        [TestCase]//Test case #8
+        [TestCase]//Test case #1983
         public void CopyPlaylist()
         {
             //step1
@@ -1676,7 +1676,7 @@ namespace QA.Automation.UITests
 
         }
 
-        [TestCase]//Test case #9
+        [TestCase]//Test case #1984
         public void OpenPlaylist()
         {
             //Step 1
@@ -1717,6 +1717,158 @@ namespace QA.Automation.UITests
             playlistsSideBarMenuButton2.Click();
             Logout();
 
+        }
+
+        [TestCase]// test case 1985
+        public void AbleToEditPlaylist()
+        {
+            //step 1 loging
+            Login();
+            //step 2 select playlists that contains no widget and select able to edit button from main menu
+            IWebElement playlistSearchInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            playlistSearchInput.SendKeys("Automated");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement durationSection = _driver.FindElement(By.CssSelector(BaseStrings.durationSectionCssSelector));
+            string duration = durationSection.Text;
+            WaitForMaskModal();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //Assert.IsTrue(duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"));
+            if (duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
+            {
+                IWebElement playlistEditButton1 = _driver.FindElement(By.CssSelector(BaseStrings.editButtonCssSelector));
+                playlistEditButton1.Click();
+                IWebElement saveButton1 = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+                saveButton1.Click();
+            }
+            //step 3 select playlists from main menu
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton.Click();
+            WaitForMaskModal();
+            //step 4 select playlists that contains widgets and select able to edit button 
+            if (!duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
+            {
+                IWebElement playlistEditButton2 = _driver.FindElement(By.CssSelector(BaseStrings.editButtonCssSelector));
+                playlistEditButton2.Click();
+                IWebElement saveButton2 = _driver.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+                saveButton2.Click();
+            }
+            //step 5 select playlists from main menu
+            IWebElement playlistsSideBarMenuButton1 = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton1.Click();
+            WaitForMaskModal();
+            //Step 6 logout
+            Logout();
+        }
+
+        [TestCase]//Test case 1986
+        public void PlaylistFilters()
+        {
+            //step 1 signin
+            Login();
+            //step 2 select filter dropdown box
+            IWebElement filterDropDownButton = _driver.FindElement(By.CssSelector(BaseStrings.filterButtonCssSelector));
+            var selectfilterDropDownButton = new SelectElement(filterDropDownButton);
+            selectfilterDropDownButton.SelectByValue("date");
+            //step 3 spell check all filter values from drop down box
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 4 select the alphabetical option 
+            IWebElement filterDropDownButton1 = _driver.FindElement(By.CssSelector(BaseStrings.filterButtonCssSelector));
+            var selectfilterDropDownButton1 = new SelectElement(filterDropDownButton1);
+            selectfilterDropDownButton1.SelectByValue("alphabetically");
+            //step 5 confirm all the playlist display in alphabetical ascending order
+            //step 6 refresh screen
+            RefreshPage();
+            //step 7 confirm all playlist display in date added order
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 8 select filter dropdown box
+
+            //step 9 select the changel option
+            IWebElement filterDropDownButton2 = _driver.FindElement(By.CssSelector(BaseStrings.filterButtonCssSelector));
+            var selectfilterDropDownButton2 = new SelectElement(filterDropDownButton2);
+            selectfilterDropDownButton2.SelectByValue("channel");
+            //step 10 Confirm all playlist display in Channel order:  Buick TV, Buick-Chevy TV, Chevy TV,  Chevy-Buick TV, Chevy-GMC, Chevy-Buick-GMC, GMC TV
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 11 refresh screen
+            RefreshPage();
+            //step 12 confirm all playlists display in dated added order
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //Step 13 logout
+            Logout();
+        }
+
+        [TestCase]//test case 1987
+        public void PlaylistDisplayAsGrid()
+        {
+            //step 1 login
+            Login();
+            //step 2 hover over grid icon
+            IWebElement gridIcon = _driver.FindElement(By.CssSelector(BaseStrings.gridIconButtonCssSelector));
+            Actions action = new Actions(_driver);
+            action.MoveToElement(gridIcon).Perform();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 3 select grid icon
+            gridIcon.Click();
+            //step 4 use scroll bar to navigate through all rolls
+
+            //step 5 select any of the playlist
+            IWebElement playlistSearchInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            playlistSearchInput.SendKeys("Automated");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement openButton = _driver.FindElement(By.CssSelector(BaseStrings.gridOpenButtonCssSelector));
+            openButton.Click();
+            //step 6 select playlists from main menu
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton.Click();
+            WaitForMaskModal();
+            //step 7 select grid icon
+            IWebElement gridIcon1 = _driver.FindElement(By.CssSelector(BaseStrings.gridIconButtonCssSelector));
+            gridIcon1.Click();
+            //step 8 confirm that all the data that appears for a grid's playlist, is the same data that appears when a row is selected (3 horizontal lines) select row icon
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 9 logout
+            Logout();
+        }
+
+        [TestCase]// test case 1988
+        public void PlaylistDisplayAsRow()
+        {
+            //step 1 login
+            Login();
+            //step 2 hover over grid icon
+            IWebElement rowIcon = _driver.FindElement(By.CssSelector(BaseStrings.rowOpenButtonCssSelector));
+            Actions action = new Actions(_driver);
+            action.MoveToElement(rowIcon).Perform();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 3 select grid icon
+            rowIcon.Click();
+            //step 4 use scroll bar to navigate through all rolls
+
+            //step 5 select any of the playlist
+            IWebElement playlistSearchInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            playlistSearchInput.SendKeys("Automated");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement openButton = _driver.FindElement(By.CssSelector(BaseStrings.gridOpenButtonCssSelector));
+            openButton.Click();
+            //step 6 select playlists from main menu
+            IWebElement playlistsSideBarMenuButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton.Click();
+            WaitForMaskModal();
+            //step 7 select grid icon
+            IWebElement gridIcon1 = _driver.FindElement(By.CssSelector(BaseStrings.gridIconButtonCssSelector));
+            gridIcon1.Click();
+            //step 8 confirm that all the data that appears for a grid's playlist, is the same data that appears when a row is selected (3 horizontal lines) select row icon
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 9 logout
+            Logout();
+        }
+
+        public void RefreshPage()
+        {
+            _driver.Navigate().Refresh();
         }
 
         [TearDown]
