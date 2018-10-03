@@ -1866,6 +1866,32 @@ namespace QA.Automation.UITests
             Logout();
         }
 
+        [TestCase]//TestCase 1989
+        public void PlaylistSearchBox()
+        {
+            //step 1 signin
+            Login();
+            //step 2 place curser in search box
+            IWebElement playlistSearchInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            //step 3 Spell check Search box placeholder text
+
+            //step 4 Enter invalid names (only Playlist names are considered valid entries) in Search box
+            playlistSearchInput.SendKeys("123456");
+            //step 5 Enter spaces in Search box
+            playlistSearchInput.Clear();
+            playlistSearchInput.SendKeys("     ");
+            //step 6 Enter a valid Playlist name (only Playlist names are considered valid entries) in Search box
+            playlistSearchInput.Clear();
+            playlistSearchInput.SendKeys("Automated");
+            //step 7 Enter a valid Playlist name that consist of letters, numbers and special characters
+            playlistSearchInput.Clear();
+            playlistSearchInput.SendKeys("Automated Playlist Test 9/6/2018");
+            //step 8 From Search box, remove text from test step 6 above
+            playlistSearchInput.Clear();
+            //step 9 logout
+            Logout();
+        }
+
         public void RefreshPage()
         {
             _driver.Navigate().Refresh();
