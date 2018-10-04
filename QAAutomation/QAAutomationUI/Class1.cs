@@ -105,6 +105,20 @@ namespace QA.Automation.UITests
         public static string gridIconButtonCssSelector = "#playlists-container > div.pm-utility-bar.js-playlists-utility-bar > div > div:nth-child(2) > label > span.\\5b.fa.fa-th-large.\\5d";
         public static string gridOpenButtonCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2) > button";
         public static string rowOpenButtonCssSelector = "#playlists-container > div.pm-utility-bar.js-playlists-utility-bar > div > div:nth-child(1) > label";
+        public static string myProfileButtonCssSelector = "#interaction-info-bar-container > div > div > div > div.iibcuinow-menu-wrapper > ul > li:nth-child(1) > a > span";
+        public static string myProfileSaveButtonCssSelector = "#profile-container > div.pc-personal-details-fields > div > div > div.lg-modal__actions > button";
+        public static string myProfileFirstNameInput = "#firstName-form-plain-text";
+        public static string myProfileLastNameInput = "#lastName-form-plain-text";
+        public static string myProfileTitleInput = "#job-title-form-plain-text";
+        public static string myProfileEmailInput = "#form-email";
+        public static string myProfilePhoneInput = "#phone-form-plain-text";
+        public static string myProfileMobileInput = "#mobile-form-plain-text";
+        public static string myProfileAddressInput = "#street-form-plain-text";
+        public static string myProfileCityInput = "#city-form-plain-text";
+        public static string myProfileStateInput = "#state-form-plain-text";
+        public static string myProfileZipInput = "#zip-form-plain-text";
+
+
 
     }
 }
