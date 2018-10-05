@@ -499,14 +499,41 @@ namespace QA.Automation.UITests
             //TODO: Assert that the saved worked.
         }
 
+        [TestCase]//test case 809
         public void AddHealthWidget()
         {
+            //step 1 sign in
+            Login();
+            //step 2 select an existing playlist
+            string playlistName = "Automated Playlist Test";
+            IWebElement playlistAddForm = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            playlistAddForm.SendKeys(playlistName);
+            IWebElement playlistSelection = _driver.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
+            playlistSelection.Click();
+            //step 3 select add health widget
+            IWebElement healthWidgetIcon = _driver.FindElement(By.CssSelector(BaseStrings.healthWidgetCssSelector));
+            healthWidgetIcon.Click();
+            //step 4 spell check all content (fields/values/buttons), including placeholder text
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 5 confirm text box displays with pre-filled time duration (not editable)
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 6 health pre-filled description displays on lower section of window
 
+            //step 7 select save
+            IWebElement healthSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.healthWidgetSaveButtonCssSelector));
+            healthSaveButton.Click();
+            WaitForMaskModal();
+            //step 8 select add widget
+
+            //step 9 select brand dropdown box
+            //step 10 select buick brand
+            //step 11 select save
         }
 
+        [TestCase]//test case 72
         public void AddImageWidget()
         {
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(15));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
 
             IWebElement imageWidget = _driver.FindElement(By.CssSelector(BaseStrings.imageWidgetCssSelector));
             WaitForMaskModal();
@@ -645,7 +672,7 @@ namespace QA.Automation.UITests
             //TODO: Assert that the published worked. Might be an API call.
         }
 
-        [TestCase]
+        
         public void LiveguidePlaylists()
         {
             Login();
@@ -830,6 +857,7 @@ namespace QA.Automation.UITests
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
         }
 
+        [TestCase]//Test case 1994
         public void Logout()
         {
             string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
@@ -1958,14 +1986,37 @@ namespace QA.Automation.UITests
             directPhoneNumberInput.SendKeys("4141231234" + Keys.Enter);
             //step 16 Enter an invalid (letters, special characters-except for dash & parenthesis or less than 10 numbers) Mobile Number
             IWebElement mobileNumberInput = _driver.FindElement(By.CssSelector(BaseStrings.myProfileMobileInput ));
-            
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            mobileNumberInput.SendKeys("abc123"+Keys.Enter);
             //step 17 Repeat test step 16 with various invalid Mobile Number combinations 
+            mobileNumberInput.Clear();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            mobileNumberInput.SendKeys("123" + Keys.Enter);
             //step 18 Enter a valid Mobile Number and select Save
+            mobileNumberInput.Clear();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            mobileNumberInput.SendKeys("1234567890" + Keys.Enter);
             //step 19 Enter any Street Address (there are not edit checks in place) and select Save   
-            //step 20 Enter any City name (there are not edit checks in place) and select Save 
-            //step 21 Enter any State (there are not edit checks in place) and select Save 
+            IWebElement addressInput = _driver.FindElement(By.CssSelector(BaseStrings.myProfileAddressInput));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            addressInput.SendKeys("2727 Good Faith Rd" + Keys.Enter);
+            //step 20 Enter any City name (there are not edit checks in place) and select Save
+            IWebElement cityInput = _driver.FindElement(By.CssSelector(BaseStrings.myProfileCityInput));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            cityInput.SendKeys("Milwuakee" + Keys.Enter);
+            //step 21 Enter any State (there are not edit checks in place) and select Save
+            IWebElement stateInput = _driver.FindElement(By.CssSelector(BaseStrings.myProfileStateInput));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            stateInput.SendKeys("WI" + Keys.Enter);
             //step 22 Enter an invalid Zip Code (letters, special characters or less or more than 5 numbers) and select Save
+            IWebElement zipCodeInput = _driver.FindElement(By.CssSelector(BaseStrings.myProfileZipInput));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            zipCodeInput.SendKeys("12345" + Keys.Enter);
             //step 23 Repeat test step 22 with various invalid Zip Code combinations 
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            zipCodeInput.Clear();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            zipCodeInput.SendKeys("53209" + Keys.Enter);
             //step 24 logout
             Logout();
 
