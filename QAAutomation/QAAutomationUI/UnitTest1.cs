@@ -139,12 +139,18 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistEditButton.Click();
             //Step 19 click outside window
+            OffClick();
+            //step 20 logout
+            Logout();
+        }
+
+
+        public void OffClick()
+        {
             IWebElement offClick = _driver.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             var element = _driver.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
             new Actions(_driver).MoveToElement(element).MoveByOffset(10, 10).Click().Perform();
-            //step 20 logout
-            Logout();
         }
 
         [TestCase] //Test Case 9182
@@ -235,6 +241,16 @@ namespace QA.Automation.UITests
             //{
             //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
             //}
+        }
+
+        public void SelectAutomatedPlaylist()
+        {
+            string playlistName = "Automated Playlist Test";
+            IWebElement playlistAddForm = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            playlistAddForm.SendKeys(playlistName);
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement playlistSelection = _driver.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
+            playlistSelection.Click();
         }
 
         [TestCase] //Test case #580
@@ -385,17 +401,52 @@ namespace QA.Automation.UITests
 
         }
 
+        [TestCase] //Test case 737
         public void AddWeatherWidget()
         {
+            //step 1 login   
+            Login();
+            //step 2 Select an existing Playlist
+            SelectAutomatedPlaylist();
+            //step 3 Select Add Weather Widget 
             IWebElement weatherWidget = _driver.FindElement(By.CssSelector(BaseStrings.weatherWidgetCSSSelector));
             WaitForMaskModal();
             weatherWidget.Click();
+            //step 4 Spell check all content (fields/values/buttons), including placeholder text 
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 5 Confirm text box displays with pre-filled time Duration (not editable)
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 6 Weather pre-filled description displays on lower section of window
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 7 Do not enter a Zip Code, confirm placeholder text displays 'Enter Zip Code'
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 8 Select Save
+            IWebElement weatherWidgetSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.weatherWidgetSaveButtonCSSSelector));
+            weatherWidgetSaveButton.Click();
+            //step 9 Select Add Weather Widget
+            IWebElement weatherWidget1 = _driver.FindElement(By.CssSelector(BaseStrings.weatherWidgetCSSSelector));
+            WaitForMaskModal();
+            weatherWidget1.Click();
+            //step 10 Select Brand dropdown box
+            //step 11 Select Buick Brand
+            IWebElement brandDropdown = _driver.FindElement(By.XPath(BaseStrings.healthWidgetDropDown));
+            var selectBrandDropDown = new SelectElement(brandDropdown);
+            selectBrandDropDown.SelectByValue("buick");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 12 Select Save
+            //step 13 Select Add Weather Widget
+            //step 14 Enter an invalid Zip Code in text box  (letters, special characters or less or more than 5 numbers)
+            //step 15 Enter a valid Zip Code in text box
+            //step 16 Select Save 
+            //step 17 Create all brands
+            //step 18 select save from playlist screen
+            //step 19 logout
+
+
 
             IWebElement weatherZipCodeInput = _driver.FindElement(By.Id(BaseStrings.weatherZipCodeInputID));
             weatherZipCodeInput.SendKeys("53142");
-
-            IWebElement weatherWidgetSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.weatherWidgetSaveButtonCSSSelector));
-            weatherWidgetSaveButton.Click();
+            
 
             IWebElement playlistSave = _driver.FindElement(By.CssSelector(BaseStrings.playlistSaveCSSSelector));
             WaitForMaskModal();
@@ -505,29 +556,37 @@ namespace QA.Automation.UITests
             //step 1 sign in
             Login();
             //step 2 select an existing playlist
-            string playlistName = "Automated Playlist Test";
-            IWebElement playlistAddForm = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
-            playlistAddForm.SendKeys(playlistName);
-            IWebElement playlistSelection = _driver.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
-            playlistSelection.Click();
+            SelectAutomatedPlaylist();
             //step 3 select add health widget
             IWebElement healthWidgetIcon = _driver.FindElement(By.CssSelector(BaseStrings.healthWidgetCssSelector));
             healthWidgetIcon.Click();
             //step 4 spell check all content (fields/values/buttons), including placeholder text
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //step 5 confirm text box displays with pre-filled time duration (not editable)
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //step 6 health pre-filled description displays on lower section of window
-
+               
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //step 7 select save
             IWebElement healthSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.healthWidgetSaveButtonCssSelector));
             healthSaveButton.Click();
             WaitForMaskModal();
             //step 8 select add widget
-
+            IWebElement healthWidgetIcon1 = _driver.FindElement(By.CssSelector(BaseStrings.healthWidgetCssSelector));
+            healthWidgetIcon1.Click();
             //step 9 select brand dropdown box
+
+            IWebElement brandDropdown = _driver.FindElement(By.XPath(BaseStrings.healthWidgetDropDown));
+            var selectBrandDropDown = new SelectElement(brandDropdown);
+            selectBrandDropDown.SelectByValue("buick");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
             //step 10 select buick brand
+
             //step 11 select save
+            WaitForMaskModal();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            healthSaveButton.Click();
         }
 
         [TestCase]//test case 72
@@ -553,31 +612,64 @@ namespace QA.Automation.UITests
             //TODO: Assert that the saved worked.
         }
 
+        
+
+        [TestCase]//Test case 834
         public void AddVideoWidget()
         {
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(30));
-
+            //step 1 login
+            Login();
+            //step 2 Select an existing Playlist
+            SelectAutomatedPlaylist();
+            //step 3 Select Add Video Widget
             IWebElement videoWidgetButton = _driver.FindElement(By.CssSelector(BaseStrings.videoWidgetCssSelector));
-
             videoWidgetButton.Click();
-
-            IWebElement videoAssestLibrarySearchInput = _driver.FindElement(By.Id("asset-search"));
-            videoAssestLibrarySearchInput.SendKeys("a");  //in the future this should grab the whole collection of assests and pick a random asset
-
-            IWebElement videoAssestSelection = _driver.FindElement(By.XPath(BaseStrings.videoAssestSelectionXPath));
-            IWebElement videoWidgetDoneButton = _driver.FindElement(By.XPath(BaseStrings.videoWidgetDoneButtonXpath));
-            //WaitForMaskModal();
-            videoAssestSelection.Click();
-
-
-            IWebElement videoPlayIcon = _driver.FindElement(By.XPath(BaseStrings.videoPlayIconXpath));
-            videoPlayIcon.Click();
-            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-
-            videoWidgetDoneButton.Click();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
             WaitForMaskModal();
-            //TODO: Assert that the saved worked.
+            //step 4 Spell check all content (fields/values/buttons), including placeholder text  
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(3));
+            //step 5 Select 'X' to close window
+            IWebElement videoXoutButton = _driver.FindElement(By.CssSelector(BaseStrings.videoXoutButtonCssSelector));
+            videoXoutButton.Click();
+            //step 6 Select Add Video Widget
+            videoWidgetButton.Click();
+            //step 7 Click outside window
+            OffClick();
+            //step 8 Select Add Video Widget
+            videoWidgetButton.Click();
+            //step 9 Select any one video            
+            IWebElement videoAssestLibrarySearchInput = _driver.FindElement(By.Id("asset-search"));
+            videoAssestLibrarySearchInput.SendKeys("a");
+            IWebElement videoAssestSelection = _driver.FindElement(By.XPath(BaseStrings.videoAssestSelectionXPath));
+            videoAssestSelection.Click();
+            //step 10 Select Done
+            IWebElement videoWidgetDoneButton = _driver.FindElement(By.XPath(BaseStrings.videoWidgetDoneButtonXpath));
+            videoWidgetDoneButton.Click();
+            //step 11 Select Add Video Widget
+            videoWidgetButton.Click();
+            WaitForMaskModal();
+            //step 12 Select multiple videos
+            //IWebElement brandDropdown = _driver.FindElement(By.XPath(BaseStrings.healthWidgetDropDown));
+            //var selectBrandDropDown = new SelectElement(brandDropdown);
+            //selectBrandDropDown.SelectByValue("buick");
+            IWebElement option1 = _driver.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[1]"));
+            IWebElement option2 = _driver.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[2]"));
+            IWebElement option3 = _driver.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[3]"));
+
+            option1.Click();
+            option2.Click();
+            option3.Click();
+
+            //step 13 Select Done
+            IWebElement videoWidgetDoneButton1 = _driver.FindElement(By.XPath(BaseStrings.videoWidgetDoneButtonXpath));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            videoWidgetDoneButton1.Click();
+            //step 14 Select Save from Playlist screen
+            IWebElement saveButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSaveButtonCssSelector));
+            saveButton.Click();
+
+            //step 15 Logout
+            Logout();
+            
         }
 
         public void AddScreenFeedWidget()
@@ -587,7 +679,6 @@ namespace QA.Automation.UITests
             screenfeedWidgetButton.Click();
 
             IWebElement selectScreenFeedFilter = _driver.FindElement(By.XPath("//*[@id='select-duration']"));
-
             var selectScreenFeedElement = new SelectElement(selectScreenFeedFilter);
             selectScreenFeedElement.SelectByText("Best Bites");
 
@@ -672,7 +763,7 @@ namespace QA.Automation.UITests
             //TODO: Assert that the published worked. Might be an API call.
         }
 
-        
+
         public void LiveguidePlaylists()
         {
             Login();
@@ -1754,6 +1845,7 @@ namespace QA.Automation.UITests
             Login();
             //step 2 select playlists that contains no widget and select able to edit button from main menu
             IWebElement playlistSearchInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             playlistSearchInput.SendKeys("Automated");
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             IWebElement durationSection = _driver.FindElement(By.CssSelector(BaseStrings.durationSectionCssSelector));
@@ -1959,16 +2051,16 @@ namespace QA.Automation.UITests
             saveButton.Click();
             //step 10 Enter an invalid Email Address and select Save 
             /*****Email is a locked imput for cbam right now 10/4/2018******/
-                //IWebElement playerChannelDropdown2 = _driver.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
-                //playerChannelDropdown2.Click();
-                //IWebElement myProfileButton2 = _driver.FindElement(By.CssSelector(BaseStrings.myProfileButtonCssSelector));
-                //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-                //myProfileButton1.Click();
-                //IWebElement emailInput = _driver.FindElement(By.CssSelector(BaseStrings.myProfileEmailInput));
-                //emailInput.SendKeys("test");
+            //IWebElement playerChannelDropdown2 = _driver.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            //playerChannelDropdown2.Click();
+            //IWebElement myProfileButton2 = _driver.FindElement(By.CssSelector(BaseStrings.myProfileButtonCssSelector));
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //myProfileButton1.Click();
+            //IWebElement emailInput = _driver.FindElement(By.CssSelector(BaseStrings.myProfileEmailInput));
+            //emailInput.SendKeys("test");
             //step 11 Repeat test step 10 with various invalid Email combinations
-                //emailInput.Clear();
-                //emailInput.SendKeys("test.com");
+            //emailInput.Clear();
+            //emailInput.SendKeys("test.com");
             //step 12 Enter a valid Email Address and select Save
             //step 13 Enter an invalid (letters, special characters-except for dash & parenthesis or less than 10 numbers) Direct Phone Number 
             IWebElement directPhoneNumberInput = _driver.FindElement(By.CssSelector(BaseStrings.myProfilePhoneInput));
@@ -1985,9 +2077,9 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
             directPhoneNumberInput.SendKeys("4141231234" + Keys.Enter);
             //step 16 Enter an invalid (letters, special characters-except for dash & parenthesis or less than 10 numbers) Mobile Number
-            IWebElement mobileNumberInput = _driver.FindElement(By.CssSelector(BaseStrings.myProfileMobileInput ));
+            IWebElement mobileNumberInput = _driver.FindElement(By.CssSelector(BaseStrings.myProfileMobileInput));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            mobileNumberInput.SendKeys("abc123"+Keys.Enter);
+            mobileNumberInput.SendKeys("abc123" + Keys.Enter);
             //step 17 Repeat test step 16 with various invalid Mobile Number combinations 
             mobileNumberInput.Clear();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
