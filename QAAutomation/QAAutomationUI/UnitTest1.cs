@@ -429,31 +429,37 @@ namespace QA.Automation.UITests
             weatherWidget1.Click();
             //step 10 Select Brand dropdown box
             //step 11 Select Buick Brand
-            IWebElement brandDropdown = _driver.FindElement(By.XPath(BaseStrings.healthWidgetDropDown));
+            IWebElement brandDropdown = _driver.FindElement(By.XPath(BaseStrings.weatherWidgetDropDown));
             var selectBrandDropDown = new SelectElement(brandDropdown);
             selectBrandDropDown.SelectByValue("buick");
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //step 12 Select Save
-            //step 13 Select Add Weather Widget
-            //step 14 Enter an invalid Zip Code in text box  (letters, special characters or less or more than 5 numbers)
-            //step 15 Enter a valid Zip Code in text box
-            //step 16 Select Save 
-            //step 17 Create all brands
-            //step 18 select save from playlist screen
-            //step 19 logout
-
-
-
-            IWebElement weatherZipCodeInput = _driver.FindElement(By.Id(BaseStrings.weatherZipCodeInputID));
-            weatherZipCodeInput.SendKeys("53142");
-            
-
-            IWebElement playlistSave = _driver.FindElement(By.CssSelector(BaseStrings.playlistSaveCSSSelector));
+            IWebElement weatherSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.weatherWidgetSaveButtonCSSSelector));
             WaitForMaskModal();
-            playlistSave.Click();
+            weatherSaveButton.Click();
+            //step 13 Select Add Weather Widget
+            IWebElement weatherWidget2 = _driver.FindElement(By.CssSelector(BaseStrings.weatherWidgetCSSSelector));
+            WaitForMaskModal();
+            weatherWidget2.Click();
+            //step 14 Enter an invalid Zip Code in text box  (letters, special characters or less or more than 5 numbers)
+            IWebElement weatherZipCodeInput = _driver.FindElement(By.Id(BaseStrings.weatherZipCodeInputID));
+            weatherZipCodeInput.SendKeys("531");
+            //step 15 Enter a valid Zip Code in text box
+            IWebElement weatherZipCodeInput1 = _driver.FindElement(By.Id(BaseStrings.weatherZipCodeInputID));
+            weatherZipCodeInput1.Clear();
+            weatherZipCodeInput1.SendKeys("53142");
+            //step 16 Select Save
+            IWebElement weatherSaveButton1 = _driver.FindElement(By.CssSelector(BaseStrings.weatherWidgetSaveButtonCSSSelector));
+            WaitForMaskModal();
+            weatherSaveButton1.Click();
+            //step 17 Create all brands ---I am not sure what this means---
 
-
-
+            //step 18 select save from playlist screen
+            IWebElement playlistSave2 = _driver.FindElement(By.CssSelector(BaseStrings.playlistSaveCSSSelector));
+            WaitForMaskModal();
+            playlistSave2.Click();
+            //step 19 logout
+            Logout();
             //TODO: Assert that the saved worked.
         }
         //[TestCase]
@@ -483,70 +489,179 @@ namespace QA.Automation.UITests
         //    //   }
         //}
 
+        [TestCase] //Testcase 781
         public void AddFinanceWidget()
         {
+            //Step 1 
+            Login();
+            //Step 2 
+            SelectAutomatedPlaylist();
+            //Step 3 Select Add Finance Widget 
             IWebElement financeWidget = _driver.FindElement(By.CssSelector(BaseStrings.financeWidgetCSSSelector));
             WaitForMaskModal();
             financeWidget.Click();
-
-            IWebElement selectFinanceFilter = _driver.FindElement(By.Id("select-brand"));
-            //create select element object 
-
-            var selectFinanceElement = new SelectElement(selectFinanceFilter);
-            selectFinanceElement.SelectByText("Chevy");
-
+            //Step 4 Spell check all content (fields/values/buttons), including placeholder text   
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 5 Confirm text box displays with pre-filled time Duration (not editable)
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 6 Finance pre-filled description displays on lower section of window
+            IWebElement financeWidgetDescription = _driver.FindElement(By.CssSelector(BaseStrings.financeWidgetDescriptionCssSelector));
+            Assert.IsTrue(financeWidgetDescription.Text.Contains("Data includes the NASDAQ, NYSE, S&P 500, TSX, Dow 30, top gainers and losers, and companies trading on those exchanges."));
+            //Step 7 Select Save
             IWebElement saveFinanceButton = _driver.FindElement(By.CssSelector(BaseStrings.saveFinanceButtonCSSSelector));
             WaitForMaskModal();
             saveFinanceButton.Click();
+            //Step 8 Select Add Finance Widget
+            IWebElement financeWidget1 = _driver.FindElement(By.CssSelector(BaseStrings.financeWidgetCSSSelector));
+            WaitForMaskModal();
+            financeWidget1.Click();
+            //Step 9 Select Brand dropdown box
+            IWebElement financeWidgeBrandDropDown = _driver.FindElement(By.XPath(BaseStrings.financeWidgetDropDown));
+
+            //Step 10 Select Buick Brand 
+            IWebElement brandDropdown = _driver.FindElement(By.XPath(BaseStrings.weatherWidgetDropDown));
+            var selectBrandDropDown = new SelectElement(brandDropdown);
+            selectBrandDropDown.SelectByValue("buick");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 11 Select Save
+            IWebElement saveFinanceButton1 = _driver.FindElement(By.CssSelector(BaseStrings.saveFinanceButtonCSSSelector));
+            WaitForMaskModal();
+            saveFinanceButton1.Click();
+            //Step 12 Create all brands
+
+            //Step 13 Select Save from Playlist screen
+            IWebElement playlistSave2 = _driver.FindElement(By.CssSelector(BaseStrings.playlistSaveCSSSelector));
+            WaitForMaskModal();
+            playlistSave2.Click();
+            //Step 14 log out
+            Logout();
 
             //TODO: Assert that the saved worked.
         }
 
+
+        [TestCase]//test case 800
         public void AddTrafficWidget()
         {
+            //step 1 sign in 
+            Login();
+            //step 2 select an existing playlist
+            SelectAutomatedPlaylist();
+            //step 3 select add traffic widget
             IWebElement trafficWidget = _driver.FindElement(By.CssSelector(BaseStrings.trafficWidgetCssSelector));
             WaitForMaskModal();
             trafficWidget.Click();
-
-            IWebElement selectTrafficBrandFilter = _driver.FindElement(By.Id("select-brand"));
-            //create select element object 
-
-            var selectTrafficBrandElement = new SelectElement(selectTrafficBrandFilter);
-            selectTrafficBrandElement.SelectByText("Chevy");
-
-            IWebElement trafficZipInput = _driver.FindElement(By.Id("traffic-widget-zip"));
-            trafficZipInput.SendKeys("53142");
-
+            //step 4 spell check all content 
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 5 confirm text box displays on lower section of window
+            IWebElement trafficWidgetDescription = _driver.FindElement(By.CssSelector(BaseStrings.trafficWidgetDescriptionCssSelector));
+            Assert.IsTrue(trafficWidgetDescription.Text.Contains("Current conditions of local routes and maps."));
+            //step 6 weather pre-filled displays on lower section of window
+            //step 7 do not enter zip code confirm placeholder text displays
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 8 select save
             IWebElement trafficWidgetSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.trafficWidgetSaveButtonCssSelector));
             WaitForMaskModal();
             trafficWidgetSaveButton.Click();
+            //step 9 select add traffic widget
+            IWebElement trafficWidget1 = _driver.FindElement(By.CssSelector(BaseStrings.trafficWidgetCssSelector));
+            WaitForMaskModal();
+            trafficWidget1.Click();
+            //step 10 select brand drop down box
+            IWebElement brandDropdown = _driver.FindElement(By.XPath(BaseStrings.trafficWidgetDropDown));
+            var selectBrandDropDown = new SelectElement(brandDropdown);
+            selectBrandDropDown.SelectByValue("buick");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
+            //step 11 select buick brand
+            //step 12 select save
+            IWebElement trafficWidgetSaveButton1 = _driver.FindElement(By.CssSelector(BaseStrings.trafficWidgetSaveButtonCssSelector));
+            WaitForMaskModal();
+            trafficWidgetSaveButton1.Click();
+            //step 13 select add traffic widget
+            IWebElement trafficWidget2 = _driver.FindElement(By.CssSelector(BaseStrings.trafficWidgetCssSelector));
+            WaitForMaskModal();
+            trafficWidget2.Click();
+            //step 14 enter an invalid zip code
+            IWebElement trafficZipInput = _driver.FindElement(By.Id("traffic-widget-zip"));
+            trafficZipInput.SendKeys("53");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 15 enter valid zip code
+            trafficZipInput.Clear();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            trafficZipInput.SendKeys("53142");
+            //step 16 select save
+            IWebElement trafficWidgetSaveButton2 = _driver.FindElement(By.CssSelector(BaseStrings.trafficWidgetSaveButtonCssSelector));
+            WaitForMaskModal();
+            trafficWidgetSaveButton2.Click();
+            //step 17 create all brands
+            //step 18 select save from playlist screen
+            IWebElement playlistSave = _driver.FindElement(By.CssSelector(BaseStrings.playlistSaveCSSSelector));
+            WaitForMaskModal();
+            playlistSave.Click();
+            //step 19 logout
+            Logout();
             //TODO: Assert that the saved worked.
         }
 
+
+        [TestCase] //testcase 808
         public void AddTriviaWidget()
         {
+            //Step 1 signIn
+            Login();
+            //Step 2 select existing playlist
+            SelectAutomatedPlaylist();
+            //Step 3 select add trivia widget
             IWebElement triviaWidget = _driver.FindElement(By.CssSelector(BaseStrings.triviaWidgetCssSelector));
             WaitForMaskModal();
             triviaWidget.Click();//NOT VISIBLE on half screen
-
-            IWebElement selectBrandTriviaFilter = _driver.FindElement(By.Id("select-brand"));
-            //create select element object 
-
-            var selectTriviaBrandElement = new SelectElement(selectBrandTriviaFilter);
-            selectTriviaBrandElement.SelectByText("Chevy");
-
-            IWebElement selectDurationTriviaFilter = _driver.FindElement(By.Id("select-duration"));
-            //create select element object 
-
-            //var selectDurationBrandElement = new SelectElement(selectDurationTriviaFilter);
-            //selectDurationBrandElement.SelectByText("1");
-            //Just taking the default value here I am having a hard time grabbing the value from the drop down
-
-            IWebElement triviaSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.triviaSaveButtonCssSelector));
+            //Step 4 Spell check all content (fields/values/buttons), including placeholder text 
+            
+            //Step 5 Confirm text box displays with pre-filled time Duration (not editable)
+            IWebElement triviaWidgetDuration = _driver.FindElement(By.CssSelector(BaseStrings.triviaWidgetDurationCssSelector));
+            //---Assert.IsTrue(triviaWidgetDuration.Text.Contains("45")); 
+            //Step 6 Trivia pre-filled description displays on lower section of window
+            IWebElement triviaDescriptionText = _driver.FindElement(By.CssSelector(BaseStrings.triviaSaveButtonCssSelector));
+            //---Assert.IsTrue(triviaDescriptionText.Text.Contains("GM specific Q&A for customers sitting in the lounge."));
+            //Step 7 Select Save
+            IWebElement triviaWidgetSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.triviaWidgetSaveButtonCssSelector));
+            triviaWidgetSaveButton.Click();
+            //Step 8 Select Add Trivia Widget
+            IWebElement triviaWidget1 = _driver.FindElement(By.CssSelector(BaseStrings.triviaWidgetSaveButtonCssSelector));
             WaitForMaskModal();
-            triviaSaveButton.Click();
+            triviaWidget1.Click();
+            //Step 9 Select Brand dropdown box //Step 10 Select Buick Brand
+            IWebElement triviaWidgetBrand = _driver.FindElement(By.XPath(BaseStrings.trafficWidgetDropDown));
+            var selectBrandDropDown = new SelectElement(triviaWidgetBrand);
+            selectBrandDropDown.SelectByValue("buick");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 11 Select Save 
+            IWebElement triviaWidgetSaveButton1 = _driver.FindElement(By.CssSelector(BaseStrings.triviaWidgetSaveButtonCssSelector));
+            triviaWidgetSaveButton1.Click();
+            //Step 12 Select Add Trivia Widget
+            IWebElement triviaWidget2 = _driver.FindElement(By.CssSelector(BaseStrings.triviaWidgetCssSelector));
+            WaitForMaskModal();
+            triviaWidget2.Click();
+            //Step 13 Select Number to Show dropdown box  
+            IWebElement triviaWidgetDurationDD = _driver.FindElement(By.XPath(BaseStrings.triviaWidgetDurationDropDown));
+            var selectDurationDropDown = new SelectElement(triviaWidgetDurationDD);
+            selectDurationDropDown.SelectByValue("2");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 14 Select any number (1-10) - add parameters to test w/all 10?
 
+            //Step 15 Select Save 
+            IWebElement triviaWidgetSaveButton2 = _driver.FindElement(By.CssSelector(BaseStrings.triviaWidgetSaveButtonCssSelector));
+            triviaWidgetSaveButton2.Click();
+            //Step 16 Create all Brands
+
+            //Step 17 Select Save from playlist screen
+            IWebElement playlistSave = _driver.FindElement(By.CssSelector(BaseStrings.playlistSaveCSSSelector));
+            WaitForMaskModal();
+            playlistSave.Click();
+            //Step 18 Logout
+            Logout();
+            
             //TODO: Assert that the saved worked.
         }
 
@@ -565,7 +680,7 @@ namespace QA.Automation.UITests
             //step 5 confirm text box displays with pre-filled time duration (not editable)
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //step 6 health pre-filled description displays on lower section of window
-               
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //step 7 select save
             IWebElement healthSaveButton = _driver.FindElement(By.CssSelector(BaseStrings.healthWidgetSaveButtonCssSelector));
@@ -612,7 +727,7 @@ namespace QA.Automation.UITests
             //TODO: Assert that the saved worked.
         }
 
-        
+
 
         [TestCase]//Test case 834
         public void AddVideoWidget()
@@ -669,7 +784,7 @@ namespace QA.Automation.UITests
 
             //step 15 Logout
             Logout();
-            
+
         }
 
         public void AddScreenFeedWidget()
