@@ -128,8 +128,8 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistSaveButton.Click();
             //step 16 select edit icon for same playlist
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            //WaitForMaskModal();
             playlistEditButton.Click();
             //step 17 close 'x' edit window
             IWebElement playlistEditCloseButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistEditCloseButtonCssSelector));
@@ -141,7 +141,7 @@ namespace QA.Automation.UITests
             //Step 19 click outside window
             OffClick();
             //step 20 logout
-            Logout();
+            LogOutWithoutLogin();
         }
 
 
@@ -149,8 +149,8 @@ namespace QA.Automation.UITests
         {
             IWebElement offClick = _driver.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            var element = _driver.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
-            new Actions(_driver).MoveToElement(element).MoveByOffset(10, 10).Click().Perform();
+            var element = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            new Actions(_driver).MoveToElement(element).Click().Perform();
         }
 
         [TestCase] //Test Case 9182
@@ -213,7 +213,7 @@ namespace QA.Automation.UITests
             //step 12 select favorite icon again for new playlist in test step 7
             //step 13 refresh screen
             //Step 14 logout
-            Logout();
+            LogOutWithoutLogin();
         }
         [TestCase]
         public void LiveGuide20()
@@ -349,7 +349,7 @@ namespace QA.Automation.UITests
             addPlaylistButton3.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 20 Logout
-            Logout();
+            LogOutWithoutLogin();
 
 
             //TODO: Assert to check if the playlist was actually playlist got created. 
@@ -397,7 +397,7 @@ namespace QA.Automation.UITests
             //Step 6 select done---does not exist currently (09/26/2018)
             //Step 7 new playlist has been created
             //Step 8 logout
-            Logout();
+            LogOutWithoutLogin();
 
         }
 
@@ -459,7 +459,7 @@ namespace QA.Automation.UITests
             WaitForMaskModal();
             playlistSave2.Click();
             //step 19 logout
-            Logout();
+            LogOutWithoutLogin();
             //TODO: Assert that the saved worked.
         }
         //[TestCase]
@@ -489,7 +489,7 @@ namespace QA.Automation.UITests
         //    //   }
         //}
 
-        [TestCase] //Testcase 781
+        //[TestCase] //Testcase 781
         public void AddFinanceWidget()
         {
             //Step 1 
@@ -534,7 +534,7 @@ namespace QA.Automation.UITests
             WaitForMaskModal();
             playlistSave2.Click();
             //Step 14 log out
-            Logout();
+            LogOutWithoutLogin();
 
             //TODO: Assert that the saved worked.
         }
@@ -600,12 +600,12 @@ namespace QA.Automation.UITests
             WaitForMaskModal();
             playlistSave.Click();
             //step 19 logout
-            Logout();
+            LogOutWithoutLogin();
             //TODO: Assert that the saved worked.
         }
 
 
-        [TestCase] //testcase 808
+        //[TestCase] //testcase 808
         public void AddTriviaWidget()
         {
             //Step 1 signIn
@@ -660,12 +660,12 @@ namespace QA.Automation.UITests
             WaitForMaskModal();
             playlistSave.Click();
             //Step 18 Logout
-            Logout();
+            LogOutWithoutLogin();
             
             //TODO: Assert that the saved worked.
         }
 
-        [TestCase]//test case 809
+        //[TestCase]//test case 809
         public void AddHealthWidget()
         {
             //step 1 sign in
@@ -704,7 +704,7 @@ namespace QA.Automation.UITests
             healthSaveButton.Click();
         }
 
-        [TestCase]//test case 72
+        //[TestCase]//test case 72
         public void AddImageWidget()
         {
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
@@ -779,11 +779,12 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
             videoWidgetDoneButton1.Click();
             //step 14 Select Save from Playlist screen
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
             IWebElement saveButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistSaveButtonCssSelector));
             saveButton.Click();
 
             //step 15 Logout
-            Logout();
+            LogOutWithoutLogin();
 
         }
 
@@ -937,7 +938,7 @@ namespace QA.Automation.UITests
 
             DeleteProtocolWITHOUTlogin();
 
-            Logout();
+            LogOutWithoutLogin();
 
         }
 
@@ -1066,13 +1067,15 @@ namespace QA.Automation.UITests
         [TestCase]//Test case 1994
         public void Logout()
         {
-            string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
-            string currentURL = _driver.Url;
-            _driver.Navigate().GoToUrl(url);
+            Login();
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
             IWebElement logOutButton = _driver.FindElement(By.CssSelector(BaseStrings.logOutButtonCssSelector));
             WaitForMaskModal();
             logOutButton.Click();
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
             IWebElement confirmLogOutButton = _driver.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector));
             WaitForMaskModal();
@@ -1081,6 +1084,21 @@ namespace QA.Automation.UITests
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
             //TODO: Assert that we are logged out based on URL and maybe the Username/password fields.
+        }
+
+        public void LogOutWithoutLogin()
+        {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            IWebElement logOutButton = _driver.FindElement(By.CssSelector(BaseStrings.logOutButtonCssSelector));
+            WaitForMaskModal();
+            logOutButton.Click();
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            IWebElement confirmLogOutButton = _driver.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector));
+            WaitForMaskModal();
+            confirmLogOutButton.Click();
         }
 
         [TestCase]
@@ -1177,7 +1195,7 @@ namespace QA.Automation.UITests
             //Step 7 refresh screen
             _driver.Navigate().Refresh();
             //Step 8 logout
-            Logout();
+            LogOutWithoutLogin();
             //Step 9
             Login();
             //Step 10
@@ -1185,7 +1203,7 @@ namespace QA.Automation.UITests
             WaitForMaskModal();
             playlistsSideBarMenuButton.Click();
             //Step 11
-            Logout();
+            LogOutWithoutLogin();
         }
 
 
@@ -1278,22 +1296,22 @@ namespace QA.Automation.UITests
                         //TODO: Validate the playlist has been deleted. API??
                     }
 
-                    //Logout();//here
+                    
 
                 }
                 else
                 {
-                    //Logout();//here
+                    
                 }
             }
             else
             {
-                //Logout(); //here
+               
             }
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
-            //Logout();
+            
         }
 
         [TestCase]
@@ -1412,7 +1430,7 @@ namespace QA.Automation.UITests
             IWebElement ContactUsDoneButton = _driver.FindElement(By.CssSelector("#notifications-form > div > button"));
             ContactUsDoneButton.Click();
 
-            Logout();
+            LogOutWithoutLogin();
         }
 
         [TestCase]//Test Case #1459
@@ -1513,7 +1531,7 @@ namespace QA.Automation.UITests
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 11
-            Logout();
+            LogOutWithoutLogin();
         }
 
         [TestCase]//Test Case #1460
@@ -1534,7 +1552,7 @@ namespace QA.Automation.UITests
             Assert.True(playersGraph.Contains(expectedMessage));
 
             //Step 4 select a player
-            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-LG-QAROB"));
+            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
             playerSelect.Click();
 
             //Step 5
@@ -1542,7 +1560,7 @@ namespace QA.Automation.UITests
             WaitForMaskModal();
 
             //Step 6
-            IWebElement playerSelect2 = _driver.FindElement(By.CssSelector("#player-LG-SCOTT"));
+            IWebElement playerSelect2 = _driver.FindElement(By.CssSelector("#player-player_QyvWE5pQCs55 > td.sorting_1"));
             playerSelect2.Click();
 
             //Step 7
@@ -1556,7 +1574,7 @@ namespace QA.Automation.UITests
             WaitForMaskModal();
 
             //Step 10
-            Logout();
+            LogOutWithoutLogin();
         }
 
         [TestCase]// test case #1463
@@ -1571,7 +1589,7 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
             //Step 3 
-            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-LG-QAROB"));
+            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playerSelect.Click();
 
@@ -1659,7 +1677,7 @@ namespace QA.Automation.UITests
             //Step 23,24,25,26,27,28,29,30,31 are not present on frontend that i can see as of 09/18/18
 
             //Step 31
-            Logout();
+            LogOutWithoutLogin();
         }
 
         [TestCase]
@@ -1674,7 +1692,7 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
             //Step 3 Select Any player
-            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-LG-QAROB"));
+            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playerSelect.Click();
 
@@ -1729,8 +1747,8 @@ namespace QA.Automation.UITests
             IAlert alert5 = _driver.SwitchTo().Alert();
             alert5.Accept();
 
-            //Step 13 LOGout
-            Logout();
+            //Step 13 Logout
+            LogOutWithoutLogin();
 
         }
 
@@ -1785,7 +1803,7 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             pageRefreshButton.Click();
             //step 12
-            Logout();
+            LogOutWithoutLogin();
         }
 
         [TestCase]//Test case 1487
@@ -1818,7 +1836,7 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             pageRefreshButton.Click();
             //Step 7
-            Logout();
+            LogOutWithoutLogin();
         }
 
         [TestCase]//Test case 1488
@@ -1832,7 +1850,7 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 3 Hover over the screen connect icon
             //step 4
-            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-LG-QAROB"));
+            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playerSelect.Click();
             //Step 5 Hover over screen connect icon
@@ -1853,7 +1871,7 @@ namespace QA.Automation.UITests
                 _driver.SwitchTo().Window(tabs[0]);
             }
             //Step 8
-            Logout();
+            LogOutWithoutLogin();
 
         }
 
@@ -1887,10 +1905,12 @@ namespace QA.Automation.UITests
             IWebElement playlistSearchInput2 = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
             playlistSearchInput2.SendKeys("Automated");
             IWebElement playlistCopyName = _driver.FindElement(By.CssSelector(BaseStrings.playlistCopyTitleNameCssSelector));
-            string copyName = playlistCopyName.Text;
+            
             WaitForMaskModal();
+            IWebElement playlistCopyName1 = _driver.FindElement(By.CssSelector(BaseStrings.playlistCopyTitleNameCssSelector));
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            Assert.IsTrue(copyName.Contains("Copy"));
+            Assert.IsTrue(playlistCopyName1.Text.Contains("Copy"));
             //step 6 select copy icon for the same copied playlist (copy 1) form above
             IWebElement playlistCopySearchInput = _driver.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
             playlistCopySearchInput.SendKeys("Copy");
@@ -1905,7 +1925,7 @@ namespace QA.Automation.UITests
             playlistCopy2SearchInput.SendKeys("Copy");
             WaitForMaskModal();
             //Step 9
-            Logout();
+            LogOutWithoutLogin();
 
 
         }
@@ -1949,7 +1969,7 @@ namespace QA.Automation.UITests
             IWebElement playlistsSideBarMenuButton2 = _driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
             playlistsSideBarMenuButton2.Click();
-            Logout();
+            LogOutWithoutLogin();
 
         }
 
@@ -1994,7 +2014,7 @@ namespace QA.Automation.UITests
             playlistsSideBarMenuButton1.Click();
             WaitForMaskModal();
             //Step 6 logout
-            Logout();
+            LogOutWithoutLogin();
         }
 
         [TestCase]//Test case 1986
@@ -2030,7 +2050,7 @@ namespace QA.Automation.UITests
             //step 12 confirm all playlists display in dated added order
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //Step 13 logout
-            Logout();
+            LogOutWithoutLogin();
         }
 
         [TestCase]//test case 1987
@@ -2064,7 +2084,7 @@ namespace QA.Automation.UITests
             //step 8 confirm that all the data that appears for a grid's playlist, is the same data that appears when a row is selected (3 horizontal lines) select row icon
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //step 9 logout
-            Logout();
+            LogOutWithoutLogin();
         }
 
         [TestCase]// test case 1988
@@ -2098,7 +2118,7 @@ namespace QA.Automation.UITests
             //step 8 confirm that all the data that appears for a grid's playlist, is the same data that appears when a row is selected (3 horizontal lines) select row icon
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //step 9 logout
-            Logout();
+            LogOutWithoutLogin();
         }
 
         [TestCase]//TestCase 1989
@@ -2124,7 +2144,7 @@ namespace QA.Automation.UITests
             //step 8 From Search box, remove text from test step 6 above
             playlistSearchInput.Clear();
             //step 9 logout
-            Logout();
+            LogOutWithoutLogin();
         }
 
         [TestCase]//TestCase 1991
@@ -2225,7 +2245,7 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
             zipCodeInput.SendKeys("53209" + Keys.Enter);
             //step 24 logout
-            Logout();
+            LogOutWithoutLogin();
 
         }
 

@@ -21,7 +21,7 @@ namespace QA.Automation.UITests
         public static string financeWidgetCSSSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-favorite-widgets.js-drag-drop-favorite-widgets > button:nth-child(2)";
         public static string saveFinanceButtonCSSSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
         public static string financeWidgetDescriptionCssSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > div > div > div:nth-child(2)";
-        public static string trafficWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-favorite-widgets.js-drag-drop-favorite-widgets > button:nth-child(3)";
+        public static string trafficWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-favorite-widgets.js-drag-drop-favorite-widgets > button:nth-child(2)";
         public static string trafficWidgetSaveButtonCssSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div.lg-modal__actions > button";
         public static string trafficWidgetDescriptionCssSelector = "#widget-modal > div > div > div.lg-modal__container > div.lg-modal__content > div > div > div:nth-child(1)";
         public static string triviaWidgetCssSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-favorite-widgets.js-drag-drop-favorite-widgets > button:nth-child(4)";
