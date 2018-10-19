@@ -1703,9 +1703,10 @@ namespace QA.Automation.UITests
 
             //Step 5 Double click on the image that display under the Ping Data
             IWebElement pingDataImage = _driver.FindElement(By.Id("sampleScreen"));
+            IWebElement SampleScreen = _driver.FindElement(By.Id("sampleScreen"));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //new SelectElement(_driver.FindElement(By.Id("sampleScreen")).Click());
-            new Actions(_driver).DoubleClick(_driver.FindElement(By.Id("sampleScreen"))).Perform();
+            new Actions(_driver).DoubleClick(SampleScreen).Perform();
 
             //Step 6 Select cancel
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
