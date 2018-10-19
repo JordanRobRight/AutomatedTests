@@ -1763,16 +1763,16 @@ namespace QA.Automation.UITests
             playersTab.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 3 Select Any player
-            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-LG-QAROB"));
+            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1 > span"));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playerSelect.Click();
             //step 4 channelJoinButtonCssSelector
-            IWebElement channelJoinButton = _driver.FindElement(By.CssSelector(BaseStrings.channelJoinButtonCssSelector));//nothing should happen
+            //IWebElement channelJoinButton = _driver.FindElement(By.CssSelector(BaseStrings.channelJoinButtonCssSelector));//nothing should happen
             //Step 5
             IWebElement channelFilterInput = _driver.FindElement(By.Id("channel-input"));
             channelFilterInput.SendKeys("test");
             //Step 6
-            channelJoinButton.Click();
+            //channelJoinButton.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //IAlert alert = _driver.SwitchTo().Alert();
             //alert.Accept();
@@ -1817,21 +1817,32 @@ namespace QA.Automation.UITests
             playersTab.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 3 Select Any player
-            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-LG-QAROB"));
+            IWebElement playerSelect = _driver.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playerSelect.Click();
-            //Step 4 
-            IWebElement xOutButton1 = _driver.FindElement(By.CssSelector(BaseStrings.xOutButton1CssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(15));
-            xOutButton1.Click();
-            IAlert alert = _driver.SwitchTo().Alert();
+            //Step 4 select configure button 
+            IWebElement configureButton = _driver.FindElement(By.CssSelector(BaseStrings.configureButtonCssSelector));
+            Assert.IsTrue(configureButton.Displayed);
+            configureButton.Click();
+
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            alert.Dismiss();
+            IWebElement filterSection = _driver.FindElement(By.CssSelector(BaseStrings.filterSectionCssSelection));
+            
+            if (filterSection.Text.Contains("test"))
+            {
+                IWebElement testFilterXout = _driver.FindElement(By.CssSelector(BaseStrings.testFilterXoutButtonCssSelector));
+                testFilterXout.Click();
+                IAlert alert = _driver.SwitchTo().Alert();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                alert.Dismiss();
+            }
+
             //Step 5
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(15));
-            xOutButton1.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //xOutButton1.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            alert.Dismiss();
+            //alert.Dismiss();
             //Step 6
             IWebElement pageRefreshButton = _driver.FindElement(By.CssSelector(BaseStrings.pageRefreshButtonCssSelector));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));

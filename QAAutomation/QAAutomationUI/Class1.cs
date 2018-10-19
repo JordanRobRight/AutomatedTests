@@ -101,6 +101,9 @@ namespace QA.Automation.UITests
         public static string screenConnectCssSelector = "#player-container > div > div.pdw-utility-row > div.pdw-utility-row-top > div.pdwurt-status-wrapper > div > a > i";
         public static string playListXoutCssSelector = "#playlist-info-modal > div > div > div.lg-modal__container > button > span";
         public static string offClickCssSelector = "#playlist-info-modal > div > div > div.lg-modal__overlay";
+        public static string configureButtonCssSelector = "#player-container > div > div.pdw-utility-row > div.pdw-utility-row-bottom > button:nth-child(3)";
+        public static string filterSectionCssSelection = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(4) > div:nth-child(1) > div > div.lgfe-tile-grid-item-content-wrapper.lgfe-tile-max > div:nth-child(1) > div.lg-modal__field > div";
+        public static string testFilterXoutButtonCssSelector = "#player-container > div > div.lgfe-tile-grid-wrapper > div:nth-child(4) > div:nth-child(1) > div > div.lgfe-tile-grid-item-content-wrapper.lgfe-tile-max > div:nth-child(1) > div.lg-modal__field > div > div:nth-child(4) > button";
         public static string createCustomPlaylistCssSelector = "#playlist-info-form > div.lg-modal__section > div.lg-modal__field.lgfe-input-checkbox > label > span.lgfe-input-checkbox__custom-input";
         public static string playlistEditButtonCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button.lgfe-cm-utility-button.button-unstyled.js-playlist-edit > span.\\5b.fa.fa-pencil.\\5d";
         public static string playlistTitleInputCssSelector = "#form-name";
