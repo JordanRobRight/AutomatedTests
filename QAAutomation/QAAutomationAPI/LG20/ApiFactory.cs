@@ -10,7 +10,7 @@ namespace QA.Automation.APITests.LG20
 {
     public class APIFactory
     {
-        private static Dictionary<LGMServiceType, Func<Models.APRIConfigSettings, IApiPage>> apiPage = new Dictionary<LGMServiceType, Func<Models.APRIConfigSettings, IApiPage>>
+        private static Dictionary<LGMServiceType, Func<Models.APRIConfigSettings, object>> apiPage = new Dictionary<LGMServiceType, Func<Models.APRIConfigSettings, object>>
         {
             {LGMServiceType.AssetsService, a => new LGMAssetsService(a)},
             {LGMServiceType.PlayersService, a => new LGMPlayersService(a)},
@@ -55,26 +55,28 @@ namespace QA.Automation.APITests.LG20
         //          case LGMServiceType.AssetsService:
         //              page = new LGMAssetsService(config);
         //              break;
-               
+
         //    }
 
         //    return page;
         //}
 
-        public static IApiPage ApiFactory(LGMServiceType service, string userUser, string password)
+//        public static IApiPage ApiFactory(LGMServiceType service, string userUser, string password)
+        public static T ApiFactory<T>(LGMServiceType service, string userUser, string password)
         { 
             APRIConfigSettings config = new APRIConfigSettings
             {
                 UserName = userUser,
                 Password = password
             };
-
-            return ApiFactory(service, config);
+            return ApiFactory<T>(service, config);
+           
         }
 
-        public static IApiPage ApiFactory(LGMServiceType service, APRIConfigSettings config)
+//        public static IApiPage ApiFactory(LGMServiceType service, APRIConfigSettings config)
+        public static T ApiFactory<T>(LGMServiceType service, APRIConfigSettings config)
         {
-            IApiPage returnPage = null;
+            object returnPage = null;
 
             try
             {
@@ -87,10 +89,22 @@ namespace QA.Automation.APITests.LG20
                 Console.WriteLine(ex);
                 throw;
             }
-           
-            //IApiPage page = GetPage(service, userUser, password);
 
-            return returnPage;
+            //IApiPage page = GetPage(service, userUser, password);
+            if (returnPage is T)
+            {
+                return (T)returnPage;
+            }
+
+            try
+            {
+                return (T)Convert.ChangeType(returnPage, typeof(T));
+            }
+            catch (InvalidCastException)
+            {
+                return default(T);
+            }
+           //return returnPage;
         }
     }
 }

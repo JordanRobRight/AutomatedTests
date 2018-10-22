@@ -13,12 +13,17 @@ namespace QA.Automation.APITests.LG20.Services
 
         public LGMAssetsService(Common.HttpUtilsHelper httpUtilsHelper, APRIConfigSettings config) : base (httpUtilsHelper, config)
         {
-            config.UserName = _serviceName;
+            config.ServiceName = _serviceName;
         }
 
         public LGMAssetsService(APRIConfigSettings config) : base (config)
         {
             config.ServiceName = _serviceName;
+        }
+
+        public string LGMAssetsServiceAssetsUpdateUserPath()
+        {
+            return string.Empty;
         }
     }
 }

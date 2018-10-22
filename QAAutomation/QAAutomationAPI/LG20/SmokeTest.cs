@@ -111,7 +111,7 @@ namespace QA.Automation.APITests.LG20
             string result = string.Empty;
             string updatedUrl = string.Empty;
 
-            using (IApiPage page = APIFactory.ApiFactory(item.Key, Settings))
+            using (IApiPage page = APIFactory.ApiFactory<IApiPage>(item.Key, Settings))
             {
 
                 updatedUrl = FormatUrl(page.ServiceName, Settings);
@@ -237,7 +237,7 @@ namespace QA.Automation.APITests.LG20
             string result = string.Empty;
             string updatedUrl = string.Empty;
 
-            using (IApiPage page = APIFactory.ApiFactory(LGMServiceType.PlaylistsService, config))
+            using (LGMPlaylistsService page = APIFactory.ApiFactory<LGMPlaylistsService>(LGMServiceType.PlaylistsService, config))
             {
                 updatedUrl = FormatUrl(page.ServiceName, config);
 

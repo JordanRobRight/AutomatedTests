@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -15,9 +16,11 @@ namespace QA.Automation.UITests
 {
     //TODO: Need a better way to pass in these items. 
     [TestFixture("chrome", "63", "Windows 10", "", "")]
+    [Parallelizable(ParallelScope.Children)]
     public class UnitTest1
     {
-        private IWebDriver _driver;
+        //private IWebDriver _driver;
+        private ThreadLocal<IWebDriver> _driver = new ThreadLocal<IWebDriver>();
         private String browser;
         private String version;
         private String os;
@@ -54,19 +57,29 @@ namespace QA.Automation.UITests
 
             if (_configuration.IsRemoteDriver)
             {
-                _driver = new RemoteWebDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, TimeSpan.FromSeconds(600));
+                //_driver = new RemoteWebDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, TimeSpan.FromSeconds(600));
+                caps.SetCapability("name",
+                    string.Format("{0}:{1}: [{2}]",
+                        TestContext.CurrentContext.Test.ClassName,
+                        TestContext.CurrentContext.Test.MethodName,
+                        string.Empty));
+                        //TestContext.CurrentContext.Test.Properties.Get("Description")));
+                _driver.Value = new CustomDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, TimeSpan.FromSeconds(600));
+
+               
             }
             else
             {
                 ChromeOptions co = new ChromeOptions();    // set the desired browser
                 co.AddAdditionalCapability("platform", "Windows 7");
                 string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                _driver = new ChromeDriver(path);
+                _driver.Value = new ChromeDriver(path);
             }
 
-            _driver.Manage().Window.Maximize();
-            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
-            _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
+
+            _driver.Value.Manage().Window.Maximize();
+            _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
+            _driver.Value.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
         }
 
         [TestCase]//Test case 586 edit playlist
@@ -75,7 +88,7 @@ namespace QA.Automation.UITests
             //Step 1
             Login();
             //Step 2 select edit icon
-            IWebElement playlistEditButton = _driver.FindElement(By.CssSelector(BaseStrings.playlistEditButtonCssSelector));
+            IWebElement playlistEditButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistEditButtonCssSelector));
             playlistEditButton.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 3 spell check all content
@@ -1704,6 +1717,7 @@ namespace QA.Automation.UITests
             //Step 5 Double click on the image that display under the Ping Data
             IWebElement pingDataImage = _driver.FindElement(By.Id("sampleScreen"));
             IWebElement SampleScreen = _driver.FindElement(By.Id("sampleScreen"));
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //new SelectElement(_driver.FindElement(By.Id("sampleScreen")).Click());
             new Actions(_driver).DoubleClick(SampleScreen).Perform();
