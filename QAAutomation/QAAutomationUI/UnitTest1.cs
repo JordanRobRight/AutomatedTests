@@ -11,6 +11,7 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
+using QA.Automation.UITests.LG2.Pages;
 
 namespace QA.Automation.UITests
 {
@@ -958,6 +959,8 @@ namespace QA.Automation.UITests
         [TestCase]
         public void Login()
         {
+            #region --- old code
+            /*
             string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
             string currentURL = _driver.Value.Url;
             _driver.Value.Navigate().GoToUrl(url);
@@ -969,6 +972,11 @@ namespace QA.Automation.UITests
             query.SendKeys("Cbam#test1");
 
             query.Submit();
+            */
+            #endregion ---
+
+            Login login = new Login(_driver, TestConfiguration.GetTestConfiguration());
+            login.Perform();
 
             WaitForElementExists("page-header-container");
 
