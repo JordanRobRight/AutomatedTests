@@ -2,7 +2,7 @@
 using System.Threading;
 using OpenQA.Selenium;
 
-namespace QA.Automation.UITests.LG2.Pages
+namespace QA.Automation.UITests.LG20.Pages
 {
     public class Login : LGBasePage
     {
@@ -13,23 +13,21 @@ namespace QA.Automation.UITests.LG2.Pages
 
         #endregion
 
-        #region -- Properties ---
-
-        private IWebElement UserName => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Id, _username);
-
-        private IWebElement Password => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Id, _password);
-
-        #endregion
-
-        public Login(ThreadLocal<IWebDriver> driver , TestConfiguration config) : base(driver, config)
+        #region -- Constructors --
+        public Login(IWebDriver driver , TestConfiguration config) : base(driver, config)
         {
             
         }
+        #endregion
+
+        #region -- Methods --
+
+        #region -- Override Methods
 
         public override void Perform()
         {
             string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
-            Driver.Value.Navigate().GoToUrl(url);
+            Driver.Navigate().GoToUrl(url);
 
             UserName.SendKeys("cbam.lgtest1@dciartform.com");
             Password.SendKeys("Cbam#test1");
@@ -40,5 +38,17 @@ namespace QA.Automation.UITests.LG2.Pages
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+        
+        #endregion
+
+        #region -- Properties ---
+
+        private IWebElement UserName => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Id, _username);
+
+        private IWebElement Password => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Id, _password);
+
+        #endregion
     }
 }

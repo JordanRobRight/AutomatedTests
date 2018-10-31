@@ -11,7 +11,7 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
-using QA.Automation.UITests.LG2.Pages;
+using QA.Automation.UITests.LG20.Pages;
 
 namespace QA.Automation.UITests
 {
@@ -975,11 +975,14 @@ namespace QA.Automation.UITests
             */
             #endregion ---
 
-            Login login = new Login(_driver, TestConfiguration.GetTestConfiguration());
+            Login login = new Login(_driver.Value, TestConfiguration.GetTestConfiguration());
             login.Perform();
 
             WaitForElementExists("page-header-container");
 
+            IWebElement p = _driver.Value.FindElement(By.Id("interaction-nav-bar-container"));
+           
+            
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
             string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
@@ -2297,7 +2300,7 @@ namespace QA.Automation.UITests
                 // Logs the result to Sauce Labs
                 if (_configuration.IsRemoteDriver)
                 {
-                    ((IJavaScriptExecutor)_driver).ExecuteScript("sauce:job-result=" + (passed ? "passed" : "failed"));
+                    ((IJavaScriptExecutor)_driver.Value).ExecuteScript("sauce:job-result=" + (passed ? "passed" : "failed"));
                 }
             }
             finally

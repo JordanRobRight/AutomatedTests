@@ -4,14 +4,14 @@ using System.Text;
 using System.Threading;
 using OpenQA.Selenium;
 
-namespace QA.Automation.UITests.LG2
+namespace QA.Automation.UITests.LG20
 { 
     public abstract class LGBasePage : IDisposable
     {
         private TestConfiguration _config = null;
-        private ThreadLocal<IWebDriver> _driver;
+        private IWebDriver _driver;
 
-        public LGBasePage(ThreadLocal<IWebDriver> driver, TestConfiguration config)
+        public LGBasePage(IWebDriver driver, TestConfiguration config)
         {
             _config = config;
             _driver = driver;
@@ -27,7 +27,7 @@ namespace QA.Automation.UITests.LG2
 
         public TestConfiguration Config => _config;
 
-        public ThreadLocal<IWebDriver> Driver => _driver;
+        public IWebDriver Driver => _driver;
     }     
 
 }

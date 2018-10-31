@@ -12,7 +12,7 @@ namespace QA.Automation.UITests
 
         #region -- Private Methods ---
 
-        public static IWebElement GetElement(ThreadLocal<IWebDriver> _driver, ByType byType, string element)
+        public static IWebElement GetElement(IWebDriver _driver, ByType byType, string element)
         {
             By selector = null;
             IWebElement query = null;
@@ -37,7 +37,7 @@ namespace QA.Automation.UITests
 
             try
             {
-                query = _driver.Value.FindElement(selector);
+                query = _driver.FindElement(selector);
 
             }
             catch (Exception e)
