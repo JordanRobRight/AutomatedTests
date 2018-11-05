@@ -23,12 +23,12 @@ namespace QA.Automation.UITests.LG20.Pages
         #region -- Constructors --
         public PlayLists(IWebDriver driver, TestConfiguration config) : base(driver, config)
         {
-            //this.Driver
+            //this.Driver;
         }
 
         private void Test()
         {
-            //PlayListItem pl =  PlayListItems.First(a => a.Name.Contains("test"));
+            PlayListItem pl =  PlayListItems.First(a => a.Name.Contains("test"));
         }
         #endregion
 
