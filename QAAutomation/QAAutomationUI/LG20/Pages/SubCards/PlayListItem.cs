@@ -8,7 +8,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
     public sealed class PlayListItem
     {
 
-        private string _likeButton = "#Like";
+        private string _favoriteButton = "#Favorite";
         private string _editButton = "";
         private string _trashButton = "";
         private string _copyButton = "";
@@ -25,7 +25,8 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         }
 
         public string Name { get; set; }
-
+        /*public string Title { get; set; }
+         use this to grab variables without names and only titles*/
 
     }
 }

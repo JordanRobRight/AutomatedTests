@@ -17,9 +17,9 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         #region -- Properties ---
 
-        private IWebElement PlayLists => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, playlists);
+        //private IWebElement PlayLists => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, playlists);
 
-        private IWebElement Assets => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, assets);
+        //private IWebElement Assets => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, assets);
 
         #endregion
 
@@ -30,7 +30,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         private void Test()
         {
-            SideBarItem pl = GetMenuItems.First(a => a.Name.Contains("test"));
+            //SideBarItem pl = GetMenuItems.First(a => a.Name.Contains("test"));
         }
 
         public override void Perform()
@@ -38,13 +38,13 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
             Driver.Navigate().GoToUrl(url);
 
-            PlayLists.Click();
+           // PlayLists.Click();
 
         }
 
         public List<SideBarItem> GetMenuItems => GetMenu(Driver);
 
-        public object Name { get; private set; }
+        //public object Name { get; set; }
 
         private List<SideBarItem> GetMenu(IWebDriver driver)
         {
@@ -56,8 +56,8 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
             foreach (IWebElement menuLink in menuItems)
             {
-                SideBarItem pli = new SideBarItem(driver) { Name = menuLink.Text };
-                sidebarItems.Add(pli);
+                //SideBarItem pli = new SideBarItem(driver) { Name = menuLink.Text };
+                //sidebarItems.Add(pli);
             }
 
             return sidebarItems;

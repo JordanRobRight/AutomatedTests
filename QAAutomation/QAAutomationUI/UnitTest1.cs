@@ -64,10 +64,10 @@ namespace QA.Automation.UITests
                         TestContext.CurrentContext.Test.ClassName,
                         TestContext.CurrentContext.Test.MethodName,
                         string.Empty));
-                        //TestContext.CurrentContext.Test.Properties.Get("Description")));
+                //TestContext.CurrentContext.Test.Properties.Get("Description")));
                 _driver.Value = new CustomDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, TimeSpan.FromSeconds(600));
 
-               
+
             }
             else
             {
@@ -630,8 +630,8 @@ namespace QA.Automation.UITests
             IWebElement triviaWidget = _driver.Value.FindElement(By.CssSelector(BaseStrings.triviaWidgetCssSelector));
             WaitForMaskModal();
             triviaWidget.Click();//NOT VISIBLE on half screen
-            //Step 4 Spell check all content (fields/values/buttons), including placeholder text 
-            
+                                 //Step 4 Spell check all content (fields/values/buttons), including placeholder text 
+
             //Step 5 Confirm text box displays with pre-filled time Duration (not editable)
             IWebElement triviaWidgetDuration = _driver.Value.FindElement(By.CssSelector(BaseStrings.triviaWidgetDurationCssSelector));
             //---Assert.IsTrue(triviaWidgetDuration.Text.Contains("45")); 
@@ -675,7 +675,7 @@ namespace QA.Automation.UITests
             playlistSave.Click();
             //Step 18 Logout
             LogOutWithoutLogin();
-            
+
             //TODO: Assert that the saved worked.
         }
 
@@ -981,8 +981,8 @@ namespace QA.Automation.UITests
             WaitForElementExists("page-header-container");
 
             IWebElement p = _driver.Value.FindElement(By.Id("interaction-nav-bar-container"));
-           
-            
+
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
             string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
@@ -1320,22 +1320,22 @@ namespace QA.Automation.UITests
                         //TODO: Validate the playlist has been deleted. API??
                     }
 
-                    
+
 
                 }
                 else
                 {
-                    
+
                 }
             }
             else
             {
-               
+
             }
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
-            
+
         }
 
         [TestCase]
@@ -1853,7 +1853,7 @@ namespace QA.Automation.UITests
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             IWebElement filterSection = _driver.Value.FindElement(By.CssSelector(BaseStrings.filterSectionCssSelection));
-            
+
             if (filterSection.Text.Contains("test"))
             {
                 IWebElement testFilterXout = _driver.Value.FindElement(By.CssSelector(BaseStrings.testFilterXoutButtonCssSelector));
@@ -1942,7 +1942,7 @@ namespace QA.Automation.UITests
             IWebElement playlistSearchInput2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
             playlistSearchInput2.SendKeys("Automated");
             IWebElement playlistCopyName = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistCopyTitleNameCssSelector));
-            
+
             WaitForMaskModal();
             IWebElement playlistCopyName1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistCopyTitleNameCssSelector));
 
@@ -2182,6 +2182,51 @@ namespace QA.Automation.UITests
             playlistSearchInput.Clear();
             //step 9 logout
             LogOutWithoutLogin();
+        }
+
+
+        [TestCase]//Test case 2147
+        public void CBAM_PlayerPagination()
+        {
+            //Step 1
+            Login();
+            //Step 2 
+            IWebElement playersTab = _driver.Value.FindElement(By.CssSelector("#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(3) > a > span"));
+            playersTab.Click();
+            WaitForMaskModal();
+            //Step 3
+            /*Scroll to bottom of page (right corner) to view Pagination - Players Pagination will  display, but only if more than 15 players exists will it become selectable, if less than 15 players exist, the pagination buttons will be unselectable. The remainder of this test case cannot be executed, if less than 15 players exists, resume w/this test case only if applicable. */
+
+            //Step 4 
+            //Select various numbered pages (Ex: 1, 5 , 50, 100, 500...)
+
+            //Step 5
+            //Select NEXT various times
+
+            //Step 6 
+            //Select PREVIOUS times
+
+            //Step 7
+            LogOutWithoutLogin();
+        }
+
+        [TestCase] //test case 2150
+        public void CBAM_AssetsSearchBox()
+        {
+            //Step 1
+            Login();
+            //Step 2
+            IWebElement assetTab = _driver.Value.FindElement(By.CssSelector("#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a > span"));
+            assetTab.Click();
+            WaitForMaskModal();
+            //Step 3
+            IWebElement assetSearchInput = _driver.Value.FindElement(By.Id("assets-search"));
+            assetSearchInput.Click();
+            //step 4
+            //spell check placeholder text
+
+            //step 5 
+            assetSearchInput.SendKeys("     ");
         }
 
         [TestCase]//TestCase 1991
