@@ -38,13 +38,13 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
             Driver.Navigate().GoToUrl(url);
 
-           // PlayLists.Click();
+            //PlayLists.Click();
 
         }
 
         public List<SideBarItem> GetMenuItems => GetMenu(Driver);
 
-        //public object Name { get; set; }
+        public object Name { get; private set; }
 
         private List<SideBarItem> GetMenu(IWebDriver driver)
         {
