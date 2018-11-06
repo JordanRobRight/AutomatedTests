@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
-using QA.Automation.UITests.LG20.Pages.SubCards;
+using QA.Automation.UITests.LG20.Pages;
 
-namespace QA.Automation.UITests.LG20.Pages.SubCards
+namespace QA.Automation.UITests.LG20.Pages
 {
     public class SideBarItem : LGBasePage
     {
         #region -- Fields -- 
         private static string sideBar = @"interaction-nav-bar-container";
-        private IWebDriver driver;
+       
 
         #endregion
 
@@ -25,7 +25,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         public SideBarItem(IWebDriver driver, TestConfiguration config) : base(driver, config)
         {
-            this.driver = driver;
+            //this.Driver;
         }
 
         private void Test()

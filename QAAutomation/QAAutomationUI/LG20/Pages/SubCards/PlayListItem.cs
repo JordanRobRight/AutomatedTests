@@ -8,7 +8,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
     public sealed class PlayListItem
     {
 
-        private string _favoriteButton = "#Favorite";
+        private string _favoriteButton = "#assets-container > div.assets-content-wrapper.js-assets-content > div > div > div:nth-child(1) > div > div.\\5b.lgfe-cm-utilities.lgfe-cm-utilities--column.\\5d > div > button:nth-child(1)";
         private string _editButton = "";
         private string _trashButton = "";
         private string _copyButton = "";

@@ -276,7 +276,7 @@ namespace QA.Automation.UITests
             IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
             playlistsSideBarMenuButton.Click();
-            WaitForMaskModal();
+            //WaitForMaskModal();
             //step 2
             IWebElement addPlaylistButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
             addPlaylistButton.Click();
@@ -994,6 +994,17 @@ namespace QA.Automation.UITests
             IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
 
             playerChannelDropdown.Click();
+
+
+            var loginMenu = (GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a")));
+
+            foreach (var li in loginMenu)
+            {
+                if(li.Text=="GM")
+                {
+                    //chanelSelection = 
+                }
+            }
 
             IWebElement gmChannelSelection = _driver.Value.FindElement(By.XPath(BaseStrings.gmChannelSelectionXPath));
 
@@ -2216,7 +2227,7 @@ namespace QA.Automation.UITests
             //Step 1
             Login();
             //Step 2
-            IWebElement assetTab = _driver.Value.FindElement(By.CssSelector("#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a > span"));
+            IWebElement assetTab = _driver.Value.FindElement(By.CssSelector("#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(2) > a > span"));
             assetTab.Click();
             WaitForMaskModal();
             //Step 3
@@ -2227,6 +2238,39 @@ namespace QA.Automation.UITests
 
             //step 5 
             assetSearchInput.SendKeys("     ");
+            WaitForMaskModal();
+            assetSearchInput.Clear();
+            //step 6 
+            assetSearchInput.SendKeys("asdfghjkl;");
+            WaitForMaskModal();
+            assetSearchInput.Clear();
+            //step 7
+            assetSearchInput.SendKeys("test");
+            WaitForMaskModal();
+            assetSearchInput.Clear();
+
+            assetSearchInput.SendKeys("12");
+            WaitForMaskModal();
+            assetSearchInput.Clear();
+
+            assetSearchInput.SendKeys("!");
+            WaitForMaskModal();
+            assetSearchInput.Clear();
+
+            //Step 8 
+            assetSearchInput.SendKeys("DCI");
+            WaitForMaskModal();
+            assetSearchInput.Clear();
+
+            //Step 9
+            assetSearchInput.SendKeys("tag");
+            WaitForMaskModal();
+
+            //Step 10
+            assetSearchInput.Clear();
+
+            //Step 11
+            LogOutWithoutLogin();
         }
 
         [TestCase]//TestCase 1991
