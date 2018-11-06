@@ -25,11 +25,15 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #region -- Override Methods
 
-        public override void Perform()
+        public override void GoToUrl()
         {
             string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
             Driver.Navigate().GoToUrl(url);
+        }
 
+        public override void Perform()
+        {
+           
             byte[] data = Convert.FromBase64String(Config.LGPassword);
             string password = Encoding.UTF8.GetString(data);
             UserName.SendKeys(Config.LGUser);

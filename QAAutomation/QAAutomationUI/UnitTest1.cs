@@ -977,6 +977,7 @@ namespace QA.Automation.UITests
             #endregion ---
 
             Login login = new Login(_driver.Value, TestConfiguration.GetTestConfiguration());
+            login.GoToUrl();
             login.Perform();
 
             WaitForElementExists("page-header-container");
@@ -990,20 +991,11 @@ namespace QA.Automation.UITests
             IWebElement playlistDiv = _driver.Value.FindElement(By.CssSelector(playlistDivCssSelector));
             //if playlists is empty find profile dropdown 
 
-            //if (playlistDiv.Text.Contains(""))
-            //{
-            string channelSelector = BaseStrings.playerChannelDropdownCssSelector;
-            //if (TestConfiguration.GetTestConfiguration().Environment == EnvironmentType.PreProd)
-            //{
-            //    channelSelector = BaseStrings.playerChannelDropdownCssSelector.Replace("span:nth-child(2)", "span:nth-child(3)");
-            //}
-
-//            IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
-            IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(channelSelector));
+            IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
 
             playerChannelDropdown.Click();
 
-            var wrapper = (GetElement(ByType.ClassName, "iibcuinow-menu-wrapper")).FindElements(By.TagName("a"));
+            var wrapper = GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a"));
             IWebElement gmChannelSelection = null;
 
             foreach (var menuItem in wrapper)

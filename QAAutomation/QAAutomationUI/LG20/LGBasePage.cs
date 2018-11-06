@@ -21,6 +21,11 @@ namespace QA.Automation.UITests.LG20
             
         }
 
+        public virtual void GoToUrl()
+        {
+            throw new NotImplementedException();
+        }
+
         public abstract void Perform();
 
         public abstract bool VerifyPage();
