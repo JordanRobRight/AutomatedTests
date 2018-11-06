@@ -11,6 +11,7 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
+using QA.Automation.Common;
 using QA.Automation.UITests.LG20.Pages;
 
 namespace QA.Automation.UITests
@@ -991,11 +992,32 @@ namespace QA.Automation.UITests
 
             //if (playlistDiv.Text.Contains(""))
             //{
-            IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            string channelSelector = BaseStrings.playerChannelDropdownCssSelector;
+            //if (TestConfiguration.GetTestConfiguration().Environment == EnvironmentType.PreProd)
+            //{
+            //    channelSelector = BaseStrings.playerChannelDropdownCssSelector.Replace("span:nth-child(2)", "span:nth-child(3)");
+            //}
+
+//            IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(channelSelector));
 
             playerChannelDropdown.Click();
 
-            IWebElement gmChannelSelection = _driver.Value.FindElement(By.XPath(BaseStrings.gmChannelSelectionXPath));
+            var wrapper = (GetElement(ByType.ClassName, "iibcuinow-menu-wrapper")).FindElements(By.TagName("a"));
+            IWebElement gmChannelSelection = null;
+
+            foreach (var menuItem in wrapper)
+            {
+                if (menuItem.Text == "GM")
+                {
+                    gmChannelSelection = menuItem;
+                    break;
+                }
+            }
+
+            //gmChannelSelection = wrapper.FirstOrDefault();
+
+            gmChannelSelection = gmChannelSelection ?? wrapper.FirstOrDefault();
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
