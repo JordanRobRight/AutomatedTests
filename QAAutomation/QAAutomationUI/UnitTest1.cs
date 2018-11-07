@@ -284,35 +284,94 @@ namespace QA.Automation.UITests
             //step 1 login
             Login();//remove to do full test
 
-            IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            var sideMenu = GetElement(ByType.ClassName, "inbc-menu-wrapper").FindElements(By.TagName("a"));
+            IWebElement playlistSelect = null;
+
+            foreach (var menuItem in sideMenu)
+            {
+                if (menuItem.Text == "Playlists")
+                {
+                    playlistSelect = menuItem;
+                    break;
+                }
+            }
+            playlistSelect.Click();
             WaitForMaskModal();
-            playlistsSideBarMenuButton.Click();
-            WaitForMaskModal();
+
             //step 2
-            IWebElement addPlaylistButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
+            var functionBar = GetElement(ByType.ClassName, "pmfb-container").FindElements(By.TagName("button"));
+            IWebElement addPlaylistButton = null;
+
+            foreach (var functionBarItem in functionBar)
+            {
+                if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
+                {
+                    addPlaylistButton = functionBarItem;
+                    break;
+                }
+            }
             addPlaylistButton.Click();
-            //Step 3 spell check all content (fields/values), including place holder text
+
             //Step 4 Select 'X' to close window
-            IWebElement playlistAddXButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playListXoutCssSelector));
+
+            var modalContainer = GetElement(ByType.ClassName, "lg-modal__container");
+            var modalContainerButtons = modalContainer.FindElements(By.TagName("button"));
+            IWebElement playlistAddXButton = null;
+
+            foreach ( var button in modalContainerButtons)
+            {
+                if(button.Text != "Save")
+                {
+                    playlistAddXButton = button;
+                }               
+            }
+
             playlistAddXButton.Click();
+            
             //Step 5 Select '+' to add new playlist
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            IWebElement addPlaylistButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
-            addPlaylistButton1.Click();
+
+            foreach (var functionBarItem in functionBar)
+            {
+                if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
+                {
+                    addPlaylistButton = functionBarItem;
+                    break;
+                }
+            }
+            addPlaylistButton.Click();
             //Step 6 Click outside the window to close it 
             IWebElement offClick = _driver.Value.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
             offClick.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 7 Select '+' to add new playlist
-            IWebElement addPlaylistButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
-            addPlaylistButton2.Click();
+            foreach (var functionBarItem in functionBar)
+            {
+                if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
+                {
+                    addPlaylistButton = functionBarItem;
+                    break;
+                }
+            }
+            addPlaylistButton.Click();
+
             //Step 8 Select Create a Custom Playlist - Filtered Check box
-            IWebElement createCustomPlaylistCheckbox = _driver.Value.FindElement(By.CssSelector(BaseStrings.createCustomPlaylistCssSelector));
-            createCustomPlaylistCheckbox.Click();
+            var modalContainerCheckBox = modalContainer.FindElement(By.ClassName("lgfe-input-checkbox__custom-input"));
+            modalContainerCheckBox.Click();
 
             //Step 9 Select Save
-            IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+            IWebElement saveButton = null;
+            foreach (var button in modalContainerButtons)
+            {
+               
+                if (button.Text.Contains("Save"))
+                {
+                    saveButton = button;
+                    break;
+                }
+            }
             saveButton.Click();
+
             //Step 10 Select Ok
             IAlert alert = _driver.Value.SwitchTo().Alert();
             alert.Accept();
