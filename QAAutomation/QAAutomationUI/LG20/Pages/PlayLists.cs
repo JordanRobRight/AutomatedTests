@@ -35,6 +35,12 @@ namespace QA.Automation.UITests.LG20.Pages
         #region -- Methods -- 
 
         #region -- Overrides --
+
+        // Example of overriding the WaitFor element method.
+        public override void WaitFor(string itemToWaitFor)
+        {
+            base.WaitFor(itemToWaitFor);
+        }
         public override void Perform()
         {
             throw new NotImplementedException();

@@ -26,6 +26,11 @@ namespace QA.Automation.UITests.LG20
             throw new NotImplementedException();
         }
 
+        public virtual void WaitFor(string itemToWaitFor = "")
+        {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+        }
+
         public abstract void Perform();
 
         public abstract bool VerifyPage();
