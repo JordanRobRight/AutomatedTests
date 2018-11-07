@@ -85,6 +85,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]//Test case 586 edit playlist
+        [Category("All")]
+        [Description("Test case 586 edit playlist")]
         public void EditPlaylist()
         {
             //Step 1
@@ -169,6 +171,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase] //Test Case 9182
+        [Category("All")]
+        [Description("Test Case 9182")]
         public void FavoritePlaylist()
         {
             //Step 1 login
@@ -230,7 +234,10 @@ namespace QA.Automation.UITests
             //Step 14 logout
             LogOutWithoutLogin();
         }
+
         [TestCase]
+        [Category("All")]
+        [Category("SmokeTests")]
         public void LiveGuide20()
         {
             Login();
@@ -269,6 +276,9 @@ namespace QA.Automation.UITests
         }
 
         [TestCase] //Test case #580
+        [Category("All")]
+        [Category("SmokeTests")]
+        [Description("Test case #580")]
         public void CreatePlaylists()
         {
             //step 1 login
@@ -385,6 +395,9 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]// test Case #46
+        [Category("All")]
+        [Category("SmokeTests")]
+        [Description("Test Case #46")]
         public void CreateAPlaylistHappyPath()
         {
             //Step 1 login 
@@ -417,6 +430,9 @@ namespace QA.Automation.UITests
         }
 
         [TestCase] //Test case 737
+        [Category("All")]
+        //[Category("SmokeTests")]
+        [Description("Test case 737")]
         public void AddWeatherWidget()
         {
             //step 1 login   
@@ -556,6 +572,9 @@ namespace QA.Automation.UITests
 
 
         [TestCase]//test case 800
+        [Category("All")]
+        [Description("Test case 800")]
+        //[Category("SmokeTests")]
         public void AddTrafficWidget()
         {
             //step 1 sign in 
@@ -621,6 +640,7 @@ namespace QA.Automation.UITests
 
 
         //[TestCase] //testcase 808
+        //[Description("Test Case 808")]
         public void AddTriviaWidget()
         {
             //Step 1 signIn
@@ -681,6 +701,7 @@ namespace QA.Automation.UITests
         }
 
         //[TestCase]//test case 809
+        //[Description("Test case 809")]
         public void AddHealthWidget()
         {
             //step 1 sign in
@@ -720,6 +741,7 @@ namespace QA.Automation.UITests
         }
 
         //[TestCase]//test case 72
+        //[Description("Test case 72")]
         public void AddImageWidget()
         {
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
@@ -745,6 +767,9 @@ namespace QA.Automation.UITests
 
 
         [TestCase]//Test case 834
+        [Category("All")]
+        //[Category("SmokeTests")]
+        [Description("Test case 834")]
         public void AddVideoWidget()
         {
             //step 1 login
@@ -958,6 +983,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]
+        [Category("SmokeTests")]
+        [Description("Login")]
         public void Login()
         {
             #region --- old code
@@ -1031,6 +1058,7 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]
+        [Description("LiveGuideAssets")]
         public void LiveguideAssets()
         {
             Login();
@@ -1103,6 +1131,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]//Test case 1994
+        [Category("SmokeTests")]
+        [Description("Test case 1994")]
         public void Logout()
         {
             Login();
@@ -1140,6 +1170,7 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]
+        [Description("Test for Test case 1456")]
         public void LogoutAfterLogin()//postive test for Test case 1456
         {
             //step 1
@@ -1212,6 +1243,8 @@ namespace QA.Automation.UITests
             //TODO: Assert that we are logged out based on URL and maybe the Username/password fields.
         }
         [TestCase]//Test case 585
+        [Category("All")]
+        [Description("Test case 585")]
         public void DeletePlaylist()
         {
             //Step 1
@@ -1246,6 +1279,7 @@ namespace QA.Automation.UITests
 
 
         [TestCase]
+        [Category("All")]
         public void DeleteProtocol()
         {
             Login();
@@ -1353,6 +1387,7 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]
+        [Category("All")]
         public void ContactUsWithrequiredFields()
         {
             //step 1
@@ -1472,6 +1507,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]//Test Case #1459
+        [Category("All")]
+        [Description("Test Case #1459")]
         public void ContactUsWithAllFields()
         {
             //Step 1
@@ -1573,6 +1610,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]//Test Case #1460
+        [Category("All")]
+        [Description("Test Case #1460")]
         public void PlayersStatus()
         {
             //Step 1
@@ -1616,6 +1655,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]// test case #1463
+        [Category("All")]
+        [Description("Test case #1463")]
         public void PlayerEdits()
         {
             //Step 1
@@ -1719,6 +1760,7 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]
+        [Category("All")]
         public void PlayerEditDevice()
         {
             //Step 1
@@ -1793,6 +1835,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]//Test case #1469
+        [Category("All")]
+        [Description("Test case #1469")]
         public void PlayerAddNewChannel()
         {
             //step 1
@@ -1847,6 +1891,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]//Test case 1487
+        [Category("All")]
+        [Description("Test case 1487")]
         public void PlayerDeleteChannel()
         {
             //step 1
@@ -1891,6 +1937,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]//Test case 1488
+        [Category("All")]
+        [Description("Test case 1488")]
         public void PlayerScreenConnect()
         {
             //Step 1
@@ -1928,6 +1976,8 @@ namespace QA.Automation.UITests
 
 
         [TestCase]//Test case #1983
+        [Category("All")]
+        [Description("Test case #1983")]
         public void CopyPlaylist()
         {
             //step1
@@ -1982,6 +2032,9 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]//Test case #1984
+        [Category("SmokeTests")]
+        [Category("All")]
+        [Description("Test case #1984")]
         public void OpenPlaylist()
         {
             //Step 1
@@ -2025,6 +2078,9 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]// test case 1985
+        [Category("SmokeTests")]
+        [Category("All")]
+        [Description("Test case 1985")]
         public void AbleToEditPlaylist()
         {
             //step 1 loging
@@ -2069,6 +2125,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]//Test case 1986
+        [Category("All")]
+        [Description("Test case 1986")]
         public void PlaylistFilters()
         {
             //step 1 signin
@@ -2105,6 +2163,9 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]//test case 1987
+        [Category("SmokeTests")]
+        [Category("All")]
+        [Description("Test case 1987")]
         public void PlaylistDisplayAsGrid()
         {
             //step 1 login
@@ -2139,6 +2200,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]// test case 1988
+        [Category("All")]
+        [Description("Test case 1988")]
         public void PlaylistDisplayAsRow()
         {
             //step 1 login
@@ -2173,6 +2236,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]//TestCase 1989
+        [Category("All")]
+        [Description("TestCase 1989")]
         public void PlaylistSearchBox()
         {
             //step 1 signin
@@ -2200,6 +2265,8 @@ namespace QA.Automation.UITests
 
 
         [TestCase]//Test case 2147
+        [Category("All")]
+        [Description("Test case 2147")]
         public void CBAM_PlayerPagination()
         {
             //Step 1
@@ -2225,6 +2292,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase] //test case 2150
+        [Category("All")]
+        [Description("Test case 2150")]
         public void CBAM_AssetsSearchBox()
         {
             //Step 1
@@ -2244,6 +2313,8 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]//TestCase 1991
+        [Category("All")]
+        [Description("TestCase 1991")]
         public void PlaylistMyProfile()
         {
             //step 1 sign in
