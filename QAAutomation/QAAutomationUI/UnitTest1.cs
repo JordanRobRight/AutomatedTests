@@ -14,12 +14,14 @@ using OpenQA.Selenium.Support.UI;
 using QA.Automation.Common;
 using QA.Automation.UITests.LG20.Pages;
 
+
+
 namespace QA.Automation.UITests
 {
     //TODO: Need a better way to pass in these items. 
     [TestFixture("chrome", "63", "Windows 10", "", "")]
     [Parallelizable(ParallelScope.Children)]
-    public class UnitTest1
+    public class UnitTest1 
     {
         //private IWebDriver _driver;
         private ThreadLocal<IWebDriver> _driver = new ThreadLocal<IWebDriver>();
@@ -297,7 +299,7 @@ namespace QA.Automation.UITests
             }
             playlistSelect.Click();
             WaitForMaskModal();
-
+            
             //step 2
             var functionBar = GetElement(ByType.ClassName, "pmfb-container").FindElements(By.TagName("button"));
             IWebElement addPlaylistButton = null;
@@ -361,9 +363,10 @@ namespace QA.Automation.UITests
 
             //Step 9 Select Save
             IWebElement saveButton = null;
+            WaitForElementExists("modalContainerButtons");
+            
             foreach (var button in modalContainerButtons)
             {
-               
                 if (button.Text.Contains("Save"))
                 {
                     saveButton = button;

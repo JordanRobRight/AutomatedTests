@@ -70,6 +70,19 @@ namespace QA.Automation.UITests.LG20.Pages
            
             return p;
         }
+        //public override void WaitFor(string itemToWaitFor = "")
+        //{
+        //    if(itemToWaitFor == "saveModal")
+        //    {
+        //        IWebElement savemodal = GetElement();
+        //        if(savemodal.Displayed)
+        //        {
+                    
+        //        }
+        //    }
+            
+        //    //base.WaitFor(itemToWaitFor);
+        //}
 
         private IEnumerable<WidgetListItem> GetWidgetList(IWebDriver driver)
         {
