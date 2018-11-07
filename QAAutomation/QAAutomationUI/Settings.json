@@ -4,5 +4,9 @@
   "SauceLabsKey": "a4277bd1-3492-4562-99bc-53dd349c52e1",
   "IsRemoteDriver": false,
   "BaseUrl": "https://portal{0}.dcimliveguide.com/",
-  "WaitTimeInSeconds": 30
+  "WaitTimeInSeconds": 30,
+  //"LGUser": "rkos@dciartform.com",
+  //"LGPassword": "X01hcmtldGluZzEyMw==",
+  "LGUser": "cbam.lgtest1@dciartform.com",
+  "LGPassword": "Q2JhbSN0ZXN0MQ=="
 }

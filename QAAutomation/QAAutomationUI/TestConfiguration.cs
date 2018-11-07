@@ -21,6 +21,12 @@ namespace QA.Automation.UITests
         [JsonProperty]
         public int WaitTimeInSeconds { get; set; }
 
+        [JsonProperty]
+        public string LGUser { get; set; }
+        [JsonProperty]
+        public string LGPassword { get; set; }
+
+
         public static TestConfiguration GetTestConfiguration()
         {
             JsonSerializer serializer = new JsonSerializer();

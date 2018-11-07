@@ -8,7 +8,7 @@ namespace QA.Automation.UITests.LG20
 { 
     public abstract class LGBasePage : IDisposable
     {
-        private TestConfiguration _config = null;
+        private readonly TestConfiguration _config = null;
         private IWebDriver _driver;
 
         public LGBasePage(IWebDriver driver, TestConfiguration config)
@@ -18,7 +18,12 @@ namespace QA.Automation.UITests.LG20
         }
         public void Dispose()
         {
+            
+        }
 
+        public virtual void GoToUrl()
+        {
+            throw new NotImplementedException();
         }
 
         public abstract void Perform();

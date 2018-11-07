@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading;
 using OpenQA.Selenium;
 
@@ -24,13 +25,22 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #region -- Override Methods
 
-        public override void Perform()
+        public override void GoToUrl()
         {
             string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
             Driver.Navigate().GoToUrl(url);
+        }
 
-            UserName.SendKeys("cbam.lgtest1@dciartform.com");
-            Password.SendKeys("Cbam#test1");
+        public override void Perform()
+        {
+           
+            byte[] data = Convert.FromBase64String(Config.LGPassword);
+            string password = Encoding.UTF8.GetString(data);
+            UserName.SendKeys(Config.LGUser);
+            Password.SendKeys(password);
+
+            //UserName.SendKeys("cbam.lgtest1@dciartform.com");
+            //Password.SendKeys("Cbam#test1");
             Password.Submit();
         }
 

@@ -64,6 +64,7 @@ namespace QA.Automation.APITests.LG20
 
         [TestCaseSource("items")]
         [NUnit.Framework.Category("SmokeTests")]
+        [NUnit.Framework.Category("All")]
         //public void GetEnv(KeyValuePair<string, string> item)
         public void GetEnv(KeyValuePair<LGMServiceType,string> item)
         {
@@ -105,6 +106,7 @@ namespace QA.Automation.APITests.LG20
 
         [TestCaseSource("items")]
         [NUnit.Framework.Category("SmokeTests")]
+        [NUnit.Framework.Category("All")]
         public void GetAuthTokenByPage(KeyValuePair<LGMServiceType,string> item)
         {
             //string updatedUrl = FormatUrl(item.Key);
