@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using OpenQA.Selenium;
+using QA.Automation.UITests.Models;
 
 namespace QA.Automation.UITests.LG20
 { 

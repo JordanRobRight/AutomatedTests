@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
 using QA.Automation.UITests.LG20.Pages.SubCards;
+using QA.Automation.UITests.Models;
+using QA.Automation.UITests.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages
 {

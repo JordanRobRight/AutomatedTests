@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
 using QA.Automation.UITests.LG20.Pages;
+using QA.Automation.UITests.Models;
 
 namespace QA.Automation.UITests.LG20.Pages
 {

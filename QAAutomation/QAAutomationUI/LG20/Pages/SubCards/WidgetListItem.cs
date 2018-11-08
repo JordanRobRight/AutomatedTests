@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using OpenQA.Selenium;
+using QA.Automation.UITests.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages.SubCards
 {
