@@ -40,6 +40,10 @@ namespace QA.Automation.UITests
                 query = _driver.FindElement(selector);
 
             }
+            catch (NoSuchElementException nsex)
+            {
+                Console.WriteLine("Element couldn't be found: " + nsex);
+            }
             catch (Exception e)
             {
                 Console.WriteLine(e);

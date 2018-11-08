@@ -63,26 +63,33 @@ namespace QA.Automation.UITests.LG20.Pages
 
         private List<PlayListItem> GetPlayList(IWebDriver driver)
         {
-
-            // THis is just an example using the menu are the right so the locators need to change to support Playlist screen
-
-            // Get the main container for the menu.
-            IWebElement p = driver.FindElement(By.Id("interaction-nav-bar-container"));
-            // Get the menu that is for the various pages like playlist,assets and such.
-
-            IWebElement p1 = p.FindElement(By.ClassName("inbc-menu-wrapper"));
-
-            // Find all elements that have an a tagname.
-            IEnumerable<IWebElement> p2 = p1.FindElements(By.TagName("a")).ToList();
-
             List<PlayListItem> pls = new List<PlayListItem>();
 
-            foreach (IWebElement we in p2)
+            try
             {
-                PlayListItem pli = new PlayListItem(driver) {Name = we.Text};
-                pls.Add(pli);
-            }
+                // THis is just an example using the menu are the right so the locators need to change to support Playlist screen
 
+                // Get the main container for the menu.
+                IWebElement p = driver.FindElement(By.Id("interaction-nav-bar-container"));
+                // Get the menu that is for the various pages like playlist,assets and such.
+
+                IWebElement p1 = p.FindElement(By.ClassName("inbc-menu-wrapper"));
+
+                // Find all elements that have an a tagname.
+                IEnumerable<IWebElement> p2 = p1.FindElements(By.TagName("a")).ToList();
+
+                foreach (IWebElement we in p2)
+                {
+                    PlayListItem pli = new PlayListItem(driver) { Name = we.Text };
+                    pls.Add(pli);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
             return pls;
         }
     }
