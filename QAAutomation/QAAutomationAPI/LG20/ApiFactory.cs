@@ -39,9 +39,11 @@ namespace QA.Automation.APITests.LG20
             {LGMServiceType.FinanceService, a => new LGMFinanceService(a)},
             {LGMServiceType.DbService, a => new LGMDbService(a)},
             {LGMServiceType.AmenitiesService, a => new LGMAmenitiesService(a)},
-            {LGMServiceType.SubaruTrimAccessoriesService, a => new LGMSubaruTrimAccessoriesService(a)},
-            {LGMServiceType.SubaruSDSAppSettingsService, a => new LGMSubaruTrimAccessoriesService(a)},
-            
+            {LGMServiceType.Subaru_TrimAccessoriesService, a => new LGMSubaruTrimAccessoriesService(a)},
+            {LGMServiceType.Subaru_SDSAppSettingsService, a => new LGMSubaruTrimAccessoriesService(a)},
+            {LGMServiceType.Subaru_TrimComparisonService, a => new LGMSubaruTrimComparisonServicee(a)},
+            {LGMServiceType.Subaru_VehicleTrimsService, a => new LGMSubaruVehicleComparisonServicee(a)},
+
 
         };
 
