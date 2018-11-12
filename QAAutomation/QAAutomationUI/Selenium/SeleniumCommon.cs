@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace QA.Automation.UITests
+namespace QA.Automation.UITests.Selenium
 {
     public class SeleniumCommon
     {

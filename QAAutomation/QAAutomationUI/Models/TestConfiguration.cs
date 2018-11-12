@@ -2,7 +2,7 @@
 using System.Reflection;
 using Newtonsoft.Json;
 
-namespace QA.Automation.UITests
+namespace QA.Automation.UITests.Models
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class TestConfiguration
@@ -27,15 +27,15 @@ namespace QA.Automation.UITests
         public string LGPassword { get; set; }
 
 
-        public static TestConfiguration GetTestConfiguration()
-        {
-            JsonSerializer serializer = new JsonSerializer();
-            FileInfo fi = new FileInfo(Path.Combine(Assembly.GetExecutingAssembly().Location));
+        //public static TestConfiguration GetTestConfiguration()
+        //{
+        //    JsonSerializer serializer = new JsonSerializer();
+        //    FileInfo fi = new FileInfo(Path.Combine(Assembly.GetExecutingAssembly().Location));
 
-            string data = File.ReadAllText(Path.Combine(fi.DirectoryName, "Settings.json"));
-            TestConfiguration deserializedProduct = JsonConvert.DeserializeObject<UITests.TestConfiguration>(data);
-            return deserializedProduct;
-        }
+        //    string data = File.ReadAllText(Path.Combine(fi.DirectoryName, "Settings.json"));
+        //    TestConfiguration deserializedProduct = JsonConvert.DeserializeObject<TestConfiguration>(data);
+        //    return deserializedProduct;
+        //}
     }
 }
 

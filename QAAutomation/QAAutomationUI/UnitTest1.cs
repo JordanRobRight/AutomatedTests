@@ -13,7 +13,8 @@ using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 using QA.Automation.Common;
 using QA.Automation.UITests.LG20.Pages;
-
+using QA.Automation.UITests.Models;
+using QA.Automation.UITests.Selenium;
 
 
 namespace QA.Automation.UITests
@@ -30,7 +31,7 @@ namespace QA.Automation.UITests
         private String os;
         private String deviceName;
         private String deviceOrientation;
-        private readonly UITests.TestConfiguration _configuration = null;
+        private readonly TestConfiguration _configuration = null;
 
         //private const string un = @"DCIArtform";
 
@@ -43,7 +44,8 @@ namespace QA.Automation.UITests
             this.os = os;
             this.deviceName = deviceName;
             this.deviceOrientation = deviceOrientation;
-            _configuration = UITests.TestConfiguration.GetTestConfiguration();
+            //_configuration = TestConfiguration.GetTestConfiguration();
+            _configuration = ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>();
         }
 
         [SetUp]
@@ -1055,7 +1057,7 @@ namespace QA.Automation.UITests
             */
             #endregion ---
 
-            Login login = new Login(_driver.Value, TestConfiguration.GetTestConfiguration());
+            Login login = new Login(_driver.Value, _configuration);
             login.GoToUrl();
             login.Perform();
 
