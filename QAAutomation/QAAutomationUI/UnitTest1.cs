@@ -286,19 +286,7 @@ namespace QA.Automation.UITests
             //step 1 login
             Login();//remove to do full test
 
-            var sideMenu = GetElement(ByType.ClassName, "inbc-menu-wrapper").FindElements(By.TagName("a"));
-            IWebElement playlistSelect = null;
-
-            foreach (var menuItem in sideMenu)
-            {
-                if (menuItem.Text == "Playlists")
-                {
-                    playlistSelect = menuItem;
-                    break;
-                }
-            }
-            playlistSelect.Click();
-            WaitForMaskModal();
+            
             
             //step 2
             var functionBar = GetElement(ByType.ClassName, "pmfb-container").FindElements(By.TagName("button"));
@@ -342,6 +330,7 @@ namespace QA.Automation.UITests
                 }
             }
             addPlaylistButton.Click();
+            _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
             //Step 6 Click outside the window to close it 
             IWebElement offClick = _driver.Value.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
             offClick.Click();
@@ -363,10 +352,13 @@ namespace QA.Automation.UITests
 
             //Step 9 Select Save
             IWebElement saveButton = null;
-            WaitForElementExists("modalContainerButtons");
             
+            _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
             foreach (var button in modalContainerButtons)
             {
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
                 if (button.Text.Contains("Save"))
                 {
                     saveButton = button;
@@ -389,33 +381,26 @@ namespace QA.Automation.UITests
             saveButton.Click();
             IAlert mustSelectLocaiton = _driver.Value.SwitchTo().Alert();
             mustSelectLocaiton.Accept();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
-            //Step 13 Enter location name
+            //Step 13 Enter location name (this is the first input field after the Custom checkbox)
             IWebElement locationInput = _driver.Value.FindElement(By.Id("select-filter-location"));
             locationInput.SendKeys("System Test Location Two Buick");
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            IWebElement selectLocationFromDropDown = _driver.Value.FindElement(By.CssSelector("#eac-container-select-filter-location > ul > li"));
-            selectLocationFromDropDown.Click();
-            /* locationInput.SendKeys(Keys.Down);
-             //IWebElement selectLocationFilter = _driver.Value.FindElement(By.Id("select-filter-location-device"));
-             ////create select element object 
-             //var selectLocationElement = new SelectElement(selectLocationFilter);
-             //selectLocationElement.SelectByText("Test");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
-             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-             //string filterID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
-             //IWebElement selectFilter = _driver.Value.FindElement(By.XPath(filterID));
-             //create select element object 
-             //selectFilter.SendKeys("chevy" + Keys.Enter);
-             */
+            locationInput.Submit();
+
+            //IWebElement locationDropDown = GetElement(ByType.);
+            //var locationList = GetElement(ByType.);
+
+            // IWebElement selectLocationFromDropDown = _driver.Value.FindElement(By.CssSelector("#eac-container-select-filter-location > ul > li"));
+            //selectLocationFromDropDown.Click();
+
 
             //Step 14 Select save
-            IWebElement saveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
-            saveButton1.Click();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            IAlert alert1 = _driver.Value.SwitchTo().Alert();
-            alert1.Accept();
+            saveButton.Click();
+            //IAlert mustSelectLocaiton = _driver.Value.SwitchTo().Alert();
+            mustSelectLocaiton.Accept();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
             //Step 15 Select device drop down
@@ -431,10 +416,15 @@ namespace QA.Automation.UITests
             //Step 18 New playlist has been created
 
             //Step 19 Select '+' to add a new playlist
-            IWebElement addPlaylistButton3 = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            addPlaylistButton3.Click();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+            foreach (var functionBarItem in functionBar)
+            {
+                if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
+                {
+                    addPlaylistButton = functionBarItem;
+                    break;
+                }
+            }
             //Step 20 Logout
             LogOutWithoutLogin();
 
@@ -1199,21 +1189,34 @@ namespace QA.Automation.UITests
         {
             Login();
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            Logout logout = new Logout(_driver.Value, TestConfiguration.GetTestConfiguration());
+            logout.LogoutButtonClick();
+            logout.CancelButtonClick();
+            //logout.LogoutModal.
+            logout.LogoutButtonClick();
+            logout.LogoutAcceptButtonClick();
+            //logout.Perform();
 
-            IWebElement logOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logOutButtonCssSelector));
-            WaitForMaskModal();
-            logOutButton.Click();
+           // System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
-            IWebElement confirmLogOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector));
-            WaitForMaskModal();
-            confirmLogOutButton.Click();
+            #region --- old code
+
+            //IWebElement logOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logOutButtonCssSelector));
+            //WaitForMaskModal();
+            //logOutButton.Click();
+
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            //IWebElement confirmLogOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector));
+            //WaitForMaskModal();
+            //confirmLogOutButton.Click();
 
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
             //TODO: Assert that we are logged out based on URL and maybe the Username/password fields.
+
+            #endregion
         }
 
         public void LogOutWithoutLogin()
