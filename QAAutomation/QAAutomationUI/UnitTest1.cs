@@ -1073,28 +1073,32 @@ namespace QA.Automation.UITests
             //if playlists is empty find profile dropdown 
 
             IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            string clientName = "GM";
 
-            playerChannelDropdown.Click();
-
-            var wrapper = GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a"));
-            IWebElement gmChannelSelection = null;
-
-            foreach (var menuItem in wrapper)
+            if (!playerChannelDropdown.Text.Equals(clientName, StringComparison.OrdinalIgnoreCase))
             {
-                if (menuItem.Text == "GM")
+                playerChannelDropdown.Click();
+
+                var wrapper = GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a"));
+                IWebElement gmChannelSelection = null;
+
+                foreach (var menuItem in wrapper)
                 {
-                    gmChannelSelection = menuItem;
-                    break;
+                    if (menuItem.Text == clientName)
+                    {
+                        gmChannelSelection = menuItem;
+                        break;
+                    }
                 }
+
+                //gmChannelSelection = wrapper.FirstOrDefault();
+
+                gmChannelSelection = gmChannelSelection ?? wrapper.FirstOrDefault();
+
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+                gmChannelSelection.Click();
             }
-
-            //gmChannelSelection = wrapper.FirstOrDefault();
-
-            gmChannelSelection = gmChannelSelection ?? wrapper.FirstOrDefault();
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-
-            gmChannelSelection.Click();
             //}
 
             //if (!playlistDiv.Displayed)
@@ -1190,8 +1194,8 @@ namespace QA.Automation.UITests
         public void Logout()
         {
             Login();
+            Logout logout = new Logout(_driver.Value, ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>());
 
-            Logout logout = new Logout(_driver.Value, TestConfiguration.GetTestConfiguration());
             logout.LogoutButtonClick();
             logout.CancelButtonClick();
             //logout.LogoutModal.
