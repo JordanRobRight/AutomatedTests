@@ -1191,16 +1191,13 @@ namespace QA.Automation.UITests
         {
             Login();
 
-            Logout logout = new Logout(_driver.Value, TestConfiguration.GetTestConfiguration());
+            Logout logout = new Logout(_driver.Value, _configuration);
             logout.LogoutButtonClick();
-            logout.CancelButtonClick();
+            //logout.CancelButtonClick();
             //logout.LogoutModal.
-            logout.LogoutButtonClick();
+            //logout.LogoutButtonClick();
             logout.LogoutAcceptButtonClick();
             //logout.Perform();
-
-           // System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
 
             #region --- old code
 

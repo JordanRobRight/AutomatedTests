@@ -18,8 +18,8 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #region -- Properties ---        
         private IWebElement LogoutButton => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, _logout);
-        private IWebElement LogoutCancelButton => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, _cancelButton);
-        private IWebElement LogoutAcceptButton => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, _acceptLogoutButton);
+        public IWebElement LogoutCancelButton => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, _cancelButton);
+        public IWebElement LogoutAcceptButton => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, _acceptLogoutButton);
         public IWebElement LogoutModal => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.ClassName, "lg-modal__container");
         //private IWebElement cancelButton => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.ClassName, "lg-modal__container");
         public IWebElement cancelButtonSelection = null;
@@ -29,9 +29,11 @@ namespace QA.Automation.UITests.LG20.Pages
         #endregion
 
         #region -- Constructors --
+       
+
         public Logout(IWebDriver driver, TestConfiguration config) : base(driver, config)
         {
-            
+
         }
         #endregion
 
@@ -46,12 +48,12 @@ namespace QA.Automation.UITests.LG20.Pages
             {
                 if (modalItem.Text == "cancel")
                 {
-                    cancelButtonSelection = modalItem;                   
+                    LogoutCancelButton.Click();                   
                 }
-                else if(modalItem.Text == "logout")
-                {
-                    logoutButtonSelection = modalItem;                    
-                }
+                //else if(modalItem.Text == "logout")
+                //{
+                //    LogoutAcceptButton = modalItem;                    
+                //}
             }
         }
 
@@ -78,7 +80,7 @@ namespace QA.Automation.UITests.LG20.Pages
         public void LogoutAcceptButtonClick()
         {
             WaitFor();
-            logoutButtonSelection.Click();
+            LogoutAcceptButton.Click();
         }
 
         public override void Perform()
