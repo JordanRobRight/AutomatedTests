@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
 using OpenQA.Selenium;
-using QA.Automation.UITests.LG20.Pages;
+using QA.Automation.UITests.LG20.Pages.SubCards;
 using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
 
@@ -12,16 +11,26 @@ namespace QA.Automation.UITests.LG20.Pages
 {
     public class SideBarItem : LGBasePage
     {
-      
+        public SideBarItem(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        {
+            this.driver = driver;
+        }
+
         #region -- Fields -- 
-        
+
         private static string sideBar = @"interaction-nav-bar-container";
         private string playlists = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a";
+        private IWebDriver driver;
 
+        //private void Test()
+        //{
+        //    PlayListItem pl = PlayListItems.First(a => a.Name.Contains("test"));
+        //}
 
         #endregion
 
         #region -- Properties ---
+
 
         private IWebElement PlayLists => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, playlists);
 
@@ -29,66 +38,20 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #endregion
 
-        public SideBarItem(IWebDriver driver, TestConfiguration config) : base(driver, config)
-        {
-            //this.Driver;
-        }
-
-        private void Test()
-        {
-            //SideBarItem pl = GetMenuItems.First(a => a.Name.Contains("test"));
-        }
+        #region -- Methods ---
 
         public override void Perform()
         {
             string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
             Driver.Navigate().GoToUrl(url);
 
-            //PlayLists.Click();
-
-        }
-
-        public List<SideBarItem> GetMenuItems => GetMenu(Driver);
-
-        public object Name { get; private set; }
-
-        private List<SideBarItem> GetMenu(IWebDriver driver)
-        {
-            IWebElement menu = driver.FindElement(By.Id("interaction-nav-bar-container"));
-            IWebElement sideBarItem = null;
-            
-            IEnumerable<IWebElement> menuItems = menu.FindElements(By.TagName("a")).ToList();
-
-            List<SideBarItem> sidebarItems = new List<SideBarItem>();
-
-            foreach (IWebElement menuLink in menuItems)
-            {
-                if(menuLink.Text.Contains("playlist"))
-                {
-                    sideBarItem = menuLink;
-                }
-                else if(menuLink.Text.Contains("assets"))
-                {
-                    sideBarItem = menuLink;
-                }
-                else if (menuLink.Text.Contains("players"))
-                {
-                    sideBarItem = menuLink;
-                }
-                else if (menuLink.Text.Contains("locations"))
-                {
-                    sideBarItem = menuLink;
-                }
-            }
-
-            return sidebarItems;
         }
 
         public override bool VerifyPage()
         {
             throw new NotImplementedException();
         }
-
+        #endregion
     }
 }
 
