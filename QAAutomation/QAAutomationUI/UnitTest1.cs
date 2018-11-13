@@ -1067,7 +1067,9 @@ namespace QA.Automation.UITests
 
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            SelectItemFromCilentMenu(_driver.Value, "GM");
 
+            /*
             string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
             IWebElement playlistDiv = _driver.Value.FindElement(By.CssSelector(playlistDivCssSelector));
             //if playlists is empty find profile dropdown 
@@ -1099,6 +1101,7 @@ namespace QA.Automation.UITests
 
                 gmChannelSelection.Click();
             }
+            */
             //}
 
             //if (!playlistDiv.Displayed)
@@ -1196,14 +1199,14 @@ namespace QA.Automation.UITests
             Login();
             Logout logout = new Logout(_driver.Value, ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>());
 
-            logout.LogoutButtonClick();
+            SelectItemFromCilentMenu(_driver.Value, "logout");
+
             logout.CancelButtonClick();
-            //logout.LogoutModal.
-            logout.LogoutButtonClick();
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            SelectItemFromCilentMenu(_driver.Value, "logout");
+
             logout.LogoutAcceptButtonClick();
             //logout.Perform();
-
-           // System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
 
             #region --- old code
@@ -2512,6 +2515,43 @@ namespace QA.Automation.UITests
         }
 
         #region -- Private Methods ---
+
+        private void SelectItemFromCilentMenu(IWebDriver driver, string menuItemToSelect)
+        {
+            string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
+            
+            //IWebElement playlistDiv = _driver.Value.FindElement(By.CssSelector(playlistDivCssSelector));
+            //if playlists is empty find profile dropdown 
+
+            IWebElement playerChannelDropdown = driver.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            //string clientName = "GM";
+
+            if (!playerChannelDropdown.Text.Equals(menuItemToSelect, StringComparison.OrdinalIgnoreCase))
+            {
+                playerChannelDropdown.Click();
+                System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(500));
+
+                var wrapper = GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a"));
+                IWebElement gmChannelSelection = null;
+                
+                foreach (var menuItem in wrapper)
+                {
+                    if (menuItem.Text.Equals(menuItemToSelect, StringComparison.OrdinalIgnoreCase)) // == menuItemToSelect)
+                    {
+                        gmChannelSelection = menuItem;
+                        break;
+                    }
+                }
+
+                //gmChannelSelection = wrapper.FirstOrDefault();
+
+                gmChannelSelection = gmChannelSelection ?? wrapper.FirstOrDefault();
+
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+                gmChannelSelection.Click();
+            }
+        }
 
         private IWebElement GetElement(ByType byType, string element)
         {
