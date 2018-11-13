@@ -1065,10 +1065,10 @@ namespace QA.Automation.UITests
 
             IWebElement p = _driver.Value.FindElement(By.Id("interaction-nav-bar-container"));
 
-
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             SelectItemFromCilentMenu(_driver.Value, "GM");
 
+            #region -- old code --
             /*
             string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
             IWebElement playlistDiv = _driver.Value.FindElement(By.CssSelector(playlistDivCssSelector));
@@ -1116,6 +1116,8 @@ namespace QA.Automation.UITests
 
             //    gmChannelSelection.Click();
             //}
+            #endregion
+
         }
 
         [TestCase]
