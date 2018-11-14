@@ -30,9 +30,25 @@ namespace QA.Automation.UITests.LG20.Pages
         #endregion
 
         #region -- Properties ---
+        private List<SideBarItems> SideBarItems => GetMenuItems(Driver);
 
+        private List<SideBarItems> GetMenuItems(IWebDriver driver)
+        {
+            List<SideBarItems> menuList = new List<SideBarItems>();
 
-        private IWebElement PlayLists => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, playlists);
+            var sideBarMenuItems = driver.FindElement(By.Id("interaction-nav-bar-container")).FindElements(By.TagName("a")).ToList();
+
+            foreach (IWebElement item in sideBarMenuItems )
+            {
+                SideBarItems menuItem = new SideBarItems(driver) { Name = item.Text };
+                menuList.Add(menuItem);
+            }
+            return menuList;
+        }
+
+        //IEnumerable<IWebElement> menuItems = new List<IWebElement>();
+
+        private IWebElement menuElement => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Id, sideBar);
 
         //private IWebElement Assets => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, assets);
 
