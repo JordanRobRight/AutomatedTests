@@ -250,9 +250,7 @@ namespace QA.Automation.UITests
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
-            //TODO: Update this assert to take into account the environment.
-
-            Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Value.Url.Trim());
+            Assert.AreEqual($"https://portal.{_configuration.Environment.ToString()}.dcimliveguide.com/#playlists".ToLower(), _driver.Value.Url.Trim().ToLower());
         }
         public void WaitForMaskModal()
         {
