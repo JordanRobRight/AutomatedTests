@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using NUnit.Framework;
 using QA.Automation.APITests.LG20.Services;
@@ -12,6 +13,7 @@ namespace QA.Automation.APITests.LG20
 {
     //[TestFixture(Category ="TheSmokeTest")]
     [TestFixture]
+    [Parallelizable(ParallelScope.Children)]
     public class SmokeTest : APITestBase
     {
         public static Dictionary<LGMServiceType, string> items = new Dictionary<LGMServiceType, string>
@@ -34,16 +36,19 @@ namespace QA.Automation.APITests.LG20
                 {LGMServiceType.StorageService,"" },
                 //{LGMServiceType.SocialService,"" },
                 {LGMServiceType.ClientsService,"" },
-                {LGMServiceType.HealthService,"" },
+                //{LGMServiceType.HealthService,"" },
                 {LGMServiceType.LicensesService,"" },
                 {LGMServiceType.ChannelsService,"" },
                 {LGMServiceType.ClientProgramsService,"" },
                 {LGMServiceType.ProgramsService,"" },
                 {LGMServiceType.FrontEndService,"" },
-                {LGMServiceType.FinanceService,"" },
+                //{LGMServiceType.FinanceService,"" },
                 {LGMServiceType.DbService,"" },
                 {LGMServiceType.AmenitiesService,"" },
-
+                {LGMServiceType.Subaru_SDSAppSettingsService,"" },
+                {LGMServiceType.Subaru_VehicleTrimsService,"" },
+                {LGMServiceType.LiveGuide1Service,"" },
+                {LGMServiceType.Subaru_TrimComparisonService,"" },
           // "LG.LGM.ProfileService"
       };
         private readonly string _url = string.Empty;
@@ -64,10 +69,14 @@ namespace QA.Automation.APITests.LG20
 
         [TestCaseSource("items")]
         [NUnit.Framework.Category("SmokeTests")]
+        [NUnit.Framework.Category("All")]
         //public void GetEnv(KeyValuePair<string, string> item)
         public void GetEnv(KeyValuePair<LGMServiceType,string> item)
         {
-            var apiUrl = $@"{FormatUrl("LG-LGM-" + item.Key.ToString(), Settings)}/swagger/v1/swagger.json";
+            string swaggerUrl = GetSwaggerPage(item.Key.ToString().Replace("_", "-"));
+
+//            var apiUrl = $@"{FormatUrl("LG-LGM-" + item.Key.ToString(), Settings)}/swagger/v1/swagger.json";
+            var apiUrl = $@"{FormatUrl("LG-LGM-" + item.Key.ToString().Replace("_", "-"), Settings)}{swaggerUrl}";
             var helper = new Common.HttpUtilsHelper();
 
             var data = helper.ApiRequest(apiUrl,string.Empty);
@@ -103,15 +112,35 @@ namespace QA.Automation.APITests.LG20
            */
         }
 
+        private string GetSwaggerPage(string serviceName)
+        {
+            var apiUrl = $@"{FormatUrl("LG-LGM-" + serviceName, Settings)}/swagger/index.html";
+            var helper = new Common.HttpUtilsHelper();
+
+            var data = helper.ApiRequest(apiUrl, string.Empty);
+
+            string regEx = @"/swagger.*\.json";
+
+            Match m = Regex.Match(data, regEx);
+            string swaggerText = string.Empty;
+            if (m.Success)
+            {
+                swaggerText = m.Groups[0].Value;
+            }
+
+            return swaggerText;
+        }
+
         [TestCaseSource("items")]
         [NUnit.Framework.Category("SmokeTests")]
+        [NUnit.Framework.Category("All")]
         public void GetAuthTokenByPage(KeyValuePair<LGMServiceType,string> item)
         {
             //string updatedUrl = FormatUrl(item.Key);
             string result = string.Empty;
             string updatedUrl = string.Empty;
 
-            using (IApiPage page = APIFactory.ApiFactory(item.Key, Settings))
+            using (IApiPage page = APIFactory.ApiFactory<IApiPage>(item.Key, Settings))
             {
 
                 updatedUrl = FormatUrl(page.ServiceName, Settings);
@@ -237,7 +266,7 @@ namespace QA.Automation.APITests.LG20
             string result = string.Empty;
             string updatedUrl = string.Empty;
 
-            using (IApiPage page = APIFactory.ApiFactory(LGMServiceType.PlaylistsService, config))
+            using (LGMPlaylistsService page = APIFactory.ApiFactory<LGMPlaylistsService>(LGMServiceType.PlaylistsService, config))
             {
                 updatedUrl = FormatUrl(page.ServiceName, config);
 
