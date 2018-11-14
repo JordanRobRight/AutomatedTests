@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using OpenQA.Selenium;
@@ -14,18 +17,28 @@ namespace QA.Automation.UITests.LG20.Pages
         private static string _cancelButton = "#logout-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div > button:nth-child(1)";
         private static string _acceptLogoutButton = "#logout-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div > button:nth-child(2)";
 
+        private static string _modalLogout = "logout-modal"; // id
+        private static string _modalClass = "lg-modal__wrapper";
+        private static string _modalButtonArea = "lg-modal__actions logoutModalBtns";
+        private static string _modalForm = "lg-modal__panel tab-panel-widget__panel";
+
         #endregion
 
         #region -- Properties ---        
         private IWebElement LogoutButton => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, _logout);
-        public IWebElement LogoutCancelButton => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, _cancelButton);
-        public IWebElement LogoutAcceptButton => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, _acceptLogoutButton);
+
+        private IWebElement ModelDialog => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.ClassName, _modalClass);
+        private IWebElement ModelLogoutDialog => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Id, _modalLogout);
+        private IWebElement Model_modalClass => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.ClassName, _modalClass);
+        private IWebElement ModelForm => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.ClassName, _modalForm);
+
+        private IWebElement ModelDialogButtonArea => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.ClassName, _modalButtonArea);
+
+        private IWebElement LogoutCancelButton => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, _cancelButton);
+        private IWebElement LogoutAcceptButton => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, _acceptLogoutButton);
         public IWebElement LogoutModal => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.ClassName, "lg-modal__container");
-        //private IWebElement cancelButton => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.ClassName, "lg-modal__container");
-        public IWebElement cancelButtonSelection = null;
-        public IWebElement logoutButtonSelection = null;
 
-
+        private IEnumerable<IWebElement> ModelButtons => BuildModel();
         #endregion
 
         #region -- Constructors --
@@ -39,22 +52,33 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #region -- Methods --
 
-        public void CancelButton()
+        private IEnumerable<IWebElement> BuildModel()
         {
-            var modal = SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("button"));
-            
-
-            foreach (var modalItem in modal)
+            List<IWebElement> buttons = new List<IWebElement>();
+            try
             {
-                if (modalItem.Text == "cancel")
+                var innerArea = ModelLogoutDialog.FindElement(By.ClassName("lg-modal__content"));
+
+                var modalbuttons = innerArea.FindElements(By.TagName("button"));
+
+                foreach (var button in modalbuttons)
                 {
-                    LogoutCancelButton.Click();                   
+                    buttons.Add(button);
                 }
-                //else if(modalItem.Text == "logout")
-                //{
-                //    LogoutAcceptButton = modalItem;                    
-                //}
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                //throw;
+            }
+
+            return buttons;
+        }
+
+        private IWebElement FindButton(string text)
+        {
+            IWebElement button = ModelButtons.FirstOrDefault(a => a.Text.Equals(text, StringComparison.OrdinalIgnoreCase));
+            return button;
         }
 
             #region -- Override Methods
@@ -74,13 +98,13 @@ namespace QA.Automation.UITests.LG20.Pages
         public void CancelButtonClick()
         {
             WaitFor();
-            cancelButtonSelection.Click();
+            FindButton("cancel")?.Click();
         }
 
         public void LogoutAcceptButtonClick()
         {
             WaitFor();
-            LogoutAcceptButton.Click();
+            FindButton("logout")?.Click();
         }
 
         public override void Perform()

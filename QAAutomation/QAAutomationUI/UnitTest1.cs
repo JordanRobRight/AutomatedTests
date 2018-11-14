@@ -250,9 +250,7 @@ namespace QA.Automation.UITests
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
-            //TODO: Update this assert to take into account the environment.
-
-            Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Value.Url.Trim());
+            Assert.AreEqual($"https://portal.{_configuration.Environment.ToString()}.dcimliveguide.com/#playlists".ToLower(), _driver.Value.Url.Trim().ToLower());
         }
         public void WaitForMaskModal()
         {
@@ -1065,36 +1063,43 @@ namespace QA.Automation.UITests
 
             IWebElement p = _driver.Value.FindElement(By.Id("interaction-nav-bar-container"));
 
-
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            SelectItemFromCilentMenu(_driver.Value, "GM");
 
+            #region -- old code --
+            /*
             string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
             IWebElement playlistDiv = _driver.Value.FindElement(By.CssSelector(playlistDivCssSelector));
             //if playlists is empty find profile dropdown 
 
             IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            string clientName = "GM";
 
-            playerChannelDropdown.Click();
-
-            var wrapper = GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a"));
-            IWebElement gmChannelSelection = null;
-
-            foreach (var menuItem in wrapper)
+            if (!playerChannelDropdown.Text.Equals(clientName, StringComparison.OrdinalIgnoreCase))
             {
-                if (menuItem.Text == "GM")
+                playerChannelDropdown.Click();
+
+                var wrapper = GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a"));
+                IWebElement gmChannelSelection = null;
+
+                foreach (var menuItem in wrapper)
                 {
-                    gmChannelSelection = menuItem;
-                    break;
+                    if (menuItem.Text == clientName)
+                    {
+                        gmChannelSelection = menuItem;
+                        break;
+                    }
                 }
+
+                //gmChannelSelection = wrapper.FirstOrDefault();
+
+                gmChannelSelection = gmChannelSelection ?? wrapper.FirstOrDefault();
+
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+                gmChannelSelection.Click();
             }
-
-            //gmChannelSelection = wrapper.FirstOrDefault();
-
-            gmChannelSelection = gmChannelSelection ?? wrapper.FirstOrDefault();
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-
-            gmChannelSelection.Click();
+            */
             //}
 
             //if (!playlistDiv.Displayed)
@@ -1109,6 +1114,8 @@ namespace QA.Automation.UITests
 
             //    gmChannelSelection.Click();
             //}
+            #endregion
+
         }
 
         [TestCase]
@@ -1190,14 +1197,17 @@ namespace QA.Automation.UITests
         public void Logout()
         {
             Login();
+            Logout logout = new Logout(_driver.Value, ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>());
 
-            Logout logout = new Logout(_driver.Value, _configuration);
-            logout.LogoutButtonClick();
-            //logout.CancelButtonClick();
-            //logout.LogoutModal.
-            //logout.LogoutButtonClick();
+            SelectItemFromCilentMenu(_driver.Value, "logout");
+
+            logout.CancelButtonClick();
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            SelectItemFromCilentMenu(_driver.Value, "logout");
+
             logout.LogoutAcceptButtonClick();
             //logout.Perform();
+
 
             #region --- old code
 
@@ -2505,6 +2515,43 @@ namespace QA.Automation.UITests
         }
 
         #region -- Private Methods ---
+
+        private void SelectItemFromCilentMenu(IWebDriver driver, string menuItemToSelect)
+        {
+            string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
+            
+            //IWebElement playlistDiv = _driver.Value.FindElement(By.CssSelector(playlistDivCssSelector));
+            //if playlists is empty find profile dropdown 
+
+            IWebElement playerChannelDropdown = driver.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            //string clientName = "GM";
+
+            if (!playerChannelDropdown.Text.Equals(menuItemToSelect, StringComparison.OrdinalIgnoreCase))
+            {
+                playerChannelDropdown.Click();
+                System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(500));
+
+                var wrapper = GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a"));
+                IWebElement gmChannelSelection = null;
+                
+                foreach (var menuItem in wrapper)
+                {
+                    if (menuItem.Text.Equals(menuItemToSelect, StringComparison.OrdinalIgnoreCase)) // == menuItemToSelect)
+                    {
+                        gmChannelSelection = menuItem;
+                        break;
+                    }
+                }
+
+                //gmChannelSelection = wrapper.FirstOrDefault();
+
+                gmChannelSelection = gmChannelSelection ?? wrapper.FirstOrDefault();
+
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+                gmChannelSelection.Click();
+            }
+        }
 
         private IWebElement GetElement(ByType byType, string element)
         {
