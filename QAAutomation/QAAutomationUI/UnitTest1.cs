@@ -53,8 +53,8 @@ namespace QA.Automation.UITests
         [SetUp]
         public void Init()
         {
-            _driver.Value = new ChromeBrowser(browser, version, os, deviceName, deviceOrientation, _configuration,
-                TestContext.CurrentContext.Test.Name, TestContext.CurrentContext.Test.ClassName, TestContext.CurrentContext.Test.MethodName).Driver;
+            _driver.Value = new ChromeBrowser(browser, version, os, deviceName, deviceOrientation, _configuration)
+                                .CreateBrowser(TestContext.CurrentContext.Test.Name, TestContext.CurrentContext.Test.ClassName, TestContext.CurrentContext.Test.MethodName);
 
             Login();
 
