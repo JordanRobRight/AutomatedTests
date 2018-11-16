@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -26,6 +27,7 @@ namespace QA.Automation.UITests
     {
         //private IWebDriver _driver;
         private ThreadLocal<IWebDriver> _driver = new ThreadLocal<IWebDriver>();
+
         private String browser;
         private String version;
         private String os;
@@ -51,6 +53,13 @@ namespace QA.Automation.UITests
         [SetUp]
         public void Init()
         {
+            _driver.Value = new ChromeBrowser(browser, version, os, deviceName, deviceOrientation, _configuration,
+                TestContext.CurrentContext.Test.Name, TestContext.CurrentContext.Test.ClassName, TestContext.CurrentContext.Test.MethodName).Driver;
+
+            Login();
+
+            #region  -- old code --
+            /*
             DesiredCapabilities caps = new DesiredCapabilities();
             caps.SetCapability(CapabilityType.BrowserName, browser);
             caps.SetCapability(CapabilityType.Version, version);
@@ -86,6 +95,8 @@ namespace QA.Automation.UITests
             _driver.Value.Manage().Window.Maximize();
             _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
             _driver.Value.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
+            */
+            #endregion -- --
         }
 
         [TestCase]//Test case 586 edit playlist
@@ -1196,7 +1207,7 @@ namespace QA.Automation.UITests
         [Description("Test case 1994")]
         public void Logout()
         {
-            Login();
+           // Login();
             Logout logout = new Logout(_driver.Value, ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>());
 
             SelectItemFromCilentMenu(_driver.Value, "logout");
