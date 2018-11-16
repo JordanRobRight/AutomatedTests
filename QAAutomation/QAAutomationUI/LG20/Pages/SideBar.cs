@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using QA.Automation.UITests.LG20.Pages.SubCards;
 using QA.Automation.UITests.Models;
@@ -21,26 +22,22 @@ namespace QA.Automation.UITests.LG20.Pages
         private static string sideBar = @"interaction-nav-bar-container";
         private string playlists = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a";
         private IWebDriver driver;
-
-        //private void Test()
-        //{
-        //    PlayListItem pl = PlayListItems.First(a => a.Name.Contains("test"));
-        //}
+       
 
         #endregion
 
         #region -- Properties ---
-        private List<SideBarItems> SideBarItems => GetMenuItems(Driver);
+        private List<SideBarItem> SideBarItems => GetMenuItems(Driver);
 
-        private List<SideBarItems> GetMenuItems(IWebDriver driver)
+        private List<SideBarItem> GetMenuItems(IWebDriver driver)
         {
-            List<SideBarItems> menuList = new List<SideBarItems>();
+            List<SideBarItem> menuList = new List<SideBarItem>();
 
             var sideBarMenuItems = driver.FindElement(By.Id("interaction-nav-bar-container")).FindElements(By.TagName("a")).ToList();
 
             foreach (IWebElement item in sideBarMenuItems )
             {
-                SideBarItems menuItem = new SideBarItems(driver) { Name = item.Text };
+                SideBarItem menuItem = new SideBarItem(driver) { Name = item };
                 menuList.Add(menuItem);
             }
             return menuList;
@@ -63,9 +60,44 @@ namespace QA.Automation.UITests.LG20.Pages
 
         }
 
+        public void PlaylistClick()
+        {
+            var plc = SideBarItem.FirstOrDefault(x => x.Name.Contains("playlist"));//.Select(x => x.Name.Contains("playlist"));
+
+            plc.Click();
+        }
+
+        public void AssetsClick()
+        {
+           // SideBarItem.SideBarItems.Select(x => x.Name.Contains("assets"));
+        }
+
+        public void PlayersClick()
+        {
+           // SideBarItems.Select(x => x.Name.Contains("players"));
+        }
+
+        public void LocationsClick()
+        {
+           // SideBarItems.Select(x => x.Name.Contains("location"));
+        }
+
+        public void MyAccountClick()
+        {
+           // SideBarItems.Select(x => x.Name.Contains("account"));
+        }
+
+        public void ContactUsClick()
+        {
+            //SideBarItems.Select(x => x.Name.Contains("contact"));
+        }
+
         public override bool VerifyPage()
         {
+            //string url = driver.Url;
+            //Assert.IsTrue(url.Contains("dcimliveguide"));
             throw new NotImplementedException();
+
         }
         #endregion
     }

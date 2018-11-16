@@ -5,11 +5,11 @@ using OpenQA.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages.SubCards
 {
-    class SideBarItems
+    class SideBarItem
     {
         private IWebDriver driver;
 
-        public SideBarItems(IWebDriver driver)
+        public SideBarItem(IWebDriver driver)
         {
             this.driver = driver;
         }
