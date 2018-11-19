@@ -56,7 +56,7 @@ namespace QA.Automation.UITests
             _driver.Value = new ChromeBrowser(browser, version, os, deviceName, deviceOrientation, _configuration,
                 TestContext.CurrentContext.Test.Name, TestContext.CurrentContext.Test.ClassName, TestContext.CurrentContext.Test.MethodName).Driver;
 
-            Login();
+            //Login();
 
             #region  -- old code --
             /*
@@ -343,8 +343,12 @@ namespace QA.Automation.UITests
             addPlaylistButton.Click();
             _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
             //Step 6 Click outside the window to close it 
+
             IWebElement offClick = _driver.Value.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
-            offClick.Click();
+
+            Actions action = new Actions(_driver.Value);
+            action.MoveToElement(offClick).MoveByOffset(100,100).Click().Perform();
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 7 Select '+' to add new playlist
             foreach (var functionBarItem in functionBar)
