@@ -17,7 +17,7 @@ namespace QA.Automation.UITests.LG20.Pages
         private static string _cancelButton = "#logout-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div > button:nth-child(1)";
         private static string _acceptLogoutButton = "#logout-modal > div > div > div.lg-modal__container > div.lg-modal__content > form > div > button:nth-child(2)";
 
-        private static string _modalLogout = "logout-modal"; // id
+        private static string _modalLogout = "logout-modal";
         private static string _modalClass = "lg-modal__wrapper";
         private static string _modalButtonArea = "lg-modal__actions logoutModalBtns";
         private static string _modalForm = "lg-modal__panel tab-panel-widget__panel";
