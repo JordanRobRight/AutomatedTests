@@ -56,7 +56,10 @@ namespace QA.Automation.UITests
             _driver.Value = new ChromeBrowser(browser, version, os, deviceName, deviceOrientation, _configuration)
                                 .CreateBrowser(TestContext.CurrentContext.Test.Name, TestContext.CurrentContext.Test.ClassName, TestContext.CurrentContext.Test.MethodName);
 
-            Login();
+          //  Assert.That(2+2, Is.True);
+            
+
+            //Login();
 
             #region  -- old code --
             /*
@@ -288,118 +291,105 @@ namespace QA.Automation.UITests
             playlistSelection.Click();
         }
 
-        [TestCase] //Test case #580
-        [Category("All")]
-        [Category("SmokeTests")]
-        [Description("Test case #580")]
-        public void CreatePlaylists()
+        [TestCase]
+        [Category("Debugonly")]
+        // [Ignore("This test case is for debugging only")]
+
+        public void CreatePlaylistTest()
         {
             //step 1 login
             Login();//remove to do full test
 
-            
-            
-            //step 2
-            var functionBar = GetElement(ByType.ClassName, "pmfb-container").FindElements(By.TagName("button"));
-            IWebElement addPlaylistButton = null;
+            PlayLists pls = new PlayLists(_driver.Value, _configuration);
 
-            foreach (var functionBarItem in functionBar)
+            pls.AddPlayListButton.Click();
+
+            pls.ModalCancelButton.Click();
+
+            pls.AddPlayListButton.Click();
+
+            pls.ModalCreateCustomPlaylistCheckbox.SendKeys(Keys.Space);
+            
+            try
             {
-                if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
-                {
-                    addPlaylistButton = functionBarItem;
-                    break;
-                }
+                _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+                //Step 6 Click outside the window to close it 
+                //IWebElement offClick = _driver.Value.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
+
+
+                //offClick.Click();
+
+                SeleniumCommon.ClickOffScreen(this._driver.Value);
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             }
-            addPlaylistButton.Click();
-
-            //Step 4 Select 'X' to close window
-
-            var modalContainer = GetElement(ByType.ClassName, "lg-modal__container");
-            var modalContainerButtons = modalContainer.FindElements(By.TagName("button"));
-            IWebElement playlistAddXButton = null;
-
-            foreach ( var button in modalContainerButtons)
+            catch (Exception e)
             {
-                if(button.Text != "Save")
-                {
-                    playlistAddXButton = button;
-                }               
+                Console.WriteLine(e);
+                //throw;
             }
 
-            playlistAddXButton.Click();
-            
-            //Step 5 Select '+' to add new playlist
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-
-            foreach (var functionBarItem in functionBar)
-            {
-                if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
-                {
-                    addPlaylistButton = functionBarItem;
-                    break;
-                }
-            }
-            addPlaylistButton.Click();
-            _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
-            //Step 6 Click outside the window to close it 
-            IWebElement offClick = _driver.Value.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
-            offClick.Click();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 7 Select '+' to add new playlist
-            foreach (var functionBarItem in functionBar)
-            {
-                if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
-                {
-                    addPlaylistButton = functionBarItem;
-                    break;
-                }
-            }
-            addPlaylistButton.Click();
+
+            pls.AddPlayListButton.Click();
 
             //Step 8 Select Create a Custom Playlist - Filtered Check box
-            var modalContainerCheckBox = modalContainer.FindElement(By.ClassName("lgfe-input-checkbox__custom-input"));
-            modalContainerCheckBox.Click();
+
+            pls.ModalCreateCustomPlaylistCheckbox.Click();
 
             //Step 9 Select Save
             IWebElement saveButton = null;
-            
+
             _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
-            foreach (var button in modalContainerButtons)
-            {
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-                _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
-                if (button.Text.Contains("Save"))
-                {
-                    saveButton = button;
-                    break;
-                }
-            }
-            saveButton.Click();
+            pls.ModalSaveButton.Click();
 
             //Step 10 Select Ok
-            IAlert alert = _driver.Value.SwitchTo().Alert();
-            alert.Accept();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            try
+            {
+                IAlert alert = _driver.Value.SwitchTo().Alert();
+                alert.Accept();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                //throw;
+            }
+
 
             //Step 11 Enter a playlist name
             string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
-            IWebElement playlistAddForm = _driver.Value.FindElement(By.Id("form-name"));
-            playlistAddForm.SendKeys(playlistName);
+
+            pls.ModalNameEditField.SendKeys(playlistName);
+
 
             //Step 12 Select save
-            saveButton.Click();
-            IAlert mustSelectLocaiton = _driver.Value.SwitchTo().Alert();
-            mustSelectLocaiton.Accept();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+            pls.ModalSaveButton.Click();
+
+            try
+            {
+                IAlert mustSelectLocaiton = _driver.Value.SwitchTo().Alert();
+                mustSelectLocaiton.Accept();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                //throw;
+            }
 
             //Step 13 Enter location name (this is the first input field after the Custom checkbox)
-            IWebElement locationInput = _driver.Value.FindElement(By.Id("select-filter-location"));
-            locationInput.SendKeys("System Test Location Two Buick");
+            //IWebElement locationInput = _driver.Value.FindElement(By.Id("select-filter-location"));
+            //locationInput.SendKeys("System Test Location Two Buick");
+
+            pls.ModalChannelSelection.SendKeys("System Test Location Two Buick");
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
-            locationInput.Submit();
+            //locationInput.Submit();
+
+            pls.ModalChannelSelection.Submit();
 
             //IWebElement locationDropDown = GetElement(ByType.);
             //var locationList = GetElement(ByType.);
@@ -409,10 +399,22 @@ namespace QA.Automation.UITests
 
 
             //Step 14 Select save
-            saveButton.Click();
+            //            saveButton.Click();
+
+            pls.ModalSaveButton.Click();
+
             //IAlert mustSelectLocaiton = _driver.Value.SwitchTo().Alert();
-            mustSelectLocaiton.Accept();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            try
+            {
+               // mustSelectLocaiton.Accept();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                // throw;
+            }
+
 
             //Step 15 Select device drop down
             IWebElement selectLocationDeviceFilter = _driver.Value.FindElement(By.Id("select-filter-location-device"));
@@ -428,14 +430,244 @@ namespace QA.Automation.UITests
 
             //Step 19 Select '+' to add a new playlist
 
-            foreach (var functionBarItem in functionBar)
+            //TODO: Need to check with Margie on this test. 
+
+            //foreach (var functionBarItem in functionBar)
+            //{
+            //    if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
+            //    {
+            //        addPlaylistButton = functionBarItem;
+            //        break;
+            //    }
+            //}
+            //Step 20 Logout
+            LogOutWithoutLogin();
+
+
+            //TODO: Assert to check if the playlist was actually playlist got created. 
+
+            //IWebElement newPlaylist = GetElement(ByType.ClassName, "lgfe-cm-card");          
+
+            //Assert.IsTrue(newPlaylist.Displayed);
+            //Assert.AreEqual(newPlaylist, "Automated Playlist Test");
+
+            //TODO: Assert calling API.
+            //string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
+
+            //Assert.AreEqual(newPlaylist, apiPlayList);
+
+            //TODO: Update this assert to take into account the environment.
+            //Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
+            //Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
+        }
+
+        [TestCase] //Test case #580
+        [Category("All")]
+        [Category("SmokeTests")]
+        [Description("Test case #580")]
+        public void CreatePlaylists()
+        {
+            //step 1 login
+            Login();//remove to do full test
+
+            PlayLists pls = new PlayLists(_driver.Value, _configuration);
+
+            pls.AddPlayListButton.Click();
+            
+            //step 2
+            // var functionBar = GetElement(ByType.ClassName, "pmfb-container").FindElements(By.TagName("button"));
+            //IWebElement addPlaylistButton = null;
+
+            //foreach (var functionBarItem in functionBar)
+            //{
+            //    if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
+            //    {
+            //        addPlaylistButton = functionBarItem;
+            //        break;
+            //    }
+            //}
+            //addPlaylistButton.Click();
+
+            //Step 4 Select 'X' to close window
+
+            pls.ModalCancelButton.Click();
+
+            //var modalContainer = GetElement(ByType.ClassName, "lg-modal__container");
+            //var modalContainerButtons = modalContainer.FindElements(By.TagName("button"));
+            //IWebElement playlistAddXButton = null;
+
+            //foreach ( var button in modalContainerButtons)
+            //{
+            //    if(button.Text != "Save")
+            //    {
+            //        playlistAddXButton = button;
+            //    }               
+            //}
+
+            //playlistAddXButton.Click();
+            
+            //Step 5 Select '+' to add new playlist
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+            //foreach (var functionBarItem in functionBar)
+            //{
+            //    if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
+            //    {
+            //        addPlaylistButton = functionBarItem;
+            //        break;
+            //    }
+            //}
+            //addPlaylistButton.Click();
+
+            pls.AddPlayListButton.Click();
+
+            try
             {
-                if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
-                {
-                    addPlaylistButton = functionBarItem;
-                    break;
-                }
+                _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+                //Step 6 Click outside the window to close it 
+                IWebElement offClick = _driver.Value.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
+                //offClick.Click();
+                SeleniumCommon.ClickOffScreen(this._driver.Value);
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                //throw;
+            }
+            
+            //Step 7 Select '+' to add new playlist
+
+            pls.AddPlayListButton.Click();
+
+            //foreach (var functionBarItem in functionBar)
+            //{
+            //    if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
+            //    {
+            //        addPlaylistButton = functionBarItem;
+            //        break;
+            //    }
+            //}
+            //addPlaylistButton.Click();
+
+            //Step 8 Select Create a Custom Playlist - Filtered Check box
+
+            //pls.ModalCreateCustomPlaylistCheckbox.Click();
+            pls.ModalCreateCustomPlaylistCheckbox.SendKeys(Keys.Space);
+            //var modalContainerCheckBox = modalContainer.FindElement(By.ClassName("lgfe-input-checkbox__custom-input"));
+            //modalContainerCheckBox.Click();
+
+            //Step 9 Select Save
+            IWebElement saveButton = null;
+            
+            _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+            //foreach (var button in modalContainerButtons)
+            //{
+            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //    _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+            //    if (button.Text.Contains("Save"))
+            //    {
+            //        saveButton = button;
+            //        break;
+            //    }
+            //}
+            //saveButton.Click();
+
+            pls.ModalSaveButton.Click();
+
+            //Step 10 Select Ok
+            try
+            {
+                IAlert alert = _driver.Value.SwitchTo().Alert();
+                alert.Accept();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                //throw;
+            }
+
+
+            //Step 11 Enter a playlist name
+            string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
+           // IWebElement playlistAddForm = _driver.Value.FindElement(By.Id("form-name"));
+           // playlistAddForm.SendKeys(playlistName);
+
+            pls.ModalNameEditField.SendKeys(playlistName);
+
+
+            //Step 12 Select save
+            //saveButton.Click();
+
+            pls.ModalSaveButton.Click();
+
+            IAlert mustSelectLocaiton = _driver.Value.SwitchTo().Alert();
+            mustSelectLocaiton.Accept();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+            //Step 13 Enter location name (this is the first input field after the Custom checkbox)
+            //IWebElement locationInput = _driver.Value.FindElement(By.Id("select-filter-location"));
+            //locationInput.SendKeys("System Test Location Two Buick");
+
+            pls.ModalChannelSelection.SendKeys("System Test Location Two Buick");
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+            //locationInput.Submit();
+
+            pls.ModalChannelSelection.Submit();
+
+            //IWebElement locationDropDown = GetElement(ByType.);
+            //var locationList = GetElement(ByType.);
+
+            // IWebElement selectLocationFromDropDown = _driver.Value.FindElement(By.CssSelector("#eac-container-select-filter-location > ul > li"));
+            //selectLocationFromDropDown.Click();
+
+
+            //Step 14 Select save
+//            saveButton.Click();
+
+            pls.ModalSaveButton.Click();
+
+            //IAlert mustSelectLocaiton = _driver.Value.SwitchTo().Alert();
+            try
+            {
+                mustSelectLocaiton.Accept();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+               // throw;
+            }
+
+
+            //Step 15 Select device drop down
+            IWebElement selectLocationDeviceFilter = _driver.Value.FindElement(By.Id("select-filter-location-device"));
+            //create select element object 
+            var selectLocationDeviceElement = new SelectElement(selectLocationDeviceFilter);
+
+            //Step 16 Select all devices
+            selectLocationDeviceElement.SelectByValue("all");
+            //Step 17 Select save
+            saveButton.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 18 New playlist has been created
+
+            //Step 19 Select '+' to add a new playlist
+
+            //TODO: Need to check with Margie on this test. 
+
+            //foreach (var functionBarItem in functionBar)
+            //{
+            //    if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
+            //    {
+            //        addPlaylistButton = functionBarItem;
+            //        break;
+            //    }
+            //}
             //Step 20 Logout
             LogOutWithoutLogin();
 

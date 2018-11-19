@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
 namespace QA.Automation.UITests.Selenium
@@ -69,6 +72,36 @@ namespace QA.Automation.UITests.Selenium
 
             return query ?? throw new Exception("GetElement returned a null value.");
         }
+
+        public static void ClickOffScreen(IWebDriver driver)
+        {
+            OpenQA.Selenium.Interactions.Actions a = new OpenQA.Selenium.Interactions.Actions(driver);
+            a.MoveByOffset(-100, -100).Click().Build().Perform();
+            
+        }
+
+        public static IEnumerable<IWebElement> GetWebElements(IWebElement element, By selector, string NameElement = "")
+        {
+            IList<IWebElement> query = null;
+
+            try
+            {
+                query = element.FindElements(selector).ToList();
+            }
+            catch (NoSuchElementException nsex)
+            {
+                Console.WriteLine("Element couldn't be found: " + nsex);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: GetElement() {e}");
+            }
+
+            return query ?? throw new Exception("GetElements returned a null value.");
+        }
+
+
+
         public static void WaitForElementExists(ThreadLocal<IWebDriver> _driver, string element)
         {
             WaitUntilElementExists(_driver.Value, By.Id(element));
