@@ -406,134 +406,26 @@ namespace QA.Automation.UITests
             //IAlert mustSelectLocaiton = _driver.Value.SwitchTo().Alert();
             try
             {
-               // mustSelectLocaiton.Accept();
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
+                {
+                    addPlaylistButton = functionBarItem;
+                    break;
+                }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                // throw;
-            }
-
-
-            //Step 15 Select device drop down
-            IWebElement selectLocationDeviceFilter = _driver.Value.FindElement(By.Id("select-filter-location-device"));
-            //create select element object 
-            var selectLocationDeviceElement = new SelectElement(selectLocationDeviceFilter);
-
-            //Step 16 Select all devices
-            selectLocationDeviceElement.SelectByValue("all");
-            //Step 17 Select save
-            saveButton.Click();
+            addPlaylistButton.Click();
+            _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+            //Step 6 Click outside the window to close it 
+            IWebElement offClick = _driver.Value.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
+            offClick.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            //Step 18 New playlist has been created
-
-            //Step 19 Select '+' to add a new playlist
-
-            //TODO: Need to check with Margie on this test. 
-
-            //foreach (var functionBarItem in functionBar)
-            //{
-            //    if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
-            //    {
-            //        addPlaylistButton = functionBarItem;
-            //        break;
-            //    }
-            //}
-            //Step 20 Logout
-            LogOutWithoutLogin();
-
-
-            //TODO: Assert to check if the playlist was actually playlist got created. 
-
-            //IWebElement newPlaylist = GetElement(ByType.ClassName, "lgfe-cm-card");          
-
-            //Assert.IsTrue(newPlaylist.Displayed);
-            //Assert.AreEqual(newPlaylist, "Automated Playlist Test");
-
-            //TODO: Assert calling API.
-            //string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
-
-            //Assert.AreEqual(newPlaylist, apiPlayList);
-
-            //TODO: Update this assert to take into account the environment.
-            //Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
-            //Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
-        }
-
-        [TestCase] //Test case #580
-        [Category("All")]
-        [Category("SmokeTests")]
-        [Description("Test case #580")]
-        public void CreatePlaylists()
-        {
-            //step 1 login
-            Login();//remove to do full test
-
-            PlayLists pls = new PlayLists(_driver.Value, _configuration);
-
-            pls.AddPlayListButton.Click();
-            
-            //step 2
-            // var functionBar = GetElement(ByType.ClassName, "pmfb-container").FindElements(By.TagName("button"));
-            //IWebElement addPlaylistButton = null;
-
-            //foreach (var functionBarItem in functionBar)
-            //{
-            //    if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
-            //    {
-            //        addPlaylistButton = functionBarItem;
-            //        break;
-            //    }
-            //}
-            //addPlaylistButton.Click();
-
-            //Step 4 Select 'X' to close window
-
-            pls.ModalCancelButton.Click();
-
-            //var modalContainer = GetElement(ByType.ClassName, "lg-modal__container");
-            //var modalContainerButtons = modalContainer.FindElements(By.TagName("button"));
-            //IWebElement playlistAddXButton = null;
-
-            //foreach ( var button in modalContainerButtons)
-            //{
-            //    if(button.Text != "Save")
-            //    {
-            //        playlistAddXButton = button;
-            //    }               
-            //}
-
-            //playlistAddXButton.Click();
-            
-            //Step 5 Select '+' to add new playlist
-            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-
-            //foreach (var functionBarItem in functionBar)
-            //{
-            //    if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
-            //    {
-            //        addPlaylistButton = functionBarItem;
-            //        break;
-            //    }
-            //}
-            //addPlaylistButton.Click();
-
-            pls.AddPlayListButton.Click();
-
-            try
+            //Step 7 Select '+' to add new playlist
+            foreach (var functionBarItem in functionBar)
             {
-                _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
-                //Step 6 Click outside the window to close it 
-                IWebElement offClick = _driver.Value.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
-                //offClick.Click();
-                SeleniumCommon.ClickOffScreen(this._driver.Value);
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                //throw;
+                if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
+                {
+                    addPlaylistButton = functionBarItem;
+                    break;
+                }
             }
             
             //Step 7 Select '+' to add new playlist

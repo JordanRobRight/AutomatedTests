@@ -10,9 +10,9 @@ using QA.Automation.UITests.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages
 {
-    public class SideBarItem : LGBasePage
+    public class SideBar : LGBasePage
     {
-        public SideBarItem(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        public SideBar(IWebDriver driver, TestConfiguration config) : base(driver, config)
         {
             this.driver = driver;
         }
@@ -37,8 +37,8 @@ namespace QA.Automation.UITests.LG20.Pages
 
             foreach (IWebElement item in sideBarMenuItems )
             {
-                SideBarItem menuItem = new SideBarItem(driver) { Name = item };
-                menuList.Add(menuItem);
+                //SideBarItem menuItem = new SideBarItem(driver) { Name = item };
+                //menuList.Add(menuItem);
             }
             return menuList;
         }
@@ -62,34 +62,34 @@ namespace QA.Automation.UITests.LG20.Pages
 
         public void PlaylistClick()
         {
-            var plc = SideBarItem.FirstOrDefault(x => x.Name.Contains("playlist"));//.Select(x => x.Name.Contains("playlist"));
+            var playlist = SideBarItems.FirstOrDefault(x => x.Name.Contains("playlist"));//.Select(x => x.Name.Contains("playlist"));
 
-            plc.Click();
+            
         }
 
         public void AssetsClick()
         {
-           // SideBarItem.SideBarItems.Select(x => x.Name.Contains("assets"));
+            var asset = SideBarItems.FirstOrDefault(x => x.Name.Contains("assets"));
         }
 
         public void PlayersClick()
         {
-           // SideBarItems.Select(x => x.Name.Contains("players"));
+           var players = SideBarItems.Select(x => x.Name.Contains("players"));
         }
 
         public void LocationsClick()
         {
-           // SideBarItems.Select(x => x.Name.Contains("location"));
+           var locations = SideBarItems.Select(x => x.Name.Contains("location"));
         }
 
         public void MyAccountClick()
         {
-           // SideBarItems.Select(x => x.Name.Contains("account"));
+           var myAccount = SideBarItems.Select(x => x.Name.Contains("account"));
         }
 
         public void ContactUsClick()
         {
-            //SideBarItems.Select(x => x.Name.Contains("contact"));
+            var contactUs = SideBarItems.Select(x => x.Name.Contains("contact"));
         }
 
         public override bool VerifyPage()
