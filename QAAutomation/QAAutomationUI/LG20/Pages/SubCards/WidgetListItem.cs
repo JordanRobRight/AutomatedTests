@@ -8,7 +8,6 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 {
     public sealed class WidgetListItem
     {
-
         private string _cardClass = "lgfe-cm-card";
         private string _informationSection = "[ lgfe-cm-information lgfe-cm-information--order ]";
         private string _widgetNameSection = "lgfe-cm-name line-clamp";
