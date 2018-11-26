@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using QA.Automation.APITests.LG20.Services;
 using QA.Automation.APITests.Models;
@@ -20,37 +19,37 @@ namespace QA.Automation.APITests.LG20
         public static Dictionary<LGMServiceType, string> items = new Dictionary<LGMServiceType, string>
           {
                 {LGMServiceType.PlayersService, "" },
-              {LGMServiceType.FiltersService,"" },
-                    {LGMServiceType.LocationsService,"" },
-                  {LGMServiceType.ScreenFeedVideoService,"" },
-                  //{LGMServiceType.SSOAuthService,"" },
-                  {LGMServiceType.ProgramVersionsService,"" },
-                  {LGMServiceType.AssetsService,"" },
-                  //{LGMServiceType.SOService,"" },
-                  {LGMServiceType.PlaylistsService,"" },
-                  {LGMServiceType.WeatherService,"" },
-                  {LGMServiceType.WidgetsService,"" },
-                  {LGMServiceType.UsersService,"" },
-                  //{LGMServiceType.TriviaService,"" },
-                  {LGMServiceType.TrafficService,"" },
-                  {LGMServiceType.SubscriptionsService,"" },
-                  {LGMServiceType.StorageService,"" },
-                  //{LGMServiceType.SocialService,"" },
-                  {LGMServiceType.ClientsService,"" },
-                  //{LGMServiceType.HealthService,"" },
-                  {LGMServiceType.LicensesService,"" },
-                  {LGMServiceType.ChannelsService,"" },
-                  {LGMServiceType.ClientProgramsService,"" },
-                  {LGMServiceType.ProgramsService,"" },
-                  {LGMServiceType.FrontEndService,"" },
-                  //{LGMServiceType.FinanceService,"" },
-                  {LGMServiceType.DbService,"" },
-                  {LGMServiceType.AmenitiesService,"" },
-                  {LGMServiceType.Subaru_SDSAppSettingsService,"" },
-                  {LGMServiceType.Subaru_VehicleTrimsService,"" },
-                  {LGMServiceType.LiveGuide1Service,"" },
-                  {LGMServiceType.Subaru_TrimComparisonService,"" },
-            // "LG.LGM.ProfileService"
+                {LGMServiceType.FiltersService,"" },
+                {LGMServiceType.LocationsService,"" },
+                {LGMServiceType.ScreenFeedVideoService,"" },
+                //{LGMServiceType.SSOAuthService,"" },
+                {LGMServiceType.ProgramVersionsService,"" },
+                {LGMServiceType.AssetsService,"" },
+                //{LGMServiceType.SOService,"" },
+                {LGMServiceType.PlaylistsService,"" },
+                {LGMServiceType.WeatherService,"" },
+                {LGMServiceType.WidgetsService,"" },
+                {LGMServiceType.UsersService,"" },
+                //{LGMServiceType.TriviaService,"" },
+                {LGMServiceType.TrafficService,"" },
+                {LGMServiceType.SubscriptionsService,"" },
+                {LGMServiceType.StorageService,"" },
+                //{LGMServiceType.SocialService,"" },
+                {LGMServiceType.ClientsService,"" },
+                //{LGMServiceType.HealthService,"" },
+                {LGMServiceType.LicensesService,"" },
+                {LGMServiceType.ChannelsService,"" },
+                {LGMServiceType.ClientProgramsService,"" },
+                {LGMServiceType.ProgramsService,"" },
+                {LGMServiceType.FrontEndService,"" },
+                //{LGMServiceType.FinanceService,"" },
+                {LGMServiceType.DbService,"" },
+                {LGMServiceType.AmenitiesService,"" },
+                {LGMServiceType.Subaru_SDSAppSettingsService,"" },
+                {LGMServiceType.Subaru_VehicleTrimsService,"" },
+                {LGMServiceType.LiveGuide1Service,"" },
+                {LGMServiceType.Subaru_TrimComparisonService,"" },
+          // "LG.LGM.ProfileService"
       };
         private readonly string _url = string.Empty;
 
@@ -76,23 +75,16 @@ namespace QA.Automation.APITests.LG20
         {
             string swaggerUrl = GetSwaggerPage(item.Key.ToString().Replace("_", "-"));
 
+//            var apiUrl = $@"{FormatUrl("LG-LGM-" + item.Key.ToString(), Settings)}/swagger/v1/swagger.json";
             var apiUrl = $@"{FormatUrl("LG-LGM-" + item.Key.ToString().Replace("_", "-"), Settings)}{swaggerUrl}";
             var helper = new Common.HttpUtilsHelper();
 
             var data = helper.ApiRequest(apiUrl,string.Empty);
 
-            JToken version = JsonHelper.GetTokenByPath(Common.JsonHelper.GetJsonJObjectFromString(data), "info.title");
-
-            // Due to changes in swagger, if we change for ( in the version to determine if the environment name moved.
-            if (!version.ToString().Contains("("))
-            {
-                version = JsonHelper.GetTokenByPath(Common.JsonHelper.GetJsonJObjectFromString(data), "info.version");
-            }
-
-            var m =  JsonHelper.GetMatchFromRegEx(version, @".*\((?<Test>\w+)\)");
+            var m =  Common.JsonHelper.GetMatchFromRegEx(Common.JsonHelper.GetTokenByPath(Common.JsonHelper.GetJsonJObjectFromString(data), "info.title"), @".*\((?<Test>\w+)\)");
             var envData = m != null && m.Success ? m.Groups["Test"].Value : string.Empty;
 
-            Assert.AreEqual(Settings.Environment.ToString().ToLower(), envData.ToLower() );
+            Assert.AreEqual(envData.ToLower(), Settings.Environment.ToString().ToLower());
 
             /*
            // IApiPage i = new LGMFiltersService();
