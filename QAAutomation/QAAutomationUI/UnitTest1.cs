@@ -302,12 +302,16 @@ namespace QA.Automation.UITests
 
             PlayLists pls = new PlayLists(_driver.Value, _configuration);
 
-            pls.AddPlayListButton.Click();
+            pls.AddPlayList();
+            var count = _driver.Value.WindowHandles.Count;
+            var d = _driver.Value.Title;
 
             //TODO: Fix the cancel button.
             //pls.ModalCancelButton.Click();
 
             //pls.AddPlayListButton.Click();
+
+            pls.PlayListModal.PlayListNameTextField = "Test";
 
             pls.ModalCreateCustomPlaylistCheckbox.SendKeys(Keys.Space);
 

@@ -111,7 +111,26 @@ namespace QA.Automation.UITests.LG20.Pages
         private IEnumerable<IWebElement> ModalInputFields => GetModalInputFields();
 
         public List<PlayListItem> PlayListItems => GetPlayList(Driver);
-    
+
+        public bool AddPlayList()
+        {
+            try
+            {
+                var addButton = GetAddButton();
+                if (addButton != null)
+                {
+                    addButton.Click();
+                    _playListModel = new PlayListSettingModal(this.Driver);
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return false;
+        }
         #endregion
 
 
