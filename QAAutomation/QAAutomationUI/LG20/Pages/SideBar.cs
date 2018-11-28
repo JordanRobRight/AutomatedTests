@@ -63,7 +63,7 @@ namespace QA.Automation.UITests.LG20.Pages
         public void PlaylistClick()
         {
             var playlist = SideBarItems.FirstOrDefault(x => x.Name.Contains("playlist"));//.Select(x => x.Name.Contains("playlist"));
-
+            SideBarItem match = SideBarItems.Find(x => x.Name == "playlist");
             
         }
 
