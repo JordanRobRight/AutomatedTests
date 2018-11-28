@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using QA.Automation.UITests.LG20.Pages.SubCards;
 using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
@@ -11,14 +12,13 @@ namespace QA.Automation.UITests.LG20.Pages
 {
     public class PlayLists : LGBasePage
     {
-
         #region -- Fields --
 
         private readonly string _playListinfoModal = @"playlist-info-modal";
         private readonly string _pmfbContainer = @"pmfb-container";
 
-        private readonly string _modalContainer = @"lg-modal__container";
-        private readonly string _modalSection = @"lg-modal__section";
+       // private readonly string _modalContainer = @"lg-modal__container";
+       // private readonly string _modalSection = @"lg-modal__section";
 
         private string _addPlayListButtonId = "";
         private string _searchPlayListField = "";
@@ -26,6 +26,29 @@ namespace QA.Automation.UITests.LG20.Pages
         private string _playListDisplayByRowButton = "";
         private string _playListDisplayByGridButton = "";
         private string _playListScrollArea = "";
+
+        // Modal popup - Update to support new filter changes
+       // private readonly string _playListName = @"playlist-info-field-name"; // Element: Input By: Name
+       // private readonly string _playListDescription = @"playlist-info-description"; // Element: TextArea By: Name
+
+        //private readonly string _playListFilterByClientProgramAndChannel = @"Filtered by client program and channel(s)"; // Search for checkbox with this text.
+        //private readonly string _playListFilterSelectClientProgram = @"select-filter-program"; // Element: Select By: id
+        //private readonly string _playListFilterSelectFilter = @"select-filter"; // Element: Select By: id
+
+        //private readonly string _playListFilterByLocationAndDevice = @"Filtered by location and device(s)";
+        //private readonly string _playLIstFilterTextBoxLocation = @"enter-filter-location"; // Element: TextBox By: id
+        //private readonly string _playListFilterLocationSelectDevice = @"enter-filter-location-device"; // Element: Select By: id
+
+        //private readonly string _playListFilterByTags = @"Filtered by tag(s)";
+        //private readonly string _playListFilterSelectTag = @"enter-filter-locations"; // Element: Select By: id
+        //private readonly string _playListFilterByTagsText = @"Select your Tag(s)"; // Get by label
+        //private readonly string _playListFilterByTagsTextSelect = @"lgfe-select"; // element: div By: class
+
+        //private readonly string _playListNumberOfPlayersLabelField = @"Players:";
+        //private readonly string _playListDurationLabelField = @"Estimated Duration:";
+
+        private PlayListSettingModal _playListModel = null;
+
         #endregion
 
         #region -- Constructors --
@@ -71,12 +94,45 @@ namespace QA.Automation.UITests.LG20.Pages
         internal IWebElement ModalCreateCustomPlaylistCheckbox => GetCustomCheckbox();
         internal IWebElement ModalSaveButton => GetModalSavebutton();
 
+        internal SubCards.PlayListSettingModal PlayListModal
+        {
+            get
+            {
+                if (_playListModel == null)
+                {
+                    _playListModel = new PlayListSettingModal(this.Driver);
+                    
+                }
+                return _playListModel;
+            }
+            set => _playListModel = value;
+        } 
 
         private IEnumerable<IWebElement> ModalInputFields => GetModalInputFields();
 
         public List<PlayListItem> PlayListItems => GetPlayList(Driver);
 
+        public bool AddPlayList()
+        {
+            try
+            {
+                var addButton = GetAddButton();
+                if (addButton != null)
+                {
+                    addButton.Click();
+                    _playListModel = new PlayListSettingModal(this.Driver);
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return false;
+        }
         #endregion
+
 
 
         private IWebElement GetAddButton()
@@ -88,70 +144,81 @@ namespace QA.Automation.UITests.LG20.Pages
 
             return button;
         }
+    
+        
 
         private IEnumerable<IWebElement> GetModalButtons()
         {
-            var modalContainer = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalContainer);
-            var modalContainerButtons = modalContainer.FindElements(By.TagName("button")).ToList();
-            return modalContainerButtons;
+            //var modalContainer = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalContainer);
+            //var modalContainerButtons = modalContainer.FindElements(By.TagName("button")).ToList();
+            //return modalContainerButtons;
+            return new List<IWebElement>();
         }
 
         private IWebElement GetModalCancelButton()
         {
            // if (ModalButtons == null) GetModalButtons();
 
-            var cancelButton = ModalButtons.FirstOrDefault(a => a.GetAttribute("aria-label") != null &&
-                a.GetAttribute("aria-label").Equals("Close", StringComparison.OrdinalIgnoreCase));
+            //var cancelButton = ModalButtons.FirstOrDefault(a => a.GetAttribute("aria-label") != null &&
+            //    a.GetAttribute("aria-label").Equals("Close", StringComparison.OrdinalIgnoreCase));
 
-            return cancelButton;
+            //var cancelSpan = cancelButton.FindElement(By.TagName("span"));
+            //return cancelSpan;
+            //return cancelButton;
+            return null;
         }
 
         private IWebElement GetModalSavebutton()
         {
-           // if (ModalButtons == null) GetModalButtons();
+            // if (ModalButtons == null) GetModalButtons();
 
-            var saveButton = ModalButtons.FirstOrDefault(a => a.GetAttribute("type") != null &&
-                a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals("Save", StringComparison.OrdinalIgnoreCase));
+            //var saveButton = ModalButtons.FirstOrDefault(a => a.GetAttribute("type") != null &&
+            //    a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals("Save", StringComparison.OrdinalIgnoreCase));
 
-            return saveButton;
+            //return saveButton;
+            return null;
         }
 
         private IEnumerable<IWebElement> GetModalInputFields()
         {
-            var GetModalContainer = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalContainer);
-            var GetModalSection = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalSection);
-            var inputFields = GetModalSection.FindElements(By.TagName("input")).ToList();
+            //var GetModalContainer = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalContainer);
+            //var GetModalSection = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalSection);
+            //var inputFields = GetModalSection.FindElements(By.TagName("input")).ToList();
 
-            return inputFields;
+            //return inputFields;
+            return null;
         }
 
         private IWebElement GetNameField()
         {
-          // if (ModalInputFields == null) GetModalInputFields();
+            // if (ModalInputFields == null) GetModalInputFields();
 
-            return this.ModalInputFields.FirstOrDefault(a => a.GetAttribute("name") != null &&
-                a.GetAttribute("name")
-                    .Equals("playlist-info-field-name", StringComparison.OrdinalIgnoreCase));
+            //return this.ModalInputFields.FirstOrDefault(a => a.GetAttribute("name") != null &&
+            //    a.GetAttribute("name")
+            //        .Equals("playlist-info-field-name", StringComparison.OrdinalIgnoreCase));
+            return null;
         }
 
         private IWebElement GetCustomCheckbox()
         {
-           // if (ModalInputFields == null) GetModalInputFields();
+            // if (ModalInputFields == null) GetModalInputFields();
 
-            return this.ModalInputFields.FirstOrDefault(a => a.GetAttribute("name") != null &&
-                a.GetAttribute("name")
-                    .Equals("checkbox-create-playlist", StringComparison.OrdinalIgnoreCase));
+            //return this.ModalInputFields.FirstOrDefault(a => a.GetAttribute("name") != null &&
+            //    a.GetAttribute("name")
+            //        .Equals("checkbox-create-playlist", StringComparison.OrdinalIgnoreCase));
+            return null;
         }
 
         private IWebElement GetChannelSelection()
         {
-            var GetModalContainer = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalContainer);
-            var GetModalSection = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalSection);
-            var inputFields = GetModalSection.FindElements(By.TagName("select")).ToList();
+            //var GetModalContainer = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalContainer);
+            //var GetModalSection = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalSection);
+            //var inputFields = GetModalSection.FindElements(By.TagName("select")).ToList();
 
-            return inputFields.FirstOrDefault(a => a.GetAttribute("id") != null &&
-                a.GetAttribute("id")
-                    .Equals("select-filter", StringComparison.OrdinalIgnoreCase));
+            //return inputFields.FirstOrDefault(a => a.GetAttribute("id") != null &&
+            //    a.GetAttribute("id")
+            //        .Equals("select-filter", StringComparison.OrdinalIgnoreCase));
+            return null;
         }
 
         private List<PlayListItem> GetPlayList(IWebDriver driver)

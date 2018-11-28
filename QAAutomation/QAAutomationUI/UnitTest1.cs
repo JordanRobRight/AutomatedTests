@@ -302,11 +302,16 @@ namespace QA.Automation.UITests
 
             PlayLists pls = new PlayLists(_driver.Value, _configuration);
 
-            pls.AddPlayListButton.Click();
+            pls.AddPlayList();
+            var count = _driver.Value.WindowHandles.Count;
+            var d = _driver.Value.Title;
 
-            pls.ModalCancelButton.Click();
+            //TODO: Fix the cancel button.
+            //pls.ModalCancelButton.Click();
 
-            pls.AddPlayListButton.Click();
+            //pls.AddPlayListButton.Click();
+
+            pls.PlayListModal.PlayListNameTextField = "Test";
 
             pls.ModalCreateCustomPlaylistCheckbox.SendKeys(Keys.Space);
 
@@ -490,21 +495,21 @@ namespace QA.Automation.UITests
 
             //Step 4 Select 'X' to close window
 
-            pls.ModalCancelButton.Click();
+            // pls.ModalCancelButton.Click();
 
-            //var modalContainer = GetElement(ByType.ClassName, "lg-modal__container");
-            //var modalContainerButtons = modalContainer.FindElements(By.TagName("button"));
-            //IWebElement playlistAddXButton = null;
+            var modalContainer = GetElement(ByType.ClassName, "lg-modal__container");
+            var modalContainerButtons = modalContainer.FindElements(By.TagName("button"));
+            IWebElement playlistAddXButton = null;
 
-            //foreach ( var button in modalContainerButtons)
-            //{
-            //    if(button.Text != "Save")
-            //    {
-            //        playlistAddXButton = button;
-            //    }               
-            //}
+            foreach (var button in modalContainerButtons)
+            {
+                if (button.Text != "Save")
+                {
+                    playlistAddXButton = button;
+                }
+            }
 
-            //playlistAddXButton.Click();
+            playlistAddXButton.Click();
 
             //Step 5 Select '+' to add new playlist
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
