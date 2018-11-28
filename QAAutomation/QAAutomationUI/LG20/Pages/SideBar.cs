@@ -34,10 +34,10 @@ namespace QA.Automation.UITests.LG20.Pages
         #endregion
 
         #region -- Properties ---
-        private List<SideBarItem> SideBarItems => GetMenuItems(Driver);
+        private IEnumerable<SideBarItem> SideBarItems => GetMenuItems();
 
         // update return value to be ienumerable<T>
-        private List<SideBarItem> GetMenuItems(IWebDriver driver)
+        private IEnumerable<SideBarItem> GetMenuItems()
         {
             // option to make this a list of string or refactor for list of sidebaritem
             List<SideBarItem> menuList = new List<SideBarItem>();
@@ -47,8 +47,8 @@ namespace QA.Automation.UITests.LG20.Pages
             foreach (IWebElement item in sideBarMenuItems )
             {
                 // update this section by setting the correct value to the collection
-                //SideBarItem menuItem = new SideBarItem(driver) { Name = item };
-                //menuList.Add(menuItem);
+                SideBarItem menuItem = new SideBarItem(driver) { Name = item.Text };
+                menuList.Add(menuItem);
             }
             return menuList;
         }
@@ -73,35 +73,19 @@ namespace QA.Automation.UITests.LG20.Pages
         public void PlaylistClick()
         {
             var playlist = SideBarItems.FirstOrDefault(x => x.Name.Contains("playlist"));//.Select(x => x.Name.Contains("playlist"));
-            SideBarItem match = SideBarItems.Find(x => x.Name == "playlist");
+            //SideBarItem match = SideBarItems.Find(x => x.Name == "playlist");
             
         }
 
         // Add a method call to find a menu item and return the result. This method should be generic. 
-        public void AssetsClick()
+        public string getItems(string itemName )
         {
-            var asset = SideBarItems.Select(x => x.Name.Contains("assets")); 
+            var li = SideBarItems.FirstOrDefault(x => x.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+
+            return li.Name;
         }
 
-        public void PlayersClick()
-        {
-           var players = SideBarItems.Select(x => x.Name.Contains("players"));
-        }
-
-        public void LocationsClick()
-        {
-           var locations = SideBarItems.Select(x => x.Name.Contains("location"));
-        }
-
-        public void MyAccountClick()
-        {
-           var myAccount = SideBarItems.Select(x => x.Name.Contains("account"));
-        }
-
-        public void ContactUsClick()
-        {
-            var contactUs = SideBarItems.Select(x => x.Name.Contains("contact"));
-        }
+        
 
         public override bool VerifyPage()
         {

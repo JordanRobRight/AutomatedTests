@@ -1368,6 +1368,33 @@ namespace QA.Automation.UITests
 
         [TestCase]
         [Description("LiveGuideAssets")]
+        public void LiveguideAssets2()
+        {
+            Login();
+
+            //IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(Base.playlistSideBarMenuCssSelector));
+            //playlistsSideBarMenuButton.Click();
+
+            //TODO: Assert that we are on the playlist page
+
+            var sidebartest = new SideBar(_driver.Value, _configuration);
+
+            var assetItem = sidebartest.getItems("assets");
+
+
+            IWebElement playlistSearch = _driver.Value.FindElement(By.Id("playlists-search"));
+            playlistSearch.SendKeys("Automated Playlist Test");
+
+            //TODO: Assert that a model is up. 
+
+            AssetUploadingImage();
+
+            AssetUploadingVideo();
+
+        }
+
+        [TestCase]
+        [Description("LiveGuideAssets")]
         public void LiveguideAssets()
         {
             Login();
