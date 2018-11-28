@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.PageObjects;
 using QA.Automation.UITests.LG20.Pages.SubCards;
 using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
@@ -12,14 +13,20 @@ namespace QA.Automation.UITests.LG20.Pages
 {
     public class SideBar : LGBasePage
     {
+
         public SideBar(IWebDriver driver, TestConfiguration config) : base(driver, config)
         {
+            // Remove this property and use the base class driver property.
+            // Replace all other instances of driver in this class.
             this.driver = driver;
         }
 
         #region -- Fields -- 
 
-        private static string sideBar = @"interaction-nav-bar-container";
+        /// <summary>
+        /// 
+        /// </summary>
+        private static string sideBar = @"interaction-nav-bar-container"; 
         private string playlists = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a";
         private IWebDriver driver;
        
@@ -29,14 +36,17 @@ namespace QA.Automation.UITests.LG20.Pages
         #region -- Properties ---
         private List<SideBarItem> SideBarItems => GetMenuItems(Driver);
 
+        // update return value to be ienumerable<T>
         private List<SideBarItem> GetMenuItems(IWebDriver driver)
         {
+            // option to make this a list of string or refactor for list of sidebaritem
             List<SideBarItem> menuList = new List<SideBarItem>();
 
             var sideBarMenuItems = driver.FindElement(By.Id("interaction-nav-bar-container")).FindElements(By.TagName("a")).ToList();
 
             foreach (IWebElement item in sideBarMenuItems )
             {
+                // update this section by setting the correct value to the collection
                 //SideBarItem menuItem = new SideBarItem(driver) { Name = item };
                 //menuList.Add(menuItem);
             }
@@ -67,9 +77,10 @@ namespace QA.Automation.UITests.LG20.Pages
             
         }
 
+        // Add a method call to find a menu item and return the result. This method should be generic. 
         public void AssetsClick()
         {
-            var asset = SideBarItems.FirstOrDefault(x => x.Name.Contains("assets"));
+            var asset = SideBarItems.Select(x => x.Name.Contains("assets")); 
         }
 
         public void PlayersClick()
@@ -99,6 +110,7 @@ namespace QA.Automation.UITests.LG20.Pages
             throw new NotImplementedException();
 
         }
+
         #endregion
     }
 }

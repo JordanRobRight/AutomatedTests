@@ -11,6 +11,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         public SideBarItem(IWebDriver driver)
         {
+            // Remove driver property
             this.driver = driver;
         }
 
