@@ -16,49 +16,37 @@ namespace QA.Automation.UITests.LG20.Pages
 
         public SideBar(IWebDriver driver, TestConfiguration config) : base(driver, config)
         {
-            // Remove this property and use the base class driver property.
-            // Replace all other instances of driver in this class.
-            this.driver = driver;
+            
         }
 
         #region -- Fields -- 
-
-        /// <summary>
-        /// 
-        /// </summary>
         private static string sideBar = @"interaction-nav-bar-container"; 
         private string playlists = "#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a";
-        private IWebDriver driver;
        
-
         #endregion
 
         #region -- Properties ---
-        private List<SideBarItem> SideBarItems => GetMenuItems(Driver);
+        private IEnumerable<SideBarItem> SideBarItems => GetMenuItems();
 
         // update return value to be ienumerable<T>
-        private List<SideBarItem> GetMenuItems(IWebDriver driver)
+        private IEnumerable<SideBarItem> GetMenuItems()
         {
             // option to make this a list of string or refactor for list of sidebaritem
             List<SideBarItem> menuList = new List<SideBarItem>();
 
-            var sideBarMenuItems = driver.FindElement(By.Id("interaction-nav-bar-container")).FindElements(By.TagName("a")).ToList();
+            var sideBarMenuItems = Driver.FindElement(By.Id("interaction-nav-bar-container")).FindElements(By.TagName("a")).ToList();
 
             foreach (IWebElement item in sideBarMenuItems )
             {
                 // update this section by setting the correct value to the collection
-                //SideBarItem menuItem = new SideBarItem(driver) { Name = item };
-                //menuList.Add(menuItem);
+                SideBarItem menuItem = new SideBarItem(Driver) { Name = item.Text, WebElement = item};
+                menuList.Add(menuItem);
             }
             return menuList;
         }
 
-        //IEnumerable<IWebElement> menuItems = new List<IWebElement>();
-
         private IWebElement menuElement => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Id, sideBar);
-
-        //private IWebElement Assets => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, assets);
-
+ 
         #endregion
 
         #region -- Methods ---
@@ -67,41 +55,32 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
             Driver.Navigate().GoToUrl(url);
-
-        }
-
-        public void PlaylistClick()
-        {
-            var playlist = SideBarItems.FirstOrDefault(x => x.Name.Contains("playlist"));//.Select(x => x.Name.Contains("playlist"));
-            SideBarItem match = SideBarItems.Find(x => x.Name == "playlist");
-            
         }
 
         // Add a method call to find a menu item and return the result. This method should be generic. 
-        public void AssetsClick()
+        private SideBarItem getItems(string itemName )
         {
-            var asset = SideBarItems.Select(x => x.Name.Contains("assets")); 
+            var li = SideBarItems.FirstOrDefault(x => x.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+
+            return li;
         }
 
-        public void PlayersClick()
+        public string GetMenuItem(string menuItem)
         {
-           var players = SideBarItems.Select(x => x.Name.Contains("players"));
+            return getItems(menuItem).Name;
         }
 
-        public void LocationsClick()
+        public void SelectMenu(string menuName)
         {
-           var locations = SideBarItems.Select(x => x.Name.Contains("location"));
+            var menuItem = getItems(menuName);
+
+            if (menuItem != null)
+            {
+                menuItem.WebElement.Click();
+            }
         }
 
-        public void MyAccountClick()
-        {
-           var myAccount = SideBarItems.Select(x => x.Name.Contains("account"));
-        }
-
-        public void ContactUsClick()
-        {
-            var contactUs = SideBarItems.Select(x => x.Name.Contains("contact"));
-        }
+        
 
         public override bool VerifyPage()
         {
