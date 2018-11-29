@@ -14,6 +14,7 @@ using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 using QA.Automation.Common;
 using QA.Automation.UITests.LG20.Pages;
+using QA.Automation.UITests.LG20.Pages.SubCards;
 using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
 
@@ -302,7 +303,12 @@ namespace QA.Automation.UITests
 
             PlayLists pls = new PlayLists(_driver.Value, _configuration);
 
-            pls.AddPlayList();
+            var status = pls.AddPlayList();
+            if (!status)
+            {
+                //exception add button wasn't clicked. 
+            }
+
             var count = _driver.Value.WindowHandles.Count;
             var d = _driver.Value.Title;
 
@@ -310,10 +316,29 @@ namespace QA.Automation.UITests
             //pls.ModalCancelButton.Click();
 
             //pls.AddPlayListButton.Click();
+            pls.WaitFor("");
 
-            pls.PlayListModal.PlayListNameTextField = "Test";
 
-            pls.ModalCreateCustomPlaylistCheckbox.SendKeys(Keys.Space);
+            //PlayListSettingModal p = new PlayListSettingModal(_driver.Value);
+           // p.PlayListDescriptionTextField = "Test";
+
+
+            var textValue = pls.PlayListModal.PlayListNameTextField;
+            pls.PlayListModal.PlayListNameTextField = "Test name";
+
+            pls.PlayListModal.PlayListDescriptionTextField = "Test description";
+            var ch1 = pls.PlayListModal.FilterByClientProgramAndChannelCheckbox;
+
+            pls.PlayListModal.FilterByClientProgramAndChannelCheckbox = true;
+            var ch2 = pls.PlayListModal.FilterByClientProgramAndChannelCheckbox;
+
+            pls.PlayListModal.FilterByLocationAndDeviceCheckbox = true;
+            pls.PlayListModal.FilterByByTagCheckbox = true;
+
+            //var ch1 = pls.PlayListModal.FilterByClientProgramAndChannelCheckbox;
+
+            //pls.ModalCreateCustomPlaylistCheckbox.SendKeys(Keys.Space);
+
 
             try
             {
