@@ -1337,7 +1337,7 @@ namespace QA.Automation.UITests
             IWebElement p = _driver.Value.FindElement(By.Id("interaction-nav-bar-container"));
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            SelectItemFromCilentMenu(_driver.Value, "GM");
+           // SelectItemFromCilentMenu(_driver.Value, "GM");
 
             #region -- old code --
             /*
@@ -1502,11 +1502,11 @@ namespace QA.Automation.UITests
            // Login();
             Logout logout = new Logout(_driver.Value, ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>());
 
-            SelectItemFromCilentMenu(_driver.Value, "logout");
+            //SelectItemFromCilentMenu(_driver.Value, "logout");
 
             logout.CancelButtonClick();
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            SelectItemFromCilentMenu(_driver.Value, "logout");
+            //SelectItemFromCilentMenu(_driver.Value, "logout");
 
             logout.LogoutAcceptButtonClick();
             //logout.Perform();
