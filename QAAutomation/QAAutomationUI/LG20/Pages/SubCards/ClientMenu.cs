@@ -21,6 +21,8 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         }
 
         #region -- Fields --
+        public static string UserDiv = "#interaction-info-bar-container > div > div";
+        public static string ClientDropDownDiv = "#interaction-info-bar-container > div > div > div > div.iibcuinow-menu-wrapper";
 
 
 
@@ -32,8 +34,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         private IEnumerable<ClientMenuItem> GetClientMenuItems()
         {
-            // option to make this a list of string or refactor for list of sidebaritem
-            List<ClientMenuItem> menuList = new List<GetClientMenuItems>();
+            List<ClientMenuItem> menuList = new List<ClientMenuItem>();
 
             var sideBarMenuItems = Driver.FindElement(By.Id("interaction-nav-bar-container")).FindElements(By.TagName("a")).ToList();
 
@@ -81,31 +82,31 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             IWebElement playerChannelDropdown = driver.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
             //string clientName = "GM";
 
-            if (!playerChannelDropdown.Text.Equals(menuItemToSelect, StringComparison.OrdinalIgnoreCase))
-            {
-                playerChannelDropdown.Click();
-                System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            //if (!playerChannelDropdown.Text.Equals(menuItemToSelect, StringComparison.OrdinalIgnoreCase))
+            //{
+            //    playerChannelDropdown.Click();
+            //    System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(500));
 
-                var wrapper = GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a"));
-                IWebElement gmChannelSelection = null;
+            //    var wrapper = GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a"));
+            //    IWebElement gmChannelSelection = null;
 
-                foreach (var menuItem in wrapper)
-                {
-                    if (menuItem.Text.Equals(menuItemToSelect, StringComparison.OrdinalIgnoreCase)) // == menuItemToSelect)
-                    {
-                        gmChannelSelection = menuItem;
-                        break;
-                    }
-                }
+            //    foreach (var menuItem in wrapper)
+            //    {
+            //        if (menuItem.Text.Equals(menuItemToSelect, StringComparison.OrdinalIgnoreCase)) // == menuItemToSelect)
+            //        {
+            //            gmChannelSelection = menuItem;
+            //            break;
+            //        }
+            //    }
 
-                //gmChannelSelection = wrapper.FirstOrDefault();
+            //    //gmChannelSelection = wrapper.FirstOrDefault();
 
-                gmChannelSelection = gmChannelSelection ?? wrapper.FirstOrDefault();
+            //    gmChannelSelection = gmChannelSelection ?? wrapper.FirstOrDefault();
 
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
-                gmChannelSelection.Click();
-            }
+            //    gmChannelSelection.Click();
+            //}
         }
         #endregion
     }
