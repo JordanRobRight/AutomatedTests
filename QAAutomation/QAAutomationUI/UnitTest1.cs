@@ -309,9 +309,6 @@ namespace QA.Automation.UITests
                 //exception add button wasn't clicked. 
             }
 
-            var count = _driver.Value.WindowHandles.Count;
-            var d = _driver.Value.Title;
-
             //TODO: Fix the cancel button.
             //pls.ModalCancelButton.Click();
 
@@ -329,11 +326,31 @@ namespace QA.Automation.UITests
             pls.PlayListModal.PlayListDescriptionTextField = "Test description";
             var ch1 = pls.PlayListModal.FilterByClientProgramAndChannelCheckbox;
 
-            pls.PlayListModal.FilterByClientProgramAndChannelCheckbox = true;
-            var ch2 = pls.PlayListModal.FilterByClientProgramAndChannelCheckbox;
+            //pls.PlayListModal.FilterByClientProgramAndChannelCheckbox = true;
+            //var ch2 = pls.PlayListModal.FilterByClientProgramAndChannelCheckbox;
+
+            //pls.PlayListModal.SelectClientProgramSelectBox = "Guest TV";
+            //pls.PlayListModal.SelectYourChannelSelectBox = "Chevy-Buick-GMC TV";
+
+            //var program = pls.PlayListModal.SelectClientProgramSelectBox;
 
             pls.PlayListModal.FilterByLocationAndDeviceCheckbox = true;
+
+            pls.PlayListModal.SelectYourLocationTextBox = "KUDICK CHEVROLET BUICK";
+            pls.PlayListModal.SelectYourDeviceSelectBox = "Player: LG-QAROB";
+
+            var location1 = pls.PlayListModal.SelectYourLocationTextBox;
+            var location2 = pls.PlayListModal.SelectYourDeviceSelectBox;
+
+
             pls.PlayListModal.FilterByByTagCheckbox = true;
+
+            pls.PlayListModal.SelectYouTagTypeSelectBox = "Player";
+            pls.PlayListModal.SelectYouTagSelectBox = "RobTest";
+
+            var type1 = pls.PlayListModal.SelectYouTagTypeSelectBox;
+            var type2 = pls.PlayListModal.SelectYouTagSelectBox;
+
 
             //var ch1 = pls.PlayListModal.FilterByClientProgramAndChannelCheckbox;
 
@@ -1337,7 +1354,7 @@ namespace QA.Automation.UITests
             IWebElement p = _driver.Value.FindElement(By.Id("interaction-nav-bar-container"));
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            SelectItemFromCilentMenu(_driver.Value, "GM");
+            //SelectItemFromCilentMenu(_driver.Value, "GM");
 
             #region -- old code --
             /*
@@ -1502,11 +1519,11 @@ namespace QA.Automation.UITests
            // Login();
             Logout logout = new Logout(_driver.Value, ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>());
 
-            SelectItemFromCilentMenu(_driver.Value, "logout");
+            //SelectItemFromCilentMenu(_driver.Value, "logout");
 
             logout.CancelButtonClick();
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            SelectItemFromCilentMenu(_driver.Value, "logout");
+            //SelectItemFromCilentMenu(_driver.Value, "logout");
 
             logout.LogoutAcceptButtonClick();
             //logout.Perform();
