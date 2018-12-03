@@ -52,15 +52,33 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         #region -- Methods --
 
 
+        public override void Perform()
+        {
+            string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
+            Driver.Navigate().GoToUrl(url);
+        }
+
+
         private ClientMenuItem getItems(string itemName)
         {
             var li = ClientMenuItems.FirstOrDefault(x => x.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
 
             return li;
         }
-        public override void Perform()
+
+        public string GetClientMenuItem(string ClientItem)
         {
-            throw new NotImplementedException();
+            return getItems(ClientItem).Name;
+        }
+
+        public void SelectClient(string clientName)
+        {
+            var ClientItem = getItems(clientName);
+
+            if (ClientItem != null)
+            {
+                ClientItem.WebElement.Click();
+            }
         }
 
         public override bool VerifyPage()
