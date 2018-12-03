@@ -36,15 +36,15 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         {
             List<ClientMenuItem> menuList = new List<ClientMenuItem>();
 
-            var ClientMenuItems = Driver.FindElement(By.Id("interaction-nav-bar-container")).FindElements(By.TagName("a")).ToList();
+            var ClientMenuItems = Driver.FindElement(By.ClassName("iibcuinow-menu-wrapper")).FindElements(By.TagName("a")).ToList();
 
             foreach (IWebElement item in ClientMenuItems)
             {
-                // update this section by setting the correct value to the collection
                 ClientMenuItem menuItem = new ClientMenuItem(Driver) { Name = item.Text, WebElement = item };
                 menuList.Add(menuItem);
             }
             return menuList;
+            
         }
 
         #endregion
@@ -62,7 +62,6 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         private ClientMenuItem getItems(string itemName)
         {
             var li = ClientMenuItems.FirstOrDefault(x => x.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
-
             return li;
         }
 
@@ -97,7 +96,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             //IWebElement playlistDiv = _driver.Value.FindElement(By.CssSelector(playlistDivCssSelector));
             //if playlists is empty find profile dropdown 
 
-            IWebElement playerChannelDropdown = driver.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            //IWebElement playerChannelDropdown = driver.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
             //string clientName = "GM";
 
             //if (!playerChannelDropdown.Text.Equals(menuItemToSelect, StringComparison.OrdinalIgnoreCase))

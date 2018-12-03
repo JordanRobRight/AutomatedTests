@@ -1442,6 +1442,12 @@ namespace QA.Automation.UITests
         [Description("LiveGuideClientMenu")]
         public void ClientMenuTest()
         {
+            Login();
+
+            IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+
+            playerChannelDropdown.Click();
+
             var ClientMenuTest = new ClientMenu(_driver.Value, _configuration);
 
             ClientMenuTest.GetClientMenuItem("GM");

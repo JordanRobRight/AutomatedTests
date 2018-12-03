@@ -7,7 +7,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 {
     class SideBarItem
     {
-        private IWebDriver driver;
+        
 
         public SideBarItem(IWebDriver driver)
         {
