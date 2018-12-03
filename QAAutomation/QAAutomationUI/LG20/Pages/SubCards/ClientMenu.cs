@@ -36,9 +36,9 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         {
             List<ClientMenuItem> menuList = new List<ClientMenuItem>();
 
-            var sideBarMenuItems = Driver.FindElement(By.Id("interaction-nav-bar-container")).FindElements(By.TagName("a")).ToList();
+            var ClientMenuItems = Driver.FindElement(By.Id("interaction-nav-bar-container")).FindElements(By.TagName("a")).ToList();
 
-            foreach (IWebElement item in sideBarMenuItems)
+            foreach (IWebElement item in ClientMenuItems)
             {
                 // update this section by setting the correct value to the collection
                 ClientMenuItem menuItem = new ClientMenuItem(Driver) { Name = item.Text, WebElement = item };

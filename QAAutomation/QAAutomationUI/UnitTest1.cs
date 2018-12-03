@@ -1439,6 +1439,17 @@ namespace QA.Automation.UITests
         }
 
         [TestCase]
+        [Description("LiveGuideClientMenu")]
+        public void ClientMenuTest()
+        {
+            var ClientMenuTest = new ClientMenu(_driver.Value, _configuration);
+
+            ClientMenuTest.GetClientMenuItem("GM");
+
+            ClientMenuTest.SelectClient("GM");
+        }
+
+        [TestCase]
         [Description("LiveGuideAssets")]
         public void LiveguideAssets()
         {
