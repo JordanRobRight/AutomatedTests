@@ -90,8 +90,8 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
 
         #region Old Code
-        private void SelectItemFromCilentMenu(IWebDriver driver, string menuItemToSelect)
-        {
+        //private void SelectItemFromCilentMenu(IWebDriver driver, string menuItemToSelect)
+        //{
  
             //string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
 
@@ -126,7 +126,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
             //    gmChannelSelection.Click();
             //}
-        }
+        //}
         #endregion
     }
 }

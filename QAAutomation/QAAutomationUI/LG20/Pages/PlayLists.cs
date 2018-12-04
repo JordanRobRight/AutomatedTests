@@ -54,13 +54,12 @@ namespace QA.Automation.UITests.LG20.Pages
         #region -- Constructors --
         public PlayLists(IWebDriver driver, TestConfiguration config) : base(driver, config)
         {
-            //this.Driver;
         }
 
-        private void Test()
-        {
-            PlayListItem pl =  PlayListItems.First(a => a.Name.Contains("test"));
-        }
+        //private void Test()
+        //{
+        //    PlayListItem pl =  PlayListItems.First(a => a.Name.Contains("test"));
+        //}
         #endregion
 
         #region -- Methods -- 
@@ -144,8 +143,6 @@ namespace QA.Automation.UITests.LG20.Pages
 
             return button;
         }
-    
-        
 
         private IEnumerable<IWebElement> GetModalButtons()
         {
