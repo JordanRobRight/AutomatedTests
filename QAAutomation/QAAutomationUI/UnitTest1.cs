@@ -315,6 +315,7 @@ namespace QA.Automation.UITests
             //pls.AddPlayListButton.Click();
             pls.WaitFor("");
 
+            pls.PlayListModal.ModalCancelButton();
 
             //PlayListSettingModal p = new PlayListSettingModal(_driver.Value);
            // p.PlayListDescriptionTextField = "Test";
@@ -334,18 +335,19 @@ namespace QA.Automation.UITests
 
             //var program = pls.PlayListModal.SelectClientProgramSelectBox;
 
-            pls.PlayListModal.FilterByLocationAndDeviceCheckbox = true;
+           // pls.PlayListModal.FilterByLocationAndDeviceCheckbox = true;
 
-            pls.PlayListModal.SelectYourLocationTextBox = "KUDICK CHEVROLET BUICK";
-            pls.PlayListModal.SelectYourDeviceSelectBox = "Player: LG-QAROB";
+           // pls.PlayListModal.SelectYourLocationTextBox = "KUDICK CHEVROLET BUICK";
+           // pls.PlayListModal.SelectYourDeviceSelectBox = "Player: LG-QAROB";
 
-            var location1 = pls.PlayListModal.SelectYourLocationTextBox;
-            var location2 = pls.PlayListModal.SelectYourDeviceSelectBox;
+          //  var location1 = pls.PlayListModal.SelectYourLocationTextBox;
+          //  var location2 = pls.PlayListModal.SelectYourDeviceSelectBox;
 
 
             pls.PlayListModal.FilterByByTagCheckbox = true;
 
             pls.PlayListModal.SelectYouTagTypeSelectBox = "Player";
+            var theList = pls.PlayListModal.SelectYouTagSelectBox;
             pls.PlayListModal.SelectYouTagSelectBox = "RobTest";
 
             var type1 = pls.PlayListModal.SelectYouTagTypeSelectBox;
