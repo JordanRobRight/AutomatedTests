@@ -7,7 +7,6 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 {
     class ClientMenuItem
     {
-        private IWebDriver driver;
 
         public ClientMenuItem(IWebDriver driver)
         {
