@@ -1261,7 +1261,16 @@ namespace QA.Automation.UITests
             sidebartest.SelectMenu("assets");
 
 
+            var assettest = new Assets(_driver.Value, _configuration);
+
+            assettest.GetAssetAddButton(); //.Click();<-- works
+
+            assettest.GetAssetSearchInput();
+
+            
+
             #region -- old code --
+
             //IWebElement playlistSearch = _driver.Value.FindElement(By.Id("playlists-search"));
             //playlistSearch.SendKeys("Automated Playlist Test");
 
@@ -1270,6 +1279,7 @@ namespace QA.Automation.UITests
             //AssetUploadingImage();
 
             //AssetUploadingVideo();
+
             #endregion
         }
 
