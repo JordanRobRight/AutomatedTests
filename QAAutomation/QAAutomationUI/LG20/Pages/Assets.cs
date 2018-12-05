@@ -19,6 +19,7 @@ namespace QA.Automation.UITests.LG20.Pages
         private readonly string assetsFuncitonBar = "pmfb-container";
         private readonly string assetsUtilityBar = "";
         private readonly string assetsContentWrapper = "";
+        private readonly string assetsSearchInput = "assets-search";
 
         #endregion
 
@@ -42,8 +43,15 @@ namespace QA.Automation.UITests.LG20.Pages
             {
                 throw new NotImplementedException();
             }
+        #endregion
 
-        private IWebElement GetAssetAddButton()
+        public IWebElement GetAssetSearchInput()
+        {
+            IWebElement searchInput = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.Id, assetsSearchInput);
+            return searchInput;
+        }
+
+        public IWebElement GetAssetAddButton()
         {
             var buttons = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, assetsFuncitonBar)
                 .FindElements(By.TagName("button"));
@@ -51,30 +59,52 @@ namespace QA.Automation.UITests.LG20.Pages
             return button;
         }
 
-        private IEnumerable<IWebElement> GetAssetModalButtons()
-        {
-            return new List<IWebElement>();
-        }
+        //private IEnumerable<IWebElement> GetAssetModalButtons()
+        //{
+        //    return new List<IWebElement>();
+        //}
 
-        private IEnumerable<DisplayOptions> GetAssetDisplayOptionButtons();
+        private IEnumerable<AssetItem> AssetItems => GetAssetDisplayOptionButtons();
 
-        private IEnumerable<DisplayOptions> GetAssetDisplayOptionButtons()
+        private IEnumerable<AssetItem> GetAssetDisplayOptionButtons()
         {
-            List<DisplayOptions> displayOptions = new List<DisplayOptions>();
+            List<AssetItem> displayOptions = new List<AssetItem>();
 
             var displayOptionButtons = Driver.FindElement(By.ClassName("amub-layout-type"))
                 .FindElements(By.ClassName("amublt-field")).ToList();
 
             foreach (IWebElement button in displayOptions)
             {
-                IWebElement buttonItem = new IWebElement(Driver) {Name = button.Text, WebElement = button};
+                AssetItem buttonItem = new AssetItem(Driver) {Name = button.Text, WebElement = button};
                 displayOptions.Add(buttonItem);
             }
 
             return displayOptions;
         }
 
-        #endregion
+        private AssetItem getItems(string itemName)
+        {
+            var li = AssetItems.FirstOrDefault(x => x.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+
+            return li;
+        }
+
+        public string GetHeaderItem(string headerButton)
+        {
+            //WaitFor(headerButton);
+      
+            return getItems(headerButton).Name;
+        }
+
+        public void SelectAddButton(string button)
+        {
+            var item = getItems(button);
+
+            if (item != null)
+            {
+                item.WebElement.Click();
+            }
+        }
 
 
 
@@ -83,11 +113,11 @@ namespace QA.Automation.UITests.LG20.Pages
         #region -- Properties --
 
         internal IWebElement AddAssetButton => GetAssetAddButton();
-        private IEnumerable<IWebElement> AssetModalButtons => GetAssetModalButtons();
+        //private IEnumerable<IWebElement> AssetModalButtons => GetAssetModalButtons();
         private IWebElement AssetSearchInput => GetAssetSearchInput();
-        private IWebElement AssetFilterDropDown => GetAssetFilterDropDown();
-        private IEnumerable<IWebElement> AssetDisplayOptionButtons => GetAssetDisplayOptionButtons();
-        private IEnumerable<IWebElement> AssetContent => GetAssetContent();
+        //private IWebElement AssetFilterDropDown => GetAssetFilterDropDown();
+        //private IEnumerable<IWebElement> AssetDisplayOptionButtons => GetAssetDisplayOptionButtons();
+        //private IEnumerable<IWebElement> AssetContent => GetAssetContent();
 
 
 

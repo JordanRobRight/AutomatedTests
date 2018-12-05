@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using QA.Automation.UITests.LG20.Pages.SubCards;
-using QA.Automation.UITests.Models;
-using QA.Automation.UITests.Selenium;
 
 
 namespace QA.Automation.UITests.LG20.Pages.SubCards
 {
-    class AssetItems
+    class AssetItem
     {
+        
+        public AssetItem(IWebDriver driver)
+        {
+
+        }
+
+        public string Name { get; set; }
+        public IWebElement WebElement { get; set; }
+
         //    internal IWebElement AssetModalClose => GetAssetModalClose();
         //    internal IWebElement AssetModalSave => GetAssetModalSave();
         //    internal IWebElement AssetModalNameEdit => GetAssetModalNameEdit();
@@ -23,13 +27,6 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         //    internal IWebElement AssetModalExpirationEnd => GetAssetModalExpirationEnd();
         //    internal IWebElement AssetThumbnail => GetAssetThumbnail();
 
-        public DisplayOptions(IWebDriver driver)
-        {
-
-        }
-
-        public string Name { get; set; }
-        public IWebElement WebElement { get; set; }
     }
 
 }
