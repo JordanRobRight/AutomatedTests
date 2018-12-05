@@ -73,11 +73,31 @@ namespace QA.Automation.UITests.Selenium
             return query ?? throw new Exception("GetElement returned a null value.");
         }
 
-        public static void ClickOffScreen(IWebDriver driver)
+        public static void ClickOffScreen(IWebDriver driver, SeleniumCommon.ByType byType, string locator, int secondsToWait = 2)
         {
-            OpenQA.Selenium.Interactions.Actions a = new OpenQA.Selenium.Interactions.Actions(driver);
-            a.MoveByOffset(-100, -100).Click().Build().Perform();
+            //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+            // IWebElement offClick = driver.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
+            IWebElement element = GetElement(driver, byType, locator);
+            Actions a = new Actions(driver);
+            // MoveByOffset(-100, -100)
+            a.MoveToElement(element).MoveByOffset(-10, -10).Click().Build().Perform();
+            Thread.Sleep(TimeSpan.FromSeconds(secondsToWait));
             
+        }
+
+        public static void AcceptAlert(IWebDriver driver, int secondsToWait = 2)
+        {
+            try
+            {
+                IAlert alert = driver.SwitchTo().Alert();
+                alert.Accept();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(secondsToWait));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                //throw;
+            }
         }
 
         public static IEnumerable<IWebElement> GetWebElements(IWebElement element, By selector, string NameElement = "")
@@ -122,12 +142,36 @@ namespace QA.Automation.UITests.Selenium
         //var clickableElement = wait.Until(ExpectedConditions.ElementToBeClickable(By.PartialLinkText("TFS Test API")));
 
         //this will search for the element until a timeout is reached
+
+        public static Func<IWebDriver, bool> IsElementVisible(IWebElement iwe)
+        {
+            return (d) =>
+            {
+                try
+                {
+                    return iwe.Displayed;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    return false;
+                    //throw;
+                }
+            };
+        }
         public static IWebElement WaitUntilElementExists(IWebDriver driver, By elementLocator, int timeout = 10)
         {
             try
             {
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
-                return wait.Until(ExpectedConditions.ElementExists(elementLocator));
+                return wait.Until(c =>
+                    {
+                        var i = c.FindElement(elementLocator);
+                        return i;
+                    }
+                );
+                //var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
+                //return wait.Until(ExpectedConditions.ElementExists(elementLocator));
             }
             catch (NoSuchElementException)
             {
@@ -172,6 +216,11 @@ namespace QA.Automation.UITests.Selenium
             Id = 3,
             ClassName = 4,
 
+        }
+
+        internal static bool IsElementVisible()
+        {
+            throw new NotImplementedException();
         }
     }
 }

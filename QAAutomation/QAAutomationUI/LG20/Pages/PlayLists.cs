@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using QA.Automation.UITests.LG20.Pages.SubCards;
 using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
@@ -66,10 +64,10 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #region -- Overrides --
 
-        // Example of overriding the WaitFor element method.
-        public override void WaitFor(string itemToWaitFor)
+        public void Wait(int seconds = 2)
         {
-            base.WaitFor(itemToWaitFor);
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(seconds));
+            //base.WaitFor();
         }
         public override void Perform()
         {
@@ -85,14 +83,6 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #region -- Properties --
 
-        internal IWebElement AddPlayListButton => GetAddButton();
-        private IEnumerable<IWebElement> ModalButtons => GetModalButtons();
-        internal IWebElement ModalCancelButton => GetModalCancelButton();
-        internal IWebElement ModalNameEditField => GetNameField();
-        internal IWebElement ModalChannelSelection => GetChannelSelection();
-        internal IWebElement ModalCreateCustomPlaylistCheckbox => GetCustomCheckbox();
-        internal IWebElement ModalSaveButton => GetModalSavebutton();
-
         internal SubCards.PlayListSettingModal PlayListModal
         {
             get
@@ -107,18 +97,15 @@ namespace QA.Automation.UITests.LG20.Pages
             set => _playListModel = value;
         } 
 
-        private IEnumerable<IWebElement> ModalInputFields => GetModalInputFields();
-
         public List<PlayListItem> PlayListItems => GetPlayList(Driver);
 
         public bool AddPlayList()
         {
             try
             {
-                var addButton = GetAddButton();
-                if (addButton != null)
+                var addButton = AddButtonClick();
+                if (addButton)
                 {
-                    addButton.Click();
                     _playListModel = new PlayListSettingModal(this.Driver);
                     return true;
                 }
@@ -132,90 +119,26 @@ namespace QA.Automation.UITests.LG20.Pages
         }
         #endregion
 
-
-
-        private IWebElement GetAddButton()
+        public bool AddButtonClick()
         {
-            var buttons = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _pmfbContainer).FindElements(By.TagName("button"));
+            try
+            {
+                var buttons = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _pmfbContainer).FindElements(By.TagName("button"));
 
-            IWebElement button = buttons.FirstOrDefault(a => a.GetAttribute("title") != null &&
-                a.GetAttribute("title").Equals("Add New Playlist", StringComparison.OrdinalIgnoreCase));
+                IWebElement button = buttons.FirstOrDefault(a => a.GetAttribute("title") != null &&
+                                                                 a.GetAttribute("title").Equals("Add New Playlist", StringComparison.OrdinalIgnoreCase));
+                button.Click();
 
-            return button;
-        }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+                //throw;
+            }
 
-        private IEnumerable<IWebElement> GetModalButtons()
-        {
-            //var modalContainer = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalContainer);
-            //var modalContainerButtons = modalContainer.FindElements(By.TagName("button")).ToList();
-            //return modalContainerButtons;
-            return new List<IWebElement>();
-        }
-
-        private IWebElement GetModalCancelButton()
-        {
-           // if (ModalButtons == null) GetModalButtons();
-
-            //var cancelButton = ModalButtons.FirstOrDefault(a => a.GetAttribute("aria-label") != null &&
-            //    a.GetAttribute("aria-label").Equals("Close", StringComparison.OrdinalIgnoreCase));
-
-            //var cancelSpan = cancelButton.FindElement(By.TagName("span"));
-            //return cancelSpan;
-            //return cancelButton;
-            return null;
-        }
-
-        private IWebElement GetModalSavebutton()
-        {
-            // if (ModalButtons == null) GetModalButtons();
-
-            //var saveButton = ModalButtons.FirstOrDefault(a => a.GetAttribute("type") != null &&
-            //    a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals("Save", StringComparison.OrdinalIgnoreCase));
-
-            //return saveButton;
-            return null;
-        }
-
-        private IEnumerable<IWebElement> GetModalInputFields()
-        {
-            //var GetModalContainer = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalContainer);
-            //var GetModalSection = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalSection);
-            //var inputFields = GetModalSection.FindElements(By.TagName("input")).ToList();
-
-            //return inputFields;
-            return null;
-        }
-
-        private IWebElement GetNameField()
-        {
-            // if (ModalInputFields == null) GetModalInputFields();
-
-            //return this.ModalInputFields.FirstOrDefault(a => a.GetAttribute("name") != null &&
-            //    a.GetAttribute("name")
-            //        .Equals("playlist-info-field-name", StringComparison.OrdinalIgnoreCase));
-            return null;
-        }
-
-        private IWebElement GetCustomCheckbox()
-        {
-            // if (ModalInputFields == null) GetModalInputFields();
-
-            //return this.ModalInputFields.FirstOrDefault(a => a.GetAttribute("name") != null &&
-            //    a.GetAttribute("name")
-            //        .Equals("checkbox-create-playlist", StringComparison.OrdinalIgnoreCase));
-            return null;
-        }
-
-        private IWebElement GetChannelSelection()
-        {
-            //var GetModalContainer = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalContainer);
-            //var GetModalSection = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _modalSection);
-            //var inputFields = GetModalSection.FindElements(By.TagName("select")).ToList();
-
-            //return inputFields.FirstOrDefault(a => a.GetAttribute("id") != null &&
-            //    a.GetAttribute("id")
-            //        .Equals("select-filter", StringComparison.OrdinalIgnoreCase));
-            return null;
+            return false;
         }
 
         private List<PlayListItem> GetPlayList(IWebDriver driver)

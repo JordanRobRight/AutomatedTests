@@ -54,8 +54,8 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         #region  --- Private Properties ---
 
-        internal IEnumerable<IWebElement> ModalButtons => GetModalButtons();
-        internal IWebElement ModalChannelSelection => GetChannelSelection();
+        //internal IEnumerable<IWebElement> ModalButtons => GetModalButtons();
+        //internal IWebElement ModalChannelSelection => GetChannelSelection();
 
         #endregion
 
@@ -121,28 +121,28 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         {
             get
             {
-                var ckboxProgramChannel = GetSelect("select", _playListFilterClientProgramSelect);
-                return ckboxProgramChannel != null ? ckboxProgramChannel.SelectedOption.Text : string.Empty;
+                var selectBoxProgramChannel = GetSelect("select", _playListFilterClientProgramSelect);
+                return selectBoxProgramChannel != null ? selectBoxProgramChannel.SelectedOption.Text : string.Empty;
             }
 
             set
             {
-                var ckboxProgramChannel = GetSelect("select", _playListFilterClientProgramSelect);
-                ckboxProgramChannel.SelectByText(value);
+                var selectBoxProgramChannel = GetSelect("select", _playListFilterClientProgramSelect);
+                selectBoxProgramChannel.SelectByText(value);
             }
         }
         public string SelectYourChannelSelectBox
         {
             get
             {
-                var ckboxProgramChannel = GetSelect("select", _playListFilterChannelSelect);
-                return ckboxProgramChannel != null ? ckboxProgramChannel.SelectedOption.Text : string.Empty;
+                var selectBoxChannel = GetSelect("select", _playListFilterChannelSelect);
+                return selectBoxChannel != null ? selectBoxChannel.SelectedOption.Text : string.Empty;
             }
 
             set
             {
-                var ckboxProgramChannel = GetSelect("select", _playListFilterChannelSelect);
-                ckboxProgramChannel.SelectByText(value);
+                var selectBoxChannel = GetSelect("select", _playListFilterChannelSelect);
+                selectBoxChannel.SelectByText(value);
 
             }
         }
@@ -199,14 +199,14 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         {
             get
             {
-                var ckboxProgramChannel = GetSelect("select", _playListFilterTagTypeSelect);
-                return ckboxProgramChannel != null ? ckboxProgramChannel.SelectedOption.Text : string.Empty;
+                var selectBoxYourTagType = GetSelect("select", _playListFilterTagTypeSelect);
+                return selectBoxYourTagType != null ? selectBoxYourTagType.SelectedOption.Text : string.Empty;
             }
 
             set
             {
-                var ckboxProgramChannel = GetSelect("select", _playListFilterTagTypeSelect);
-                ckboxProgramChannel.SelectByText(value);
+                var selectBoxYourTagType = GetSelect("select", _playListFilterTagTypeSelect);
+                selectBoxYourTagType.SelectByText(value);
             }
         }
         public string SelectYouTagSelectBox
@@ -214,7 +214,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             get
             {
                 var optionValues = GetYourTagSelect().FindElements(By.TagName("option"));
-                var theList = string.Join(",", optionValues.Select(a => a.Text.Trim())); // optionValues.Select(a => a.Text).Join(",").ToString();
+                var theList = string.Join(",", optionValues.Select(a => a.Text.Trim()));
                 return theList;
             }
 
@@ -275,15 +275,15 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             return modalContainerButtons;
         }
 
-        public bool ModalCancelButton()
+        public bool ModalCancelButtonClick()
         {
             try
             {
-
-                var cancelButton = ModalButtons.FirstOrDefault(a => a.GetAttribute("aria-label") != null &&
+                var cancelButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("aria-label") != null &&
                                                                     a.GetAttribute("aria-label").Equals("Close", StringComparison.OrdinalIgnoreCase));
 
                 var cancelSpan = cancelButton.FindElement(By.TagName("span"));
+               
                 if (cancelSpan != null)
                 {
                     cancelSpan.Click();
@@ -297,11 +297,11 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             return false;            
         }
 
-        public bool ModalSavebutton()
+        public bool ModalSaveButtonClick()
         {
             try
             {
-                var saveButton = ModalButtons.FirstOrDefault(a => a.GetAttribute("type") != null &&
+                var saveButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("type") != null &&
                                                                   a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals("Save", StringComparison.OrdinalIgnoreCase));
                 if (saveButton != null)
                 {
@@ -318,6 +318,31 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             return false;
         }
 
+        public bool ClickOffScreen()
+        {
+            try
+            {
+                var cancelButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("aria-label") != null &&
+                                                                         a.GetAttribute("aria-label").Equals("Close", StringComparison.OrdinalIgnoreCase));
+
+                var cancelSpan = cancelButton.FindElement(By.TagName("span"));
+                Actions action = new Actions(_driver);
+                // MoveByOffset(-100, -100)
+                action.MoveToElement(cancelSpan).MoveByOffset(30, 30).Click().Build().Perform();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+               // SeleniumCommon.ClickOffScreen(this._driver, SeleniumCommon.ByType.Id, _playListSettingModal);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+                //Console.WriteLine(e);
+                //throw;
+            }
+            return false;
+        }
+
         private IWebElement GetModal()
         {
             var getModalWindow = SeleniumCommon.GetElement(_driver, SeleniumCommon.ByType.Id, _playListSettingModal);
@@ -327,10 +352,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         private IEnumerable<IWebElement> GetModalInputFields(string tagName)
         {
-            //var getModalWindow1 = SeleniumCommon.GetElement(_driver, SeleniumCommon.ByType.Id, _playListSettingModal); 
-            //var getmodalSubb1 = getModalWindow1.FindElements(By.TagName("div")).FirstOrDefault(a => a.GetAttribute("class").Equals(_playListSettingModalVisiableClass));
             var getModalDialog = GetModal();
-
             var inputFields = getModalDialog.FindElements(By.TagName(tagName)).ToList();
 
             return inputFields;
@@ -353,7 +375,6 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         private IWebElement GetCustomCheckbox(string tagName, string spanText)
         {
             var tagItems = GetModalInputFields(tagName);
-//            var item = tagItems.FirstOrDefault(a => a.Text.Contains(spanText));
             var item = tagItems.FirstOrDefault(a => a.Text.Equals(spanText, StringComparison.OrdinalIgnoreCase));
             return item;
         }

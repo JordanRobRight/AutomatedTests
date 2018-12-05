@@ -29,7 +29,8 @@ namespace QA.Automation.UITests.LG20
 
         public virtual void WaitFor(string itemToWaitFor = "")
         {
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            int numOfSecondsToWait = 5;
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(numOfSecondsToWait));
         }
 
         public abstract void Perform();
