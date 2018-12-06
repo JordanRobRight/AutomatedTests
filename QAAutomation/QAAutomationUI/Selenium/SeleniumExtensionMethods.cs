@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
 
@@ -31,5 +32,12 @@ namespace QA.Automation.UITests.Selenium
                 ? webElement.GetAttribute("outerHTML")
                 : string.Empty;
         }
+
+        public static IWebElement GetElementFromCompoundClass(this List<IWebElement> webElement, string locator)
+        {
+            return webElement.FirstOrDefault(a => a.GetAttribute("class") != null && a.GetAttribute("class").Equals(locator));
+        }
     }
+
+  
 }
