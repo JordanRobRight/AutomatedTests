@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -66,12 +67,21 @@ namespace QA.Automation.UITests.LG20.Pages
 
         private IEnumerable<AssetItem> AssetItems => GetAssetDisplayOptionButtons();
 
+        //private string test = "pm-utility-bar js-playlists-utility-bar";
+
         private IEnumerable<AssetItem> GetAssetDisplayOptionButtons()
         {
             List<AssetItem> displayOptions = new List<AssetItem>();
 
-            var displayOptionButtons = Driver.FindElement(By.ClassName("amub-layout-type"))
-                .FindElements(By.ClassName("amublt-field")).ToList();
+            var displayOptionButtons = Driver.FindElement(By.Id("assets-container"));
+
+
+            var parentDiv = displayOptionButtons.GetElementFromCompoundClass(By.TagName("div"),
+                "pm-utility-bar js-playlists-utility-bar");
+            //GetElementFromCompoundClass("pmub-layout-type");
+
+            var newItem = parentDiv.FindElements(By.ClassName("pmublt-field")).ToList();
+
 
             foreach (IWebElement button in displayOptions)
             {
@@ -89,10 +99,10 @@ namespace QA.Automation.UITests.LG20.Pages
             return li;
         }
 
-        public string GetHeaderItem(string headerButton)
+        public string GetItem(string headerButton)
         {
             //WaitFor(headerButton);
-      
+
             return getItems(headerButton).Name;
         }
 

@@ -1263,11 +1263,12 @@ namespace QA.Automation.UITests
 
             var assettest = new Assets(_driver.Value, _configuration);
 
-            assettest.GetAssetAddButton(); //.Click();<-- works
+            assettest.GetAssetAddButton();
 
             assettest.GetAssetSearchInput();
 
-            
+            assettest.GetItem("assets-display-type-grid");
+
 
             #region -- old code --
 

@@ -123,6 +123,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             {
                 var selectBoxProgramChannel = GetSelect("select", _playListFilterClientProgramSelect);
                 return selectBoxProgramChannel != null ? selectBoxProgramChannel.SelectedOption.Text : string.Empty;
+                //////////////////////////////////IF     then                                             else 
             }
 
             set

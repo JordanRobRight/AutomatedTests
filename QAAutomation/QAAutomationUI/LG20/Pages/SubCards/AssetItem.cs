@@ -15,6 +15,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         }
 
         public string Name { get; set; }
+        public string Id { get; set; }
         public IWebElement WebElement { get; set; }
 
         //    internal IWebElement AssetModalClose => GetAssetModalClose();
