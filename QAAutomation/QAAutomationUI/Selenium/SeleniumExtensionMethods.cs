@@ -33,9 +33,9 @@ namespace QA.Automation.UITests.Selenium
                 : string.Empty;
         }
 
-        public static IWebElement GetElementFromCompoundClass(this List<IWebElement> webElement, string locator)
+        public static IWebElement GetElementFromCompoundClass(this IWebElement webElement, By locator, string className)
         {
-            return webElement.FirstOrDefault(a => a.GetAttribute("class") != null && a.GetAttribute("class").Equals(locator));
+            return webElement.FindElements(locator).FirstOrDefault(a => a.GetAttribute("class") != null && a.GetAttribute("class").Equals(locator));
         }
     }
 
