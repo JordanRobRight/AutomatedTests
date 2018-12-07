@@ -132,6 +132,7 @@ namespace QA.Automation.UITests
             //step 12 select save
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistSaveButton.Click();
+            //TODO: Need to valdate that the Tag was saved and the change doesn't display in Playlist
             //step 13 Select edit icon
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //WaitForMaskModal();
@@ -170,9 +171,9 @@ namespace QA.Automation.UITests
             new Actions(_driver.Value).MoveToElement(element).Click().Perform();
         }
 
-        [TestCase] //Test Case 9182
+        [TestCase] //Test Case 1982
         [Category("All")]
-        [Description("Test Case 9182")]
+        [Description("Test Case 1982")]
         public void FavoritePlaylist()
         {
             //Step 1 login
@@ -581,6 +582,10 @@ namespace QA.Automation.UITests
             Login();
             //step 2 select an existing playlist
             SelectAutomatedPlaylist();
+            PlayList pl = new PlayList(_driver.Value, TestConfiguration.GetTestConfiguration());
+
+            IWebElement traffic = pl.PlayListWidets.FirstOrDefault(a => a.Text.Contains("traffic"));
+            
             //step 3 select add traffic widget
             IWebElement trafficWidget = _driver.Value.FindElement(By.CssSelector(BaseStrings.trafficWidgetCssSelector));
             WaitForMaskModal();
@@ -594,9 +599,11 @@ namespace QA.Automation.UITests
             //step 7 do not enter zip code confirm placeholder text displays
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //step 8 select save
+
             IWebElement trafficWidgetSaveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.trafficWidgetSaveButtonCssSelector));
             WaitForMaskModal();
             trafficWidgetSaveButton.Click();
+            //TODO: Check to see if the widget was saved.
             //step 9 select add traffic widget
             IWebElement trafficWidget1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.trafficWidgetCssSelector));
             WaitForMaskModal();
@@ -612,6 +619,7 @@ namespace QA.Automation.UITests
             IWebElement trafficWidgetSaveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.trafficWidgetSaveButtonCssSelector));
             WaitForMaskModal();
             trafficWidgetSaveButton1.Click();
+            //TODO: Check to see if the widget was saved.
             //step 13 select add traffic widget
             IWebElement trafficWidget2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.trafficWidgetCssSelector));
             WaitForMaskModal();
@@ -1257,6 +1265,7 @@ namespace QA.Automation.UITests
             IAlert cancel = _driver.Value.SwitchTo().Alert();
             cancel.Dismiss();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //TODO: Need assert here to validate that the playlist wasn't deleted.
             //Step 5
             deletePlaylistButton.Click();
             //Step 6
@@ -1265,6 +1274,7 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 7 refresh screen
             _driver.Value.Navigate().Refresh();
+            //TODO: Need assert here to validate the the playlist has been deleted. 
             //Step 8 logout
             LogOutWithoutLogin();
             //Step 9
@@ -1839,6 +1849,7 @@ namespace QA.Automation.UITests
         [Description("Test case #1469")]
         public void PlayerAddNewChannel()
         {
+            //TODO: No asserts and no adding of channel and checking for it ??
             //step 1
             Login();
             //Step 2 select player tab
@@ -2099,6 +2110,8 @@ namespace QA.Automation.UITests
             {
                 IWebElement playlistEditButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.editButtonCssSelector));
                 playlistEditButton1.Click();
+                
+                //TODO: Get element playlist-no-content and get the text from it to compare to.
                 IWebElement saveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
                 saveButton1.Click();
             }
@@ -2112,6 +2125,7 @@ namespace QA.Automation.UITests
             {
                 IWebElement playlistEditButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.editButtonCssSelector));
                 playlistEditButton2.Click();
+                //TODO: Get the lement lgfe-card-matrix js-drag-drop-playlist lgfe-card-matrix--layout-row and see if there is more than one
                 IWebElement saveButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
                 saveButton2.Click();
             }
@@ -2120,6 +2134,7 @@ namespace QA.Automation.UITests
             WaitForMaskModal();
             playlistsSideBarMenuButton1.Click();
             WaitForMaskModal();
+            //TODO:Checking that you get a list of playlists.
             //Step 6 logout
             LogOutWithoutLogin();
         }
