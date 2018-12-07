@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -13,22 +14,27 @@ using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 using QA.Automation.Common;
 using QA.Automation.UITests.LG20.Pages;
+using QA.Automation.UITests.LG20.Pages.SubCards;
+using QA.Automation.UITests.Models;
+using QA.Automation.UITests.Selenium;
+
 
 namespace QA.Automation.UITests
 {
     //TODO: Need a better way to pass in these items. 
     [TestFixture("chrome", "63", "Windows 10", "", "")]
     [Parallelizable(ParallelScope.Children)]
-    public class UnitTest1
+    public class UnitTest1 
     {
         //private IWebDriver _driver;
         private ThreadLocal<IWebDriver> _driver = new ThreadLocal<IWebDriver>();
+
         private String browser;
         private String version;
         private String os;
         private String deviceName;
         private String deviceOrientation;
-        private readonly UITests.TestConfiguration _configuration = null;
+        private readonly TestConfiguration _configuration = null;
 
         //private const string un = @"DCIArtform";
 
@@ -41,12 +47,23 @@ namespace QA.Automation.UITests
             this.os = os;
             this.deviceName = deviceName;
             this.deviceOrientation = deviceOrientation;
-            _configuration = UITests.TestConfiguration.GetTestConfiguration();
+            //_configuration = TestConfiguration.GetTestConfiguration();
+            _configuration = ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>();
         }
 
         [SetUp]
         public void Init()
         {
+            _driver.Value = new ChromeBrowser(browser, version, os, deviceName, deviceOrientation, _configuration)
+                                .CreateBrowser(TestContext.CurrentContext.Test.Name, TestContext.CurrentContext.Test.ClassName, TestContext.CurrentContext.Test.MethodName);
+
+          //  Assert.That(2+2, Is.True);
+            
+
+            //Login();
+
+            #region  -- old code --
+            /*
             DesiredCapabilities caps = new DesiredCapabilities();
             caps.SetCapability(CapabilityType.BrowserName, browser);
             caps.SetCapability(CapabilityType.Version, version);
@@ -82,6 +99,8 @@ namespace QA.Automation.UITests
             _driver.Value.Manage().Window.Maximize();
             _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
             _driver.Value.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
+            */
+            #endregion -- --
         }
 
         [TestCase]//Test case 586 edit playlist
@@ -247,9 +266,7 @@ namespace QA.Automation.UITests
 
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
-            //TODO: Update this assert to take into account the environment.
-
-            Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Value.Url.Trim());
+            Assert.AreEqual($"https://portal.{_configuration.Environment.ToString()}.dcimliveguide.com/#playlists".ToLower(), _driver.Value.Url.Trim().ToLower());
         }
         public void WaitForMaskModal()
         {
@@ -276,6 +293,77 @@ namespace QA.Automation.UITests
             playlistSelection.Click();
         }
 
+        [TestCase]
+        [Category("Debugonly")]
+        // [Ignore("This test case is for debugging only")]
+
+        public void CreatePlaylistTest()
+        {
+            //step 1 login
+            Login();//remove to do full test
+
+            PlayLists pls = new PlayLists(_driver.Value, _configuration);
+
+            var status = pls.AddPlayList();
+            if (!status)
+            {
+                //exception add button wasn't clicked. 
+            }
+            pls.Wait();
+
+            //pls.PlayListModal.ClickOffScreen();
+
+            //SeleniumCommon.ClickOffScreen(_driver.Value, string.Empty);
+
+            pls.PlayListModal.ModalCancelButtonClick();
+
+            //pls.AddPlayListButton.Click();
+            pls.Wait();
+
+            //pls.PlayListModal.ModalCancelButton();
+
+            //PlayListSettingModal p = new PlayListSettingModal(_driver.Value);
+            // p.PlayListDescriptionTextField = "Test";
+
+            pls.Wait();
+            var textValue = pls.PlayListModal.PlayListNameTextField;
+            pls.PlayListModal.PlayListNameTextField = "Test name";
+
+            pls.PlayListModal.PlayListDescriptionTextField = "Test description";
+            var ch1 = pls.PlayListModal.FilterByClientProgramAndChannelCheckbox;
+
+            pls.PlayListModal.FilterByClientProgramAndChannelCheckbox = true;
+            var ch2 = pls.PlayListModal.FilterByClientProgramAndChannelCheckbox;
+
+            pls.PlayListModal.SelectClientProgramSelectBox = "Guest TV";
+            pls.PlayListModal.SelectYourChannelSelectBox = "Chevy-Buick-GMC TV";
+
+            var program = pls.PlayListModal.SelectClientProgramSelectBox;
+
+           // pls.PlayListModal.FilterByLocationAndDeviceCheckbox = true;
+
+            //pls.PlayListModal.SelectYourLocationTextBox = "KUDICK CHEVROLET BUICK";
+          //  pls.PlayListModal.SelectYourDeviceSelectBox = "Player: LG-QAROB";
+
+          //  var location1 = pls.PlayListModal.SelectYourLocationTextBox;
+          //  var location2 = pls.PlayListModal.SelectYourDeviceSelectBox;
+
+
+            pls.PlayListModal.FilterByByTagCheckbox = true;
+            pls.Wait();
+
+            pls.PlayListModal.SelectYouTagTypeSelectBox = "Player";
+            var theList = pls.PlayListModal.SelectYouTagSelectBox;
+            pls.Wait();
+            pls.PlayListModal.SelectYouTagSelectBox = "RobTest";
+
+            var type1 = pls.PlayListModal.SelectYouTagTypeSelectBox;
+            var type2 = pls.PlayListModal.SelectYouTagSelectBox;
+            pls.Wait();
+            pls.PlayListModal.ModalSaveButtonClick();
+            pls.Wait();
+        }
+
         [TestCase] //Test case #580
         [Category("All")]
         [Category("SmokeTests")]
@@ -285,95 +373,184 @@ namespace QA.Automation.UITests
             //step 1 login
             Login();//remove to do full test
 
-            IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
-            WaitForMaskModal();
-            playlistsSideBarMenuButton.Click();
-            WaitForMaskModal();
+            PlayLists pls = new PlayLists(_driver.Value, _configuration);
+
             //step 2
-            IWebElement addPlaylistButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
-            addPlaylistButton.Click();
-            //Step 3 spell check all content (fields/values), including place holder text
+            pls.AddButtonClick();
+
             //Step 4 Select 'X' to close window
-            IWebElement playlistAddXButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playListXoutCssSelector));
-            playlistAddXButton.Click();
+
+            pls.PlayListModal.ModalCancelButtonClick();
+            pls.Wait();
+
+            //Assert.IsFalse(pls.PlayListModal.IsModalDisplay);
+
             //Step 5 Select '+' to add new playlist
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            IWebElement addPlaylistButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
-            addPlaylistButton1.Click();
-            //Step 6 Click outside the window to close it 
-            IWebElement offClick = _driver.Value.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
-            offClick.Click();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+           
+            pls.AddButtonClick();
+
+            pls.Wait();
+
+            //try
+            //{
+            //    _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+            //    //Step 6 Click outside the window to close it 
+            //    IWebElement offClick = _driver.Value.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
+            //    //offClick.Click();
+            //    SeleniumCommon.ClickOffScreen(this._driver.Value);
+            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //}
+
+            //SeleniumCommon.ClickOffScreen(_driver.Value, string.Empty);
+            pls.PlayListModal.ClickOffScreen();
+
+            pls.Wait();
+
             //Step 7 Select '+' to add new playlist
-            IWebElement addPlaylistButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
-            addPlaylistButton2.Click();
+            //Assert.IsFalse(pls.PlayListModal.IsModalDisplay);
+
+            pls.AddButtonClick();
+
+            pls.Wait();
+
             //Step 8 Select Create a Custom Playlist - Filtered Check box
-            IWebElement createCustomPlaylistCheckbox = _driver.Value.FindElement(By.CssSelector(BaseStrings.createCustomPlaylistCssSelector));
-            createCustomPlaylistCheckbox.Click();
+
+            //pls.ModalCreateCustomPlaylistCheckbox.Click();
+            
+            //pls.ModalCreateCustomPlaylistCheckbox.SendKeys(Keys.Space);
+
+            
+            //var modalContainerCheckBox = modalContainer.FindElement(By.ClassName("lgfe-input-checkbox__custom-input"));
+            //modalContainerCheckBox.Click();
 
             //Step 9 Select Save
-            IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
-            saveButton.Click();
+            //IWebElement saveButton = null;
+
+            //_driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+            //foreach (var button in modalContainerButtons)
+            //{
+            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //    _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+            //    if (button.Text.Contains("Save"))
+            //    {
+            //        saveButton = button;
+            //        break;
+            //    }
+            //}
+            //saveButton.Click();
+
+            //pls.ModalSaveButton.Click();
+            pls.PlayListModal.ModalSaveButtonClick();
+           // Assert.IsTrue(pls.PlayListModal.IsModalDisplay);
+
             //Step 10 Select Ok
-            IAlert alert = _driver.Value.SwitchTo().Alert();
-            alert.Accept();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //try
+            //{
+            //    IAlert alert = _driver.Value.SwitchTo().Alert();
+            //    alert.Accept();
+            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //    //throw;
+            //}
+
 
             //Step 11 Enter a playlist name
             string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
-            IWebElement playlistAddForm = _driver.Value.FindElement(By.Id("form-name"));
-            playlistAddForm.SendKeys(playlistName);
+            // IWebElement playlistAddForm = _driver.Value.FindElement(By.Id("form-name"));
+            // playlistAddForm.SendKeys(playlistName);
+
+            pls.PlayListModal.PlayListNameTextField = playlistName;
+
+            //pls.ModalNameEditField.SendKeys(playlistName);
+
 
             //Step 12 Select save
-            saveButton.Click();
-            IAlert mustSelectLocaiton = _driver.Value.SwitchTo().Alert();
-            mustSelectLocaiton.Accept();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            //saveButton.Click();
 
-            //Step 13 Enter location name
-            IWebElement locationInput = _driver.Value.FindElement(By.Id("select-filter-location"));
-            locationInput.SendKeys("System Test Location Two Buick");
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            IWebElement selectLocationFromDropDown = _driver.Value.FindElement(By.CssSelector("#eac-container-select-filter-location > ul > li"));
-            selectLocationFromDropDown.Click();
-            /* locationInput.SendKeys(Keys.Down);
-             //IWebElement selectLocationFilter = _driver.Value.FindElement(By.Id("select-filter-location-device"));
-             ////create select element object 
-             //var selectLocationElement = new SelectElement(selectLocationFilter);
-             //selectLocationElement.SelectByText("Test");
+            //pls.ModalSaveButton.Click();
+            pls.PlayListModal.ModalSaveButtonClick();
+            if (pls.PlayListModal.IsModalDisplay)
+            {
+                // Assert.IsTrue(pls.PlayListModal.IsModalDisplay);
 
-             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-             //string filterID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
-             //IWebElement selectFilter = _driver.Value.FindElement(By.XPath(filterID));
-             //create select element object 
-             //selectFilter.SendKeys("chevy" + Keys.Enter);
-             */
+                //IAlert mustSelectLocaiton = _driver.Value.SwitchTo().Alert();
+                //mustSelectLocaiton.Accept();
+                //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+                //Step 13 Enter location name (this is the first input field after the Custom checkbox)
+                //IWebElement locationInput = _driver.Value.FindElement(By.Id("select-filter-location"));
+                //locationInput.SendKeys("System Test Location Two Buick");
+
+                //pls.ModalChannelSelection.SendKeys("System Test Location Two Buick");
+
+                pls.PlayListModal.PlayListDescriptionTextField = "System Test Location Two Buick";
+
+                pls.Wait();
+                //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+                //locationInput.Submit();
+
+                // pls.ModalChannelSelection.Submit();
+
+                pls.PlayListModal.ModalSaveButtonClick();
+            }
+            //IWebElement locationDropDown = GetElement(ByType.);
+            //var locationList = GetElement(ByType.);
+
+            // IWebElement selectLocationFromDropDown = _driver.Value.FindElement(By.CssSelector("#eac-container-select-filter-location > ul > li"));
+            //selectLocationFromDropDown.Click();
+
 
             //Step 14 Select save
-            IWebElement saveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
-            saveButton1.Click();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            IAlert alert1 = _driver.Value.SwitchTo().Alert();
-            alert1.Accept();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //            saveButton.Click();
+
+            //pls.ModalSaveButton.Click();
+
+            //IAlert mustSelectLocaiton = _driver.Value.SwitchTo().Alert();
+            //try
+            //{
+            //    mustSelectLocaiton.Accept();
+            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //    // throw;
+            //}
+
 
             //Step 15 Select device drop down
-            IWebElement selectLocationDeviceFilter = _driver.Value.FindElement(By.Id("select-filter-location-device"));
+            //IWebElement selectLocationDeviceFilter = _driver.Value.FindElement(By.Id("select-filter-location-device"));
             //create select element object 
-            var selectLocationDeviceElement = new SelectElement(selectLocationDeviceFilter);
+            //var selectLocationDeviceElement = new SelectElement(selectLocationDeviceFilter);
 
             //Step 16 Select all devices
-            selectLocationDeviceElement.SelectByValue("all");
+            //selectLocationDeviceElement.SelectByValue("all");
             //Step 17 Select save
-            saveButton.Click();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //saveButton.Click();
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 18 New playlist has been created
 
             //Step 19 Select '+' to add a new playlist
-            IWebElement addPlaylistButton3 = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            addPlaylistButton3.Click();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+            //TODO: Need to check with Margie on this test. 
+
+            //foreach (var functionBarItem in functionBar)
+            //{
+            //    if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
+            //    {
+            //        addPlaylistButton = functionBarItem;
+            //        break;
+            //    }
+            //}
             //Step 20 Logout
             LogOutWithoutLogin();
 
@@ -1011,7 +1188,7 @@ namespace QA.Automation.UITests
             */
             #endregion ---
 
-            Login login = new Login(_driver.Value, TestConfiguration.GetTestConfiguration());
+            Login login = new Login(_driver.Value, _configuration);
             login.GoToUrl();
             login.Perform();
 
@@ -1019,36 +1196,43 @@ namespace QA.Automation.UITests
 
             IWebElement p = _driver.Value.FindElement(By.Id("interaction-nav-bar-container"));
 
-
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //SelectItemFromCilentMenu(_driver.Value, "GM");
 
+            #region -- old code --
+            /*
             string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
             IWebElement playlistDiv = _driver.Value.FindElement(By.CssSelector(playlistDivCssSelector));
             //if playlists is empty find profile dropdown 
 
             IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            string clientName = "GM";
 
-            playerChannelDropdown.Click();
-
-            var wrapper = GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a"));
-            IWebElement gmChannelSelection = null;
-
-            foreach (var menuItem in wrapper)
+            if (!playerChannelDropdown.Text.Equals(clientName, StringComparison.OrdinalIgnoreCase))
             {
-                if (menuItem.Text == "GM")
+                playerChannelDropdown.Click();
+
+                var wrapper = GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a"));
+                IWebElement gmChannelSelection = null;
+
+                foreach (var menuItem in wrapper)
                 {
-                    gmChannelSelection = menuItem;
-                    break;
+                    if (menuItem.Text == clientName)
+                    {
+                        gmChannelSelection = menuItem;
+                        break;
+                    }
                 }
+
+                //gmChannelSelection = wrapper.FirstOrDefault();
+
+                gmChannelSelection = gmChannelSelection ?? wrapper.FirstOrDefault();
+
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+                gmChannelSelection.Click();
             }
-
-            //gmChannelSelection = wrapper.FirstOrDefault();
-
-            gmChannelSelection = gmChannelSelection ?? wrapper.FirstOrDefault();
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-
-            gmChannelSelection.Click();
+            */
             //}
 
             //if (!playlistDiv.Displayed)
@@ -1063,6 +1247,66 @@ namespace QA.Automation.UITests
 
             //    gmChannelSelection.Click();
             //}
+            #endregion
+
+        }
+
+        [TestCase]
+        [Description("LiveGuideAssets")]
+        public void LiveguideAssets2()//just method calls 
+        {
+            Login();
+
+            //IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(Base.playlistSideBarMenuCssSelector));
+            //playlistsSideBarMenuButton.Click();
+
+            //TODO: Assert that we are on the playlist page
+
+            var sidebartest = new SideBar(_driver.Value, _configuration);
+
+            sidebartest.GetMenuItem("assets");
+
+            sidebartest.SelectMenu("assets");
+
+
+            var assettest = new Assets(_driver.Value, _configuration);
+
+            assettest.GetAssetAddButton();
+
+            assettest.GetAssetSearchInput();
+
+            assettest.GetItem("assets-display-type-grid");
+
+
+            #region -- old code --
+
+            //IWebElement playlistSearch = _driver.Value.FindElement(By.Id("playlists-search"));
+            //playlistSearch.SendKeys("Automated Playlist Test");
+
+            ////TODO: Assert that a model is up. 
+
+            //AssetUploadingImage();
+
+            //AssetUploadingVideo();
+
+            #endregion
+        }
+
+        [TestCase]
+        [Description("LiveGuideClientMenu")]
+        public void ClientMenuTest()
+        {
+            Login();
+
+            IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+
+            playerChannelDropdown.Click();
+
+            var ClientMenuTest = new ClientMenu(_driver.Value, _configuration);
+
+            ClientMenuTest.GetClientMenuItem("GM");
+
+            ClientMenuTest.SelectClient("GM");
         }
 
         [TestCase]
@@ -1143,23 +1387,36 @@ namespace QA.Automation.UITests
         [Description("Test case 1994")]
         public void Logout()
         {
-            Login();
+           // Login();
+            Logout logout = new Logout(_driver.Value, ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>());
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //SelectItemFromCilentMenu(_driver.Value, "logout");
 
-            IWebElement logOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logOutButtonCssSelector));
-            WaitForMaskModal();
-            logOutButton.Click();
+            logout.CancelButtonClick();
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            //SelectItemFromCilentMenu(_driver.Value, "logout");
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            logout.LogoutAcceptButtonClick();
+            //logout.Perform();
 
-            IWebElement confirmLogOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector));
-            WaitForMaskModal();
-            confirmLogOutButton.Click();
+
+            #region --- old code
+
+            //IWebElement logOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logOutButtonCssSelector));
+            //WaitForMaskModal();
+            //logOutButton.Click();
+
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            //IWebElement confirmLogOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector));
+            //WaitForMaskModal();
+            //confirmLogOutButton.Click();
 
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
             //TODO: Assert that we are logged out based on URL and maybe the Username/password fields.
+
+            #endregion
         }
 
         public void LogOutWithoutLogin()
@@ -1639,7 +1896,9 @@ namespace QA.Automation.UITests
             Assert.True(playersGraph.Contains(expectedMessage));
 
             //Step 4 select a player
-            IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
+            //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
+            IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
+
             playerSelect.Click();
 
             //Step 5
@@ -1647,7 +1906,9 @@ namespace QA.Automation.UITests
             WaitForMaskModal();
 
             //Step 6
-            IWebElement playerSelect2 = _driver.Value.FindElement(By.CssSelector("#player-player_QyvWE5pQCs55 > td.sorting_1"));
+            //IWebElement playerSelect2 = _driver.Value.FindElement(By.CssSelector("#player-player_QyvWE5pQCs55 > td.sorting_1"));
+            //TODO: need to select a different player
+            IWebElement playerSelect2 = GetPlayer(_driver.Value, "LG-QAROB");
             playerSelect2.Click();
 
             //Step 7
@@ -1678,7 +1939,10 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
             //Step 3 
-            IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
+            //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
+
+            IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playerSelect.Click();
 
@@ -1782,7 +2046,16 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
             //Step 3 Select Any player
-            IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
+
+            //IWebElement playerTable =
+            //    SeleniumCommon.GetElement(_driver.Value, SeleniumCommon.ByType.Id, "players-table");
+            //IEnumerable<IWebElement> trs = playerTable.FindElements(By.TagName("tr")).ToList();
+            //string playerName = "LG-QARob";
+            //IWebElement playerSelect = trs.FirstOrDefault(a => a).FindElements(By.TagName("td"))
+            //    .FirstOrDefault(b => b.Text.Equals(playerName, StringComparison.OrdinalIgnoreCase));
+
+            IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
+            //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playerSelect.Click();
 
@@ -1857,7 +2130,9 @@ namespace QA.Automation.UITests
             playersTab.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 3 Select Any player
-            IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1 > span"));
+            //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1 > span"));
+            IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playerSelect.Click();
             //step 4 channelJoinButtonCssSelector
@@ -1913,7 +2188,10 @@ namespace QA.Automation.UITests
             playersTab.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 3 Select Any player
-            IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
+            // IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
+
+            IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playerSelect.Click();
             //Step 4 select configure button 
@@ -1960,7 +2238,8 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 3 Hover over the screen connect icon
             //step 4
-            IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
+            //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
+            IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playerSelect.Click();
             //Step 5 Hover over screen connect icon
@@ -2457,6 +2736,19 @@ namespace QA.Automation.UITests
 
         #region -- Private Methods ---
 
+        private IWebElement GetPlayer(IWebDriver driver, string playerName)
+        {
+            IWebElement playerTable =
+                SeleniumCommon.GetElement(driver, SeleniumCommon.ByType.Id, "players-table");
+            IEnumerable<IWebElement> trs = playerTable.FindElements(By.TagName("tr")).ToList();
+            //string playerName = "LG-QARob";
+            IWebElement playerSelect = trs.FirstOrDefault().FindElements(By.TagName("td"))
+                .FirstOrDefault(b => b.Text.Equals(playerName, StringComparison.OrdinalIgnoreCase));
+
+            return playerSelect;
+        }
+        
+
         private IWebElement GetElement(ByType byType, string element)
         {
             By selector = null;
@@ -2476,6 +2768,7 @@ namespace QA.Automation.UITests
                 case ByType.ClassName:
                     selector = By.ClassName(element);
                     break;
+                
                 default:
                     throw new ArgumentOutOfRangeException(nameof(byType), byType, null);
             }
@@ -2585,6 +2878,7 @@ namespace QA.Automation.UITests
         Xml = 2,
         Id = 3,
         ClassName = 4,
+        Title = 5,
 
 
     }

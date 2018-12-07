@@ -6,7 +6,7 @@ namespace QA.Automation.APITests.LG20.Services
 {
     public class LGMSubaruSDSAppSettingsService : APIActionsBase, IApiPage
     {
-        private static readonly string _serviceName = "LG.LGM.Subaru.SDSAppSettingsService";
+        private static readonly string _serviceName = "LG.LGM.Subaru.SDSAppsettingsService";
 
         public LGMSubaruSDSAppSettingsService(APRIConfigSettings config) : base (config)
         {

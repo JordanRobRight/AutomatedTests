@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using OpenQA.Selenium;
+using QA.Automation.UITests.Models;
 
 namespace QA.Automation.UITests.LG20
 { 
@@ -24,6 +25,12 @@ namespace QA.Automation.UITests.LG20
         public virtual void GoToUrl()
         {
             throw new NotImplementedException();
+        }
+
+        public virtual void WaitFor(string itemToWaitFor = "")
+        {
+            int numOfSecondsToWait = 5;
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(numOfSecondsToWait));
         }
 
         public abstract void Perform();

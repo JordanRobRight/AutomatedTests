@@ -2,6 +2,8 @@
 using System.Text;
 using System.Threading;
 using OpenQA.Selenium;
+using QA.Automation.UITests.Models;
+using QA.Automation.UITests.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages
 {
@@ -38,7 +40,7 @@ namespace QA.Automation.UITests.LG20.Pages
             string password = Encoding.UTF8.GetString(data);
             UserName.SendKeys(Config.LGUser);
             Password.SendKeys(password);
-
+            WaitFor();
             //UserName.SendKeys("cbam.lgtest1@dciartform.com");
             //Password.SendKeys("Cbam#test1");
             Password.Submit();

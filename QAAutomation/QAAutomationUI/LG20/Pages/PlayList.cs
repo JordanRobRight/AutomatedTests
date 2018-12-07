@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
 using QA.Automation.UITests.LG20.Pages.SubCards;
+using QA.Automation.UITests.Models;
+using QA.Automation.UITests.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages
 {
@@ -65,22 +67,49 @@ namespace QA.Automation.UITests.LG20.Pages
 
         private IEnumerable<IWebElement> GetWidgets(IWebDriver driver)
         {
-
-            IEnumerable<IWebElement> p = playListWidgetContainer.FindElements(By.TagName("Button"));
-           
+            IEnumerable<IWebElement> p = new List<IWebElement>();
+            try
+            {
+                p = playListWidgetContainer.FindElements(By.TagName("Button"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
             return p;
         }
+        //public override void WaitFor(string itemToWaitFor = "")
+        //{
+        //    if(itemToWaitFor == "saveModal")
+        //    {
+        //        IWebElement savemodal = GetElement();
+        //        if(savemodal.Displayed)
+        //        {
+                    
+        //        }
+        //    }
+            
+        //    //base.WaitFor(itemToWaitFor);
+        //}
 
         private IEnumerable<WidgetListItem> GetWidgetList(IWebDriver driver)
         {
-
-            IEnumerable<IWebElement> p = playListWidgetList.FindElements(By.ClassName(_widgetListContainer));
-
-            List<WidgetListItem> widgetsItemList = new List<WidgetListItem>();
-
-            foreach (var item in p)
+            var widgetsItemList = new List<WidgetListItem>();
+            try
             {
-                widgetsItemList.Add(new WidgetListItem(driver));
+                IEnumerable<IWebElement> p = playListWidgetList.FindElements(By.ClassName(_widgetListContainer));
+
+                if (p != null)
+                {
+                    widgetsItemList.AddRange(p.Select(item => new WidgetListItem(driver)));
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+               throw;
             }
 
             return widgetsItemList;

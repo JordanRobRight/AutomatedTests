@@ -34,8 +34,11 @@ namespace QA.Automation.APITests.LG20
         DbService,
         AmenitiesService,
         // Subaru Services
-        SubaruTrimAccessoriesService,
-        SubaruSDSAppSettingsService
+        Subaru_TrimAccessoriesService,
+        Subaru_SDSAppSettingsService,
+        Subaru_VehicleTrimsService,
+        LiveGuide1Service,
+        Subaru_TrimComparisonService,
     }
 }
 

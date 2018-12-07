@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using OpenQA.Selenium.Remote;
 
-namespace QA.Automation.UITests
+namespace QA.Automation.UITests.Selenium
 {
-    class CustomDriver : RemoteWebDriver
+    public class CustomDriver : RemoteWebDriver
     {
         public CustomDriver(Uri uri, DesiredCapabilities capabilities, TimeSpan commandTimeout) : base(uri, capabilities, commandTimeout) { }
 
-        public SessionId getSessionId()
+        public SessionId GetSessionId()
         {
             return this.SessionId;
         }
