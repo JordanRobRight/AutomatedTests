@@ -258,6 +258,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             var getSelects = getTagField.Where(a => a.FindElement(By.TagName("label")).Text.Equals("Select your Tag(s)")).Select(a => a).FirstOrDefault(b => b.FindElement(By.TagName("select")) != null);
             return getSelects;
         }
+
         private IWebElement GetLocationItem(string locationToSearch)
         {
             var getField = GetField("input", "id", _playLIstFilterLocationTextBox);
@@ -291,7 +292,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
                     return true;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -311,7 +312,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -333,15 +334,15 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
                // SeleniumCommon.ClickOffScreen(this._driver, SeleniumCommon.ByType.Id, _playListSettingModal);
-                return true;
+               
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
                 //Console.WriteLine(e);
                 //throw;
             }
-            return false;
+            return true;
         }
 
         private IWebElement GetModal()

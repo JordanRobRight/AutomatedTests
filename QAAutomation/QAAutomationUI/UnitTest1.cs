@@ -56,205 +56,9 @@ namespace QA.Automation.UITests
         {
             _driver.Value = new ChromeBrowser(browser, version, os, deviceName, deviceOrientation, _configuration)
                                 .CreateBrowser(TestContext.CurrentContext.Test.Name, TestContext.CurrentContext.Test.ClassName, TestContext.CurrentContext.Test.MethodName);
-
-          //  Assert.That(2+2, Is.True);
-            
-
-            //Login();
-
-            #region  -- old code --
-            /*
-            DesiredCapabilities caps = new DesiredCapabilities();
-            caps.SetCapability(CapabilityType.BrowserName, browser);
-            caps.SetCapability(CapabilityType.Version, version);
-            caps.SetCapability(CapabilityType.Platform, os);
-            caps.SetCapability("deviceName", deviceName);
-            caps.SetCapability("deviceOrientation", deviceOrientation);
-            caps.SetCapability("username", _configuration.SauceLabsUser);
-            caps.SetCapability("accessKey", _configuration.SauceLabsKey);
-            caps.SetCapability("name", TestContext.CurrentContext.Test.Name);
-
-            if (_configuration.IsRemoteDriver)
-            {
-                //_driver = new RemoteWebDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, TimeSpan.FromSeconds(600));
-                caps.SetCapability("name",
-                    string.Format("{0}:{1}: [{2}]",
-                        TestContext.CurrentContext.Test.ClassName,
-                        TestContext.CurrentContext.Test.MethodName,
-                        string.Empty));
-                //TestContext.CurrentContext.Test.Properties.Get("Description")));
-                _driver.Value = new CustomDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, TimeSpan.FromSeconds(600));
-
-
-            }
-            else
-            {
-                ChromeOptions co = new ChromeOptions();    // set the desired browser
-                co.AddAdditionalCapability("platform", "Windows 7");
-                string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                _driver.Value = new ChromeDriver(path);
-            }
-
-
-            _driver.Value.Manage().Window.Maximize();
-            _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
-            _driver.Value.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
-            */
-            #endregion -- --
         }
 
-        [TestCase]//Test case 586 edit playlist
-        [Category("All")]
-        [Description("Test case 586 edit playlist")]
-        public void EditPlaylist()
-        {
-            //Step 1
-            Login();
-            //Step 2 select edit icon
-            IWebElement playlistEditButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistEditButtonCssSelector));
-            playlistEditButton.Click();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            //Step 3 spell check all content
-            //step 4 select playlist name text box and edit name
-            IWebElement playlistTitleInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistTitleInputCssSelector));
-            playlistTitleInput.Clear();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playlistTitleInput.SendKeys("Edited Automated Test Playlist");
-            //Step 5 select save
-            IWebElement playlistSaveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistEditSaveButtonCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playlistSaveButton.Click();
-            //Step 6 Select edit for any playlist
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
-            playlistEditButton.Click();
-            //step 7 select playlist description text box and edit description
-            IWebElement playlistDescriptionTextArea = _driver.Value.FindElement(By.CssSelector("#form-textarea"));
-            playlistDescriptionTextArea.SendKeys("this is a test");
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            //step 8 select save
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playlistSaveButton.Click();
-            //step 9 select edit icon for any playlist
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
-            playlistEditButton.Click();
-            //step 10 select add tag text box and enter any tag name
-            IWebElement playlistEditTagsSection = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistTagSectionCssSelector));
-            playlistEditTagsSection.Clear();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playlistEditTagsSection.SendKeys("Edited Tags Section");
-            //step 11 select add button
-            IWebElement playlistTagAddButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistTagAddButtonCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playlistTagAddButton.Click();
-            //step 12 select save
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playlistSaveButton.Click();
-            //TODO: Need to valdate that the Tag was saved and the change doesn't display in Playlist
-            //step 13 Select edit icon
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //WaitForMaskModal();
-            playlistEditButton.Click();
-            //step 14 Delete any tag
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            IWebElement tagDeleteButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.tagDeleteButtonCssSelector));
-            playlistEditTagsSection.Clear();
-            tagDeleteButton.Click();
-            //step 15 select save
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playlistSaveButton.Click();
-            //step 16 select edit icon for same playlist
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            //WaitForMaskModal();
-            playlistEditButton.Click();
-            //step 17 close 'x' edit window
-            IWebElement playlistEditCloseButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistEditCloseButtonCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playlistEditCloseButton.Click();
-            //step 18 select edit icon for same playlist
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playlistEditButton.Click();
-            //Step 19 click outside window
-            OffClick();
-            //step 20 logout
-            LogOutWithoutLogin();
-        }
-
-
-        public void OffClick()
-        {
-            IWebElement offClick = _driver.Value.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            var element = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
-            new Actions(_driver.Value).MoveToElement(element).Click().Perform();
-        }
-
-        [TestCase] //Test Case 1982
-        [Category("All")]
-        [Description("Test Case 1982")]
-        public void FavoritePlaylist()
-        {
-            //Step 1 login
-            Login();
-            IWebElement playlistSearch = _driver.Value.FindElement(By.Id("playlists-search"));
-            playlistSearch.SendKeys("Automated Playlist Test");
-            //Step 2 Hover over a Favorite icon (heart) thats in black
-            IWebElement favoritIconHeart = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
-            Actions action = new Actions(_driver.Value);
-            action.MoveToElement(favoritIconHeart).Perform();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //Step 3 Hover over a Favorite icon (heart) thats in red
-            IWebElement favoritIconHeart1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
-            Actions action1 = new Actions(_driver.Value);
-            action1.MoveToElement(favoritIconHeart1).Perform();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //step 4 Search for any existing Playlist and select favorite icon (heart)            
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //IWebElement favoritIconHeart = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
-            IWebElement favoritIconHeart2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
-            favoritIconHeart2.Click();
-            //Step 5 Refresh screen
-            _driver.Value.Navigate().Refresh();
-            //Step 6 Select the favorite icon again from the test step 2 above
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            IWebElement favoritIconHeart3 = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
-            favoritIconHeart3.Click();
-            //Step 7 refresh page
-            _driver.Value.Navigate().Refresh();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //Step 8 add new playlist, select '+'
-            IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
-            WaitForMaskModal();
-            playlistsSideBarMenuButton.Click();
-            WaitForMaskModal();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //step 9 enter all required field values and select save
-            IWebElement addPlaylistButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
-            addPlaylistButton.Click();
-            string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
-            IWebElement playlistAddForm = _driver.Value.FindElement(By.Id("form-name"));
-            playlistAddForm.SendKeys(playlistName);
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            string categoryID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
-            IWebElement selectCategory = _driver.Value.FindElement(By.XPath(categoryID));
-            selectCategory.SendKeys("chevy" + Keys.Enter);
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
-            saveButton.Click();
-            //Step 10 Select favorite icon for new playlist created in test step 7 
-            IWebElement favoritIconHeart4 = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            favoritIconHeart4.Click();
-            //step 11 refresh page
-            _driver.Value.Navigate().Refresh();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //step 12 select favorite icon again for new playlist in test step 7
-            //step 13 refresh screen
-            //Step 14 logout
-            LogOutWithoutLogin();
-        }
-
+        #region --- SmokeTest Tests ---
         [TestCase]
         [Category("All")]
         [Category("SmokeTests")]
@@ -262,35 +66,90 @@ namespace QA.Automation.UITests
         {
             Login();
 
-            WaitForElementExists("page-header-container");
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
             Assert.AreEqual($"https://portal.{_configuration.Environment.ToString()}.dcimliveguide.com/#playlists".ToLower(), _driver.Value.Url.Trim().ToLower());
         }
-        public void WaitForMaskModal()
-        {
-            IWebElement maskModal = _driver.Value.FindElement(By.ClassName("main-container-mask"));
-            IWebElement overLayModal = _driver.Value.FindElement(By.ClassName("lg-modal__overlay"));
 
-            while (maskModal.Displayed || overLayModal.Displayed)
-            {
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
-            }
-            //while (overLayModal.Displayed)
-            //{
-            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
-            //}
+        [TestCase]
+        [Category("SmokeTests")]
+        [Description("Login")]
+        public void Login()
+        {
+            #region --- old code
+            /*
+            string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
+            string currentURL = _driver.Value.Url;
+            _driver.Value.Navigate().GoToUrl(url);
+
+            IWebElement query = GetElement(ByType.Id, "login-email");
+
+            query.SendKeys("cbam.lgtest1@dciartform.com");
+            query = GetElement(ByType.Id, "login-password");
+            query.SendKeys("Cbam#test1");
+
+            query.Submit();
+            */
+            #endregion ---
+
+            Login login = new Login(_driver.Value, _configuration);
+            login.GoToUrl();
+            login.Perform();
+            login.WaitForElement();
         }
 
-        public void SelectAutomatedPlaylist()
+
+        [TestCase]//Test case 1994
+        [Category("SmokeTests")]
+        [Description("Test case 1994")]
+        public void Logout()
         {
-            string playlistName = "Automated Playlist Test";
-            IWebElement playlistAddForm = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
-            playlistAddForm.SendKeys(playlistName);
+            // Login();
+            Logout logout = new Logout(_driver.Value, ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>());
+
+            //SelectItemFromCilentMenu(_driver.Value, "logout");
+
+            logout.CancelButtonClick();
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            //SelectItemFromCilentMenu(_driver.Value, "logout");
+
+            logout.LogoutAcceptButtonClick();
+            //logout.Perform();
+        }
+
+        [TestCase]//test case 1987
+        [Category("SmokeTests")]
+        [Category("All")]
+        [Description("Test case 1987")]
+        public void PlaylistDisplayAsGrid()
+        {
+            //step 1 login
+            Login();
+            //step 2 hover over grid icon
+            IWebElement gridIcon = _driver.Value.FindElement(By.CssSelector(BaseStrings.gridIconButtonCssSelector));
+            Actions action = new Actions(_driver.Value);
+            action.MoveToElement(gridIcon).Perform();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            IWebElement playlistSelection = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
-            playlistSelection.Click();
+            //step 3 select grid icon
+            gridIcon.Click();
+            //step 4 use scroll bar to navigate through all rolls
+
+            //step 5 select any of the playlist
+            IWebElement playlistSearchInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            playlistSearchInput.SendKeys("Automated");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement openButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.gridOpenButtonCssSelector));
+            openButton.Click();
+            //step 6 select playlists from main menu
+            IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton.Click();
+            WaitForMaskModal();
+            //step 7 select grid icon
+            IWebElement gridIcon1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.gridIconButtonCssSelector));
+            gridIcon1.Click();
+            //step 8 confirm that all the data that appears for a grid's playlist, is the same data that appears when a row is selected (3 horizontal lines) select row icon
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 9 logout
+            LogOutWithoutLogin();
         }
 
         [TestCase]
@@ -340,13 +199,13 @@ namespace QA.Automation.UITests
 
             var program = pls.PlayListModal.SelectClientProgramSelectBox;
 
-           // pls.PlayListModal.FilterByLocationAndDeviceCheckbox = true;
+            // pls.PlayListModal.FilterByLocationAndDeviceCheckbox = true;
 
             //pls.PlayListModal.SelectYourLocationTextBox = "KUDICK CHEVROLET BUICK";
-          //  pls.PlayListModal.SelectYourDeviceSelectBox = "Player: LG-QAROB";
+            //  pls.PlayListModal.SelectYourDeviceSelectBox = "Player: LG-QAROB";
 
-          //  var location1 = pls.PlayListModal.SelectYourLocationTextBox;
-          //  var location2 = pls.PlayListModal.SelectYourDeviceSelectBox;
+            //  var location1 = pls.PlayListModal.SelectYourLocationTextBox;
+            //  var location2 = pls.PlayListModal.SelectYourDeviceSelectBox;
 
 
             pls.PlayListModal.FilterByByTagCheckbox = true;
@@ -386,7 +245,7 @@ namespace QA.Automation.UITests
             //Assert.IsFalse(pls.PlayListModal.IsModalDisplay);
 
             //Step 5 Select '+' to add new playlist
-           
+
             pls.AddButtonClick();
 
             pls.Wait();
@@ -420,10 +279,10 @@ namespace QA.Automation.UITests
             //Step 8 Select Create a Custom Playlist - Filtered Check box
 
             //pls.ModalCreateCustomPlaylistCheckbox.Click();
-            
+
             //pls.ModalCreateCustomPlaylistCheckbox.SendKeys(Keys.Space);
 
-            
+
             //var modalContainerCheckBox = modalContainer.FindElement(By.ClassName("lgfe-input-checkbox__custom-input"));
             //modalContainerCheckBox.Click();
 
@@ -446,7 +305,7 @@ namespace QA.Automation.UITests
 
             //pls.ModalSaveButton.Click();
             pls.PlayListModal.ModalSaveButtonClick();
-           // Assert.IsTrue(pls.PlayListModal.IsModalDisplay);
+            // Assert.IsTrue(pls.PlayListModal.IsModalDisplay);
 
             //Step 10 Select Ok
             //try
@@ -607,70 +466,273 @@ namespace QA.Automation.UITests
 
         }
 
-        [TestCase] //Test case 737
+        [TestCase]// test case 1985
+        [Category("SmokeTests")]
         [Category("All")]
-        //[Category("SmokeTests")]
-        [Description("Test case 737")]
-        public void AddWeatherWidget()
+        [Description("Test case 1985")]
+        public void AbleToEditPlaylist()
         {
-            //step 1 login   
+            //step 1 loging
             Login();
-            //step 2 Select an existing Playlist
-            SelectAutomatedPlaylist();
-            //step 3 Select Add Weather Widget 
-            IWebElement weatherWidget = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetCSSSelector));
+            //step 2 select playlists that contains no widget and select able to edit button from main menu
+            IWebElement playlistSearchInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            playlistSearchInput.SendKeys("Automated");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement durationSection = _driver.Value.FindElement(By.CssSelector(BaseStrings.durationSectionCssSelector));
+            string duration = durationSection.Text;
             WaitForMaskModal();
-            weatherWidget.Click();
-            //step 4 Spell check all content (fields/values/buttons), including placeholder text 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            //step 5 Confirm text box displays with pre-filled time Duration (not editable)
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            //step 6 Weather pre-filled description displays on lower section of window
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            //step 7 Do not enter a Zip Code, confirm placeholder text displays 'Enter Zip Code'
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            //step 8 Select Save
-            IWebElement weatherWidgetSaveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetSaveButtonCSSSelector));
-            weatherWidgetSaveButton.Click();
-            //step 9 Select Add Weather Widget
-            IWebElement weatherWidget1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetCSSSelector));
-            WaitForMaskModal();
-            weatherWidget1.Click();
-            //step 10 Select Brand dropdown box
-            //step 11 Select Buick Brand
-            IWebElement brandDropdown = _driver.Value.FindElement(By.XPath(BaseStrings.weatherWidgetDropDown));
-            var selectBrandDropDown = new SelectElement(brandDropdown);
-            selectBrandDropDown.SelectByValue("buick");
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            //step 12 Select Save
-            IWebElement weatherSaveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetSaveButtonCSSSelector));
-            WaitForMaskModal();
-            weatherSaveButton.Click();
-            //step 13 Select Add Weather Widget
-            IWebElement weatherWidget2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetCSSSelector));
-            WaitForMaskModal();
-            weatherWidget2.Click();
-            //step 14 Enter an invalid Zip Code in text box  (letters, special characters or less or more than 5 numbers)
-            IWebElement weatherZipCodeInput = _driver.Value.FindElement(By.Id(BaseStrings.weatherZipCodeInputID));
-            weatherZipCodeInput.SendKeys("531");
-            //step 15 Enter a valid Zip Code in text box
-            IWebElement weatherZipCodeInput1 = _driver.Value.FindElement(By.Id(BaseStrings.weatherZipCodeInputID));
-            weatherZipCodeInput1.Clear();
-            weatherZipCodeInput1.SendKeys("53142");
-            //step 16 Select Save
-            IWebElement weatherSaveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetSaveButtonCSSSelector));
-            WaitForMaskModal();
-            weatherSaveButton1.Click();
-            //step 17 Create all brands ---I am not sure what this means---
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //Assert.IsTrue(duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"));
+            if (duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
+            {
+                IWebElement playlistEditButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.editButtonCssSelector));
+                playlistEditButton1.Click();
 
-            //step 18 select save from playlist screen
-            IWebElement playlistSave2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSaveCSSSelector));
+                //TODO: Get element playlist-no-content and get the text from it to compare to.
+                IWebElement saveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+                saveButton1.Click();
+            }
+            //step 3 select playlists from main menu
+            IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
-            playlistSave2.Click();
-            //step 19 logout
+            playlistsSideBarMenuButton.Click();
+            WaitForMaskModal();
+            //step 4 select playlists that contains widgets and select able to edit button 
+            if (!duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
+            {
+                IWebElement playlistEditButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.editButtonCssSelector));
+                playlistEditButton2.Click();
+                //TODO: Get the lement lgfe-card-matrix js-drag-drop-playlist lgfe-card-matrix--layout-row and see if there is more than one
+                IWebElement saveButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+                saveButton2.Click();
+            }
+            //step 5 select playlists from main menu
+            IWebElement playlistsSideBarMenuButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton1.Click();
+            WaitForMaskModal();
+            //TODO:Checking that you get a list of playlists.
+            //Step 6 logout
             LogOutWithoutLogin();
-            //TODO: Assert that the saved worked.
         }
+
+
+        [TestCase]//Test case #1984
+        [Category("SmokeTests")]
+        [Category("All")]
+        [Description("Test case #1984")]
+        public void OpenPlaylist()
+        {
+            //Step 1
+            Login();
+            //Step 2 Select any playlist that contains no widgets and select the open button
+            IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton.Click();
+            WaitForMaskModal();
+            IWebElement playlistSearchInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            playlistSearchInput.SendKeys("Automated");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement durationSection = _driver.Value.FindElement(By.CssSelector(BaseStrings.durationSectionCssSelector));
+            string duration = durationSection.Text;
+            WaitForMaskModal();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //Assert.IsTrue(duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"));
+            if (duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
+            {
+                IWebElement playlistOpenButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
+                playlistOpenButton1.Click();
+            }
+            IWebElement playlistOpenButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
+            playlistOpenButton.Click();
+            //Step 3 Selectplaylist from main menu
+            IWebElement playlistsSideBarMenuButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton1.Click();
+            //Step 4 select any playlist that contains widgets and select the open button
+            if (duration != "<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>")
+            {
+                IWebElement playlistOpenButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
+                playlistOpenButton2.Click();
+            }
+            //Step 5 select  playlists from main menu
+            IWebElement playlistsSideBarMenuButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton2.Click();
+            LogOutWithoutLogin();
+
+        }
+
+        #endregion
+
+        // #region --- All Tests ---
+        [TestCase]
+        [Category("All")]
+        [Description("Test case 586 edit playlist")]
+        public void EditPlaylist()
+        {
+            //Step 1
+            Login();
+            //Step 2 select edit icon
+            IWebElement playlistEditButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistEditButtonCssSelector));
+            playlistEditButton.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 3 spell check all content
+            //step 4 select playlist name text box and edit name
+            IWebElement playlistTitleInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistTitleInputCssSelector));
+            playlistTitleInput.Clear();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistTitleInput.SendKeys("Edited Automated Test Playlist");
+            //Step 5 select save
+            IWebElement playlistSaveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistEditSaveButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistSaveButton.Click();
+            //Step 6 Select edit for any playlist
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            playlistEditButton.Click();
+            //step 7 select playlist description text box and edit description
+            IWebElement playlistDescriptionTextArea = _driver.Value.FindElement(By.CssSelector("#form-textarea"));
+            playlistDescriptionTextArea.SendKeys("this is a test");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 8 select save
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistSaveButton.Click();
+            //step 9 select edit icon for any playlist
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            WaitForMaskModal();
+            playlistEditButton.Click();
+            //step 10 select add tag text box and enter any tag name
+            IWebElement playlistEditTagsSection = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistTagSectionCssSelector));
+            playlistEditTagsSection.Clear();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistEditTagsSection.SendKeys("Edited Tags Section");
+            //step 11 select add button
+            IWebElement playlistTagAddButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistTagAddButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistTagAddButton.Click();
+            //step 12 select save
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistSaveButton.Click();
+            //TODO: Need to valdate that the Tag was saved and the change doesn't display in Playlist
+            //step 13 Select edit icon
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //WaitForMaskModal();
+            playlistEditButton.Click();
+            //step 14 Delete any tag
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            IWebElement tagDeleteButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.tagDeleteButtonCssSelector));
+            playlistEditTagsSection.Clear();
+            tagDeleteButton.Click();
+            //step 15 select save
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistSaveButton.Click();
+            //step 16 select edit icon for same playlist
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            //WaitForMaskModal();
+            playlistEditButton.Click();
+            //step 17 close 'x' edit window
+            IWebElement playlistEditCloseButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistEditCloseButtonCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistEditCloseButton.Click();
+            //step 18 select edit icon for same playlist
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            playlistEditButton.Click();
+            //Step 19 click outside window
+            //OffClick();
+            SeleniumCommon.ClickOffScreen(_driver.Value, SeleniumCommon.ByType.Css, BaseStrings.playlistSideBarMenuCssSelector);
+            //step 20 logout
+            LogOutWithoutLogin();
+        }
+
+
+        //public void OffClick()
+        //{
+        //    IWebElement offClick = _driver.Value.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
+        //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+        //    var element = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+        //    new Actions(_driver.Value).MoveToElement(element).Click().Perform();
+        //}
+
+        [TestCase] //Test Case 1982
+        [Category("All")]
+        [Description("Test Case 1982")]
+        public void FavoritePlaylist()
+        {
+            //Step 1 login
+            Login();
+            IWebElement playlistSearch = _driver.Value.FindElement(By.Id("playlists-search"));
+            playlistSearch.SendKeys("Automated Playlist Test");
+            //Step 2 Hover over a Favorite icon (heart) thats in black
+            IWebElement favoritIconHeart = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
+            Actions action = new Actions(_driver.Value);
+            action.MoveToElement(favoritIconHeart).Perform();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //Step 3 Hover over a Favorite icon (heart) thats in red
+            IWebElement favoritIconHeart1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
+            Actions action1 = new Actions(_driver.Value);
+            action1.MoveToElement(favoritIconHeart1).Perform();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 4 Search for any existing Playlist and select favorite icon (heart)            
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //IWebElement favoritIconHeart = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
+            IWebElement favoritIconHeart2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
+            favoritIconHeart2.Click();
+            //Step 5 Refresh screen
+            _driver.Value.Navigate().Refresh();
+            //Step 6 Select the favorite icon again from the test step 2 above
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement favoritIconHeart3 = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
+            favoritIconHeart3.Click();
+            //Step 7 refresh page
+            _driver.Value.Navigate().Refresh();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //Step 8 add new playlist, select '+'
+            IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            WaitForMaskModal();
+            playlistsSideBarMenuButton.Click();
+            WaitForMaskModal();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 9 enter all required field values and select save
+            IWebElement addPlaylistButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
+            addPlaylistButton.Click();
+            string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
+            IWebElement playlistAddForm = _driver.Value.FindElement(By.Id("form-name"));
+            playlistAddForm.SendKeys(playlistName);
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            string categoryID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
+            IWebElement selectCategory = _driver.Value.FindElement(By.XPath(categoryID));
+            selectCategory.SendKeys("chevy" + Keys.Enter);
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+            saveButton.Click();
+            //Step 10 Select favorite icon for new playlist created in test step 7 
+            IWebElement favoritIconHeart4 = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+            favoritIconHeart4.Click();
+            //step 11 refresh page
+            _driver.Value.Navigate().Refresh();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //step 12 select favorite icon again for new playlist in test step 7
+            //step 13 refresh screen
+            //Step 14 logout
+            LogOutWithoutLogin();
+        }
+
+
+
+        public void SelectAutomatedPlaylist()
+        {
+            string playlistName = "Automated Playlist Test";
+            IWebElement playlistAddForm = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
+            playlistAddForm.SendKeys(playlistName);
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            IWebElement playlistSelection = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
+            playlistSelection.Click();
+        }
+
+        
         //[TestCase]
         //public void EditWeatherWidget()
         //{
@@ -759,7 +821,7 @@ namespace QA.Automation.UITests
             Login();
             //step 2 select an existing playlist
             SelectAutomatedPlaylist();
-            PlayList pl = new PlayList(_driver.Value, TestConfiguration.GetTestConfiguration());
+            PlayList pl = new PlayList(_driver.Value, _configuration);// TestConfiguration.GetTestConfiguration());
 
             IWebElement traffic = pl.PlayListWidets.FirstOrDefault(a => a.Text.Contains("traffic"));
             
@@ -973,7 +1035,8 @@ namespace QA.Automation.UITests
             //step 6 Select Add Video Widget
             videoWidgetButton.Click();
             //step 7 Click outside window
-            OffClick();
+            //OffClick();
+            SeleniumCommon.ClickOffScreen(_driver.Value, SeleniumCommon.ByType.Css, BaseStrings.playlistSideBarMenuCssSelector);
             //step 8 Select Add Video Widget
             videoWidgetButton.Click();
             //step 9 Select any one video            
@@ -1167,90 +1230,7 @@ namespace QA.Automation.UITests
 
         }
 
-        [TestCase]
-        [Category("SmokeTests")]
-        [Description("Login")]
-        public void Login()
-        {
-            #region --- old code
-            /*
-            string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
-            string currentURL = _driver.Value.Url;
-            _driver.Value.Navigate().GoToUrl(url);
-
-            IWebElement query = GetElement(ByType.Id, "login-email");
-
-            query.SendKeys("cbam.lgtest1@dciartform.com");
-            query = GetElement(ByType.Id, "login-password");
-            query.SendKeys("Cbam#test1");
-
-            query.Submit();
-            */
-            #endregion ---
-
-            Login login = new Login(_driver.Value, _configuration);
-            login.GoToUrl();
-            login.Perform();
-
-            WaitForElementExists("page-header-container");
-
-            IWebElement p = _driver.Value.FindElement(By.Id("interaction-nav-bar-container"));
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //SelectItemFromCilentMenu(_driver.Value, "GM");
-
-            #region -- old code --
-            /*
-            string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
-            IWebElement playlistDiv = _driver.Value.FindElement(By.CssSelector(playlistDivCssSelector));
-            //if playlists is empty find profile dropdown 
-
-            IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
-            string clientName = "GM";
-
-            if (!playerChannelDropdown.Text.Equals(clientName, StringComparison.OrdinalIgnoreCase))
-            {
-                playerChannelDropdown.Click();
-
-                var wrapper = GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a"));
-                IWebElement gmChannelSelection = null;
-
-                foreach (var menuItem in wrapper)
-                {
-                    if (menuItem.Text == clientName)
-                    {
-                        gmChannelSelection = menuItem;
-                        break;
-                    }
-                }
-
-                //gmChannelSelection = wrapper.FirstOrDefault();
-
-                gmChannelSelection = gmChannelSelection ?? wrapper.FirstOrDefault();
-
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-
-                gmChannelSelection.Click();
-            }
-            */
-            //}
-
-            //if (!playlistDiv.Displayed)
-            //{
-            //    IWebElement playerChannelDropdown = GetElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
-
-            //    playerChannelDropdown.Click();
-
-            //    IWebElement gmChannelSelection = GetElement(By.XPath(BaseStrings.gmChannelSelectionXPath));
-
-            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-
-            //    gmChannelSelection.Click();
-            //}
-            #endregion
-
-        }
-
+        
         [TestCase]
         [Description("LiveGuideAssets")]
         public void LiveguideAssets2()//just method calls 
@@ -1382,41 +1362,69 @@ namespace QA.Automation.UITests
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(50));
         }
 
-        [TestCase]//Test case 1994
-        [Category("SmokeTests")]
-        [Description("Test case 1994")]
-        public void Logout()
+        [TestCase] //Test case 737
+        [Category("All")]
+        //[Category("SmokeTests")]
+        [Description("Test case 737")]
+        public void AddWeatherWidget()
         {
-           // Login();
-            Logout logout = new Logout(_driver.Value, ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>());
+            //step 1 login   
+            Login();
+            //step 2 Select an existing Playlist
+            SelectAutomatedPlaylist();
+            //step 3 Select Add Weather Widget 
+            IWebElement weatherWidget = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetCSSSelector));
+            WaitForMaskModal();
+            weatherWidget.Click();
+            //step 4 Spell check all content (fields/values/buttons), including placeholder text 
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 5 Confirm text box displays with pre-filled time Duration (not editable)
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 6 Weather pre-filled description displays on lower section of window
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 7 Do not enter a Zip Code, confirm placeholder text displays 'Enter Zip Code'
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 8 Select Save
+            IWebElement weatherWidgetSaveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetSaveButtonCSSSelector));
+            weatherWidgetSaveButton.Click();
+            //step 9 Select Add Weather Widget
+            IWebElement weatherWidget1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetCSSSelector));
+            WaitForMaskModal();
+            weatherWidget1.Click();
+            //step 10 Select Brand dropdown box
+            //step 11 Select Buick Brand
+            IWebElement brandDropdown = _driver.Value.FindElement(By.XPath(BaseStrings.weatherWidgetDropDown));
+            var selectBrandDropDown = new SelectElement(brandDropdown);
+            selectBrandDropDown.SelectByValue("buick");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //step 12 Select Save
+            IWebElement weatherSaveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetSaveButtonCSSSelector));
+            WaitForMaskModal();
+            weatherSaveButton.Click();
+            //step 13 Select Add Weather Widget
+            IWebElement weatherWidget2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetCSSSelector));
+            WaitForMaskModal();
+            weatherWidget2.Click();
+            //step 14 Enter an invalid Zip Code in text box  (letters, special characters or less or more than 5 numbers)
+            IWebElement weatherZipCodeInput = _driver.Value.FindElement(By.Id(BaseStrings.weatherZipCodeInputID));
+            weatherZipCodeInput.SendKeys("531");
+            //step 15 Enter a valid Zip Code in text box
+            IWebElement weatherZipCodeInput1 = _driver.Value.FindElement(By.Id(BaseStrings.weatherZipCodeInputID));
+            weatherZipCodeInput1.Clear();
+            weatherZipCodeInput1.SendKeys("53142");
+            //step 16 Select Save
+            IWebElement weatherSaveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetSaveButtonCSSSelector));
+            WaitForMaskModal();
+            weatherSaveButton1.Click();
+            //step 17 Create all brands ---I am not sure what this means---
 
-            //SelectItemFromCilentMenu(_driver.Value, "logout");
-
-            logout.CancelButtonClick();
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            //SelectItemFromCilentMenu(_driver.Value, "logout");
-
-            logout.LogoutAcceptButtonClick();
-            //logout.Perform();
-
-
-            #region --- old code
-
-            //IWebElement logOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logOutButtonCssSelector));
-            //WaitForMaskModal();
-            //logOutButton.Click();
-
-            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
-            //IWebElement confirmLogOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector));
-            //WaitForMaskModal();
-            //confirmLogOutButton.Click();
-
-            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
-            //TODO: Assert that we are logged out based on URL and maybe the Username/password fields.
-
-            #endregion
+            //step 18 select save from playlist screen
+            IWebElement playlistSave2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSaveCSSSelector));
+            WaitForMaskModal();
+            playlistSave2.Click();
+            //step 19 logout
+            LogOutWithoutLogin();
+            //TODO: Assert that the saved worked.
         }
 
         public void LogOutWithoutLogin()
@@ -2321,103 +2329,6 @@ namespace QA.Automation.UITests
 
         }
 
-        [TestCase]//Test case #1984
-        [Category("SmokeTests")]
-        [Category("All")]
-        [Description("Test case #1984")]
-        public void OpenPlaylist()
-        {
-            //Step 1
-            Login();
-            //Step 2 Select any playlist that contains no widgets and select the open button
-            IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
-            WaitForMaskModal();
-            playlistsSideBarMenuButton.Click();
-            WaitForMaskModal();
-            IWebElement playlistSearchInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
-            playlistSearchInput.SendKeys("Automated");
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            IWebElement durationSection = _driver.Value.FindElement(By.CssSelector(BaseStrings.durationSectionCssSelector));
-            string duration = durationSection.Text;
-            WaitForMaskModal();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //Assert.IsTrue(duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"));
-            if (duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
-            {
-                IWebElement playlistOpenButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
-                playlistOpenButton1.Click();
-            }
-            IWebElement playlistOpenButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
-            playlistOpenButton.Click();
-            //Step 3 Selectplaylist from main menu
-            IWebElement playlistsSideBarMenuButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
-            WaitForMaskModal();
-            playlistsSideBarMenuButton1.Click();
-            //Step 4 select any playlist that contains widgets and select the open button
-            if (duration != "<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>")
-            {
-                IWebElement playlistOpenButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistOpenButtonCSSSelector));
-                playlistOpenButton2.Click();
-            }
-            //Step 5 select  playlists from main menu
-            IWebElement playlistsSideBarMenuButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
-            WaitForMaskModal();
-            playlistsSideBarMenuButton2.Click();
-            LogOutWithoutLogin();
-
-        }
-
-        [TestCase]// test case 1985
-        [Category("SmokeTests")]
-        [Category("All")]
-        [Description("Test case 1985")]
-        public void AbleToEditPlaylist()
-        {
-            //step 1 loging
-            Login();
-            //step 2 select playlists that contains no widget and select able to edit button from main menu
-            IWebElement playlistSearchInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            playlistSearchInput.SendKeys("Automated");
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            IWebElement durationSection = _driver.Value.FindElement(By.CssSelector(BaseStrings.durationSectionCssSelector));
-            string duration = durationSection.Text;
-            WaitForMaskModal();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //Assert.IsTrue(duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"));
-            if (duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
-            {
-                IWebElement playlistEditButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.editButtonCssSelector));
-                playlistEditButton1.Click();
-                
-                //TODO: Get element playlist-no-content and get the text from it to compare to.
-                IWebElement saveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
-                saveButton1.Click();
-            }
-            //step 3 select playlists from main menu
-            IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
-            WaitForMaskModal();
-            playlistsSideBarMenuButton.Click();
-            WaitForMaskModal();
-            //step 4 select playlists that contains widgets and select able to edit button 
-            if (!duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
-            {
-                IWebElement playlistEditButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.editButtonCssSelector));
-                playlistEditButton2.Click();
-                //TODO: Get the lement lgfe-card-matrix js-drag-drop-playlist lgfe-card-matrix--layout-row and see if there is more than one
-                IWebElement saveButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
-                saveButton2.Click();
-            }
-            //step 5 select playlists from main menu
-            IWebElement playlistsSideBarMenuButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
-            WaitForMaskModal();
-            playlistsSideBarMenuButton1.Click();
-            WaitForMaskModal();
-            //TODO:Checking that you get a list of playlists.
-            //Step 6 logout
-            LogOutWithoutLogin();
-        }
-
         [TestCase]//Test case 1986
         [Category("All")]
         [Description("Test case 1986")]
@@ -2456,43 +2367,7 @@ namespace QA.Automation.UITests
             LogOutWithoutLogin();
         }
 
-        [TestCase]//test case 1987
-        [Category("SmokeTests")]
-        [Category("All")]
-        [Description("Test case 1987")]
-        public void PlaylistDisplayAsGrid()
-        {
-            //step 1 login
-            Login();
-            //step 2 hover over grid icon
-            IWebElement gridIcon = _driver.Value.FindElement(By.CssSelector(BaseStrings.gridIconButtonCssSelector));
-            Actions action = new Actions(_driver.Value);
-            action.MoveToElement(gridIcon).Perform();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //step 3 select grid icon
-            gridIcon.Click();
-            //step 4 use scroll bar to navigate through all rolls
-
-            //step 5 select any of the playlist
-            IWebElement playlistSearchInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
-            playlistSearchInput.SendKeys("Automated");
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            IWebElement openButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.gridOpenButtonCssSelector));
-            openButton.Click();
-            //step 6 select playlists from main menu
-            IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
-            WaitForMaskModal();
-            playlistsSideBarMenuButton.Click();
-            WaitForMaskModal();
-            //step 7 select grid icon
-            IWebElement gridIcon1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.gridIconButtonCssSelector));
-            gridIcon1.Click();
-            //step 8 confirm that all the data that appears for a grid's playlist, is the same data that appears when a row is selected (3 horizontal lines) select row icon
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //step 9 logout
-            LogOutWithoutLogin();
-        }
-
+       
         [TestCase]// test case 1988
         [Category("All")]
         [Description("Test case 1988")]
@@ -2749,6 +2624,7 @@ namespace QA.Automation.UITests
         }
         
 
+        /* --- old code
         private IWebElement GetElement(ByType byType, string element)
         {
             By selector = null;
@@ -2808,15 +2684,33 @@ namespace QA.Automation.UITests
 
             return query ?? throw new Exception("GetElement returned a null value.");
         }
-        private void WaitForElementExists(string element)
-        {
-            WaitUntilElementExists(_driver.Value, By.Id(element));
-        }
+        */
+        //private void WaitForElementExists(string element)
+        //{
+        //    WaitUntilElementExists(_driver.Value, By.Id(element));
+        //}
 
         #endregion
 
 
         #region -- Public Methods -- 
+
+        public void WaitForMaskModal()
+        {
+            IWebElement maskModal = _driver.Value.FindElement(By.ClassName("main-container-mask"));
+            IWebElement overLayModal = _driver.Value.FindElement(By.ClassName("lg-modal__overlay"));
+
+            while (maskModal.Displayed || overLayModal.Displayed)
+            {
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+            }
+            //while (overLayModal.Displayed)
+            //{
+            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+            //}
+        }
+
+
         //private static WaitForElement(IWebDriver _driver )
         //{
         //    WebDriverWait waitForElement = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
@@ -2828,58 +2722,58 @@ namespace QA.Automation.UITests
         //var clickableElement = wait.Until(ExpectedConditions.ElementToBeClickable(By.PartialLinkText("TFS Test API")));
 
         //this will search for the element until a timeout is reached
-        public static IWebElement WaitUntilElementExists(IWebDriver driver, By elementLocator, int timeout = 10)
-        {
-            try
-            {
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
-                return wait.Until(ExpectedConditions.ElementExists(elementLocator));
-            }
-            catch (NoSuchElementException)
-            {
-                Console.WriteLine("Element with locator: '" + elementLocator + "' was not found in current context page.");
-                throw;
-            }
-        }
+        //public static IWebElement WaitUntilElementExists(IWebDriver driver, By elementLocator, int timeout = 10)
+        //{
+        //    try
+        //    {
+        //        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
+        //        return wait.Until(ExpectedConditions.ElementExists(elementLocator));
+        //    }
+        //    catch (NoSuchElementException)
+        //    {
+        //        Console.WriteLine("Element with locator: '" + elementLocator + "' was not found in current context page.");
+        //        throw;
+        //    }
+        //}
 
-        public static IWebElement WaitUntilElementVisible(IWebDriver driver, By elementLocator, int timeout = 10)
-        {
-            try
-            {
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
-                return wait.Until(ExpectedConditions.ElementIsVisible(elementLocator));
-            }
-            catch (NoSuchElementException)
-            {
-                Console.WriteLine("Element with locator: '" + elementLocator + "' was not found.");
-                throw;
-            }
-        }
+        //public static IWebElement WaitUntilElementVisible(IWebDriver driver, By elementLocator, int timeout = 10)
+        //{
+        //    try
+        //    {
+        //        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
+        //        return wait.Until(ExpectedConditions.ElementIsVisible(elementLocator));
+        //    }
+        //    catch (NoSuchElementException)
+        //    {
+        //        Console.WriteLine("Element with locator: '" + elementLocator + "' was not found.");
+        //        throw;
+        //    }
+        //}
 
-        public static IWebElement WaitUntilElementClickable(IWebDriver driver, By elementLocator, int timeout = 10)
-        {
-            try
-            {
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
-                return wait.Until(ExpectedConditions.ElementToBeClickable(elementLocator));
-            }
-            catch (NoSuchElementException)
-            {
-                Console.WriteLine("Element with locator: '" + elementLocator + "' was not found in current context page.");
-                throw;
-            }
-        }
+        //public static IWebElement WaitUntilElementClickable(IWebDriver driver, By elementLocator, int timeout = 10)
+        //{
+        //    try
+        //    {
+        //        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
+        //        return wait.Until(ExpectedConditions.ElementToBeClickable(elementLocator));
+        //    }
+        //    catch (NoSuchElementException)
+        //    {
+        //        Console.WriteLine("Element with locator: '" + elementLocator + "' was not found in current context page.");
+        //        throw;
+        //    }
+        //}
         #endregion
     }
 
-    public enum ByType
-    {
-        Css = 1,
-        Xml = 2,
-        Id = 3,
-        ClassName = 4,
-        Title = 5,
+    //public enum ByType
+    //{
+    //    Css = 1,
+    //    Xml = 2,
+    //    Id = 3,
+    //    ClassName = 4,
+    //    Title = 5,
 
 
-    }
+    //}
 }

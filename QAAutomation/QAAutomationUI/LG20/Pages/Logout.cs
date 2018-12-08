@@ -91,19 +91,19 @@ namespace QA.Automation.UITests.LG20.Pages
 
         public void LogoutButtonClick()
         {
-            WaitFor();
+            Wait();
             LogoutButton.Click();
         }
 
         public void CancelButtonClick()
         {
-            WaitFor();
+            Wait();
             FindButton("cancel")?.Click();
         }
 
         public void LogoutAcceptButtonClick()
         {
-            WaitFor();
+            Wait();
             FindButton("logout")?.Click();
         }
 

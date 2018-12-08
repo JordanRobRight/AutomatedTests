@@ -15,6 +15,14 @@ namespace QA.Automation.UITests.LG20.Pages
         private static string _password = @"login-password";
 
         #endregion
+        
+        #region -- Properties ---
+
+        private IWebElement UserName => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Id, _username);
+
+        private IWebElement Password => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Id, _password);
+
+        #endregion
 
         #region -- Constructors --
         public Login(IWebDriver driver , TestConfiguration config) : base(driver, config)
@@ -40,10 +48,14 @@ namespace QA.Automation.UITests.LG20.Pages
             string password = Encoding.UTF8.GetString(data);
             UserName.SendKeys(Config.LGUser);
             Password.SendKeys(password);
-            WaitFor();
-            //UserName.SendKeys("cbam.lgtest1@dciartform.com");
-            //Password.SendKeys("Cbam#test1");
+            Wait(2);
             Password.Submit();
+        }
+
+        public override void WaitForElement(string itemToWaitFor = "")
+        {
+            Selenium.SeleniumCommon.WaitUntilElementExists(Driver, By.Id("page-header-container"));
+            Wait(2);
         }
 
         public override bool VerifyPage()
@@ -55,12 +67,6 @@ namespace QA.Automation.UITests.LG20.Pages
         
         #endregion
 
-        #region -- Properties ---
-
-        private IWebElement UserName => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Id, _username);
-
-        private IWebElement Password => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Id, _password);
-
-        #endregion
+       
     }
 }

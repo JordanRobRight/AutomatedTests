@@ -64,10 +64,9 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #region -- Overrides --
 
-        public void Wait(int seconds = 2)
+        public override void Wait(int seconds = 2)
         {
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(seconds));
-            //base.WaitFor();
+            base.Wait(seconds);
         }
         public override void Perform()
         {
@@ -110,7 +109,7 @@ namespace QA.Automation.UITests.LG20.Pages
                     return true;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -128,8 +127,6 @@ namespace QA.Automation.UITests.LG20.Pages
                 IWebElement button = buttons.FirstOrDefault(a => a.GetAttribute("title") != null &&
                                                                  a.GetAttribute("title").Equals("Add New Playlist", StringComparison.OrdinalIgnoreCase));
                 button.Click();
-
-                return true;
             }
             catch (Exception e)
             {
@@ -137,8 +134,7 @@ namespace QA.Automation.UITests.LG20.Pages
                 return false;
                 //throw;
             }
-
-            return false;
+            return true;
         }
 
         private List<PlayListItem> GetPlayList(IWebDriver driver)

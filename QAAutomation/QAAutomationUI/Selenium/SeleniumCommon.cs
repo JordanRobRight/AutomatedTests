@@ -12,7 +12,11 @@ namespace QA.Automation.UITests.Selenium
     {
 
         #region -- Private Methods ---
+       
+        #endregion
 
+
+        #region -- Public Methods -- 
         public static IWebElement GetElement(IWebDriver _driver, ByType byType, string element)
         {
             By selector = null;
@@ -85,6 +89,14 @@ namespace QA.Automation.UITests.Selenium
             
         }
 
+        //public static void OffClick(IWebDriver driver, By byType, string locator )
+        //{
+        //    IWebElement offClick = driver.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
+        //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+        //    var element = driver.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+        //    new Actions(driver).MoveToElement(element).Click().Perform();
+        //}
+
         public static void AcceptAlert(IWebDriver driver, int secondsToWait = 2)
         {
             try
@@ -127,10 +139,7 @@ namespace QA.Automation.UITests.Selenium
             WaitUntilElementExists(_driver.Value, By.Id(element));
         }
 
-        #endregion
-
-
-        #region -- Public Methods -- 
+       
         //private static WaitForElement(IWebDriver _driver )
         //{
         //    WebDriverWait waitForElement = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
@@ -206,6 +215,20 @@ namespace QA.Automation.UITests.Selenium
                 Console.WriteLine("Element with locator: '" + elementLocator + "' was not found in current context page.");
                 throw;
             }
+        }
+
+        public static IEnumerable<T> GetListItems<T>(IWebDriver driver, IWebElement elementLocator, By secondLocator)
+        {
+            IEnumerable<IWebElement> p = elementLocator.FindElements(secondLocator);
+
+            List<T> itemList = new List<T>();
+
+            foreach (var item in p)
+            {
+                itemList.Add((T)Activator.CreateInstance(typeof(T), new object[] { driver }));
+            }
+
+            return itemList;
         }
         #endregion
 

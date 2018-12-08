@@ -67,7 +67,8 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         public string GetClientMenuItem(string ClientItem)
         {
-            WaitFor(ClientItem);
+//            WaitFor(ClientItem);
+            Wait();
 
             return getItems(ClientItem).Name;
         }
