@@ -10,7 +10,7 @@ using QA.Automation.UITests.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages.SubCards
 {
-    internal class PlayListSettingModal
+    internal class PlayListSettingModal : ModalBasePage
     {
         #region -- Fields
 
@@ -242,7 +242,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         #region --- Constructor ---
 
-        internal PlayListSettingModal(IWebDriver driver)
+        internal PlayListSettingModal(IWebDriver driver) : base(driver, _playListSettingModal, _modalContainer, _playListSettingModalVisiableClass)
         {
             _driver = driver;
         }
@@ -269,28 +269,30 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
             return selectedItem;
         }
-        private IEnumerable<IWebElement> GetModalButtons()
-        {
-            var getModalDialog = GetModal();
-            var modalContainer = getModalDialog.FindElement(By.ClassName(_modalContainer));
-            var modalContainerButtons = modalContainer.FindElements(By.TagName("button")).ToList();
-            return modalContainerButtons;
-        }
+        //private IEnumerable<IWebElement> GetModalButtons()
+        //{
+        //    return base.GetModalButtons();
+        //    //var getModalDialog = GetModal();
+        //    //var modalContainer = getModalDialog.FindElement(By.ClassName(_modalContainer));
+        //    //var modalContainerButtons = modalContainer.FindElements(By.TagName("button")).ToList();
+        //    //return modalContainerButtons;
+        //}
 
         public bool ModalCancelButtonClick()
         {
             try
             {
-                var cancelButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("aria-label") != null &&
-                                                                    a.GetAttribute("aria-label").Equals("Close", StringComparison.OrdinalIgnoreCase));
+                base.ModalCancelButtonClick();
+                //var cancelButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("aria-label") != null &&
+                //                                                    a.GetAttribute("aria-label").Equals("Close", StringComparison.OrdinalIgnoreCase));
 
-                var cancelSpan = cancelButton.FindElement(By.TagName("span"));
+                //var cancelSpan = cancelButton.FindElement(By.TagName("span"));
                
-                if (cancelSpan != null)
-                {
-                    cancelSpan.Click();
-                    return true;
-                }
+                //if (cancelSpan != null)
+                //{
+                //    cancelSpan.Click();
+                //    return true;
+                //}
             }
             catch (Exception)
             {
@@ -303,13 +305,15 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         {
             try
             {
-                var saveButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("type") != null &&
-                                                                  a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals("Save", StringComparison.OrdinalIgnoreCase));
-                if (saveButton != null)
-                {
-                    saveButton.Click();
-                    return true;
-                }
+                base.ModalSaveButtonClick();
+
+                //var saveButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("type") != null &&
+                //                                                  a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals("Save", StringComparison.OrdinalIgnoreCase));
+                //if (saveButton != null)
+                //{
+                //    saveButton.Click();
+                //    return true;
+                //}
 
             }
             catch (Exception)
@@ -326,6 +330,9 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             {
                 var cancelButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("aria-label") != null &&
                                                                          a.GetAttribute("aria-label").Equals("Close", StringComparison.OrdinalIgnoreCase));
+
+                //var cancelButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("aria-label") != null &&
+                //                                                         a.GetAttribute("aria-label").Equals("Close", StringComparison.OrdinalIgnoreCase));
 
                 var cancelSpan = cancelButton.FindElement(By.TagName("span"));
                 Actions action = new Actions(_driver);

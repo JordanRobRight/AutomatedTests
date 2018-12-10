@@ -2543,19 +2543,26 @@ namespace QA.Automation.UITests
 
             //Step 2
             SideBar sb = new SideBar(_driver.Value, _configuration);
+
             sb.SelectMenu("assets");
             sb.Wait();
 
             //TODO: Assert that we are on the correct page. 
 
             //Step 3
-            IWebElement assetSearchInput = _driver.Value.FindElement(By.Id("assets-search"));
+            Assets assetPage = new Assets(_driver.Value, _configuration);
+            
+            //TODO: Move this method to a property in order to get and set data.
+            //IWebElement assetSearchInput = _driver.Value.FindElement(By.Id("assets-search"));
+            IWebElement assetSearchInput = assetPage.GetAssetSearchInput();
             assetSearchInput.Click();
+
             //step 4
             //spell check placeholder text
 
             //step 5 
             assetSearchInput.SendKeys("     ");
+            assetPage.Wait();
 
             //TODO: Assert here to validate items returned.
         }
