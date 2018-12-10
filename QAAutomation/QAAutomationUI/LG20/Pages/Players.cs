@@ -22,5 +22,10 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             throw new NotImplementedException();
         }
+
+        public override void Wait(int numberOfSeconds = 5)
+        {
+            base.Wait(numberOfSeconds);
+        }
     }
 }

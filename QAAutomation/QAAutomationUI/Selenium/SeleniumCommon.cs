@@ -139,7 +139,12 @@ namespace QA.Automation.UITests.Selenium
             WaitUntilElementExists(_driver.Value, By.Id(element));
         }
 
-       
+        public static void RefreshPage(IWebDriver driver)
+        {
+            driver.Navigate().Refresh();
+        }
+
+
         //private static WaitForElement(IWebDriver _driver )
         //{
         //    WebDriverWait waitForElement = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));

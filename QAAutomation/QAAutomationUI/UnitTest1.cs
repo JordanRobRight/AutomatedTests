@@ -1949,6 +1949,8 @@ namespace QA.Automation.UITests
             //Step 1
             Login();
 
+            Players player = new Players(_driver.Value, _configuration);
+
             //step 2
             IWebElement playersTab = _driver.Value.FindElement(By.CssSelector(BaseStrings.playersTabCssSelector));
             playersTab.Click();
@@ -1959,88 +1961,105 @@ namespace QA.Automation.UITests
 
             IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playerSelect.Click();
-
+            player.Wait();
+            
             //Step 4 
             IWebElement playerInfoDownArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerInfoDownArrowCssSelectors));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
             playerInfoDownArrow.Click();
 
             //Step 5
             IWebElement playerInfoUpArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerInfoUpArrowCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            player.Wait(2);
             playerInfoUpArrow.Click();
 
             //Step 6
             IWebElement playerInfoX = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerInfoXCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
             playerInfoX.Click();
 
             //Step 7,8,& 9 are skipped since there isnt a products section right now
             //Step 10
             IWebElement deviceDownArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.deviceDownArrowCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
             deviceDownArrow.Click();
 
             //Step 11
             IWebElement deviceUpArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.deviceUpArrowCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
             deviceUpArrow.Click();
 
             //Step 12 
             IWebElement xOnDevice = _driver.Value.FindElement(By.CssSelector(BaseStrings.xOnDeviceCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
             xOnDevice.Click();
 
             //Step 13 select down arrow for location
             IWebElement locationDownArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.locationDownArrowCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
             locationDownArrow.Click();
 
             //Step 14 
             IWebElement locationUpArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.locationUpArrowCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
             locationUpArrow.Click();
 
             //Step 15
             IWebElement locationXButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.locationXButtonCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
             locationXButton.Click();
 
             //Step 16
             IWebElement playlistsButton = _driver.Value.FindElement(By.XPath(BaseStrings.playlistsButtonXPath));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
             playlistsButton.Click();
 
             //Step 17
             IWebElement whatsPlayingDownArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.whatsPlayingDownArrowCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
             whatsPlayingDownArrow.Click();
 
             //Step 18
             IWebElement whatsPlayingUPArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.whatsPlayingUpArrowCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
             whatsPlayingUPArrow.Click();
 
             //Step 19
             IWebElement whatsPlayingXButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.whatsPlayingXButtonCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             whatsPlayingXButton.Click();
 
             //Step 20
             IWebElement playlistInfoDownArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistInfoDownArrowCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistInfoDownArrow.Click();
 
             //Step 21
             IWebElement playlistInfoUpArrow = _driver.Value.FindElement(By.XPath(BaseStrings.playlistInfoUpArrowXpath));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistInfoUpArrow.Click();
 
             //Step 22
             IWebElement playlistInfoXButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistInfoXButtonCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistInfoXButton.Click();
 
             //Step 23,24,25,26,27,28,29,30,31 are not present on frontend that i can see as of 09/18/18
@@ -2344,33 +2363,29 @@ namespace QA.Automation.UITests
         {
             //step 1 signin
             Login();
+
+            PlayLists pls = new PlayLists(_driver.Value, _configuration);
+
             //step 2 select filter dropdown box
             IWebElement filterDropDownButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.filterButtonCssSelector));
             var selectfilterDropDownButton = new SelectElement(filterDropDownButton);
             selectfilterDropDownButton.SelectByValue("date");
             //step 3 spell check all filter values from drop down box
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //TODO: Need check the playlist order and assert if there is an error.
+            pls.Wait();
+
             //step 4 select the alphabetical option 
             IWebElement filterDropDownButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.filterButtonCssSelector));
             var selectfilterDropDownButton1 = new SelectElement(filterDropDownButton1);
             selectfilterDropDownButton1.SelectByValue("alphabetically");
+            pls.Wait();
             //step 5 confirm all the playlist display in alphabetical ascending order
+            //TODO: Need check the playlist order and assert if there is an error.
             //step 6 refresh screen
-            RefreshPage();
+            SeleniumCommon.RefreshPage(_driver.Value);
             //step 7 confirm all playlist display in date added order
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //step 8 select filter dropdown box
-
-            //step 9 select the changel option
-            IWebElement filterDropDownButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.filterButtonCssSelector));
-            var selectfilterDropDownButton2 = new SelectElement(filterDropDownButton2);
-            selectfilterDropDownButton2.SelectByValue("channel");
-            //step 10 Confirm all playlist display in Channel order:  Buick TV, Buick-Chevy TV, Chevy TV,  Chevy-Buick TV, Chevy-GMC, Chevy-Buick-GMC, GMC TV
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //step 11 refresh screen
-            RefreshPage();
-            //step 12 confirm all playlists display in dated added order
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //pls.Wait();
+            
             //Step 13 logout
             LogOutWithoutLogin();
         }
@@ -2593,10 +2608,10 @@ namespace QA.Automation.UITests
 
         }
 
-        public void RefreshPage()
-        {
-            _driver.Value.Navigate().Refresh();
-        }
+        //public void RefreshPage()
+        //{
+        //    _driver.Value.Navigate().Refresh();
+        //}
 
         [TearDown]
         public void CleanUp()
