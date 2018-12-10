@@ -1916,9 +1916,13 @@ namespace QA.Automation.UITests
 
             //Step 4 select a player
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
-            IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
+            var playerName = @"LG-QAROB";
 
-            playerSelect.Click();
+            //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
+
+            //playerSelect.Click();
+            
+            player.SelectPlayer(playerName);
 
             player.Wait();
 
@@ -1930,8 +1934,11 @@ namespace QA.Automation.UITests
             //Step 6
             //IWebElement playerSelect2 = _driver.Value.FindElement(By.CssSelector("#player-player_QyvWE5pQCs55 > td.sorting_1"));
             //TODO: need to select a different player
-            IWebElement playerSelect2 = GetPlayer(_driver.Value, "LG-QAROB");
-            playerSelect2.Click();
+            //IWebElement playerSelect2 = GetPlayer(_driver.Value, "LG-QAROB");
+            //playerSelect2.Click();
+
+            player.SelectPlayer(playerName);
+
             player.Wait();
 
             //Step 7
@@ -1967,11 +1974,15 @@ namespace QA.Automation.UITests
 
             //Step 3 
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
+            var playerName = "LG-QAROB";
 
-            IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
+            //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
 //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playerSelect.Click();
+            //playerSelect.Click();
+            
+            player.SelectPlayer(playerName);
+
             player.Wait();
             
             //Step 4 
@@ -2084,6 +2095,8 @@ namespace QA.Automation.UITests
             //Step 1
             Login();
 
+            Players player = new Players(_driver.Value, _configuration);
+
             //Step 2 select player tab
             IWebElement playersTab = _driver.Value.FindElement(By.CssSelector(BaseStrings.playersTabCssSelector));
             playersTab.Click();
@@ -2098,10 +2111,15 @@ namespace QA.Automation.UITests
             //IWebElement playerSelect = trs.FirstOrDefault(a => a).FindElements(By.TagName("td"))
             //    .FirstOrDefault(b => b.Text.Equals(playerName, StringComparison.OrdinalIgnoreCase));
 
-            IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
+            var playerName = @"LG-QAROB";
+
+            //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playerSelect.Click();
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //playerSelect.Click();
+
+            player.SelectPlayer(playerName);
+            player.Wait(2);
 
             //Step 4 From the Device card, slect the ping device button
             IWebElement devicePingDeviceButton = _driver.Value.FindElement(By.XPath(BaseStrings.devicePingDeviceButtonXPath));
@@ -2169,16 +2187,25 @@ namespace QA.Automation.UITests
             //TODO: No asserts and no adding of channel and checking for it ??
             //step 1
             Login();
+
+            Players player = new Players(_driver.Value, _configuration);
             //Step 2 select player tab
             IWebElement playersTab = _driver.Value.FindElement(By.CssSelector(BaseStrings.playersTabCssSelector));
             playersTab.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 3 Select Any player
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1 > span"));
-            IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playerSelect.Click();
+            var playerName = @"LG-QAROB";
+
+            //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
+
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //playerSelect.Click();
+            player.SelectPlayer(playerName);
+            player.Wait(2);
+
+
             //step 4 channelJoinButtonCssSelector
             //IWebElement channelJoinButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.channelJoinButtonCssSelector));//nothing should happen
             //Step 5
@@ -2227,17 +2254,25 @@ namespace QA.Automation.UITests
         {
             //step 1
             Login();
+            
+            Players player = new Players(_driver.Value, _configuration);
+
             //Step 2 select player tab
             IWebElement playersTab = _driver.Value.FindElement(By.CssSelector(BaseStrings.playersTabCssSelector));
             playersTab.Click();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 3 Select Any player
             // IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
+            var playerName = @"LG-QAROB";
 
-            IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
+            //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playerSelect.Click();
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //playerSelect.Click();
+
+            player.SelectPlayer(playerName);
+            player.Wait(2);
+
             //Step 4 select configure button 
             IWebElement configureButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.configureButtonCssSelector));
             Assert.IsTrue(configureButton.Displayed);
@@ -2276,26 +2311,31 @@ namespace QA.Automation.UITests
         {
             //Step 1
             Login();
+
+            Players player = new Players(_driver.Value, _configuration);
+
             //Step 2 select player tab
             IWebElement playersTab = _driver.Value.FindElement(By.CssSelector(BaseStrings.playersTabCssSelector));
             playersTab.Click();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
             //Step 3 Hover over the screen connect icon
             //step 4
-            //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
-            IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            playerSelect.Click();
+            var playName = @"LG-QAROB";
+            player.SelectPlayer(playName);
+
             //Step 5 Hover over screen connect icon
             //Step 6
             IWebElement screenConnectButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.screenConnectCssSelector));
             screenConnectButton.Click();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            player.Wait(2);
+
+            //TODO:Add assert to validate the URL is correct for screen connect
+            Assert.AreEqual($"https://dciartform.screenconnect.com/Login?ReturnUrl=%2fHost&Reason=3#Access/All%20Machines/{playName}", _driver.Value.Url);
             //Step 7
             string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
-            string currentURL = _driver.Value.Url;
             _driver.Value.Navigate().GoToUrl(url);
 
+            //TODO: Update this section to be a bit more flexible. 
             var tabs = _driver.Value.WindowHandles;
             if (tabs.Count > 1)
             {
@@ -2303,6 +2343,7 @@ namespace QA.Automation.UITests
                 _driver.Value.Close();
                 _driver.Value.SwitchTo().Window(tabs[0]);
             }
+
             //Step 8
             LogOutWithoutLogin();
 
@@ -2499,10 +2540,14 @@ namespace QA.Automation.UITests
         {
             //Step 1
             Login();
+
             //Step 2
-            IWebElement assetTab = _driver.Value.FindElement(By.CssSelector("#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li.active > a > span"));
-            assetTab.Click();
-            WaitForMaskModal();
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            sb.SelectMenu("assets");
+            sb.Wait();
+
+            //TODO: Assert that we are on the correct page. 
+
             //Step 3
             IWebElement assetSearchInput = _driver.Value.FindElement(By.Id("assets-search"));
             assetSearchInput.Click();
@@ -2511,6 +2556,8 @@ namespace QA.Automation.UITests
 
             //step 5 
             assetSearchInput.SendKeys("     ");
+
+            //TODO: Assert here to validate items returned.
         }
 
         [TestCase]//TestCase 1991
@@ -2641,90 +2688,6 @@ namespace QA.Automation.UITests
             }
         }
 
-        #region -- Private Methods ---
-
-        private IWebElement GetPlayer(IWebDriver driver, string playerName)
-        {
-            IWebElement playerTable =
-                SeleniumCommon.GetElement(driver, SeleniumCommon.ByType.Id, "players-table");
-            IEnumerable<IWebElement> trs = playerTable.FindElements(By.TagName("tr")).ToList();
-            var items = trs.Where(tr => tr.FindElements(By.TagName("td")) != null && tr.GetInnerHTML().Contains(playerName)).Select(a => a).ToList();
-            var playerSelect = items.FirstOrDefault(t => t.GetElementFromCompoundClass(By.TagName("span"),
-                                            "pt-status-text-name pt-player-status-online") != null && t.GetElementFromCompoundClass(By.TagName("span"),
-                                            "pt-status-text-name pt-player-status-online").Text.Equals(playerName, StringComparison.OrdinalIgnoreCase));
-          
-            return playerSelect;
-        }
-        
-
-        /* --- old code
-        private IWebElement GetElement(ByType byType, string element)
-        {
-            By selector = null;
-            IWebElement query = null;
-
-            switch (byType)
-            {
-                case ByType.Css:
-                    selector = By.CssSelector(element);
-                    break;
-                case ByType.Id:
-                    selector = By.Id(element);
-                    break;
-                case ByType.Xml:
-                    selector = By.XPath(element);
-                    break;
-                case ByType.ClassName:
-                    selector = By.ClassName(element);
-                    break;
-                
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(byType), byType, null);
-            }
-
-
-
-
-            try
-            {
-                query = _driver.Value.FindElement(selector);
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
-            return query ?? throw new Exception("GetElement returned a null value.");
-        }
-        private IWebElement GetElement(By selector, string element = "")
-        {
-            IWebElement query = null;
-
-            try
-            {
-                query = _driver.Value.FindElement(selector);
-            }
-            catch (NoSuchElementException nsex)
-            {
-                Console.WriteLine("Element couldn't be found: " + nsex);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Error: GetElement() {e}");
-            }
-
-            return query ?? throw new Exception("GetElement returned a null value.");
-        }
-        */
-        //private void WaitForElementExists(string element)
-        //{
-        //    WaitUntilElementExists(_driver.Value, By.Id(element));
-        //}
-
-        #endregion
-
 
         #region -- Public Methods -- 
 
@@ -2743,70 +2706,7 @@ namespace QA.Automation.UITests
             //}
         }
 
-
-        //private static WaitForElement(IWebDriver _driver )
-        //{
-        //    WebDriverWait waitForElement = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
-        //    waitForElement.Until(ExpectedConditions.ElementIsVisible(By.Id("yourIDHere")));
-        //}
-
-        //WaitUntilElementExists(_driver, By.Id("page-header-container"));
-        // New way of doing things.
-        //var clickableElement = wait.Until(ExpectedConditions.ElementToBeClickable(By.PartialLinkText("TFS Test API")));
-
-        //this will search for the element until a timeout is reached
-        //public static IWebElement WaitUntilElementExists(IWebDriver driver, By elementLocator, int timeout = 10)
-        //{
-        //    try
-        //    {
-        //        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
-        //        return wait.Until(ExpectedConditions.ElementExists(elementLocator));
-        //    }
-        //    catch (NoSuchElementException)
-        //    {
-        //        Console.WriteLine("Element with locator: '" + elementLocator + "' was not found in current context page.");
-        //        throw;
-        //    }
-        //}
-
-        //public static IWebElement WaitUntilElementVisible(IWebDriver driver, By elementLocator, int timeout = 10)
-        //{
-        //    try
-        //    {
-        //        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
-        //        return wait.Until(ExpectedConditions.ElementIsVisible(elementLocator));
-        //    }
-        //    catch (NoSuchElementException)
-        //    {
-        //        Console.WriteLine("Element with locator: '" + elementLocator + "' was not found.");
-        //        throw;
-        //    }
-        //}
-
-        //public static IWebElement WaitUntilElementClickable(IWebDriver driver, By elementLocator, int timeout = 10)
-        //{
-        //    try
-        //    {
-        //        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
-        //        return wait.Until(ExpectedConditions.ElementToBeClickable(elementLocator));
-        //    }
-        //    catch (NoSuchElementException)
-        //    {
-        //        Console.WriteLine("Element with locator: '" + elementLocator + "' was not found in current context page.");
-        //        throw;
-        //    }
-        //}
         #endregion
     }
 
-    //public enum ByType
-    //{
-    //    Css = 1,
-    //    Xml = 2,
-    //    Id = 3,
-    //    ClassName = 4,
-    //    Title = 5,
-
-
-    //}
 }
