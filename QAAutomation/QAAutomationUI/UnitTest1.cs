@@ -440,31 +440,40 @@ namespace QA.Automation.UITests
         {
             //Step 1 login 
             Login();
+            PlayLists pls = new PlayLists(_driver.Value, _configuration);
+
+            //step 2
+          
             //Step 2 select '+' to make a new playlist
             IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
             playlistsSideBarMenuButton.Click();
             WaitForMaskModal();
-            IWebElement addPlaylistButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
-            addPlaylistButton.Click();
+
+            pls.AddButtonClick();
+            pls.Wait();
             //Step 3 enter playlist name
             string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
-            IWebElement playlistAddForm = _driver.Value.FindElement(By.Id("form-name"));
-            playlistAddForm.SendKeys(playlistName);
+            pls.PlayListModal.PlayListNameTextField = playlistName;
+
             //Step 4 Select a channel
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            string filterID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
-            IWebElement selectFilter = _driver.Value.FindElement(By.XPath(filterID));
-            //create select element object 
-            selectFilter.SendKeys("chevy" + Keys.Enter);
+
+            pls.PlayListModal.FilterByClientProgramAndChannelCheckbox = true;
+            pls.Wait(1);
+            pls.PlayListModal.SelectClientProgramSelectBox = "Guest TV";
+            pls.Wait(1);
+            pls.PlayListModal.SelectYourChannelSelectBox = "Chevy TV";
+            pls.Wait();
+
             //Step 5  select save
-            IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
-            saveButton.Click();
+          
+            pls.PlayListModal.ModalSaveButtonClick();
+
             //Step 6 select done---does not exist currently (09/26/2018)
             //Step 7 new playlist has been created
+            //TODO: Validate that the playlist was created.
             //Step 8 logout
             LogOutWithoutLogin();
-
         }
 
         [TestCase]// test case 1985
