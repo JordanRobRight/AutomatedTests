@@ -5,6 +5,7 @@
   "IsRemoteDriver": false,
   "BaseUrl": "https://portal{0}.dcimliveguide.com/",
   "WaitTimeInSeconds": 10,
+  "PageWaitTimeInSeconds": 30, 
   "LGUser": "cbam.lgtest1@dciartform.com",
   "LGPassword": "Q2JhbSN0ZXN0MQ=="
 }

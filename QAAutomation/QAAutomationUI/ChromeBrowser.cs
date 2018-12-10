@@ -54,7 +54,7 @@ namespace QA.Automation.UITests
 
             _driver.Manage().Window.Maximize();
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
-            _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(_configuration.WaitTimeInSeconds);
+            _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(_configuration.PageWaitTimeInSeconds);
 
             return _driver;
         }

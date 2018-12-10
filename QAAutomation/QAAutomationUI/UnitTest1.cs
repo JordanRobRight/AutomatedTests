@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -1892,6 +1893,7 @@ namespace QA.Automation.UITests
             //Step 1
             Login();
 
+            Players player = new Players(_driver.Value, _configuration);
             //Step 2 select players tab
             IWebElement playersTab = _driver.Value.FindElement(By.CssSelector("#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(3) > a > span"));
             playersTab.Click();
@@ -1909,25 +1911,31 @@ namespace QA.Automation.UITests
 
             playerSelect.Click();
 
+            player.Wait();
+
             //Step 5
             playersTab.Click();
             WaitForMaskModal();
+            player.Wait();
 
             //Step 6
             //IWebElement playerSelect2 = _driver.Value.FindElement(By.CssSelector("#player-player_QyvWE5pQCs55 > td.sorting_1"));
             //TODO: need to select a different player
             IWebElement playerSelect2 = GetPlayer(_driver.Value, "LG-QAROB");
             playerSelect2.Click();
+            player.Wait();
 
             //Step 7
             playersTab.Click();
             WaitForMaskModal();
+            player.Wait();
 
             //Step 8 select a player that is not set up...---needs work TODO
 
             //Step 9
             playersTab.Click();
             WaitForMaskModal();
+            player.Wait();
 
             //Step 10
             LogOutWithoutLogin();
@@ -2616,10 +2624,11 @@ namespace QA.Automation.UITests
             IWebElement playerTable =
                 SeleniumCommon.GetElement(driver, SeleniumCommon.ByType.Id, "players-table");
             IEnumerable<IWebElement> trs = playerTable.FindElements(By.TagName("tr")).ToList();
-            //string playerName = "LG-QARob";
-            IWebElement playerSelect = trs.FirstOrDefault().FindElements(By.TagName("td"))
-                .FirstOrDefault(b => b.Text.Equals(playerName, StringComparison.OrdinalIgnoreCase));
-
+            var items = trs.Where(tr => tr.FindElements(By.TagName("td")) != null && tr.GetInnerHTML().Contains(playerName)).Select(a => a).ToList();
+            var playerSelect = items.FirstOrDefault(t => t.GetElementFromCompoundClass(By.TagName("span"),
+                                            "pt-status-text-name pt-player-status-online") != null && t.GetElementFromCompoundClass(By.TagName("span"),
+                                            "pt-status-text-name pt-player-status-online").Text.Equals(playerName, StringComparison.OrdinalIgnoreCase));
+          
             return playerSelect;
         }
         

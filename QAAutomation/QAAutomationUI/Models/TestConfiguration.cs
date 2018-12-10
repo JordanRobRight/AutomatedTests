@@ -20,7 +20,8 @@ namespace QA.Automation.UITests.Models
         public string BaseUrl { get; set; }
         [JsonProperty]
         public int WaitTimeInSeconds { get; set; }
-
+        [JsonProperty]
+        public int PageWaitTimeInSeconds { get; set; }
         [JsonProperty]
         public string LGUser { get; set; }
         [JsonProperty]

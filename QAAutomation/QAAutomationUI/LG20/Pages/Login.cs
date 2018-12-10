@@ -55,7 +55,7 @@ namespace QA.Automation.UITests.LG20.Pages
         public override void WaitForElement(string itemToWaitFor = "")
         {
             Selenium.SeleniumCommon.WaitUntilElementExists(Driver, By.Id("page-header-container"));
-            Wait(2);
+            Wait();
         }
 
         public override bool VerifyPage()
