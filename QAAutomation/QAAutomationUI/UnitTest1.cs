@@ -153,8 +153,8 @@ namespace QA.Automation.UITests
             LogOutWithoutLogin();
         }
 
-        [TestCase]
-        [Category("Debugonly")]
+        //[TestCase]
+        //[Category("Debugonly")]
         // [Ignore("This test case is for debugging only")]
 
         public void CreatePlaylistTest()
@@ -1241,8 +1241,8 @@ namespace QA.Automation.UITests
         }
 
         
-        [TestCase]
-        [Description("LiveGuideAssets")]
+        //[TestCase]
+        //[Description("LiveGuideAssets")]
         public void LiveguideAssets2()//just method calls 
         {
             Login();
