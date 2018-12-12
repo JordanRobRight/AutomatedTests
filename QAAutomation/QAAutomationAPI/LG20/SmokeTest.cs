@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using QA.Automation.APITests.LG20.Services;
 using QA.Automation.APITests.Models;
@@ -76,23 +75,41 @@ namespace QA.Automation.APITests.LG20
         {
             string swaggerUrl = GetSwaggerPage(item.Key.ToString().Replace("_", "-"));
 
+//            var apiUrl = $@"{FormatUrl("LG-LGM-" + item.Key.ToString(), Settings)}/swagger/v1/swagger.json";
             var apiUrl = $@"{FormatUrl("LG-LGM-" + item.Key.ToString().Replace("_", "-"), Settings)}{swaggerUrl}";
             var helper = new Common.HttpUtilsHelper();
 
             var data = helper.ApiRequest(apiUrl,string.Empty);
 
-            JToken version = JsonHelper.GetTokenByPath(Common.JsonHelper.GetJsonJObjectFromString(data), "info.title");
-
-            // Due to changes in swagger, if we change for ( in the version to determine if the environment name moved.
-            if (!version.ToString().Contains("("))
-            {
-                version = JsonHelper.GetTokenByPath(Common.JsonHelper.GetJsonJObjectFromString(data), "info.version");
-            }
-
-            var m =  Common.JsonHelper.GetMatchFromRegEx(version, @".*\((?<Test>\w+)\)");
+            var m =  Common.JsonHelper.GetMatchFromRegEx(Common.JsonHelper.GetTokenByPath(Common.JsonHelper.GetJsonJObjectFromString(data), "info.title"), @".*\((?<Test>\w+)\)");
             var envData = m != null && m.Success ? m.Groups["Test"].Value : string.Empty;
 
-            Assert.AreEqual(Settings.Environment.ToString().ToLower(), envData.ToLower());
+            Assert.AreEqual(envData.ToLower(), Settings.Environment.ToString().ToLower());
+
+            /*
+           // IApiPage i = new LGMFiltersService();
+
+           if (!string.IsNullOrEmpty(updatedUrl))
+           {
+               Dictionary<string, string> parms = new Dictionary<string, string>()
+               {
+                   { "url", updatedUrl },
+                   { "username", Settings.UserName },
+                   { "password", Settings.Password },
+               };
+               result = LGApitAction.GetAuthInfo(parms);
+               //result = LGApitAction.GetAuthInfo(updatedUrl, Settings.UserName, Settings.Password);
+               AuthTokens.Add(data.Key, result.Trim('"'));
+           }
+
+           //NUnit.Framework.Internal.TestExecutionContext t = PropertyHelper.GetPrivateFieldValue<NUnit.Framework.Internal.TestExecutionContext>(TestContext.CurrentContext, "_testExecuteContext");
+
+           Assert.IsFalse(string.IsNullOrWhiteSpace(result));
+
+           Console.WriteLine($"Url: {updatedUrl}");
+           Console.WriteLine($"Result: {result}");
+           Console.WriteLine("\r\n");
+           */
         }
 
         private string GetSwaggerPage(string serviceName)
