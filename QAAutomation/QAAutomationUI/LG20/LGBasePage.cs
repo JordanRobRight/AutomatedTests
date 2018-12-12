@@ -27,9 +27,14 @@ namespace QA.Automation.UITests.LG20
             throw new NotImplementedException();
         }
 
-        public virtual void WaitFor(string itemToWaitFor = "")
+        public virtual void WaitForElement(string itemToWaitFor = "")
         {
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            throw new NotImplementedException();
+        }
+
+        public virtual void Wait(int numberOfSeconds = 5)
+        {
+            Thread.Sleep(TimeSpan.FromSeconds(numberOfSeconds));
         }
 
         public abstract void Perform();
