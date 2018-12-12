@@ -19,7 +19,7 @@ namespace QA.Automation.APITests.LG20
         public static Dictionary<LGMServiceType, string> items = new Dictionary<LGMServiceType, string>
           {
                 {LGMServiceType.PlayersService, "" },
-                {LGMServiceType.FiltersService,"" },
+                //{LGMServiceType.FiltersService,"" },
                 {LGMServiceType.LocationsService,"" },
                 {LGMServiceType.ScreenFeedVideoService,"" },
                 //{LGMServiceType.SSOAuthService,"" },
@@ -40,7 +40,7 @@ namespace QA.Automation.APITests.LG20
                 {LGMServiceType.LicensesService,"" },
                 {LGMServiceType.ChannelsService,"" },
                 {LGMServiceType.ClientProgramsService,"" },
-                {LGMServiceType.ProgramsService,"" },
+                //{LGMServiceType.ProgramsService,"" },
                 {LGMServiceType.FrontEndService,"" },
                 //{LGMServiceType.FinanceService,"" },
                 {LGMServiceType.DbService,"" },
@@ -81,8 +81,17 @@ namespace QA.Automation.APITests.LG20
 
             var data = helper.ApiRequest(apiUrl,string.Empty);
 
-            var m =  Common.JsonHelper.GetMatchFromRegEx(Common.JsonHelper.GetTokenByPath(Common.JsonHelper.GetJsonJObjectFromString(data), "info.title"), @".*\((?<Test>\w+)\)");
-            var envData = m != null && m.Success ? m.Groups["Test"].Value : string.Empty;
+            List<string> versionJsonPathList = new List<string>(){ "info.title", "info.version" };
+            var envData = string.Empty;
+            foreach (var versionJsonPath in versionJsonPathList)
+            {
+                var m = JsonHelper.GetMatchFromRegEx(Common.JsonHelper.GetTokenByPath(Common.JsonHelper.GetJsonJObjectFromString(data), versionJsonPath), @".*\((?<Test>\w+)\)");
+                if (m == null || !m.Success) continue;
+                envData = m.Groups["Test"].Value;
+                break;
+            }
+           // var m =  Common.JsonHelper.GetMatchFromRegEx(Common.JsonHelper.GetTokenByPath(Common.JsonHelper.GetJsonJObjectFromString(data), "info.title"), @".*\((?<Test>\w+)\)");
+            //var envData = m != null && m.Success ? m.Groups["Test"].Value : string.Empty;
 
             Assert.AreEqual(envData.ToLower(), Settings.Environment.ToString().ToLower());
 

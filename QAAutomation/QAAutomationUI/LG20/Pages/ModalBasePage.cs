@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using QA.Automation.UITests.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages
 {
-    class ModalBasePage
+    internal class ModalBasePage
     {
         private readonly string _modalClassName = string.Empty;
         private IWebDriver _driver = null;
@@ -21,7 +22,7 @@ namespace QA.Automation.UITests.LG20.Pages
             _modalContainerName = modalContainerName;
             _modalVisableClass = modalVisableClass;
         }
-        public bool ModalCancelButtonClick()
+        protected bool ModalCancelButtonClick()
         {
             try
             {
@@ -43,7 +44,7 @@ namespace QA.Automation.UITests.LG20.Pages
             return false;
         }
 
-        public bool ModalSaveButtonClick()
+        protected bool ModalSaveButtonClick()
         {
             try
             {
@@ -64,7 +65,7 @@ namespace QA.Automation.UITests.LG20.Pages
             return false;
         }
 
-        public IEnumerable<IWebElement> GetModalButtons()
+        protected IEnumerable<IWebElement> GetModalButtons()
         {
             var getModalDialog = GetModal();
             var modalContainer = getModalDialog.FindElement(By.ClassName(_modalContainerName));
@@ -72,11 +73,33 @@ namespace QA.Automation.UITests.LG20.Pages
             return modalContainerButtons;
         }
 
-        private IWebElement GetModal()
+        protected IWebElement GetModal()
         {
             var getModalWindow = SeleniumCommon.GetElement(_driver, SeleniumCommon.ByType.Id, _modalClassName);
             var getActualModal = getModalWindow.FindElements(By.TagName("div")).FirstOrDefault(a => a.GetAttribute("class").Equals(_modalVisableClass));
             return getActualModal;
+        }
+        protected IEnumerable<IWebElement> GetModalInputFields(string tagName)
+        {
+            var getModalDialog = GetModal();
+            var inputFields = getModalDialog.FindElements(By.TagName(tagName)).ToList();
+
+            return inputFields;
+        }
+
+        protected SelectElement GetSelect(string tagName, string fieldName)
+        {
+            var inputField = GetModalInputFields(tagName).FirstOrDefault(a => a.GetAttribute("id") != null
+                                                                              && a.GetAttribute("id")
+                                                                                  .Equals(fieldName, StringComparison.OrdinalIgnoreCase));
+            var actualSelect = new SelectElement(inputField);
+            return actualSelect;
+        }
+
+        protected IWebElement GetField(string tagName, string attribute, string fieldName)
+        {
+            return GetModalInputFields(tagName).FirstOrDefault(a => a.GetAttribute(attribute) != null && a.GetAttribute(attribute)
+                                                                        .Equals(fieldName, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

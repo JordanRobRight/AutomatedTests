@@ -8,7 +8,7 @@ using QA.Automation.UITests.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages
 {
-    public class PlayLists : LGBasePage
+    internal class PlayLists : LGBasePage
     {
         #region -- Fields --
 

@@ -33,6 +33,13 @@ namespace QA.Automation.UITests.Selenium
                 : string.Empty;
         }
 
+        /// <summary>
+        /// Get the element by Class for a compound class name that Selenium doesn't support fully.
+        /// </summary>
+        /// <param name="webElement"></param>
+        /// <param name="locator"></param>
+        /// <param name="className"></param>
+        /// <returns></returns>
         public static IWebElement GetElementFromCompoundClass(this IWebElement webElement, By locator, string className)
         {
             return webElement.FindElements(locator).FirstOrDefault(a => a.GetAttribute("class") != null && a.GetAttribute("class").Equals(className));

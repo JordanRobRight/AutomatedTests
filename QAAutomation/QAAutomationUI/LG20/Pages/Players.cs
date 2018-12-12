@@ -15,6 +15,7 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #region --- Properties ---
         private static readonly string _playerNameTdItem = @"pt-status-text-name pt-player-status-online";
+        private static readonly string _playersTableTBody = @"#players-table > div.table-responsive > table > tbody";
         #endregion
 
         #region --- Constructor ---
@@ -49,12 +50,15 @@ namespace QA.Automation.UITests.LG20.Pages
         #region --- Private Methods ---
         private IWebElement GetPlayer(string playerName)
         {
-            IWebElement playerTable = SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Id, "players-table");
+            //IWebElement playerTable = SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Id, "players-table");
+            IWebElement playerTable = SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.Css, _playersTableTBody);
+
             IEnumerable<IWebElement> trs = playerTable.FindElements(By.TagName("tr")).ToList();
-            var items = trs.Where(tr => tr.FindElements(By.TagName("td")) != null && tr.GetInnerHTML().Contains(playerName)).Select(a => a).ToList();
-            var playerSelect = items.FirstOrDefault(t => t.GetElementFromCompoundClass(By.TagName("span"),
-                                                             _playerNameTdItem) != null && t.GetElementFromCompoundClass(By.TagName("span"),
-                                                             _playerNameTdItem).Text.Equals(playerName, StringComparison.OrdinalIgnoreCase));
+            IWebElement tdItem = trs.FirstOrDefault(tr => tr.FindElements(By.TagName("td")) != null && tr.GetInnerHTML().Contains(playerName));
+            var playerSelect = tdItem.FindElements(By.TagName("span")).FirstOrDefault(a => string.Equals(a.Text, playerName, StringComparison.OrdinalIgnoreCase));
+            //t => t.GetElementFromCompoundClass(By.TagName("span"),
+                                                            // _playerNameTdItem) != null && t.GetElementFromCompoundClass(By.TagName("span"),
+                                                            // _playerNameTdItem).Text.Equals(playerName, StringComparison.OrdinalIgnoreCase));
 
             return playerSelect;
         }
