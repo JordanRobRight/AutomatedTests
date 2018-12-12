@@ -75,7 +75,6 @@ namespace QA.Automation.APITests.LG20
         {
             string swaggerUrl = GetSwaggerPage(item.Key.ToString().Replace("_", "-"));
 
-//            var apiUrl = $@"{FormatUrl("LG-LGM-" + item.Key.ToString(), Settings)}/swagger/v1/swagger.json";
             var apiUrl = $@"{FormatUrl("LG-LGM-" + item.Key.ToString().Replace("_", "-"), Settings)}{swaggerUrl}";
             var helper = new Common.HttpUtilsHelper();
 
