@@ -73,17 +73,17 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             List<AssetItem> displayOptions = new List<AssetItem>();
 
-            var displayOptionButtons = Driver.FindElement(By.Id("assets-container"));
+            var displayOptionButtons = Driver.FindElement(By.ClassName("amub-layout-type"));
 
 
-            var parentDiv = displayOptionButtons.GetElementFromCompoundClass(By.TagName("div"),
-                "pm-utility-bar js-playlists-utility-bar");
+            //var parentDiv = displayOptionButtons.GetElementFromCompoundClass(By.TagName("div"),
+                //"pm-utility-bar js-playlists-utility-bar");
             //GetElementFromCompoundClass("pmub-layout-type");
 
-            var newItem = parentDiv.FindElements(By.ClassName("pmublt-field")).ToList();
+            var newItem = displayOptionButtons.FindElements(By.ClassName("amublt-field")).ToList();//amub-layout-type
 
 
-            foreach (IWebElement button in displayOptions)
+            foreach (IWebElement button in newItem)
             {
                 AssetItem buttonItem = new AssetItem(Driver) {Name = button.Text, WebElement = button};
                 displayOptions.Add(buttonItem);
@@ -104,6 +104,23 @@ namespace QA.Automation.UITests.LG20.Pages
             //WaitFor(headerButton);
 
             return getItems(headerButton).Name;
+        }
+
+        public string GetDisplayOptionItem(string headerButton)
+        {
+            //WaitFor(headerButton);
+
+            return getItems(headerButton).WebElement;
+        }
+
+        public void SelectDisplayOption(string option)
+        {
+            var item = getItems(option);
+
+            if (item != null)
+            {
+                item.WebElement.Click();
+            }
         }
 
         public void SelectAddButton(string button)
