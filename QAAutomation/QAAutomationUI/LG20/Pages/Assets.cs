@@ -110,7 +110,7 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             //WaitFor(headerButton);
 
-            return getItems(headerButton).WebElement;
+            return getItems(headerButton).Name;
         }
 
         public void SelectDisplayOption(string option)
