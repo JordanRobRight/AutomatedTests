@@ -22,7 +22,7 @@ namespace QA.Automation.UITests.LG20.Pages
             _modalContainerName = modalContainerName;
             _modalVisableClass = modalVisableClass;
         }
-        protected bool ModalCancelButtonClick()
+        public bool ModalCancelButtonClick()
         {
             try
             {
@@ -44,7 +44,7 @@ namespace QA.Automation.UITests.LG20.Pages
             return false;
         }
 
-        protected bool ModalSaveButtonClick()
+        public bool ModalSaveButtonClick()
         {
             try
             {

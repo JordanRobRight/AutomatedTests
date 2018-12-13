@@ -8,7 +8,7 @@ namespace QA.Automation.APITests
     {
         private readonly APRIConfigSettings _config = null;
         public IDictionary<string, string> AuthTokens = new Dictionary<string, string>();
-        private LG20.APIActionsBase _apiActionBase = null;
+        //private LG20.APIActionsBase _apiActionBase = null;
         //private LG20.ApiActionsBase _lgApitAction = null;
 
         public APITestBase(string userName, string userPassword)
