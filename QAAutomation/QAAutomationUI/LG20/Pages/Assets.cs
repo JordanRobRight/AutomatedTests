@@ -42,7 +42,17 @@ namespace QA.Automation.UITests.LG20.Pages
 
             public override bool VerifyPage()
             {
-                throw new NotImplementedException();
+                var assetsListContentWrapper = assetsContainer.GetElementFromCompoundClass(By.TagName("div"),
+                        "assets-content-wrapper js-assets-content");
+                assetsListContentWrapper.Should().NotBeNull();
+                var playListContents = assetsListContentWrapper.FindElement(By.ClassName("assets-content"));
+                playListContents.Should().NotBeNull();
+                var playListItems = playListContents.FindElements(By.TagName("div"))
+                    .Where(a => a.GetAttribute("data-guid") != null).Select(a => a).ToList();
+                playListItems.Should().NotBeNull();
+                playListItems.Should().HaveCountGreaterThan(1);
+
+                return playListItems;
             }
         #endregion
 
