@@ -60,25 +60,16 @@ namespace QA.Automation.UITests.LG20.Pages
             return button;
         }
 
-        //private IEnumerable<IWebElement> GetAssetModalButtons()
-        //{
-        //    return new List<IWebElement>();
-        //}
-
         private IEnumerable<AssetItem> AssetItems => GetAssetDisplayOptionButtons();
-
-        //private string test = "pm-utility-bar js-playlists-utility-bar";
 
         private IEnumerable<AssetItem> GetAssetDisplayOptionButtons()
         {
             List<AssetItem> displayOptions = new List<AssetItem>();
 
-            var displayOptionButtons = Driver.FindElement(By.ClassName("amub-layout-type"));
-
-            var newItem = displayOptionButtons.FindElements(By.ClassName("amublt-field")).ToList();
+            var displayOptionButtons = Driver.FindElement(By.ClassName("amub-layout-type")).FindElements(By.ClassName("amublt-field")).ToList(); 
 
 
-            foreach (IWebElement button in newItem)
+            foreach (IWebElement button in displayOptionButtons)
             {
                 AssetItem buttonItem = new AssetItem(Driver) {Name = button.Text, WebElement = button};
                 displayOptions.Add(buttonItem);
@@ -94,14 +85,9 @@ namespace QA.Automation.UITests.LG20.Pages
             return li;
         }
 
-        public string GetItem(string headerButton)
-        {
-            return getItems(headerButton).Name;
-        }
-
         private AssetItem getDisplayItems(string itemName)
         {
-            var li = AssetItems.FirstOrDefault(x => x.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+            var li = AssetItems.FirstOrDefault(x => x.Name.Contains(itemName));
 
             return li;
         }
@@ -122,18 +108,6 @@ namespace QA.Automation.UITests.LG20.Pages
                 item.WebElement.Click();
             }
         }
-
-        public void SelectAddButton(string button)
-        {
-            var item = getItems(button);
-
-            if (item != null)
-            {
-                item.WebElement.Click();
-            }
-        }
-
-
 
         #endregion
 

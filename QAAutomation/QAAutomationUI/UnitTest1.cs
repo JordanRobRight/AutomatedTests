@@ -1265,9 +1265,7 @@ namespace QA.Automation.UITests
 
             assettest.GetAssetSearchInput();
 
-            //assettest.GetItem("");
-
-            assettest.GetDisplayOptionItem("pmub-layout-type");
+            assettest.GetDisplayOptionItem("Display as Grid");
 
             assettest.SelectDisplayOption("Display as Grid");
 
