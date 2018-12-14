@@ -94,8 +94,6 @@ namespace QA.Automation.UITests.LG20.Pages
 
         public string GetDisplayOptionItem(string headerButton)
         {
-            //WaitFor(headerButton);
-
             return getDisplayItems(headerButton).Name;
         }
 
