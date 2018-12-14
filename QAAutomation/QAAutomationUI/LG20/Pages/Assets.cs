@@ -75,12 +75,7 @@ namespace QA.Automation.UITests.LG20.Pages
 
             var displayOptionButtons = Driver.FindElement(By.ClassName("amub-layout-type"));
 
-
-            //var parentDiv = displayOptionButtons.GetElementFromCompoundClass(By.TagName("div"),
-                //"pm-utility-bar js-playlists-utility-bar");
-            //GetElementFromCompoundClass("pmub-layout-type");
-
-            var newItem = displayOptionButtons.FindElements(By.ClassName("amublt-field")).ToList();//amub-layout-type
+            var newItem = displayOptionButtons.FindElements(By.ClassName("amublt-field")).ToList();
 
 
             foreach (IWebElement button in newItem)
@@ -101,16 +96,21 @@ namespace QA.Automation.UITests.LG20.Pages
 
         public string GetItem(string headerButton)
         {
-            //WaitFor(headerButton);
-
             return getItems(headerButton).Name;
+        }
+
+        private AssetItem getDisplayItems(string itemName)
+        {
+            var li = AssetItems.FirstOrDefault(x => x.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+
+            return li;
         }
 
         public string GetDisplayOptionItem(string headerButton)
         {
             //WaitFor(headerButton);
 
-            return getItems(headerButton).Name;
+            return getDisplayItems(headerButton).Name;
         }
 
         public void SelectDisplayOption(string option)
