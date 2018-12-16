@@ -683,7 +683,7 @@ namespace QA.Automation.UITests
             IWebElement favoritIconHeart1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
             Actions action1 = new Actions(_driver.Value);
             action1.MoveToElement(favoritIconHeart1).Perform();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //step 4 Search for any existing Playlist and select favorite icon (heart)            
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //IWebElement favoritIconHeart = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
@@ -699,24 +699,38 @@ namespace QA.Automation.UITests
             _driver.Value.Navigate().Refresh();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //Step 8 add new playlist, select '+'
+            PlayLists pls = new PlayLists(_driver.Value, _configuration);
+            //pls.AddButtonClick();
             IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
             playlistsSideBarMenuButton.Click();
+            
             WaitForMaskModal();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //step 9 enter all required field values and select save
+            
             IWebElement addPlaylistButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
-            addPlaylistButton.Click();
+            pls.AddButtonClick();
+            //addPlaylistButton.Click();
             string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
-            IWebElement playlistAddForm = _driver.Value.FindElement(By.Id("form-name"));
-            playlistAddForm.SendKeys(playlistName);
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            string categoryID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
-            IWebElement selectCategory = _driver.Value.FindElement(By.XPath(categoryID));
-            selectCategory.SendKeys("chevy" + Keys.Enter);
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
-            saveButton.Click();
+            //IWebElement playlistAddForm = _driver.Value.FindElement(By.Id("form-name"));
+            //playlistAddForm.SendKeys(playlistName);
+            pls.PlayListModal.PlayListNameTextField = playlistName;
+            pls.Wait();
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            //string categoryID = "//*[@id='playlist-info-form']/div[1]/div[2]/div//*[@id='select-filter']";
+            pls.PlayListModal.FilterByClientProgramAndChannelCheckbox = true;
+            pls.Wait(1);
+            pls.PlayListModal.SelectClientProgramSelectBox = "Guest TV";
+            pls.Wait(1);
+            pls.PlayListModal.SelectYourChannelSelectBox = "Chevy TV";
+            pls.Wait(2);
+            //IWebElement selectCategory = _driver.Value.FindElement(By.XPath(categoryID));
+            //selectCategory.SendKeys("chevy" + Keys.Enter);
+            // System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            // IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+            // saveButton.Click();
+            pls.PlayListModal.ModalSaveButtonClick();
             //Step 10 Select favorite icon for new playlist created in test step 7 
             IWebElement favoritIconHeart4 = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
