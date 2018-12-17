@@ -269,60 +269,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
             return selectedItem;
         }
-        //private IEnumerable<IWebElement> GetModalButtons()
-        //{
-        //    return base.GetModalButtons();
-        //    //var getModalDialog = GetModal();
-        //    //var modalContainer = getModalDialog.FindElement(By.ClassName(_modalContainer));
-        //    //var modalContainerButtons = modalContainer.FindElements(By.TagName("button")).ToList();
-        //    //return modalContainerButtons;
-        //}
-
-        //public bool ModalCancelButtonClick()
-        //{
-        //    try
-        //    {
-        //        base.ModalCancelButtonClick();
-        //        //var cancelButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("aria-label") != null &&
-        //        //                                                    a.GetAttribute("aria-label").Equals("Close", StringComparison.OrdinalIgnoreCase));
-
-        //        //var cancelSpan = cancelButton.FindElement(By.TagName("span"));
-               
-        //        //if (cancelSpan != null)
-        //        //{
-        //        //    cancelSpan.Click();
-        //        //    return true;
-        //        //}
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return false;
-        //    }
-        //    return false;            
-        //}
-
-        //public bool ModalSaveButtonClick()
-        //{
-        //    try
-        //    {
-        //        base.ModalSaveButtonClick();
-
-        //        //var saveButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("type") != null &&
-        //        //                                                  a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals("Save", StringComparison.OrdinalIgnoreCase));
-        //        //if (saveButton != null)
-        //        //{
-        //        //    saveButton.Click();
-        //        //    return true;
-        //        //}
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return false;
-        //    }
-
-        //    return false;
-        //}
+        
 
         public bool ClickOffScreen()
         {
