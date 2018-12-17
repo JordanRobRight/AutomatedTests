@@ -484,6 +484,7 @@ namespace QA.Automation.UITests
         {
             //step 1 loging
             Login();
+            SideBar sb = new SideBar(_driver.Value, _configuration);
             //step 2 select playlists that contains no widget and select able to edit button from main menu
             IWebElement playlistSearchInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
@@ -498,30 +499,46 @@ namespace QA.Automation.UITests
             {
                 IWebElement playlistEditButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.editButtonCssSelector));
                 playlistEditButton1.Click();
-
+                PlayListSettingModal plsm = new PlayListSettingModal(_driver.Value);
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+                plsm.ModalSaveButtonClick();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
                 //TODO: Get element playlist-no-content and get the text from it to compare to.
-                IWebElement saveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
-                saveButton1.Click();
+                //IWebElement saveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+                //saveButton1.Click();
             }
             //step 3 select playlists from main menu
-            IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            //IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
-            playlistsSideBarMenuButton.Click();
-            WaitForMaskModal();
+            sb.SelectMenu("Playlists");
+            sb.Wait(2);
+            //playlistsSideBarMenuButton.Click();
+            //WaitForMaskModal();
             //step 4 select playlists that contains widgets and select able to edit button 
             if (!duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
             {
+               
                 IWebElement playlistEditButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.editButtonCssSelector));
                 playlistEditButton2.Click();
+                
                 //TODO: Get the lement lgfe-card-matrix js-drag-drop-playlist lgfe-card-matrix--layout-row and see if there is more than one
-                IWebElement saveButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
-                saveButton2.Click();
+                PlayListSettingModal plsm = new PlayListSettingModal(_driver.Value);
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+                plsm.ModalSaveButtonClick();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+                //IWebElement saveButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
+                //saveButton2.Click();
             }
             //step 5 select playlists from main menu
-            IWebElement playlistsSideBarMenuButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
-            playlistsSideBarMenuButton1.Click();
-            WaitForMaskModal();
+           
+            //IWebElement playlistsSideBarMenuButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            sb.SelectMenu("Playlists");
+            sb.Wait(2);
+           
+            //playlistsSideBarMenuButton1.Click();
+            //WaitForMaskModal();
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //TODO:Checking that you get a list of playlists.
             //Step 6 logout
             LogOutWithoutLogin();
