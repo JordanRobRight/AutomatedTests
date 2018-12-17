@@ -18,8 +18,10 @@ namespace QA.Automation.UITests.LG20.Pages
         private string _playListNoContents = "playlist-no-content";
         private string _playListContents = "playlist-content";
         private string _playListWidgetContainer = "pmfb-container";
+        private string _playListWidgetArea = "pmfbc-widgets";
         private string _playListWidgetList = "lgfe-card-matrix js-drag-drop-playlist lgfe-card-matrix--layout-row";
         private string _widgetListContainer = "lgfe-cm-card-container js-drag-drop-playlist-container";
+        private string _playListActionBar = @"pm-action-bar pm-action-bar-upper";
         private string _playListScrollArea = "";
         #endregion
 
@@ -59,18 +61,24 @@ namespace QA.Automation.UITests.LG20.Pages
         private IWebElement playListWidgetList => SeleniumCommon.GetElement(Driver, SeleniumCommon.ByType.ClassName, _playListWidgetList);
 
 
-        public IEnumerable<IWebElement> PlayListWidets => GetWidgets(Driver);
+        public IEnumerable<IWebElement> PlayListWidets => GetWidgets(); // (Driver);
 
         public IEnumerable<WidgetListItem> Widgets => GetWidgetList(Driver);
 
+        //public void SelectWidget(string name)
+        //{
+        //    var widgets = GetWidgetList
+        //}
         #endregion
 
-        private IEnumerable<IWebElement> GetWidgets(IWebDriver driver)
+        private IEnumerable<IWebElement> GetWidgets() //IWebDriver driver)
         {
             IEnumerable<IWebElement> p = new List<IWebElement>();
             try
             {
-                p = playListWidgetContainer.FindElements(By.TagName("Button"));
+                var w = playListWidgetContainer.FindElement(By.ClassName(_playListWidgetArea));
+
+                p = w.FindElements(By.TagName("button"));
             }
             catch (Exception e)
             {
@@ -79,6 +87,15 @@ namespace QA.Automation.UITests.LG20.Pages
             }
             
             return p;
+        }
+
+        public void SavePlayList()
+        {
+            var widgets = playListWidgetContainer.GetElementFromCompoundClass(By.TagName("div"), _playListActionBar);
+            var saveButton = widgets.FindElements(By.TagName("button")).FirstOrDefault(a => a.GetAttribute("class") != null && a.GetAttribute("class").Equals("lgfe-button", StringComparison.OrdinalIgnoreCase) 
+                                                    && a.Text.ToLower().StartsWith("save", StringComparison.OrdinalIgnoreCase));
+            saveButton.Click();
+            Wait(2);
         }
         //public override void WaitFor(string itemToWaitFor = "")
         //{
