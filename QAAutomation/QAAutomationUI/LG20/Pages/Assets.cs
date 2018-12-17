@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using QA.Automation.UITests.LG20.Pages.SubCards;
 using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
+
 
 namespace QA.Automation.UITests.LG20.Pages
 {
@@ -54,7 +56,7 @@ namespace QA.Automation.UITests.LG20.Pages
                 assetItems.Should().NotBeNull();
                 assetItems.Should().HaveCountGreaterThan(1);
 
-                return assetItems;
+                return true;
             }
         #endregion
 
