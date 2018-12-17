@@ -1,0 +1,81 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETCoreApp,Version=v2.1": {
+      "XUnitPriority/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "compile": {
+          "bin/placeholder/XUnitPriority.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/XUnitPriority.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "XUnitPriority/1.0.0": {
+      "type": "project",
+      "path": "../XUnitPriority/XUnitPriority.csproj",
+      "msbuildProject": "../XUnitPriority/XUnitPriority.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETCoreApp,Version=v2.1": [
+      "XUnitPriority >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\enwright\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\enwright\\source\\repos\\QAAutomation\\QAAutomation\\FrontEndValidation\\FrontEndValidation.csproj",
+      "projectName": "FrontEndValidation",
+      "projectPath": "C:\\Users\\enwright\\source\\repos\\QAAutomation\\QAAutomation\\FrontEndValidation\\FrontEndValidation.csproj",
+      "packagesPath": "C:\\Users\\enwright\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\enwright\\source\\repos\\QAAutomation\\QAAutomation\\FrontEndValidation\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\enwright\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "netcoreapp2.1"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "projectReferences": {
+            "C:\\Users\\enwright\\source\\repos\\QAAutomation\\QAAutomation\\XUnitPriority\\XUnitPriority.csproj": {
+              "projectPath": "C:\\Users\\enwright\\source\\repos\\QAAutomation\\QAAutomation\\XUnitPriority\\XUnitPriority.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netcoreapp2.1": {
+        "imports": [
+          "net461"
+        ],
+        "assetTargetFallback": true,
+        "warn": true
+      }
+    }
+  }
+}
