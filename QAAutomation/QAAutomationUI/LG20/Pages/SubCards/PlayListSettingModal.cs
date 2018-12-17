@@ -14,8 +14,8 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
     {
         #region -- Fields
 
-        private static string _playListinfoModal = @"playlist-info-modal";
-        private static string _pmfbContainer = @"pmfb-container";
+        //private static string _playListinfoModal = @"playlist-info-modal";
+        //private static string _pmfbContainer = @"pmfb-container";
 
         private static string _modalContainer = @"lg-modal__container";
         private static string _modalSection = @"lg-modal__section";
@@ -40,7 +40,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         private static string _playListFilterTagTypeSelect = @"enter-filter-locations"; // Element: Select By: id
         private static string _playListFilterFieldsClass = @"lg-modal__field";
         private static string _playListFilterByTagsTypeLabel = @"Select your Tag(s)"; // Get by label
-        private static string _playListFilterByTagsSelect = @"lgfe-select"; // element: div By: class
+        //private static string _playListFilterByTagsSelect = @"lgfe-select"; // element: div By: class
 
         private static string _playListFilterPlayerTagsSection = @"lg-modal__field tags-field"; // Element: Div By: ClassName
         private static string _playListFilterPlayerTagsWrapper = @"pim-all-tags-wrapper";
@@ -269,60 +269,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
             return selectedItem;
         }
-        //private IEnumerable<IWebElement> GetModalButtons()
-        //{
-        //    return base.GetModalButtons();
-        //    //var getModalDialog = GetModal();
-        //    //var modalContainer = getModalDialog.FindElement(By.ClassName(_modalContainer));
-        //    //var modalContainerButtons = modalContainer.FindElements(By.TagName("button")).ToList();
-        //    //return modalContainerButtons;
-        //}
-
-        public bool ModalCancelButtonClick()
-        {
-            try
-            {
-                base.ModalCancelButtonClick();
-                //var cancelButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("aria-label") != null &&
-                //                                                    a.GetAttribute("aria-label").Equals("Close", StringComparison.OrdinalIgnoreCase));
-
-                //var cancelSpan = cancelButton.FindElement(By.TagName("span"));
-               
-                //if (cancelSpan != null)
-                //{
-                //    cancelSpan.Click();
-                //    return true;
-                //}
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            return false;            
-        }
-
-        public bool ModalSaveButtonClick()
-        {
-            try
-            {
-                base.ModalSaveButtonClick();
-
-                //var saveButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("type") != null &&
-                //                                                  a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals("Save", StringComparison.OrdinalIgnoreCase));
-                //if (saveButton != null)
-                //{
-                //    saveButton.Click();
-                //    return true;
-                //}
-
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return false;
-        }
+        
 
         public bool ClickOffScreen()
         {
