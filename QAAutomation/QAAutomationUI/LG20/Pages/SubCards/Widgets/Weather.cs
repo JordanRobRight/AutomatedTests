@@ -5,7 +5,7 @@ using OpenQA.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages.SubCards.Widgets
 {
-    internal class Traffic : ModalBasePage
+    internal class Weather : ModalBasePage
     {
         #region --- Fields ---
         private readonly string _modal = "widget-modal";
@@ -13,10 +13,10 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards.Widgets
         private static string _modalClassName = @"widget-modal";
         private static string _modalContainerName = @"lg-modal__container";
         private static string _modalVisableClass = @"lg-modal lg-modal--large lg-modal--visible";
-        private static string _trafficBrandSelect = @"select-brand";
-        private static string _trafficDescription = @"lg-modal-description";
-        private static string _trafficDescriptionContent = @"lg-modal-description-content";
-        private static string _trafficZipCodeError = @"lg-modal__field__input lgfe-input-text small errorInput";
+        private static string _weatherBrandSelect = @"select-brand";
+        private static string _weatherDescription = @"lg-modal-description";
+        private static string _weatherDescriptionContent = @"lg-modal-description-content";
+        private static string _weatherZipCodeError = @"lg-modal__field__input lgfe-input-text small errorInput";
         #endregion
 
         #region --- Properties ---
@@ -25,14 +25,14 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards.Widgets
         {
             get
             {
-                var selectBoxProgramChannel = GetSelect("select", _trafficBrandSelect);
+                var selectBoxProgramChannel = GetSelect("select", _weatherBrandSelect);
                 return selectBoxProgramChannel != null ? selectBoxProgramChannel.SelectedOption.Text : string.Empty;
                 //////////////////////////////////IF     then                                             else 
             }
 
             set
             {
-                var selectBoxProgramChannel = GetSelect("select", _trafficBrandSelect);
+                var selectBoxProgramChannel = GetSelect("select", _weatherBrandSelect);
                 selectBoxProgramChannel.SelectByText(value);
             }
         }
@@ -45,35 +45,35 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards.Widgets
         public string DurationTextBox
         { get; set; }
 
-        public string TrafficDescription
+        public string WeatherDescription
         {
             get
             {
-                var textDescription = GetModal().FindElement(By.ClassName(_trafficDescription));
-                var textDescriptionContent = textDescription.FindElement(By.ClassName(_trafficDescriptionContent));
+                var textDescription = GetModal().FindElement(By.ClassName(_weatherDescription));
+                var textDescriptionContent = textDescription.FindElement(By.ClassName(_weatherDescriptionContent));
                 return textDescriptionContent.Text.Trim();
             }
         }
 
-        public string TrafficZipCodeTextBox
+        public string WeatherZipCodeTextBox
         {
             get
             {
-                var textbox = GetField("input", "id", "traffic-widget-zip");
+                var textbox = GetField("input", "id", "weather-widget-zip");
                 return textbox.Text;
             }
             set
             {
-                var textbox = GetField("input", "id", "traffic-widget-zip");
+                var textbox = GetField("input", "id", "weather-widget-zip");
                 textbox.SendKeys(value);
             }
         }
 
-        public bool TrafficZipCodeError
+        public bool WeatherZipCodeError
         {
             get
             {
-                var textbox = GetField("input", "id", "traffic-widget-zip");
+                var textbox = GetField("input", "id", "weather-widget-zip");
                 var textError = textbox.GetAttribute("class").ToLower().Contains("small errorinput");
                 return textError != null ? true : false;
             }
@@ -81,16 +81,16 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards.Widgets
         #endregion
 
         #region --- Constructor ---
-        internal Traffic(IWebDriver driver) : base (driver, _modalClassName, _modalContainerName, _modalVisableClass)
+        internal Weather(IWebDriver driver) : base (driver, _modalClassName, _modalContainerName, _modalVisableClass)
         {
             _driver = driver;
         }
         #endregion
 
         #region --- Public Methods ---
-        public void ClearTrafficZipCodeTextbox()
+        public void ClearWeatherZipCodeTextbox()
         {
-            var textbox = GetField("input", "id", "traffic-widget-zip");
+            var textbox = GetField("input", "id", "weather-widget-zip");
             textbox.Clear();
         }
         #endregion
