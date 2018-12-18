@@ -36,7 +36,7 @@ namespace QA.Automation.UITests
         private String deviceName;
         private String deviceOrientation;
         private readonly TestConfiguration _configuration = null;
-
+        private readonly EnvironmentData _envData;
         //private const string un = @"DCIArtform";
 
         //private const string ak = @"a4277bd1-3492-4562-99bc-53dd349c52e1";
@@ -50,6 +50,9 @@ namespace QA.Automation.UITests
             this.deviceOrientation = deviceOrientation;
             //_configuration = TestConfiguration.GetTestConfiguration();
             _configuration = ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>();
+
+            var testDataFromFile = ConfigurationSettings.GetSettingsConfiguration<TestData>("TestData.json");
+            _envData = testDataFromFile.Environment.FirstOrDefault(a => a.Name.Equals(_configuration.Environment.ToString(), StringComparison.OrdinalIgnoreCase));
         }
 
         [SetUp]
@@ -2033,14 +2036,15 @@ namespace QA.Automation.UITests
 
             //Step 3 confirm that each player contains one status---needs work TODO
             //TODO: Need to make this work for all players.
-//            string playersGraph = _driver.Value.FindElement(By.CssSelector("#players-table > tbody")).Text;
+            //            string playersGraph = _driver.Value.FindElement(By.CssSelector("#players-table > tbody")).Text;
 
-//            String expectedMessage = "ONLINE";
-//            Assert.True(playersGraph.Contains(expectedMessage));
+            //            String expectedMessage = "ONLINE";
+            //            Assert.True(playersGraph.Contains(expectedMessage));
 
             //Step 4 select a player
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
-            var playerName = @"LG-QAROB";
+            var playerName = _envData.Player; //  @"LG-QAROB";
+
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
@@ -2098,13 +2102,13 @@ namespace QA.Automation.UITests
 
             //Step 3 
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
-            var playerName = "LG-QAROB";
+            var playerName = _envData.Player; // "LG-QAROB";
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
-//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //playerSelect.Click();
-            
+
             player.SelectPlayer(playerName);
 
             player.Wait();
@@ -2235,7 +2239,7 @@ namespace QA.Automation.UITests
             //IWebElement playerSelect = trs.FirstOrDefault(a => a).FindElements(By.TagName("td"))
             //    .FirstOrDefault(b => b.Text.Equals(playerName, StringComparison.OrdinalIgnoreCase));
 
-            var playerName = @"LG-QAROB";
+            var playerName = _envData.Player; // @"LG-QAROB";
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
@@ -2320,7 +2324,7 @@ namespace QA.Automation.UITests
             //Step 3 Select Any player
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1 > span"));
 
-            var playerName = @"LG-QAROB";
+            var playerName = _envData.Player; // @"LG-QAROB";
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
@@ -2387,7 +2391,7 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 3 Select Any player
             // IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
-            var playerName = @"LG-QAROB";
+            var playerName = _envData.Player; //@"LG-QAROB";
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
@@ -2445,7 +2449,7 @@ namespace QA.Automation.UITests
             player.Wait(2);
             //Step 3 Hover over the screen connect icon
             //step 4
-            var playName = @"LG-QAROB";
+            var playName = _envData.Player; //@"LG-QAROB";
             player.SelectPlayer(playName);
 
             //Step 5 Hover over screen connect icon
