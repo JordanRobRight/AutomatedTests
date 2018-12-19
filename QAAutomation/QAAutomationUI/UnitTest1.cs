@@ -1116,31 +1116,16 @@ namespace QA.Automation.UITests
 
             pl.Wait(2);
 
+            LG20.Pages.SubCards.Widgets.video videoWidget = new LG20.Pages.SubCards.Widgets.video(_driver.Value);
 
+            videoWidget.SearchVideoAssets();
+
+            videoWidget.SelectVideo();
+
+            //make a new list of widgets in playlist and compare to the original to assert if the new widget was added
 
             #region --- Old Code ---
 
-            ////step 1 login
-            //Login();
-            ////step 2 Select an existing Playlist
-            //SelectAutomatedPlaylist();
-            ////step 3 Select Add Video Widget
-            //IWebElement videoWidgetButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.videoWidgetCssSelector));
-            //videoWidgetButton.Click();
-            //WaitForMaskModal();
-            ////step 4 Spell check all content (fields/values/buttons), including placeholder text  
-            //Thread.Sleep(TimeSpan.FromSeconds(3));
-            ////step 5 Select 'X' to close window
-            //IWebElement videoXoutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.videoXoutButtonCssSelector));
-            //videoXoutButton.Click();
-            ////step 6 Select Add Video Widget
-            //videoWidgetButton.Click();
-            ////step 7 Click outside window
-            ////OffClick();
-            //SeleniumCommon.ClickOffScreen(_driver.Value, SeleniumCommon.ByType.Css, BaseStrings.playlistSideBarMenuCssSelector);
-            ////step 8 Select Add Video Widget
-            //videoWidgetButton.Click();
-            ////step 9 Select any one video            
             //IWebElement videoAssestLibrarySearchInput = _driver.Value.FindElement(By.Id("asset-search"));
             //videoAssestLibrarySearchInput.SendKeys("a");
             //IWebElement videoAssestSelection = _driver.Value.FindElement(By.XPath(BaseStrings.videoAssestSelectionXPath));

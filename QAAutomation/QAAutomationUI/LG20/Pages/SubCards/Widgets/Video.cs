@@ -52,7 +52,19 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards.Widgets
         #endregion
 
         #region --- Public Methods ---
-        
+
+        public void SearchVideoAssets()
+        {
+            var searchBox = GetField("input", "id", "asset-search");
+            searchBox.SendKeys("test");
+        }
+
+        public void SelectVideo()
+        {
+            var assetSelection = GetField("div","class", "avsfim-name");
+            assetSelection.Click();
+        }
+
         #endregion
 
         #region --- Private Methods ---
