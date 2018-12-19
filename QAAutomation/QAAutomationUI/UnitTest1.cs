@@ -1101,60 +1101,82 @@ namespace QA.Automation.UITests
         [Description("Test case 834")]
         public void AddVideoWidget()
         {
-            //step 1 login
             Login();
-            //step 2 Select an existing Playlist
+
             SelectAutomatedPlaylist();
-            //step 3 Select Add Video Widget
-            IWebElement videoWidgetButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.videoWidgetCssSelector));
-            videoWidgetButton.Click();
-            WaitForMaskModal();
-            //step 4 Spell check all content (fields/values/buttons), including placeholder text  
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(3));
-            //step 5 Select 'X' to close window
-            IWebElement videoXoutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.videoXoutButtonCssSelector));
-            videoXoutButton.Click();
-            //step 6 Select Add Video Widget
-            videoWidgetButton.Click();
-            //step 7 Click outside window
-            //OffClick();
-            SeleniumCommon.ClickOffScreen(_driver.Value, SeleniumCommon.ByType.Css, BaseStrings.playlistSideBarMenuCssSelector);
-            //step 8 Select Add Video Widget
-            videoWidgetButton.Click();
-            //step 9 Select any one video            
-            IWebElement videoAssestLibrarySearchInput = _driver.Value.FindElement(By.Id("asset-search"));
-            videoAssestLibrarySearchInput.SendKeys("a");
-            IWebElement videoAssestSelection = _driver.Value.FindElement(By.XPath(BaseStrings.videoAssestSelectionXPath));
-            videoAssestSelection.Click();
-            //step 10 Select Done
-            IWebElement videoWidgetDoneButton = _driver.Value.FindElement(By.XPath(BaseStrings.videoWidgetDoneButtonXpath));
-            videoWidgetDoneButton.Click();
-            //step 11 Select Add Video Widget
-            videoWidgetButton.Click();
-            WaitForMaskModal();
-            //step 12 Select multiple videos
-            //IWebElement brandDropdown = _driver.Value.FindElement(By.XPath(BaseStrings.healthWidgetDropDown));
-            //var selectBrandDropDown = new SelectElement(brandDropdown);
-            //selectBrandDropDown.SelectByValue("buick");
-            IWebElement option1 = _driver.Value.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[1]"));
-            IWebElement option2 = _driver.Value.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[2]"));
-            IWebElement option3 = _driver.Value.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[3]"));
 
-            option1.Click();
-            option2.Click();
-            option3.Click();
+            PlayList pl = new PlayList(_driver.Value, _configuration);// TestConfiguration.GetTestConfiguration());
+            pl.Wait(2);
+            
+            IWebElement videoButton = pl.PlayListWidets.FirstOrDefault(a => a.Text.ToLower().Contains("video"));
+            
+            Assert.IsNotNull(videoButton);
 
-            //step 13 Select Done
-            IWebElement videoWidgetDoneButton1 = _driver.Value.FindElement(By.XPath(BaseStrings.videoWidgetDoneButtonXpath));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            videoWidgetDoneButton1.Click();
-            //step 14 Select Save from Playlist screen
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSaveButtonCssSelector));
-            saveButton.Click();
+            videoButton.Click();
 
-            //step 15 Logout
-            LogOutWithoutLogin();
+            pl.Wait(2);
+
+
+
+            #region --- Old Code ---
+
+            ////step 1 login
+            //Login();
+            ////step 2 Select an existing Playlist
+            //SelectAutomatedPlaylist();
+            ////step 3 Select Add Video Widget
+            //IWebElement videoWidgetButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.videoWidgetCssSelector));
+            //videoWidgetButton.Click();
+            //WaitForMaskModal();
+            ////step 4 Spell check all content (fields/values/buttons), including placeholder text  
+            //Thread.Sleep(TimeSpan.FromSeconds(3));
+            ////step 5 Select 'X' to close window
+            //IWebElement videoXoutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.videoXoutButtonCssSelector));
+            //videoXoutButton.Click();
+            ////step 6 Select Add Video Widget
+            //videoWidgetButton.Click();
+            ////step 7 Click outside window
+            ////OffClick();
+            //SeleniumCommon.ClickOffScreen(_driver.Value, SeleniumCommon.ByType.Css, BaseStrings.playlistSideBarMenuCssSelector);
+            ////step 8 Select Add Video Widget
+            //videoWidgetButton.Click();
+            ////step 9 Select any one video            
+            //IWebElement videoAssestLibrarySearchInput = _driver.Value.FindElement(By.Id("asset-search"));
+            //videoAssestLibrarySearchInput.SendKeys("a");
+            //IWebElement videoAssestSelection = _driver.Value.FindElement(By.XPath(BaseStrings.videoAssestSelectionXPath));
+            //videoAssestSelection.Click();
+            ////step 10 Select Done
+            //IWebElement videoWidgetDoneButton = _driver.Value.FindElement(By.XPath(BaseStrings.videoWidgetDoneButtonXpath));
+            //videoWidgetDoneButton.Click();
+            ////step 11 Select Add Video Widget
+            //videoWidgetButton.Click();
+            //WaitForMaskModal();
+            ////step 12 Select multiple videos
+            ////IWebElement brandDropdown = _driver.Value.FindElement(By.XPath(BaseStrings.healthWidgetDropDown));
+            ////var selectBrandDropDown = new SelectElement(brandDropdown);
+            ////selectBrandDropDown.SelectByValue("buick");
+            //IWebElement option1 = _driver.Value.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[1]"));
+            //IWebElement option2 = _driver.Value.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[2]"));
+            //IWebElement option3 = _driver.Value.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[3]"));
+
+            //option1.Click();
+            //option2.Click();
+            //option3.Click();
+
+            ////step 13 Select Done
+            //IWebElement videoWidgetDoneButton1 = _driver.Value.FindElement(By.XPath(BaseStrings.videoWidgetDoneButtonXpath));
+            //Thread.Sleep(TimeSpan.FromSeconds(10));
+            //videoWidgetDoneButton1.Click();
+            ////step 14 Select Save from Playlist screen
+            //Thread.Sleep(TimeSpan.FromSeconds(10));
+            //IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSaveButtonCssSelector));
+            //saveButton.Click();
+
+            ////step 15 Logout
+            //LogOutWithoutLogin();
+
+
+            #endregion
 
         }
 
