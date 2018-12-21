@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
 using QA.Automation.APITests.LG20.Services;
 using QA.Automation.APITests.Models;
-using QA.Automation.Common;
 
 namespace QA.Automation.APITests.LG20
 {
@@ -43,7 +40,8 @@ namespace QA.Automation.APITests.LG20
             {LGMServiceType.Subaru_SDSAppSettingsService, a => new LGMSubaruTrimAccessoriesService(a)},
             {LGMServiceType.Subaru_TrimComparisonService, a => new LGMSubaruTrimComparisonServicee(a)},
             {LGMServiceType.Subaru_VehicleTrimsService, a => new LGMSubaruVehicleComparisonServicee(a)},
-
+            {LGMServiceType.ProfileService, a => new LGMProfileService(a)},
+            {LGMServiceType.ServiceAppointmentsService, a => new LGMServiceAppointmentsService(a)},
 
         };
 

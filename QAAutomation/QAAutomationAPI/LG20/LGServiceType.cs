@@ -36,5 +36,7 @@ namespace QA.Automation.APITests.LG20
         Subaru_VehicleTrimsService,
         LiveGuide1Service,
         Subaru_TrimComparisonService,
+        ProfileService,
+        ServiceAppointmentsService,
     }
 }

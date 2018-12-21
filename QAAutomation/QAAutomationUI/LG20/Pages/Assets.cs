@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using QA.Automation.UITests.LG20.Pages.SubCards;
 using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
+
 
 namespace QA.Automation.UITests.LG20.Pages
 {
@@ -42,7 +44,19 @@ namespace QA.Automation.UITests.LG20.Pages
 
             public override bool VerifyPage()
             {
-                throw new NotImplementedException();
+                var assetsContainer = Driver.FindElement(By.Id("page-container"));
+                assetsContainer.Should().NotBeNull();
+                var assetsListContentWrapper = assetsContainer.GetElementFromCompoundClass(By.TagName("div"),
+                        "assets-content-wrapper js-assets-content");
+                assetsListContentWrapper.Should().NotBeNull();
+                var assetContents = assetsListContentWrapper.FindElement(By.ClassName("assets-content"));
+                assetContents.Should().NotBeNull();
+                var assetItems = assetContents.FindElements(By.TagName("div"))
+                    .Where(a => a.GetAttribute("data-guid") != null).Select(a => a).ToList();
+                assetItems.Should().NotBeNull();
+                assetItems.Should().HaveCountGreaterThan(1);
+
+                return true;
             }
         #endregion
 

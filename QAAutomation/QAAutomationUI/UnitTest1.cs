@@ -36,7 +36,7 @@ namespace QA.Automation.UITests
         private String deviceName;
         private String deviceOrientation;
         private readonly TestConfiguration _configuration = null;
-
+        private readonly EnvironmentData _envData;
         //private const string un = @"DCIArtform";
 
         //private const string ak = @"a4277bd1-3492-4562-99bc-53dd349c52e1";
@@ -50,6 +50,9 @@ namespace QA.Automation.UITests
             this.deviceOrientation = deviceOrientation;
             //_configuration = TestConfiguration.GetTestConfiguration();
             _configuration = ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>();
+
+            var testDataFromFile = ConfigurationSettings.GetSettingsConfiguration<TestData>("TestData.json");
+            _envData = testDataFromFile.Environment.FirstOrDefault(a => a.Name.Equals(_configuration.Environment.ToString(), StringComparison.OrdinalIgnoreCase));
         }
 
         [SetUp]
@@ -1098,60 +1101,67 @@ namespace QA.Automation.UITests
         [Description("Test case 834")]
         public void AddVideoWidget()
         {
-            //step 1 login
             Login();
-            //step 2 Select an existing Playlist
+
             SelectAutomatedPlaylist();
-            //step 3 Select Add Video Widget
-            IWebElement videoWidgetButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.videoWidgetCssSelector));
-            videoWidgetButton.Click();
-            WaitForMaskModal();
-            //step 4 Spell check all content (fields/values/buttons), including placeholder text  
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(3));
-            //step 5 Select 'X' to close window
-            IWebElement videoXoutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.videoXoutButtonCssSelector));
-            videoXoutButton.Click();
-            //step 6 Select Add Video Widget
-            videoWidgetButton.Click();
-            //step 7 Click outside window
-            //OffClick();
-            SeleniumCommon.ClickOffScreen(_driver.Value, SeleniumCommon.ByType.Css, BaseStrings.playlistSideBarMenuCssSelector);
-            //step 8 Select Add Video Widget
-            videoWidgetButton.Click();
-            //step 9 Select any one video            
-            IWebElement videoAssestLibrarySearchInput = _driver.Value.FindElement(By.Id("asset-search"));
-            videoAssestLibrarySearchInput.SendKeys("a");
-            IWebElement videoAssestSelection = _driver.Value.FindElement(By.XPath(BaseStrings.videoAssestSelectionXPath));
-            videoAssestSelection.Click();
-            //step 10 Select Done
-            IWebElement videoWidgetDoneButton = _driver.Value.FindElement(By.XPath(BaseStrings.videoWidgetDoneButtonXpath));
-            videoWidgetDoneButton.Click();
-            //step 11 Select Add Video Widget
-            videoWidgetButton.Click();
-            WaitForMaskModal();
-            //step 12 Select multiple videos
-            //IWebElement brandDropdown = _driver.Value.FindElement(By.XPath(BaseStrings.healthWidgetDropDown));
-            //var selectBrandDropDown = new SelectElement(brandDropdown);
-            //selectBrandDropDown.SelectByValue("buick");
-            IWebElement option1 = _driver.Value.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[1]"));
-            IWebElement option2 = _driver.Value.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[2]"));
-            IWebElement option3 = _driver.Value.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[3]"));
 
-            option1.Click();
-            option2.Click();
-            option3.Click();
+            PlayList pl = new PlayList(_driver.Value, _configuration);// TestConfiguration.GetTestConfiguration());
+            pl.Wait(2);
+            
+            IWebElement videoButton = pl.PlayListWidets.FirstOrDefault(a => a.Text.ToLower().Contains("video"));
+            
+            Assert.IsNotNull(videoButton);
 
-            //step 13 Select Done
-            IWebElement videoWidgetDoneButton1 = _driver.Value.FindElement(By.XPath(BaseStrings.videoWidgetDoneButtonXpath));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            videoWidgetDoneButton1.Click();
-            //step 14 Select Save from Playlist screen
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSaveButtonCssSelector));
-            saveButton.Click();
+            videoButton.Click();
 
-            //step 15 Logout
-            LogOutWithoutLogin();
+            pl.Wait(2);
+
+            LG20.Pages.SubCards.Widgets.video videoWidget = new LG20.Pages.SubCards.Widgets.video(_driver.Value);
+
+            videoWidget.SearchVideoAssets();
+
+            videoWidget.SelectVideo();
+
+            //make a new list of widgets in playlist and compare to the original to assert if the new widget was added
+
+            #region --- Old Code ---
+
+            //IWebElement videoAssestLibrarySearchInput = _driver.Value.FindElement(By.Id("asset-search"));
+            //videoAssestLibrarySearchInput.SendKeys("a");
+            //IWebElement videoAssestSelection = _driver.Value.FindElement(By.XPath(BaseStrings.videoAssestSelectionXPath));
+            //videoAssestSelection.Click();
+            ////step 10 Select Done
+            //IWebElement videoWidgetDoneButton = _driver.Value.FindElement(By.XPath(BaseStrings.videoWidgetDoneButtonXpath));
+            //videoWidgetDoneButton.Click();
+            ////step 11 Select Add Video Widget
+            //videoWidgetButton.Click();
+            //WaitForMaskModal();
+            ////step 12 Select multiple videos
+            ////IWebElement brandDropdown = _driver.Value.FindElement(By.XPath(BaseStrings.healthWidgetDropDown));
+            ////var selectBrandDropDown = new SelectElement(brandDropdown);
+            ////selectBrandDropDown.SelectByValue("buick");
+            //IWebElement option1 = _driver.Value.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[1]"));
+            //IWebElement option2 = _driver.Value.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[2]"));
+            //IWebElement option3 = _driver.Value.FindElement(By.XPath("//*[@id='asset-video-select-form']/div[2]/div[3]"));
+
+            //option1.Click();
+            //option2.Click();
+            //option3.Click();
+
+            ////step 13 Select Done
+            //IWebElement videoWidgetDoneButton1 = _driver.Value.FindElement(By.XPath(BaseStrings.videoWidgetDoneButtonXpath));
+            //Thread.Sleep(TimeSpan.FromSeconds(10));
+            //videoWidgetDoneButton1.Click();
+            ////step 14 Select Save from Playlist screen
+            //Thread.Sleep(TimeSpan.FromSeconds(10));
+            //IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSaveButtonCssSelector));
+            //saveButton.Click();
+
+            ////step 15 Logout
+            //LogOutWithoutLogin();
+
+
+            #endregion
 
         }
 
@@ -2033,14 +2043,15 @@ namespace QA.Automation.UITests
 
             //Step 3 confirm that each player contains one status---needs work TODO
             //TODO: Need to make this work for all players.
-//            string playersGraph = _driver.Value.FindElement(By.CssSelector("#players-table > tbody")).Text;
+            //            string playersGraph = _driver.Value.FindElement(By.CssSelector("#players-table > tbody")).Text;
 
-//            String expectedMessage = "ONLINE";
-//            Assert.True(playersGraph.Contains(expectedMessage));
+            //            String expectedMessage = "ONLINE";
+            //            Assert.True(playersGraph.Contains(expectedMessage));
 
             //Step 4 select a player
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
-            var playerName = @"LG-QAROB";
+            var playerName = _envData.Player; //  @"LG-QAROB";
+
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
@@ -2098,13 +2109,13 @@ namespace QA.Automation.UITests
 
             //Step 3 
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
-            var playerName = "LG-QAROB";
+            var playerName = _envData.Player; // "LG-QAROB";
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
-//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //playerSelect.Click();
-            
+
             player.SelectPlayer(playerName);
 
             player.Wait();
@@ -2235,7 +2246,7 @@ namespace QA.Automation.UITests
             //IWebElement playerSelect = trs.FirstOrDefault(a => a).FindElements(By.TagName("td"))
             //    .FirstOrDefault(b => b.Text.Equals(playerName, StringComparison.OrdinalIgnoreCase));
 
-            var playerName = @"LG-QAROB";
+            var playerName = _envData.Player; // @"LG-QAROB";
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
@@ -2320,7 +2331,7 @@ namespace QA.Automation.UITests
             //Step 3 Select Any player
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1 > span"));
 
-            var playerName = @"LG-QAROB";
+            var playerName = _envData.Player; // @"LG-QAROB";
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
@@ -2387,7 +2398,7 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 3 Select Any player
             // IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
-            var playerName = @"LG-QAROB";
+            var playerName = _envData.Player; //@"LG-QAROB";
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
@@ -2445,7 +2456,7 @@ namespace QA.Automation.UITests
             player.Wait(2);
             //Step 3 Hover over the screen connect icon
             //step 4
-            var playName = @"LG-QAROB";
+            var playName = _envData.Player; //@"LG-QAROB";
             player.SelectPlayer(playName);
 
             //Step 5 Hover over screen connect icon
