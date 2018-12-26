@@ -5,6 +5,10 @@
       "Name": "Test",
       "Player": "LG-QAROB"
 
+    },
+    {
+      "Name": "PreProd",
+      "Player": "LG-GREGDEV"
     }
   ]
 }
