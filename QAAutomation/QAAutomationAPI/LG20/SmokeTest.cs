@@ -50,7 +50,7 @@ namespace QA.Automation.APITests.LG20
                 {LGMServiceType.LiveGuide1Service,"" },
                 {LGMServiceType.Subaru_TrimComparisonService,"" },
                 {LGMServiceType.ProfileService,"" },
-                {LGMServiceType.ServiceAppointmentsService,"" }
+               // {LGMServiceType.ServiceAppointmentsService,"" }
       };
         private readonly string _url = string.Empty;
 
