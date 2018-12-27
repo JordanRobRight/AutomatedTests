@@ -868,6 +868,9 @@ namespace QA.Automation.UITests
             SelectAutomatedPlaylist();
             PlayList pl = new PlayList(_driver.Value, _configuration);// TestConfiguration.GetTestConfiguration());
 
+            pl.Wait();
+
+
             IWebElement traffic = pl.PlayListWidets.FirstOrDefault(a => a.Text.ToLower().Contains("traffic"));
             //WidgetListItem tr = pl.Widgets.FirstOrDefault(a => a.Name.ToLower().Contains("traffic"));
             Assert.IsNotNull(traffic);
@@ -959,8 +962,9 @@ namespace QA.Automation.UITests
             //step 17 create all brands
             //step 18 select save from playlist screen
             //IWebElement playlistSave = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSaveCSSSelector));
-           // WaitForMaskModal();
+            // WaitForMaskModal();
             //playlistSave.Click();
+            pl.Wait(2);
             pl.SavePlayList();
             //step 19 logout
             LogOutWithoutLogin();
@@ -1465,7 +1469,7 @@ namespace QA.Automation.UITests
             SelectAutomatedPlaylist();
             //step 3 Select Add Weather Widget 
             PlayList pl = new PlayList(_driver.Value, _configuration);// TestConfiguration.GetTestConfiguration());
-            pl.Wait(2);
+            pl.Wait();
             //IWebElement weatherWidget = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetCSSSelector));
             //WaitForMaskModal();
             //weatherWidget.Click();

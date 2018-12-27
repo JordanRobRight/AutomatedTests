@@ -10,12 +10,12 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards.Widgets
         #region --- Fields ---
         private readonly string _modal = "widget-modal";
         private IWebDriver _driver;
-        private static string _modalClassName = @"widget-modal";
-        private static string _modalContainerName = @"lg-modal__container";
-        private static string _modalVisableClass = @"lg-modal lg-modal--large lg-modal--visible";
-        private static string _videoBrandSelect = @"select-brand";
-        private static string _videoDescription = @"lg-modal-description";
-        private static string _videoDescriptionContent = @"lg-modal-description-content";
+        private static string _modalClassName = @"asset-search";
+        private static string _modalContainerName = @"lg-modal__content";
+        private static string _modalVisableClass = @"lg-modal__panel";
+        //private static string _videoBrandSelect = @"select-brand";
+        //private static string _videoDescription = @"lg-modal-description";
+        //private static string _videoDescriptionContent = @"lg-modal-description-content";
         #endregion
 
         #region --- Properties ---
