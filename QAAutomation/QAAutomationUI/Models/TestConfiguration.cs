@@ -10,6 +10,7 @@ namespace QA.Automation.UITests.Models
         [JsonProperty]
         //public string Environment { get; set; }
         public Common.EnvironmentType Environment { get; set; }
+        public Common.EnvironmentType Email { get; set; }
         [JsonProperty]
         public string SauceLabsUser { get; set; }
         [JsonProperty]

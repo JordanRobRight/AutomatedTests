@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using QA.Automation.UITests.LG20.Pages.SubCards;
 using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
+
 
 namespace QA.Automation.UITests.LG20.Pages
 {
@@ -34,16 +36,28 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #region -- Methods --
 
-            #region -- Overrides --
-            public override void Perform()
-            {
-                throw new NotImplementedException();
-            }
+        #region -- Overrides --
+        public override void Perform()
+        {
+            throw new NotImplementedException();
+        }
 
-            public override bool VerifyPage()
-            {
-                throw new NotImplementedException();
-            }
+        public override bool VerifyPage()
+        {
+            var assetsContainer = Driver.FindElement(By.Id("page-container"));
+            assetsContainer.Should().NotBeNull();
+            var assetsListContentWrapper = assetsContainer.GetElementFromCompoundClass(By.TagName("div"),
+                    "assets-content-wrapper js-assets-content");
+            assetsListContentWrapper.Should().NotBeNull();
+            var assetContents = assetsListContentWrapper.FindElement(By.ClassName("assets-content"));
+            assetContents.Should().NotBeNull();
+            var assetItems = assetContents.FindElements(By.TagName("div"))
+                .Where(a => a.GetAttribute("data-guid") != null).Select(a => a).ToList();
+            assetItems.Should().NotBeNull();
+            assetItems.Should().HaveCountGreaterThan(1);
+
+            return true;
+        }
         #endregion
 
         public IWebElement GetAssetSearchInput()
@@ -56,7 +70,7 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             var buttons = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, assetsFuncitonBar)
                 .FindElements(By.TagName("button"));
-            IWebElement button = buttons.FirstOrDefault(b=> b.GetAttribute("title") != null && b.GetAttribute("title").Equals("Add New Asset", StringComparison.OrdinalIgnoreCase));
+            IWebElement button = buttons.FirstOrDefault(b => b.GetAttribute("title") != null && b.GetAttribute("title").Equals("Add New Asset", StringComparison.OrdinalIgnoreCase));
             return button;
         }
 
@@ -66,12 +80,12 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             List<AssetItem> displayOptions = new List<AssetItem>();
 
-            var displayOptionButtons = Driver.FindElement(By.ClassName("amub-layout-type")).FindElements(By.ClassName("amublt-field")).ToList(); 
+            var displayOptionButtons = Driver.FindElement(By.ClassName("amub-layout-type")).FindElements(By.ClassName("amublt-field")).ToList();
 
 
             foreach (IWebElement button in displayOptionButtons)
             {
-                AssetItem buttonItem = new AssetItem(Driver) {Name = button.Text, WebElement = button};
+                AssetItem buttonItem = new AssetItem(Driver) { Name = button.Text, WebElement = button };
                 displayOptions.Add(buttonItem);
             }
 
