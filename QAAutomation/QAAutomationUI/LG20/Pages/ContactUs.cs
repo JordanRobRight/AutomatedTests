@@ -75,9 +75,8 @@ namespace QA.Automation.UITests.LG20.Pages
 
             set
             {
-
                 var getField = GetField("input", "id", contactFullNameId);
-                getField?.SendKeys(value);
+                TypeOrClearField(getField, value);
             }
         }
 
@@ -340,7 +339,19 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #region --- Private Methods ---
 
+        private bool TypeOrClearField<T>(IWebElement field, T theValue)
+        {
 
+            var getField = GetField("input", "id", contactFullNameId);
+            if (theValue != null)
+            {
+                getField?.SendKeys(theValue.ToString());
+            }
+            else
+            {
+                getField?.Clear();
+            }
+        }
 
 
 
