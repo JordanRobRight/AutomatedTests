@@ -35,7 +35,7 @@ namespace QA.Automation.UITests.LG20
 
         public virtual void Wait(int numberOfSeconds = 5)
         {
-            Thread.Sleep(TimeSpan.FromSeconds(numberOfSeconds));
+            Thread.Sleep(TimeSpan.FromSeconds(numberOfSeconds + _config.SlidingWaitFactor));
         }
 
         public abstract void Perform();

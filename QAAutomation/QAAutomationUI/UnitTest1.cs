@@ -345,6 +345,7 @@ namespace QA.Automation.UITests
             // playlistAddForm.SendKeys(playlistName);
 
             pls.PlayListModal.PlayListNameTextField = playlistName;
+            // RK - This should be pls.PlayListModal.PlayListDescriptionTextField and set that to null. 
             pls.ClearDescriptionTextbox();
             //pls.ModalNameEditField.SendKeys(playlistName);
 

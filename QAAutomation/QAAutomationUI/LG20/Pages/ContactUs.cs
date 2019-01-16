@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using QA.Automation.UITests.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages
 {
@@ -76,7 +77,7 @@ namespace QA.Automation.UITests.LG20.Pages
             set
             {
                 var getField = GetField("input", "id", contactFullNameId);
-                TypeOrClearField(getField, value);
+                getField?.SendKeysOrClear(value);
             }
         }
 
@@ -201,6 +202,9 @@ namespace QA.Automation.UITests.LG20.Pages
         /// <summary>
         /// verify popup being displayed and verify the success message
         /// </summary>
+        // RK - Please move the .Should() statement to the actual test method in UnitTest.cs. It is returning the text anyway.
+        // The reason is that the test method should do the asserts not this class. There could be an instance
+        // depending on user roles that the message might be slightly different which is where we do the test in the Test method. 
         public string ContactNotificationMessage()
         {
                 Wait(2);
@@ -338,21 +342,6 @@ namespace QA.Automation.UITests.LG20.Pages
         #endregion
 
         #region --- Private Methods ---
-
-        private bool TypeOrClearField<T>(IWebElement field, T theValue)
-        {
-
-            var getField = GetField("input", "id", contactFullNameId);
-            if (theValue != null)
-            {
-                getField?.SendKeys(theValue.ToString());
-            }
-            else
-            {
-                getField?.Clear();
-            }
-        }
-
 
 
         #endregion

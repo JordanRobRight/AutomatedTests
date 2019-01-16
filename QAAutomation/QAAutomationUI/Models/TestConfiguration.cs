@@ -27,6 +27,8 @@ namespace QA.Automation.UITests.Models
         public string LGUser { get; set; }
         [JsonProperty]
         public string LGPassword { get; set; }
+        [JsonProperty]
+        public int SlidingWaitFactor { get; set; }
 
 
         //public static TestConfiguration GetTestConfiguration()

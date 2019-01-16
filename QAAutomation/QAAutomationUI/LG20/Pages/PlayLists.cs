@@ -67,6 +67,7 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #region -- Overrides --
 
+        // This method can be removed because the base class has it. 
         public override void Wait(int seconds = 2)
         {
             base.Wait(seconds);
@@ -142,6 +143,10 @@ namespace QA.Automation.UITests.LG20.Pages
             }
             return true;
         }
+
+        // I not sure why this method is here and I don't think it is needed.
+        // If you are going to clear out the description for the playlist settings modal, you should just be able to set null to the description field and that should clear it out.
+        // 
         public void ClearDescriptionTextbox()
         {
             Wait(2);
@@ -149,6 +154,15 @@ namespace QA.Automation.UITests.LG20.Pages
             clearDescription.Clear();
            
         }
+
+        // RK - Comments - 1/16/19
+        // A suggestion. Convert this method to build a return List<string> of playlist names and in the CreatePlaylists in UnitTest1.cs do the verification there. 
+        // I see that this method will expand out more to include the ability to click on the individual items in the playlist line item. Actually the GetPlayList private method I believe is doing something similar
+        // On the .Contains method call. This should be changed to be Equal with StringComparison.OrdinalIgnoreCase filter on it because using .Contains will include items that might not want.
+        // For instance,  the name of the playlist is 'Test' that you just created but you have Test1, Test2 and Test3 in the playlist section. The result would be true because it matched the word 
+        // Test which is what all three items contain. If you change it to equals, then the result would be false because there isn't an playlist of Test.
+        // One more item - the test method should do the asserts not in the POM. There could be an instance
+        // depending on user roles that the message might be slightly different which is where we do the test in the Test method. So returning a list of strings, the test method will determine what to validate.
         public string VerifyCreatedPlaylist(string createdPlaylistName)
         {
             Wait(2);
