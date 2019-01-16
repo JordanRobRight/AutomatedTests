@@ -5,6 +5,8 @@ using OpenQA.Selenium;
 using QA.Automation.UITests.LG20.Pages.SubCards;
 using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
+using FluentAssertions;
+using NUnit.Framework;
 
 namespace QA.Automation.UITests.LG20.Pages
 {
@@ -26,9 +28,10 @@ namespace QA.Automation.UITests.LG20.Pages
         private string _playListScrollArea = "";
 
         // Modal popup - Update to support new filter changes
-       // private readonly string _playListName = @"playlist-info-field-name"; // Element: Input By: Name
-       // private readonly string _playListDescription = @"playlist-info-description"; // Element: TextArea By: Name
-
+        // private readonly string _playListName = @"playlist-info-field-name"; // Element: Input By: Name
+        // private readonly string _playListDescription = @"playlist-info-description"; // Element: TextArea By: Name
+        private readonly string _playListDescription = @"//label[text()='Playlist Description']//following-sibling::textarea[@id='form-textarea']"; // xpath to find unique player description emelent
+        private readonly string _playerListNameCss = @"lgfe-cm-information";// first element in playlist
         //private readonly string _playListFilterByClientProgramAndChannel = @"Filtered by client program and channel(s)"; // Search for checkbox with this text.
         //private readonly string _playListFilterSelectClientProgram = @"select-filter-program"; // Element: Select By: id
         //private readonly string _playListFilterSelectFilter = @"select-filter"; // Element: Select By: id
@@ -60,7 +63,7 @@ namespace QA.Automation.UITests.LG20.Pages
         //}
         #endregion
 
-        #region -- Methods -- 
+      
 
         #region -- Overrides --
 
@@ -77,8 +80,10 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             throw new NotImplementedException();
         }
-        #endregion
-        #endregion
+
+        
+        # endregion
+        
 
         #region -- Properties --
 
@@ -118,6 +123,7 @@ namespace QA.Automation.UITests.LG20.Pages
         }
         #endregion
 
+        #region -- Public Methods --
         public bool AddButtonClick()
         {
             try
@@ -136,7 +142,38 @@ namespace QA.Automation.UITests.LG20.Pages
             }
             return true;
         }
+        public void ClearDescriptionTextbox()
+        {
+            Wait(2);
+            IWebElement clearDescription = Driver.FindElement(By.XPath(_playListDescription));
+            clearDescription.Clear();
+           
+        }
+        public string VerifyCreatedPlaylist(string createdPlaylistName)
+        {
+            Wait(2);
 
+            IList<IWebElement> List = Driver.FindElements(By.ClassName(_playerListNameCss));
+            foreach (IWebElement playList_List1 in List)
+            {
+                string toCompare = playList_List1.Text;
+                if (toCompare.Contains(createdPlaylistName))
+                {
+                    // Assert.IsTrue(toCompare.Contains(createdPlaylistName),"created playerlist not presnet in container");
+                    //toCompare.Should().Be(createdPlaylistName);
+                    break;
+
+                }
+                Assert.IsTrue(toCompare.Contains(createdPlaylistName), "created playerlist not presnet in container");
+
+            }
+
+            return createdPlaylistName;
+        }
+
+        #endregion
+
+        #region -- Private Methods --
         private List<PlayListItem> GetPlayList(IWebDriver driver)
         {
             List<PlayListItem> pls = new List<PlayListItem>();
@@ -168,6 +205,8 @@ namespace QA.Automation.UITests.LG20.Pages
             
             return pls;
         }
+
+        #endregion
     }
 
 }

@@ -241,7 +241,7 @@ namespace QA.Automation.UITests
         [Description("Test case #580")]
         public void CreatePlaylists()
         {
-
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
             //step 1 login
             Login();//remove to do full test
 
@@ -333,14 +333,19 @@ namespace QA.Automation.UITests
             //    //throw;
             //}
 
+            //step 11: Remove the Playlist Description 
+            pls.PlayListModal.PlayListDescriptionTextField = "Automated Playlist Test Desc" + DateTime.Now.ToString();
+            pls.PlayListModal.ModalSaveButtonClick();
 
-            //Step 11 Enter a playlist name
+            pls.ClearDescriptionTextbox();
+
+            //Step 12:  Enter a playlist name
             string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
             // IWebElement playlistAddForm = _driver.Value.FindElement(By.Id("form-name"));
             // playlistAddForm.SendKeys(playlistName);
 
             pls.PlayListModal.PlayListNameTextField = playlistName;
-
+            pls.ClearDescriptionTextbox();
             //pls.ModalNameEditField.SendKeys(playlistName);
 
 
@@ -349,6 +354,8 @@ namespace QA.Automation.UITests
 
             //pls.ModalSaveButton.Click();
             pls.PlayListModal.ModalSaveButtonClick();
+            pls.Wait();
+            pls.VerifyCreatedPlaylist(playlistName);
             if (pls.PlayListModal.IsModalDisplay)
             {
                 // Assert.IsTrue(pls.PlayListModal.IsModalDisplay);
