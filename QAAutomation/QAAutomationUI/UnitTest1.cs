@@ -18,6 +18,8 @@ using QA.Automation.UITests.LG20.Pages;
 using QA.Automation.UITests.LG20.Pages.SubCards;
 using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
+using FluentAssertions;
+using FluentAssertions.Collections;
 
 
 namespace QA.Automation.UITests
@@ -1826,7 +1828,7 @@ namespace QA.Automation.UITests
 
         }
 
-        [TestCase]
+      /*  [TestCase]
         [Category("All")]
         public void ContactUsWithrequiredFields()
         {
@@ -1944,7 +1946,7 @@ namespace QA.Automation.UITests
             ContactUsDoneButton.Click();
 
             LogOutWithoutLogin();
-        }
+        }*/
 
         [TestCase]
         [Category("All")]
@@ -1953,65 +1955,83 @@ namespace QA.Automation.UITests
         {
             //RK - Since this test replaces the old test, please comment out the old one for now. At some point we will be deleting it. 
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(11));
             //Step 1
             Login();
 
             //Step 2
             SideBar sb = new SideBar(_driver.Value, _configuration);
-
+           
             sb.SelectMenu("Contact Us");
             ContactUs cus = new ContactUs(_driver.Value, _configuration);
 
             // RK - Here i believe you can just call cus.Wait(4) since Wait is part of the base class.
-            Thread.Sleep(4000);
+            cus.Wait(4);
+            cus.ClickSendButton();
+            cus.Wait(2);
+            cus.VerifyFullNameFieldError();     
+
             cus.ContactFullNameTextField = "LG-AUTOTEST";
             cus.ClickSendButton();
             
             //RK - In this area I would suggest that you add in some Should().XXX asserts here. Especially where we have items that say invalid data.
             // In those cases, there should be a check to see if an error style was applied to the field or not since this is a visual queue to show the user to enter something valid.
+            
 
-            cus.ContactPhoneTextField = "Auto Test"; // non numeric data in phone number field
+            cus.ContactPhoneTextField = "Auto Test"; // non numeric data in phone number field  
+            cus.ClickSendButton();
+
+            // cus.ContactPhoneTextField = null; // facing exception in SendKeysOrClear() as of now
             cus.ClearPhoneTextbox();
-            cus.ContactPhoneTextField = "1234567"; // non numeric data in phone number field
+            cus.ContactPhoneTextField = "1234567"; // invalid data in phone number field
             cus.ClearPhoneTextbox();
-            cus.ContactPhoneTextField = "1234567890"; // non numeric data in phone number field
+            cus.ContactPhoneTextField = "1234567890"; //valid data
             cus.ClickSendButton();
 
             cus.ContactEmailTextField = "test"; // invalid email data
             cus.ClickSendButton();
+            cus.VerifyEmailFieldError();
             cus.ClearEmailTextbox();
+
             cus.ContactEmailTextField = "test@"; // invalid email data
             cus.ClickSendButton();
+            cus.VerifyEmailFieldError();
             cus.ClearEmailTextbox();
+
             cus.ContactEmailTextField = "test@qa"; // invalid email data
             cus.ClickSendButton();
+            cus.VerifyEmailFieldError();
             cus.ClearEmailTextbox();
+
             cus.ContactEmailTextField = "test@qa."; // invalid email data
             cus.ClickSendButton();
+            cus.VerifyEmailFieldError();
             cus.ClearEmailTextbox();
+
             cus.ContactEmailTextField = "test@qa.c"; // invalid email data
             cus.ClickSendButton();
+            cus.VerifyEmailFieldError();
             cus.ClearEmailTextbox();
-            cus.ContactEmailTextField = "test@qa.co"; // invalid email data
-            cus.ClickSendButton();
 
+            cus.ContactEmailTextField = "test@qa.co"; // valid email data
+            cus.ClickSendButton();
+            
             cus.ContactCommentsTextField = "Automated Tester";
             cus.ClickSendButton();
             cus.Wait();
 
             cus.VerifyNotificationPopup();//verify notification popup being shown after send is clicked
-            cus.ContactNotificationMessage();//verify success message in notification popup
+            //cus.ContactNotificationMessage();//verify success message in notification popup
 
             cus.ClickDone();
 
             // RK - Here i believe you can just call cus.Wait(2) since Wait is part of the base class.
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            cus.Wait(2);
 
             LogOutWithoutLogin();
         }
 
-        [TestCase]//Test Case #1459
+    /*    [TestCase]//Test Case #1459
         [Category("All")]
         [Description("Test Case #1459")]
         public void ContactUsWithAllFields()
@@ -2112,7 +2132,7 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 11
             LogOutWithoutLogin();
-        }
+        }*/
 
         [TestCase]//Test Case #1459
         [Category("All")]
@@ -2145,12 +2165,19 @@ namespace QA.Automation.UITests
             cus.Wait();
             //RK - In this area I would suggest that you add in some Should().XXX asserts here to validate the data. I added comments to the ContactUs.cs to move those asserts from that class to here. 
             cus.VerifyNotificationPopup();//verify notification popup being shown after send is clicked
-            cus.ContactNotificationMessage();//verify success message in notification popup
+
+            // verify success message in notification popup
+            IWebElement contactNotificationMessage = _driver.Value.FindElement(By.CssSelector("#notification-modal > div > div.lg-modal__wrapper > div > div > p > strong"));
+            string successNotificationMessage = contactNotificationMessage.Text;
+            successNotificationMessage.Should().Be("Mail sent and will be processed in the order it was received.");
+
+
+            //cus.ContactNotificationMessage();//verify success message in notification popup
 
             cus.ClickDone();
 
             // RK - Here i believe you can just call cus.Wait(4) since Wait is part of the base class.
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(4));
+            cus.Wait(4);
             LogOutWithoutLogin();
         }
 

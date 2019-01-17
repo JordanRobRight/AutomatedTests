@@ -125,7 +125,7 @@ namespace QA.Automation.UITests.LG20.Pages
             {
 
                 var getField = GetField("input", "id", contactPhoneId);
-                getField?.SendKeys(value);
+                getField?.SendKeysOrClear(value);
             }
         }
 
@@ -205,7 +205,7 @@ namespace QA.Automation.UITests.LG20.Pages
         // RK - Please move the .Should() statement to the actual test method in UnitTest.cs. It is returning the text anyway.
         // The reason is that the test method should do the asserts not this class. There could be an instance
         // depending on user roles that the message might be slightly different which is where we do the test in the Test method. 
-        public string ContactNotificationMessage()
+       /* public string ContactNotificationMessage()
         {
                 Wait(2);
             
@@ -214,7 +214,7 @@ namespace QA.Automation.UITests.LG20.Pages
                 successNotificationMessage.Should().Be("Mail sent and will be processed in the order it was received.");
             
                 return successNotificationMessage;
-        }
+        }*/
 
         public bool VerifyNotificationPopup()
         {
@@ -338,6 +338,21 @@ namespace QA.Automation.UITests.LG20.Pages
 
          }      */
 
+        public bool VerifyEmailFieldError()
+        {
+            IWebElement invalidEmail = Driver.FindElement(By.XPath("//input[@id='email' and @class='lgfe-input-text expanded contactErrorInput']"));// using xpath to check class "lgfe-input-text expanded contactErrorInput" is enabled
+            bool emailErrorCheck = invalidEmail.Enabled;
+            emailErrorCheck.Should().BeTrue("Error not shown");
+            return emailErrorCheck;
+        }
+        public bool VerifyFullNameFieldError()
+        {
+            IWebElement invalidFullName = Driver.FindElement(By.XPath("//input[@id='full-name' and @class='lgfe-input-text expanded contactErrorInput']"));
+            bool fullNameErrorCheck = invalidFullName.Enabled;
+           // bool required = Boolean.Parse(fullName.GetAttribute("required"));
+            fullNameErrorCheck.Should().BeTrue("Error not shown");
+            return fullNameErrorCheck;
+        }
 
         #endregion
 
