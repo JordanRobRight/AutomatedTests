@@ -1440,7 +1440,7 @@ namespace QA.Automation.UITests
 
             //TODO: Need a better way to get a file to upload. Maybe define a data folder in the solution for now.
 
-            MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\galaxie.jpg");
+            //MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\galaxie.jpg");
 
             IWebElement uploadDialogCloseButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.uploadDialogCloseButtonCssSelector));
             uploadDialogCloseButton.Click();
@@ -1464,7 +1464,7 @@ namespace QA.Automation.UITests
             uploadFromButton.Click();
 
             //TODO: Need a better way to get a file to upload. Maybe define a data folder in the solution for now.
-            MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\Toy_car.mov");
+            //MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\Toy_car.mov");
 
 
             IWebElement uploadDialogCloseButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.uploadDialogCloseButtonCssSelector));
@@ -2162,11 +2162,19 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
             //Step 1
             Login();
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            sb.SelectMenu("Players");
 
             Players player = new Players(_driver.Value, _configuration);
+            try
+            {
+                player.VerifyOnlineStatus();
+                player.VerifyOfflineStatus();
+            }
+            catch (Exception e) { Console.Write(e); }
             //Step 2 select players tab
             IWebElement playersTab = _driver.Value.FindElement(By.CssSelector("#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(3) > a > span"));
-            playersTab.Click();
+            //playersTab.Click();
             WaitForMaskModal();
 
             //Step 3 confirm that each player contains one status---needs work TODO
@@ -2186,7 +2194,7 @@ namespace QA.Automation.UITests
             //playerSelect.Click();
 
             player.SelectPlayer(playerName);
-
+            player.VerifyOfflineStatus();// CK: currently  LG-QAROB is a offline player, need to work on online player
             player.Wait();
 
             //Step 5
