@@ -1951,6 +1951,8 @@ namespace QA.Automation.UITests
         [Description("Test Case #1457")]
         public void ContactUsWithrequiredFields_POM()
         {
+            //RK - Since this test replaces the old test, please comment out the old one for now. At some point we will be deleting it. 
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
             //Step 1
             Login();
@@ -1961,9 +1963,13 @@ namespace QA.Automation.UITests
             sb.SelectMenu("Contact Us");
             ContactUs cus = new ContactUs(_driver.Value, _configuration);
 
+            // RK - Here i believe you can just call cus.Wait(4) since Wait is part of the base class.
             Thread.Sleep(4000);
             cus.ContactFullNameTextField = "LG-AUTOTEST";
             cus.ClickSendButton();
+            
+            //RK - In this area I would suggest that you add in some Should().XXX asserts here. Especially where we have items that say invalid data.
+            // In those cases, there should be a check to see if an error style was applied to the field or not since this is a visual queue to show the user to enter something valid.
 
             cus.ContactPhoneTextField = "Auto Test"; // non numeric data in phone number field
             cus.ClearPhoneTextbox();
@@ -1999,7 +2005,9 @@ namespace QA.Automation.UITests
 
             cus.ClickDone();
 
+            // RK - Here i believe you can just call cus.Wait(2) since Wait is part of the base class.
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
             LogOutWithoutLogin();
         }
 
@@ -2111,6 +2119,8 @@ namespace QA.Automation.UITests
         [Description("Test Case #1459")]
         public void ContactUsWithAllFields_POM()
         {
+            //RK - Since this test replaces the old test, please comment out the old one for now. At some point we will be deleting it. 
+
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
             //Step 1
             Login();
@@ -2133,11 +2143,13 @@ namespace QA.Automation.UITests
 
             cus.ClickSendButton();
             cus.Wait();
+            //RK - In this area I would suggest that you add in some Should().XXX asserts here to validate the data. I added comments to the ContactUs.cs to move those asserts from that class to here. 
             cus.VerifyNotificationPopup();//verify notification popup being shown after send is clicked
             cus.ContactNotificationMessage();//verify success message in notification popup
 
             cus.ClickDone();
 
+            // RK - Here i believe you can just call cus.Wait(4) since Wait is part of the base class.
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(4));
             LogOutWithoutLogin();
         }
