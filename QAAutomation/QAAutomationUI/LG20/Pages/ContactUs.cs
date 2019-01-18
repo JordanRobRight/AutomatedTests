@@ -4,6 +4,7 @@ using QA.Automation.UITests.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+// RK - 1/18/19 - Please remove the FluentAssertions using statement. POM classes should not have this using statement since they do not perform assertions. 
 using FluentAssertions;
 using QA.Automation.UITests.Selenium;
 
@@ -161,6 +162,8 @@ namespace QA.Automation.UITests.LG20.Pages
             }
         }
 
+        //RK - 1/18/19 - I fixed the SendKeysOrClear method so these methods are probably not needed. :)
+
         public void ClearFullNameTextbox()
         {
             var textbox = GetField("input", "id", contactFullNameId);
@@ -205,21 +208,37 @@ namespace QA.Automation.UITests.LG20.Pages
         // RK - Please move the .Should() statement to the actual test method in UnitTest.cs. It is returning the text anyway.
         // The reason is that the test method should do the asserts not this class. There could be an instance
         // depending on user roles that the message might be slightly different which is where we do the test in the Test method. 
-       /* public string ContactNotificationMessage()
-        {
-                Wait(2);
-            
-                IWebElement contactNotificationMessage = Driver.FindElement(By.CssSelector(contactNotificationMessageCss));
-                string successNotificationMessage = contactNotificationMessage.Text;
-                successNotificationMessage.Should().Be("Mail sent and will be processed in the order it was received.");
-            
-                return successNotificationMessage;
-        }*/
+        // RK - 1/18/19 - Not sure why you commented this method out. My suggestion was to remove (or actually move) to UnitTest1.cs class. 
 
+        /* public string ContactNotificationMessage()
+         {
+                 Wait(2);
+
+                 IWebElement contactNotificationMessage = Driver.FindElement(By.CssSelector(contactNotificationMessageCss));
+                 string successNotificationMessage = contactNotificationMessage.Text;
+                 // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy.
+                 successNotificationMessage.Should().Be("Mail sent and will be processed in the order it was received.");
+
+                 return successNotificationMessage;
+         }*/
+
+        // RK - 1/18/19 - I suggest that you change the method from VerifyNotificationPopup to IsNotificationPopupDisplayed. You are already returning a bool so it should be easy to move the check to UnitTest1.cs
+        #region -- Rob Example --
+        public bool IsNotificationPopupDisplayed
+        {
+            get
+            {
+                IWebElement contactNotificationPopup = Driver.FindElement(By.CssSelector(contactNotificationCss));
+                return contactNotificationPopup.Displayed;
+            }
+           
+        }
+        #endregion
         public bool VerifyNotificationPopup()
         {
             IWebElement contactNotificationPopup = Driver.FindElement(By.CssSelector(contactNotificationCss));
             //contactNotificationPopup.Should().Be(contactNotificationPopup.Displayed != false);
+            // RK - 1/18/19 - Please move the statement below to the test method in UnitTest1.cs. 
              contactNotificationPopup.Displayed.Should().BeTrue();
         
             return contactNotificationPopup.Displayed;
@@ -338,18 +357,22 @@ namespace QA.Automation.UITests.LG20.Pages
 
          }      */
 
+        // RK - 1/18/19 - I suggest that you change the method to something like IsEmailFieldError and return a bool. Follow the example I did for VerifyNotificationPopup
         public bool VerifyEmailFieldError()
         {
             IWebElement invalidEmail = Driver.FindElement(By.XPath("//input[@id='email' and @class='lgfe-input-text expanded contactErrorInput']"));// using xpath to check class "lgfe-input-text expanded contactErrorInput" is enabled
             bool emailErrorCheck = invalidEmail.Enabled;
+            // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy.
             emailErrorCheck.Should().BeTrue("Error not shown");
             return emailErrorCheck;
         }
+        // RK - 1/18/19 - I suggest that you change the method to something like IsFullNameFieldError and return a bool. Follow the example I did for VerifyNotificationPopup
         public bool VerifyFullNameFieldError()
         {
             IWebElement invalidFullName = Driver.FindElement(By.XPath("//input[@id='full-name' and @class='lgfe-input-text expanded contactErrorInput']"));
             bool fullNameErrorCheck = invalidFullName.Enabled;
-           // bool required = Boolean.Parse(fullName.GetAttribute("required"));
+            // bool required = Boolean.Parse(fullName.GetAttribute("required"));
+            // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy. 
             fullNameErrorCheck.Should().BeTrue("Error not shown");
             return fullNameErrorCheck;
         }

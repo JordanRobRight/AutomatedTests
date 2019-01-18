@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+// RK - 1/18/19 - Please remove the NUnit.Framework using statement. POM classes should not have this using statement since they do not perform assertions. 
 using NUnit.Framework;
 using OpenQA.Selenium;
 using QA.Automation.UITests.Models;
@@ -49,14 +50,20 @@ namespace QA.Automation.UITests.LG20.Pages
             player?.Click();
         }
 
+        // RK - 1/18/19 - I suggest that you can convert this method to a property to something like PlayerOnLine. By doing this, the player is online or offline.
+        // By changing this to a property, you remove one method (for now)
+        // According to the test case, there is supposed to be a 3rd state.
+        // We need to account for that at some point.
         public bool VerifyOfflineStatus()
         {
             Wait(2);
+
             IList<IWebElement> List = Driver.FindElements(By.CssSelector(_playerOfflineStatus));
             foreach (IWebElement offlinePlayers_List in List)
             {
                 if (List.Count != 0)
                 {
+                    // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy.
                     Assert.IsTrue(offlinePlayers_List.Enabled);
                 }
                 break;
@@ -73,6 +80,7 @@ namespace QA.Automation.UITests.LG20.Pages
             {
                 if (List.Count != 0)
                 {
+                    // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy.
                     Assert.IsTrue(onlinePlayers_List.Enabled);
                 }
                 break;

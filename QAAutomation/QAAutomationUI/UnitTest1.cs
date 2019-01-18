@@ -2189,6 +2189,13 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
             //Step 1
             Login();
+            
+            //RK - 1/18/19 - I added this item in to make sure that you are set to the GM client. At some point, we might need to set this for all tests. But for this one, it was needed. 
+
+            ClientMenu client = new ClientMenu(_driver.Value, _configuration);
+            client.Wait();
+            client.SelectClient("GM");
+
             SideBar sb = new SideBar(_driver.Value, _configuration);
             sb.SelectMenu("Players");
 
@@ -2199,6 +2206,8 @@ namespace QA.Automation.UITests
                 player.VerifyOfflineStatus();
             }
             catch (Exception e) { Console.Write(e); }
+
+            // RK - 1/18/19 - I believe the statement below is just selecting the Players menu item on the right. Probably need to update these section of code to use the SelectMenu method
             //Step 2 select players tab
             IWebElement playersTab = _driver.Value.FindElement(By.CssSelector("#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(3) > a > span"));
             //playersTab.Click();
@@ -2221,6 +2230,8 @@ namespace QA.Automation.UITests
             //playerSelect.Click();
 
             player.SelectPlayer(playerName);
+            // RK - 1/18/19 - if I read the test case correctly, this check has to do with actually selecting the player from the list and displaying the Player page. From there, the check about online and offline is determined as well. 
+            // The player POM hasn't been created yet but I believe that is on the list with US 3051. 
             player.VerifyOfflineStatus();// CK: currently  LG-QAROB is a offline player, need to work on online player
             player.Wait();
 
@@ -2235,6 +2246,7 @@ namespace QA.Automation.UITests
             //IWebElement playerSelect2 = GetPlayer(_driver.Value, "LG-QAROB");
             //playerSelect2.Click();
 
+            // RK - 1/18/19 - Hard code the name to search from offline here for the time being. 
             player.SelectPlayer(playerName);
 
             player.Wait();

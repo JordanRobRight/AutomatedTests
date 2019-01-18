@@ -47,11 +47,14 @@ namespace QA.Automation.UITests.Selenium
 
         public static void SendKeysOrClear(this IWebElement webElement, string valueItem)
         {
-            if (valueItem == null)
+            if (valueItem == null )
             {
                 webElement.Clear();
             }
-            webElement.SendKeys(valueItem);
+            else
+            {
+                webElement.SendKeys(valueItem);
+            }
         }
     }
 
