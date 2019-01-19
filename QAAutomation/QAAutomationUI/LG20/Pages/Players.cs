@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 // RK - 1/18/19 - Please remove the NUnit.Framework using statement. POM classes should not have this using statement since they do not perform assertions. 
-using NUnit.Framework;
+
 using OpenQA.Selenium;
 using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
@@ -19,7 +19,9 @@ namespace QA.Automation.UITests.LG20.Pages
         private static readonly string _playerNameTdItem = @"pt-status-text-name pt-player-status-online";
         private static readonly string _playersTableTBody = @"#players-table > div.table-responsive > table > tbody";
         private static readonly string _playerOfflineStatus = @"[class*='pdwurt-status-dot pt-player-status-offline']";
-        private static readonly string _playerOnlineStatus = @"[class*='pdwurt-status-dot pt-player-status-online']";
+        private static readonly string _playerOfflineStatusPlayerPage = @"[class*='pdwurt-status-dot pdwurt-status-offline']";
+        private static readonly string _playerOnlineStatusPlayersPage = @"[class*='pdwurt-status-dot pt-player-status-online']";
+
         #endregion
 
         #region --- Constructor ---
@@ -54,38 +56,58 @@ namespace QA.Automation.UITests.LG20.Pages
         // By changing this to a property, you remove one method (for now)
         // According to the test case, there is supposed to be a 3rd state.
         // We need to account for that at some point.
-        public bool VerifyOfflineStatus()
+        public bool VerifyOfflineStatusPlayersPage
         {
-            Wait(2);
 
-            IList<IWebElement> List = Driver.FindElements(By.CssSelector(_playerOfflineStatus));
-            foreach (IWebElement offlinePlayers_List in List)
+            get
             {
-                if (List.Count != 0)
-                {
-                    // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy.
-                    Assert.IsTrue(offlinePlayers_List.Enabled);
-                }
-                break;
+                Wait(2);
 
+
+                IWebElement offlinePlayerStatus = Driver.FindElement(By.CssSelector(_playerOfflineStatus));
+                
+                 // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy.                   
+                 
+                return offlinePlayerStatus.Displayed;
             }
-            return true;
+
         }
 
-        public bool VerifyOnlineStatus()
+        public bool VerifyOfflineStatusPlayerPage
         {
-            Wait(2);
-            IList<IWebElement> List = Driver.FindElements(By.CssSelector(_playerOnlineStatus));
-            foreach (IWebElement onlinePlayers_List in List)
+            get
             {
-                if (List.Count != 0)
-                {
-                    // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy.
-                    Assert.IsTrue(onlinePlayers_List.Enabled);
-                }
-                break;
+                Wait(2);
+                IWebElement offlinePlayerStatus = Driver.FindElement(By.CssSelector(_playerOfflineStatusPlayerPage));
+                return offlinePlayerStatus.Displayed;
             }
-            return true;
+
+        }
+
+        public bool VerifyOnlineStatus
+        {
+
+            get
+            {
+                Wait(2);
+                IList<IWebElement> List = Driver.FindElements(By.CssSelector(_playerOnlineStatusPlayersPage));
+                foreach (IWebElement onlinePlayers_List in List)
+                {
+                    if (List.Count != 0)
+                    {
+                        // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy.                   
+                    }
+                    break;
+                }
+                return true;
+            }
+
+
+        }
+
+        public bool VerifyNotSetupPlayer()
+        {
+            throw new NotImplementedException();
         }
         #endregion
 

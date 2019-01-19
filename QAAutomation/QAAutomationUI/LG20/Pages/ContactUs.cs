@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 // RK - 1/18/19 - Please remove the FluentAssertions using statement. POM classes should not have this using statement since they do not perform assertions. 
-using FluentAssertions;
+
 using QA.Automation.UITests.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages
@@ -94,7 +94,7 @@ namespace QA.Automation.UITests.LG20.Pages
             {
 
                 var getField = GetField("input", "id", contactTitleId);
-                getField?.SendKeys(value);
+                getField?.SendKeysOrClear(value);
             }
         }
 
@@ -110,7 +110,7 @@ namespace QA.Automation.UITests.LG20.Pages
             {
 
                 var getField = GetField("input", "id", contactCompanyId);
-                getField?.SendKeys(value);
+                getField?.SendKeysOrClear(value);
             }
         }
 
@@ -142,7 +142,7 @@ namespace QA.Automation.UITests.LG20.Pages
             {
 
                 var getField = GetField("input", "id", contactEmailId);
-                getField?.SendKeys(value);
+                getField?.SendKeysOrClear(value);
             }
         }
 
@@ -158,29 +158,12 @@ namespace QA.Automation.UITests.LG20.Pages
             {
 
                 var getField = GetField("textarea", "id", contactCommentsId);
-                getField?.SendKeys(value);
+                getField?.SendKeysOrClear(value);
             }
         }
 
         //RK - 1/18/19 - I fixed the SendKeysOrClear method so these methods are probably not needed. :)
 
-        public void ClearFullNameTextbox()
-        {
-            var textbox = GetField("input", "id", contactFullNameId);
-            textbox.Clear();
-        }
-
-        public void ClearPhoneTextbox()
-        {
-            var textbox = GetField("input", "id", contactPhoneId);
-            textbox.Clear();
-        }
-
-        public void ClearEmailTextbox()
-        {
-            var textbox = GetField("input", "id", contactEmailId);
-            textbox.Clear();
-        }
 
         public void ClickSendButton()
         {
@@ -210,38 +193,42 @@ namespace QA.Automation.UITests.LG20.Pages
         // depending on user roles that the message might be slightly different which is where we do the test in the Test method. 
         // RK - 1/18/19 - Not sure why you commented this method out. My suggestion was to remove (or actually move) to UnitTest1.cs class. 
 
-        /* public string ContactNotificationMessage()
-         {
-                 Wait(2);
+        public string ContactNotificationMessage
+        {
+            get
+            {
+                Wait(2);
+                IWebElement contactNotificationMessage = Driver.FindElement(By.CssSelector(contactNotificationMessageCss));
+                string successNotificationMessage = contactNotificationMessage.Text;
+                // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy.
 
-                 IWebElement contactNotificationMessage = Driver.FindElement(By.CssSelector(contactNotificationMessageCss));
-                 string successNotificationMessage = contactNotificationMessage.Text;
-                 // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy.
-                 successNotificationMessage.Should().Be("Mail sent and will be processed in the order it was received.");
+                return successNotificationMessage;
+            }
 
-                 return successNotificationMessage;
-         }*/
+        }
 
         // RK - 1/18/19 - I suggest that you change the method from VerifyNotificationPopup to IsNotificationPopupDisplayed. You are already returning a bool so it should be easy to move the check to UnitTest1.cs
         #region -- Rob Example --
-        public bool IsNotificationPopupDisplayed
+        public bool IsNotificationPopupDisplayed2
         {
             get
             {
                 IWebElement contactNotificationPopup = Driver.FindElement(By.CssSelector(contactNotificationCss));
                 return contactNotificationPopup.Displayed;
             }
-           
+
         }
         #endregion
-        public bool VerifyNotificationPopup()
+        public bool IsNotificationPopupDisplayed
         {
-            IWebElement contactNotificationPopup = Driver.FindElement(By.CssSelector(contactNotificationCss));
-            //contactNotificationPopup.Should().Be(contactNotificationPopup.Displayed != false);
-            // RK - 1/18/19 - Please move the statement below to the test method in UnitTest1.cs. 
-             contactNotificationPopup.Displayed.Should().BeTrue();
-        
-            return contactNotificationPopup.Displayed;
+            get
+            {
+                IWebElement contactNotificationPopup = Driver.FindElement(By.CssSelector(contactNotificationCss));
+
+                // RK - 1/18/19 - Please move the statement below to the test method in UnitTest1.cs.         
+
+                return contactNotificationPopup.Displayed;
+            }
         }
 
         /*  public bool ClickContactUs()
@@ -358,23 +345,26 @@ namespace QA.Automation.UITests.LG20.Pages
          }      */
 
         // RK - 1/18/19 - I suggest that you change the method to something like IsEmailFieldError and return a bool. Follow the example I did for VerifyNotificationPopup
-        public bool VerifyEmailFieldError()
+        public bool IsEmailFieldError
         {
-            IWebElement invalidEmail = Driver.FindElement(By.XPath("//input[@id='email' and @class='lgfe-input-text expanded contactErrorInput']"));// using xpath to check class "lgfe-input-text expanded contactErrorInput" is enabled
-            bool emailErrorCheck = invalidEmail.Enabled;
-            // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy.
-            emailErrorCheck.Should().BeTrue("Error not shown");
-            return emailErrorCheck;
+            get
+            {
+                IWebElement invalidEmail = Driver.FindElement(By.XPath("//input[@id='email' and @class='lgfe-input-text expanded contactErrorInput']"));// using xpath to check class "lgfe-input-text expanded contactErrorInput" is enabled
+                return invalidEmail.Enabled;
+            }
         }
         // RK - 1/18/19 - I suggest that you change the method to something like IsFullNameFieldError and return a bool. Follow the example I did for VerifyNotificationPopup
-        public bool VerifyFullNameFieldError()
+        public bool IsFullNameFieldError
         {
-            IWebElement invalidFullName = Driver.FindElement(By.XPath("//input[@id='full-name' and @class='lgfe-input-text expanded contactErrorInput']"));
-            bool fullNameErrorCheck = invalidFullName.Enabled;
-            // bool required = Boolean.Parse(fullName.GetAttribute("required"));
-            // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy. 
-            fullNameErrorCheck.Should().BeTrue("Error not shown");
-            return fullNameErrorCheck;
+            get
+            {
+                IWebElement invalidFullName = Driver.FindElement(By.XPath("//input[@id='full-name' and @class='lgfe-input-text expanded contactErrorInput']"));
+
+                // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy. 
+
+                return invalidFullName.Enabled;
+            }
+
         }
 
         #endregion
@@ -384,9 +374,4 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #endregion
     }
-    
-}
-
-
-
-
+}    

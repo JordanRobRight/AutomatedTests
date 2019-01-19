@@ -1969,7 +1969,7 @@ namespace QA.Automation.UITests
             cus.Wait(4);
             cus.ClickSendButton();
             cus.Wait(2);
-            cus.VerifyFullNameFieldError();     
+            cus.IsFullNameFieldError.Should().BeTrue("Error not shown");     
 
             cus.ContactFullNameTextField = "LG-AUTOTEST";
             cus.ClickSendButton();
@@ -1980,38 +1980,37 @@ namespace QA.Automation.UITests
 
             cus.ContactPhoneTextField = "Auto Test"; // non numeric data in phone number field  
             cus.ClickSendButton();
-
-            // cus.ContactPhoneTextField = null; // facing exception in SendKeysOrClear() as of now
-            cus.ClearPhoneTextbox();
-            cus.ContactPhoneTextField = "1234567"; // invalid data in phone number field
-            cus.ClearPhoneTextbox();
+            
+            cus.ContactPhoneTextField = null;
+            cus.ContactPhoneTextField = "1234567T"; // invalid data in phone number field
+            cus.ContactPhoneTextField = null;
             cus.ContactPhoneTextField = "1234567890"; //valid data
             cus.ClickSendButton();
 
             cus.ContactEmailTextField = "test"; // invalid email data
             cus.ClickSendButton();
-            cus.VerifyEmailFieldError();
-            cus.ClearEmailTextbox();
+            cus.IsEmailFieldError.Should().BeTrue("Error not shown"); 
+            cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@"; // invalid email data
             cus.ClickSendButton();
-            cus.VerifyEmailFieldError();
-            cus.ClearEmailTextbox();
+            cus.IsEmailFieldError.Should().BeTrue("Error not shown"); 
+            cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@qa"; // invalid email data
             cus.ClickSendButton();
-            cus.VerifyEmailFieldError();
-            cus.ClearEmailTextbox();
+            cus.IsEmailFieldError.Should().BeTrue("Error not shown"); 
+            cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@qa."; // invalid email data
             cus.ClickSendButton();
-            cus.VerifyEmailFieldError();
-            cus.ClearEmailTextbox();
+            cus.IsEmailFieldError.Should().BeTrue("Error not shown"); 
+            cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@qa.c"; // invalid email data
             cus.ClickSendButton();
-            cus.VerifyEmailFieldError();
-            cus.ClearEmailTextbox();
+            cus.IsEmailFieldError.Should().BeTrue("Error not shown"); 
+            cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@qa.co"; // valid email data
             cus.ClickSendButton();
@@ -2020,8 +2019,8 @@ namespace QA.Automation.UITests
             cus.ClickSendButton();
             cus.Wait();
 
-            cus.VerifyNotificationPopup();//verify notification popup being shown after send is clicked
-            //cus.ContactNotificationMessage();//verify success message in notification popup
+            cus.IsNotificationPopupDisplayed.Should().BeTrue(); //verify notification popup being shown after send is clicked
+            cus.ContactNotificationMessage.Should().Be("Mail sent and will be processed in the order it was received.");//verify success message in notification popup;
 
             cus.ClickDone();
 
@@ -2164,15 +2163,9 @@ namespace QA.Automation.UITests
             cus.ClickSendButton();
             cus.Wait();
             //RK - In this area I would suggest that you add in some Should().XXX asserts here to validate the data. I added comments to the ContactUs.cs to move those asserts from that class to here. 
-            cus.VerifyNotificationPopup();//verify notification popup being shown after send is clicked
-
-            // verify success message in notification popup
-            IWebElement contactNotificationMessage = _driver.Value.FindElement(By.CssSelector("#notification-modal > div > div.lg-modal__wrapper > div > div > p > strong"));
-            string successNotificationMessage = contactNotificationMessage.Text;
-            successNotificationMessage.Should().Be("Mail sent and will be processed in the order it was received.");
-
-
-            //cus.ContactNotificationMessage();//verify success message in notification popup
+            cus.IsNotificationPopupDisplayed.Should().BeTrue(); //verify notification popup being shown after send is clicked
+                       
+            cus.ContactNotificationMessage.Should().Be("Mail sent and will be processed in the order it was received.");//verify success message in notification popup
 
             cus.ClickDone();
 
@@ -2202,15 +2195,16 @@ namespace QA.Automation.UITests
             Players player = new Players(_driver.Value, _configuration);
             try
             {
-                player.VerifyOnlineStatus();
-                player.VerifyOfflineStatus();
+                player.VerifyOnlineStatus.Should().BeTrue("No players were found to be online");
+                player.VerifyOfflineStatusPlayersPage.Should().BeTrue("No players were found to be offline");
             }
             catch (Exception e) { Console.Write(e); }
 
             // RK - 1/18/19 - I believe the statement below is just selecting the Players menu item on the right. Probably need to update these section of code to use the SelectMenu method
+            // CK -  selecting the player using SelectMenu method in line 2193
             //Step 2 select players tab
             IWebElement playersTab = _driver.Value.FindElement(By.CssSelector("#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(3) > a > span"));
-            //playersTab.Click();
+            
             WaitForMaskModal();
 
             //Step 3 confirm that each player contains one status---needs work TODO
@@ -2229,10 +2223,10 @@ namespace QA.Automation.UITests
 
             //playerSelect.Click();
 
-            player.SelectPlayer(playerName);
+            player.SelectPlayer("LG-QAROB");
             // RK - 1/18/19 - if I read the test case correctly, this check has to do with actually selecting the player from the list and displaying the Player page. From there, the check about online and offline is determined as well. 
             // The player POM hasn't been created yet but I believe that is on the list with US 3051. 
-            player.VerifyOfflineStatus();// CK: currently  LG-QAROB is a offline player, need to work on online player
+            player.VerifyOfflineStatusPlayerPage.Should().BeTrue("player not found to be offline");// CK: currently  LG-QAROB is a offline player, need to work on online player
             player.Wait();
 
             //Step 5
@@ -2247,7 +2241,7 @@ namespace QA.Automation.UITests
             //playerSelect2.Click();
 
             // RK - 1/18/19 - Hard code the name to search from offline here for the time being. 
-            player.SelectPlayer(playerName);
+            player.SelectPlayer("LG-QAROB");
 
             player.Wait();
 
