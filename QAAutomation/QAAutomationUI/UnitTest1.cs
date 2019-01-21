@@ -2158,7 +2158,8 @@ namespace QA.Automation.UITests
             cus.ContactEmailTextField = "autotest@test.com";
             cus.ContactCommentsTextField = "Automated Tester";
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            cus.Wait(2);
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
             cus.ClickSendButton();
             cus.Wait();

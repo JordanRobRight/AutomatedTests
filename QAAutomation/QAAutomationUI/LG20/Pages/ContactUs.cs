@@ -349,6 +349,7 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             get
             {
+                // RK - 1/21/19 - Make the XPath locator text into a static string to be consistent as rest of the POM class.
                 IWebElement invalidEmail = Driver.FindElement(By.XPath("//input[@id='email' and @class='lgfe-input-text expanded contactErrorInput']"));// using xpath to check class "lgfe-input-text expanded contactErrorInput" is enabled
                 return invalidEmail.Enabled;
             }
@@ -358,6 +359,7 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             get
             {
+                // RK - 1/21/19 - Make the XPath locator text into a static string to be consistent as rest of the POM class.
                 IWebElement invalidFullName = Driver.FindElement(By.XPath("//input[@id='full-name' and @class='lgfe-input-text expanded contactErrorInput']"));
 
                 // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy. 
