@@ -184,6 +184,16 @@ namespace QA.Automation.UITests.LG20.Pages
 
             return createdPlaylistName;
         }
+        // RK - 1/22/19 - This is an example of what I was talking about in my comments in the above method. Please take a look at this example and let me know your opinion comments 
+        public IEnumerable<string> GetPlayLists 
+        {
+            get
+            {
+                IList<IWebElement> playListItems = Driver.FindElements(By.ClassName(_playerListNameCss));
+                var items = playListItems.Select(a => a.Text).ToList();
+                return items;
+            }
+        }
 
         #endregion
 
