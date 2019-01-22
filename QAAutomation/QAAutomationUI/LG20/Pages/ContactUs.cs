@@ -1,10 +1,9 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using QA.Automation.UITests.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-// RK - 1/18/19 - Please remove the FluentAssertions using statement. POM classes should not have this using statement since they do not perform assertions. 
+
 
 using QA.Automation.UITests.Selenium;
 
@@ -29,6 +28,8 @@ namespace QA.Automation.UITests.LG20.Pages
         private static readonly string contactDoneCss = @"#notifications-form > div > button";
         private static readonly string contactNotificationCss = @"#notification-modal > div > div.lg-modal__wrapper > div > div";
         private static readonly string contactNotificationMessageCss = @"#notification-modal > div > div.lg-modal__wrapper > div > div > p > strong";
+        private static readonly string checkFullNameError = @"//input[@id='full-name' and @class='lgfe-input-text expanded contactErrorInput']";
+        private static readonly string checkEmailError = @"//input[@id='email' and @class='lgfe-input-text expanded contactErrorInput']";
         #endregion
 
         #region --- Constructor ---
@@ -162,7 +163,6 @@ namespace QA.Automation.UITests.LG20.Pages
             }
         }
 
-        //RK - 1/18/19 - I fixed the SendKeysOrClear method so these methods are probably not needed. :)
 
 
         public void ClickSendButton()
@@ -188,11 +188,7 @@ namespace QA.Automation.UITests.LG20.Pages
         /// <summary>
         /// verify popup being displayed and verify the success message
         /// </summary>
-        // RK - Please move the .Should() statement to the actual test method in UnitTest.cs. It is returning the text anyway.
-        // The reason is that the test method should do the asserts not this class. There could be an instance
-        // depending on user roles that the message might be slightly different which is where we do the test in the Test method. 
-        // RK - 1/18/19 - Not sure why you commented this method out. My suggestion was to remove (or actually move) to UnitTest1.cs class. 
-
+        
         public string ContactNotificationMessage
         {
             get
@@ -200,14 +196,13 @@ namespace QA.Automation.UITests.LG20.Pages
                 Wait(2);
                 IWebElement contactNotificationMessage = Driver.FindElement(By.CssSelector(contactNotificationMessageCss));
                 string successNotificationMessage = contactNotificationMessage.Text;
-                // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy.
-
+               
                 return successNotificationMessage;
             }
 
         }
 
-        // RK - 1/18/19 - I suggest that you change the method from VerifyNotificationPopup to IsNotificationPopupDisplayed. You are already returning a bool so it should be easy to move the check to UnitTest1.cs
+       
         #region -- Rob Example --
         public bool IsNotificationPopupDisplayed2
         {
@@ -224,8 +219,7 @@ namespace QA.Automation.UITests.LG20.Pages
             get
             {
                 IWebElement contactNotificationPopup = Driver.FindElement(By.CssSelector(contactNotificationCss));
-
-                // RK - 1/18/19 - Please move the statement below to the test method in UnitTest1.cs.         
+       
 
                 return contactNotificationPopup.Displayed;
             }
@@ -344,26 +338,23 @@ namespace QA.Automation.UITests.LG20.Pages
 
          }      */
 
-        // RK - 1/18/19 - I suggest that you change the method to something like IsEmailFieldError and return a bool. Follow the example I did for VerifyNotificationPopup
+       
         public bool IsEmailFieldError
         {
             get
             {
                 // RK - 1/21/19 - Make the XPath locator text into a static string to be consistent as rest of the POM class.
-                IWebElement invalidEmail = Driver.FindElement(By.XPath("//input[@id='email' and @class='lgfe-input-text expanded contactErrorInput']"));// using xpath to check class "lgfe-input-text expanded contactErrorInput" is enabled
+                IWebElement invalidEmail = Driver.FindElement(By.XPath(checkEmailError));// using xpath to check class "lgfe-input-text expanded contactErrorInput" is enabled
                 return invalidEmail.Enabled;
             }
         }
-        // RK - 1/18/19 - I suggest that you change the method to something like IsFullNameFieldError and return a bool. Follow the example I did for VerifyNotificationPopup
+        
         public bool IsFullNameFieldError
         {
             get
             {
                 // RK - 1/21/19 - Make the XPath locator text into a static string to be consistent as rest of the POM class.
-                IWebElement invalidFullName = Driver.FindElement(By.XPath("//input[@id='full-name' and @class='lgfe-input-text expanded contactErrorInput']"));
-
-                // RK - 1/18/19 - Just move this statement to UnitTest1.cs since that is where we should do the validation. This method is returning the value anyway it should be pretty easy. 
-
+                IWebElement invalidFullName = Driver.FindElement(By.XPath(checkFullNameError));
                 return invalidFullName.Enabled;
             }
 

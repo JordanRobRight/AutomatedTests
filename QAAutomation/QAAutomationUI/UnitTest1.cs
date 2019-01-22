@@ -1953,8 +1953,7 @@ namespace QA.Automation.UITests
         [Description("Test Case #1457")]
         public void ContactUsWithrequiredFields_POM()
         {
-            //RK - Since this test replaces the old test, please comment out the old one for now. At some point we will be deleting it. 
-
+            
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(11));
             //Step 1
             Login();
@@ -1965,19 +1964,15 @@ namespace QA.Automation.UITests
             sb.SelectMenu("Contact Us");
             ContactUs cus = new ContactUs(_driver.Value, _configuration);
 
-            // RK - Here i believe you can just call cus.Wait(4) since Wait is part of the base class.
-            cus.Wait(4);
+             cus.Wait(4);
             cus.ClickSendButton();
             cus.Wait(2);
-            cus.IsFullNameFieldError.Should().BeTrue("Error not shown");     
+            cus.IsFullNameFieldError.Should().BeTrue();     
 
             cus.ContactFullNameTextField = "LG-AUTOTEST";
             cus.ClickSendButton();
             
-            //RK - In this area I would suggest that you add in some Should().XXX asserts here. Especially where we have items that say invalid data.
-            // In those cases, there should be a check to see if an error style was applied to the field or not since this is a visual queue to show the user to enter something valid.
             
-
             cus.ContactPhoneTextField = "Auto Test"; // non numeric data in phone number field  
             cus.ClickSendButton();
             
@@ -1989,27 +1984,27 @@ namespace QA.Automation.UITests
 
             cus.ContactEmailTextField = "test"; // invalid email data
             cus.ClickSendButton();
-            cus.IsEmailFieldError.Should().BeTrue("Error not shown"); 
+            cus.IsEmailFieldError.Should().BeTrue(); 
             cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@"; // invalid email data
             cus.ClickSendButton();
-            cus.IsEmailFieldError.Should().BeTrue("Error not shown"); 
+            cus.IsEmailFieldError.Should().BeTrue(); 
             cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@qa"; // invalid email data
             cus.ClickSendButton();
-            cus.IsEmailFieldError.Should().BeTrue("Error not shown"); 
+            cus.IsEmailFieldError.Should().BeTrue(); 
             cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@qa."; // invalid email data
             cus.ClickSendButton();
-            cus.IsEmailFieldError.Should().BeTrue("Error not shown"); 
+            cus.IsEmailFieldError.Should().BeTrue(); 
             cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@qa.c"; // invalid email data
             cus.ClickSendButton();
-            cus.IsEmailFieldError.Should().BeTrue("Error not shown"); 
+            cus.IsEmailFieldError.Should().BeTrue(); 
             cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@qa.co"; // valid email data
@@ -2024,7 +2019,6 @@ namespace QA.Automation.UITests
 
             cus.ClickDone();
 
-            // RK - Here i believe you can just call cus.Wait(2) since Wait is part of the base class.
             cus.Wait(2);
 
             LogOutWithoutLogin();
@@ -2138,8 +2132,7 @@ namespace QA.Automation.UITests
         [Description("Test Case #1459")]
         public void ContactUsWithAllFields_POM()
         {
-            //RK - Since this test replaces the old test, please comment out the old one for now. At some point we will be deleting it. 
-
+           
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
             //Step 1
             Login();
@@ -2163,14 +2156,13 @@ namespace QA.Automation.UITests
 
             cus.ClickSendButton();
             cus.Wait();
-            //RK - In this area I would suggest that you add in some Should().XXX asserts here to validate the data. I added comments to the ContactUs.cs to move those asserts from that class to here. 
+           
             cus.IsNotificationPopupDisplayed.Should().BeTrue(); //verify notification popup being shown after send is clicked
                        
             cus.ContactNotificationMessage.Should().Be("Mail sent and will be processed in the order it was received.");//verify success message in notification popup
 
             cus.ClickDone();
-
-            // RK - Here i believe you can just call cus.Wait(4) since Wait is part of the base class.
+            
             cus.Wait(4);
             LogOutWithoutLogin();
         }
