@@ -5,8 +5,6 @@ using OpenQA.Selenium;
 using QA.Automation.UITests.LG20.Pages.SubCards;
 using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
-using FluentAssertions;
-using NUnit.Framework;
 
 namespace QA.Automation.UITests.LG20.Pages
 {
@@ -178,7 +176,7 @@ namespace QA.Automation.UITests.LG20.Pages
                     break;
 
                 }
-                Assert.IsTrue(toCompare.Contains(createdPlaylistName), "created playerlist not presnet in container");
+                //Assert.IsTrue(toCompare.Contains(createdPlaylistName), "created playerlist not presnet in container");
 
             }
 
