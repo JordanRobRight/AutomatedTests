@@ -252,11 +252,12 @@ namespace QA.Automation.UITests
             //step 2
             pls.AddButtonClick();
 
+            pls.Wait(3);
             //Step 4 Select 'X' to close window
 
             pls.PlayListModal.ModalCancelButtonClick();
             pls.Wait();
-            pls.PlayListModal.IsModalDisplay.Should().BeTrue("Modal should be closed");
+            pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
 
             //Assert.IsFalse(pls.PlayListModal.IsModalDisplay);
 
@@ -285,7 +286,7 @@ namespace QA.Automation.UITests
 
             pls.Wait();
             // RK - 1/22/19 - Probably need to add a Should() assert just to make sure the modal is closed. 
-            pls.PlayListModal.IsModalDisplay.Should().BeFalse("Modal should be closed");// if IsModalDisplay is false then it means Modal was closed else display message
+            pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");// if IsModalDisplay is false then it means Modal was closed else display message
             //Step 7 Select '+' to add new playlist
             //Assert.IsFalse(pls.PlayListModal.IsModalDisplay);
 
@@ -324,7 +325,8 @@ namespace QA.Automation.UITests
             pls.PlayListModal.ModalSaveButtonClick();
             pls.Wait(3);
             // RK - 1/22/19 - Probably need to add a Should() assert just to make sure the modal is closed. 
-            pls.PlayListModal.IsModalDisplay.Should().BeTrue("Modal should be closed");
+
+            pls.PlayListModal.IsModalDisplayed.Should().BeTrue("Modal should be closed");
             // Assert.IsTrue(pls.PlayListModal.IsModalDisplay);
 
             //Step 10 Select Ok
@@ -344,6 +346,9 @@ namespace QA.Automation.UITests
             pls.PlayListModal.PlayListDescriptionTextField = "Automated Playlist Test Desc" + DateTime.Now.ToString();
             pls.PlayListModal.PlayListDescriptionTextField = null;
 
+            // RK - 1/23/19 - I overlooked this in the TC 580, Step 9 types a description and step 10 clicks the save button. 
+            // The validation is that the modal is still open as expected.
+            // We just need an additional check and we should be close to complete.
            // pls.ClearDescriptionTextbox();
 
             //Step 12:  Enter a playlist name
@@ -364,12 +369,12 @@ namespace QA.Automation.UITests
             pls.PlayListModal.ModalSaveButtonClick();
             pls.Wait();
             // RK - 1/22/19 - Probably need to add a Should() assert just to make sure the modal is closed. 
-            pls.PlayListModal.IsModalDisplay.Should().BeFalse("Modal should be closed");
+            pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
             // RK - 1/22/19 - Please take a look at the comments I had regarding this for TC 583 
             // CK - 1/23/19 - OK i see that if the return is false then we say list is created
             pls.GetPlayLists.Any(a => a.Equals(playlistName, StringComparison.OrdinalIgnoreCase)).Should().BeFalse("New Playlist wasn't created. ");
             //pls.VerifyCreatedPlaylist(playlistName).Should().Contain("Automated Playlist Test");
-            if (pls.PlayListModal.IsModalDisplay)
+            if (pls.PlayListModal.IsModalDisplayed)
             {
                 // Assert.IsTrue(pls.PlayListModal.IsModalDisplay);
 
@@ -394,7 +399,7 @@ namespace QA.Automation.UITests
 
                 pls.PlayListModal.ModalSaveButtonClick();
                 // RK - 1/22/19 - Probably need to add a Should() assert just to make sure the modal is closed. 
-                pls.PlayListModal.IsModalDisplay.Should().BeFalse("Modal should be closed");
+                pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
 
             }
             //IWebElement locationDropDown = GetElement(ByType.);
@@ -513,7 +518,7 @@ namespace QA.Automation.UITests
             // RK - 1/22/19 - I'm wondering if we need a check to see if the modal is still up. I ran another test today where the modal was still up 
             // the data wasn't saved and the test passed. 
             pls.Wait(3);
-            pls.PlayListModal.IsModalDisplay.Should().BeFalse("Modal should be closed");
+            pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
             pls.Wait(2);
             //Step 6 select done---does not exist currently (09/26/2018)
             //Step 7 new playlist has been created

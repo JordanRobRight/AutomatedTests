@@ -61,7 +61,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         #region --- Public Properties ---
 
-        public bool IsModalDisplay
+        public bool IsModalDisplayed
         {
             get
             {
