@@ -513,7 +513,8 @@ namespace QA.Automation.UITests
             // RK - 1/22/19 - I'm wondering if we need a check to see if the modal is still up. I ran another test today where the modal was still up 
             // the data wasn't saved and the test passed. 
             pls.Wait(3);
-
+            pls.PlayListModal.IsModalDisplay.Should().BeFalse("Modal should be closed");
+            pls.Wait(2);
             //Step 6 select done---does not exist currently (09/26/2018)
             //Step 7 new playlist has been created
             // RK - 1/22/19 - We need to have some verification to make sure that the playlist was actually created. 
