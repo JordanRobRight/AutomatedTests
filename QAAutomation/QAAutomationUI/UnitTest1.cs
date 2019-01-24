@@ -344,6 +344,8 @@ namespace QA.Automation.UITests
 
             //step 11: Remove the Playlist Description 
             pls.PlayListModal.PlayListDescriptionTextField = "Automated Playlist Test Desc" + DateTime.Now.ToString();
+            pls.PlayListModal.ModalSaveButtonClick();
+            pls.PlayListModal.IsModalDisplayed.Should().BeTrue("Modal should be closed");
             pls.PlayListModal.PlayListDescriptionTextField = null;
 
             // RK - 1/23/19 - I overlooked this in the TC 580, Step 9 types a description and step 10 clicks the save button. 
@@ -368,7 +370,7 @@ namespace QA.Automation.UITests
             //pls.ModalSaveButton.Click();
             pls.PlayListModal.ModalSaveButtonClick();
             pls.Wait();
-            // RK - 1/22/19 - Probably need to add a Should() assert just to make sure the modal is closed. 
+            
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
             // RK - 1/22/19 - Please take a look at the comments I had regarding this for TC 583 
             // CK - 1/23/19 - OK i see that if the return is false then we say list is created
