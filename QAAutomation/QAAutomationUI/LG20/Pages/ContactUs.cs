@@ -44,6 +44,13 @@ namespace QA.Automation.UITests.LG20.Pages
                                                                         .Equals(fieldName, StringComparison.OrdinalIgnoreCase));
         }
 
+        private string GetValueFromTextField(IWebElement field)
+        {
+            return field != null && string.IsNullOrEmpty(field.GetInnerHTML())
+                ? field.GetAttribute("value") ?? field.Text
+                : string.Empty;
+        }
+
         protected IEnumerable<IWebElement> GetPageInputFields(string tagName)
         {
             var getModalDialog = GetPageContainer();
@@ -73,7 +80,7 @@ namespace QA.Automation.UITests.LG20.Pages
             get
             {
                 var getField = GetField("input", "id", contactFullNameId);
-                return getField != null ? getField.Text : string.Empty;
+                return GetValueFromTextField(getField);
             }
 
             set
@@ -88,7 +95,8 @@ namespace QA.Automation.UITests.LG20.Pages
             get
             {
                 var getField = GetField("input", "id", contactTitleId);
-                return getField != null ? getField.Text : string.Empty;
+                return GetValueFromTextField(getField);
+                //return getField != null ? getField.Text : string.Empty;
             }
 
             set
@@ -104,7 +112,8 @@ namespace QA.Automation.UITests.LG20.Pages
             get
             {
                 var getField = GetField("input", "id", contactCompanyId);
-                return getField != null ? getField.Text : string.Empty;
+                return GetValueFromTextField(getField);
+                //return getField != null ? getField.Text : string.Empty;
             }
 
             set
@@ -120,7 +129,8 @@ namespace QA.Automation.UITests.LG20.Pages
             get
             {
                 var getField = GetField("input", "id", contactPhoneId);
-                return getField != null ? getField.Text : string.Empty;
+                return GetValueFromTextField(getField);
+                //return getField != null ? getField.Text : string.Empty;
             }
 
             set
@@ -136,7 +146,8 @@ namespace QA.Automation.UITests.LG20.Pages
             get
             {
                 var getField = GetField("input", "id", contactEmailId);
-                return getField != null ? getField.Text : string.Empty;
+                return GetValueFromTextField(getField);
+                //return getField != null ? getField.Text : string.Empty;
             }
 
             set
@@ -152,7 +163,8 @@ namespace QA.Automation.UITests.LG20.Pages
             get
             {
                 var getField = GetField("textarea", "id", contactCommentsId);
-                return getField != null ? getField.Text : string.Empty;
+                return GetValueFromTextField(getField);
+                //return getField != null ? getField.Text : string.Empty;
             }
 
             set

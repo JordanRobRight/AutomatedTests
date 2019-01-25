@@ -2180,14 +2180,19 @@ namespace QA.Automation.UITests
             cus.Wait();
 
             cus.ContactFullNameTextField = "LG-AUTOTEST";
+            cus.ContactFullNameTextField.Should().Be("LG-AUTOTEST", "It should be: LG-AUTOTEST");
             cus.ContactTitleTextField = "Automated Tester";
+            cus.ContactTitleTextField.Should().Be("Automated Tester", "It should be: Automated Tester");
             cus.ContactCompanyTextField = "TestCompany";
+            cus.ContactCompanyTextField.Should().Be("TestCompany", "It should be: TestCompany");
             cus.ContactPhoneTextField = "1234567890";
+            cus.ContactPhoneTextField.Should().Be("1234567890", "It should be: 1234567890");
             cus.ContactEmailTextField = "autotest@test.com";
+            cus.ContactEmailTextField.Should().Be("autotest@test.com", "It should be: autotest@test.com");
             cus.ContactCommentsTextField = "Automated Tester";
+            cus.ContactCommentsTextField.Should().Be("Automated Tester", "It should be: Automated Tester");
 
             cus.Wait(2);
-            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
             cus.ClickSendButton();
             cus.Wait();
