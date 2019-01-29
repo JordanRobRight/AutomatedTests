@@ -153,14 +153,6 @@ namespace QA.Automation.UITests.LG20.Pages
            
         }
 
-        // RK - Comments - 1/16/19
-        // A suggestion. Convert this method to build a return List<string> of playlist names and in the CreatePlaylists in UnitTest1.cs do the verification there. 
-        // I see that this method will expand out more to include the ability to click on the individual items in the playlist line item. Actually the GetPlayList private method I believe is doing something similar
-        // On the .Contains method call. This should be changed to be Equal with StringComparison.OrdinalIgnoreCase filter on it because using .Contains will include items that might not want.
-        // For instance,  the name of the playlist is 'Test' that you just created but you have Test1, Test2 and Test3 in the playlist section. The result would be true because it matched the word 
-        // Test which is what all three items contain. If you change it to equals, then the result would be false because there isn't an playlist of Test.
-        // One more item - the test method should do the asserts not in the POM. There could be an instance
-        // depending on user roles that the message might be slightly different which is where we do the test in the Test method. So returning a list of strings, the test method will determine what to validate.
         public string VerifyCreatedPlaylist(string createdPlaylistName)
         {
             Wait(2);
@@ -182,7 +174,6 @@ namespace QA.Automation.UITests.LG20.Pages
 
             return createdPlaylistName;
         }
-        // RK - 1/22/19 - This is an example of what I was talking about in my comments in the above method. Please take a look at this example and let me know your opinion comments 
         public IEnumerable<string> GetPlayLists 
         {
             get

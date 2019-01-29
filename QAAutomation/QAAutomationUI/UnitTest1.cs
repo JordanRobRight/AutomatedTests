@@ -285,7 +285,7 @@ namespace QA.Automation.UITests
             pls.PlayListModal.ClickOffScreen();
 
             pls.Wait();
-            // RK - 1/22/19 - Probably need to add a Should() assert just to make sure the modal is closed. 
+             
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");// if IsModalDisplay is false then it means Modal was closed else display message
             //Step 7 Select '+' to add new playlist
             //Assert.IsFalse(pls.PlayListModal.IsModalDisplay);
@@ -324,7 +324,7 @@ namespace QA.Automation.UITests
             //pls.ModalSaveButton.Click();
             pls.PlayListModal.ModalSaveButtonClick();
             pls.Wait(3);
-            // RK - 1/22/19 - Probably need to add a Should() assert just to make sure the modal is closed. 
+          
 
             pls.PlayListModal.IsModalDisplayed.Should().BeTrue("Modal should be closed");
             // Assert.IsTrue(pls.PlayListModal.IsModalDisplay);
@@ -348,9 +348,7 @@ namespace QA.Automation.UITests
             pls.PlayListModal.IsModalDisplayed.Should().BeTrue("Modal should be closed");
             pls.PlayListModal.PlayListDescriptionTextField = null;
 
-            // RK - 1/23/19 - I overlooked this in the TC 580, Step 9 types a description and step 10 clicks the save button. 
-            // The validation is that the modal is still open as expected.
-            // We just need an additional check and we should be close to complete.
+            
            // pls.ClearDescriptionTextbox();
 
             //Step 12:  Enter a playlist name
@@ -359,7 +357,7 @@ namespace QA.Automation.UITests
             // playlistAddForm.SendKeys(playlistName);
 
             pls.PlayListModal.PlayListNameTextField = playlistName;
-            // RK - This should be pls.PlayListModal.PlayListDescriptionTextField and set that to null. 
+           
             pls.PlayListModal.PlayListDescriptionTextField = null;
             //pls.ModalNameEditField.SendKeys(playlistName);
 
@@ -372,8 +370,6 @@ namespace QA.Automation.UITests
             pls.Wait();
             
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
-            // RK - 1/22/19 - Please take a look at the comments I had regarding this for TC 583 
-            // CK - 1/23/19 - OK i see that if the return is false then we say list is created
             pls.GetPlayLists.Any(a => a.Equals(playlistName, StringComparison.OrdinalIgnoreCase)).Should().BeFalse("New Playlist wasn't created. ");
             //pls.VerifyCreatedPlaylist(playlistName).Should().Contain("Automated Playlist Test");
             if (pls.PlayListModal.IsModalDisplayed)
@@ -400,7 +396,7 @@ namespace QA.Automation.UITests
                 // pls.ModalChannelSelection.Submit();
 
                 pls.PlayListModal.ModalSaveButtonClick();
-                // RK - 1/22/19 - Probably need to add a Should() assert just to make sure the modal is closed. 
+                
                 pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
 
             }
@@ -474,7 +470,7 @@ namespace QA.Automation.UITests
             //Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
         }
 
-        // RK - 1/22/19 - Changed from 46 to 583. TC 46 is an old test case and is marked to be deleted. TC 583 is the correct test case.
+        
         [TestCase]// test Case #583
         [Category("All")]
         [Category("SmokeTests")]
@@ -493,8 +489,7 @@ namespace QA.Automation.UITests
             //sb.SelectMenu("Playlists");
 
             //Step 2 select '+' to make a new playlist
-            // RK - 1/22/19 I believe that these 4 statements are used to select playlists menu. I would suggest that we update this item to use the Sidebar class.
-           // IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
+            // IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
            // WaitForMaskModal();
            // playlistsSideBarMenuButton.Click();
             WaitForMaskModal();
@@ -517,14 +512,12 @@ namespace QA.Automation.UITests
             //Step 5  select save
 
             pls.PlayListModal.ModalSaveButtonClick();
-            // RK - 1/22/19 - I'm wondering if we need a check to see if the modal is still up. I ran another test today where the modal was still up 
-            // the data wasn't saved and the test passed. 
+            
             pls.Wait(3);
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
             pls.Wait(2);
             //Step 6 select done---does not exist currently (09/26/2018)
             //Step 7 new playlist has been created
-            // RK - 1/22/19 - We need to have some verification to make sure that the playlist was actually created. 
             pls.GetPlayLists.Any(a => a.Equals(playlistName, StringComparison.OrdinalIgnoreCase)).Should().BeFalse("New Playlist wasn't created. ");
            // pls.VerifyCreatedPlaylist(playlistName);
 
@@ -2010,7 +2003,6 @@ namespace QA.Automation.UITests
             cus.ContactPhoneTextField = "Auto Test"; // non numeric data in phone number field  
             cus.ClickSendButton();
             
-            // RK - 1/22/19 - Is there supposed to be a check for invalid phone number here? 
             cus.ContactPhoneTextField = null;
             cus.ContactPhoneTextField = "1234567T"; // invalid data in phone number field
             cus.ContactPhoneTextField = null;
@@ -2216,8 +2208,6 @@ namespace QA.Automation.UITests
             //Step 1
             Login();
             
-            //RK - 1/18/19 - I added this item in to make sure that you are set to the GM client. At some point, we might need to set this for all tests. But for this one, it was needed. 
-
             ClientMenu client = new ClientMenu(_driver.Value, _configuration);
             client.Wait();
             client.SelectClient("GM");
@@ -2233,8 +2223,6 @@ namespace QA.Automation.UITests
             }
             catch (Exception e) { Console.Write(e); }
 
-            // RK - 1/18/19 - I believe the statement below is just selecting the Players menu item on the right. Probably need to update these section of code to use the SelectMenu method
-            // CK -  selecting the player using SelectMenu method in line 2193
             //Step 2 select players tab
             IWebElement playersTab = _driver.Value.FindElement(By.CssSelector("#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(3) > a > span"));
             
@@ -2257,8 +2245,6 @@ namespace QA.Automation.UITests
             //playerSelect.Click();
 
             player.SelectPlayer("LG-QAROB");
-            // RK - 1/18/19 - if I read the test case correctly, this check has to do with actually selecting the player from the list and displaying the Player page. From there, the check about online and offline is determined as well. 
-            // The player POM hasn't been created yet but I believe that is on the list with US 3051. 
             player.VerifyOfflineStatusPlayerPage.Should().BeTrue("player not found to be offline");// CK: currently  LG-QAROB is a offline player, need to work on online player
             player.Wait();
 
@@ -2272,8 +2258,7 @@ namespace QA.Automation.UITests
             //TODO: need to select a different player
             //IWebElement playerSelect2 = GetPlayer(_driver.Value, "LG-QAROB");
             //playerSelect2.Click();
-
-            // RK - 1/18/19 - Hard code the name to search from offline here for the time being. 
+           
             player.SelectPlayer("LG-QAROB");
 
             player.Wait();

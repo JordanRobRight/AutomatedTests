@@ -355,7 +355,6 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             get
             {
-                // RK - 1/21/19 - Make the XPath locator text into a static string to be consistent as rest of the POM class.
                 IWebElement invalidEmail = Driver.FindElement(By.XPath(checkEmailError));// using xpath to check class "lgfe-input-text expanded contactErrorInput" is enabled
                 return invalidEmail.Enabled;
             }
@@ -365,7 +364,6 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             get
             {
-                // RK - 1/21/19 - Make the XPath locator text into a static string to be consistent as rest of the POM class.
                 IWebElement invalidFullName = Driver.FindElement(By.XPath(checkFullNameError));
                 return invalidFullName.Enabled;
             }
