@@ -30,6 +30,9 @@ namespace QA.Automation.UITests.Models
         [JsonProperty]
         public int SlidingWaitFactor { get; set; }
 
+        [JsonProperty]
+        public int MaxDuration { get; set; }
+
 
         //public static TestConfiguration GetTestConfiguration()
         //{
