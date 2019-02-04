@@ -10,6 +10,7 @@ namespace QA.Automation.UITests.Models
         [JsonProperty]
         //public string Environment { get; set; }
         public Common.EnvironmentType Environment { get; set; }
+        public Common.EnvironmentType Email { get; set; }
         [JsonProperty]
         public string SauceLabsUser { get; set; }
         [JsonProperty]
@@ -26,6 +27,8 @@ namespace QA.Automation.UITests.Models
         public string LGUser { get; set; }
         [JsonProperty]
         public string LGPassword { get; set; }
+        [JsonProperty]
+        public int SlidingWaitFactor { get; set; }
 
 
         //public static TestConfiguration GetTestConfiguration()

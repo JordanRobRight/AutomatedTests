@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using QA.Automation.UITests.Selenium;
@@ -63,6 +64,11 @@ namespace QA.Automation.UITests.LG20.Pages
             }
 
             return false;
+        }
+
+        public virtual void Wait(int numberOfSeconds = 5, int slideFactor = 0)
+        {
+            Thread.Sleep(TimeSpan.FromSeconds(numberOfSeconds + slideFactor));
         }
 
         protected IEnumerable<IWebElement> GetModalButtons()

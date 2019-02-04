@@ -1,6 +1,7 @@
 {
   "version": "1",
-  "Environment": [
+  "Environment": 
+  [
     {
       "Name": "Test",
       "Player": "LG-QAROB"
@@ -9,6 +10,14 @@
     {
       "Name": "PreProd",
       "Player": "LG-GREGDEV"
+    }
+
+  ],
+
+  "EmailDetails": 
+  [
+    {
+      "FullName": "LG-QACHAN"
     }
   ]
 }

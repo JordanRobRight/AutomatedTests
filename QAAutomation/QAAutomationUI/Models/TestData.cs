@@ -28,6 +28,8 @@ namespace QA.Automation.UITests.Models
         //[JsonProperty]
         //public string LGPassword { get; set; }
 
+        [JsonProperty]
+        public List<EmailUsData> EmailDetails { get; set; }
     }
 
     public class EnvironmentData
@@ -38,6 +40,14 @@ namespace QA.Automation.UITests.Models
         [JsonProperty]
         //public string Environment { get; set; }
         public string Player { get; set; }
+        // [JsonProperty]
+        // public string FullName { get; set; }
+    }
+    public class EmailUsData
+    {
+
+        [JsonProperty]
+        public string FullName { get; set; }
     }
 }
 

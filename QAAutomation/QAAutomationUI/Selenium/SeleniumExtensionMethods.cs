@@ -44,6 +44,18 @@ namespace QA.Automation.UITests.Selenium
         {
             return webElement.FindElements(locator).FirstOrDefault(a => a.GetAttribute("class") != null && a.GetAttribute("class").Equals(className));
         }
+
+        public static void SendKeysOrClear(this IWebElement webElement, string valueItem)
+        {
+            if (valueItem == null )
+            {
+                webElement.Clear();
+            }
+            else
+            {
+                webElement.SendKeys(valueItem);
+            }
+        }
     }
 
   

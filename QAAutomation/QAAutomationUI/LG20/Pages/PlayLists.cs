@@ -26,9 +26,10 @@ namespace QA.Automation.UITests.LG20.Pages
         private string _playListScrollArea = "";
 
         // Modal popup - Update to support new filter changes
-       // private readonly string _playListName = @"playlist-info-field-name"; // Element: Input By: Name
-       // private readonly string _playListDescription = @"playlist-info-description"; // Element: TextArea By: Name
-
+        // private readonly string _playListName = @"playlist-info-field-name"; // Element: Input By: Name
+        // private readonly string _playListDescription = @"playlist-info-description"; // Element: TextArea By: Name
+        private readonly string _playListDescription = @"//label[text()='Playlist Description']//following-sibling::textarea[@id='form-textarea']"; // xpath to find unique player description emelent
+        private readonly string _playerListNameCss = @"lgfe-cm-information";// first element in playlist
         //private readonly string _playListFilterByClientProgramAndChannel = @"Filtered by client program and channel(s)"; // Search for checkbox with this text.
         //private readonly string _playListFilterSelectClientProgram = @"select-filter-program"; // Element: Select By: id
         //private readonly string _playListFilterSelectFilter = @"select-filter"; // Element: Select By: id
@@ -60,10 +61,11 @@ namespace QA.Automation.UITests.LG20.Pages
         //}
         #endregion
 
-        #region -- Methods -- 
+      
 
         #region -- Overrides --
 
+        // This method can be removed because the base class has it. 
         public override void Wait(int seconds = 2)
         {
             base.Wait(seconds);
@@ -77,8 +79,10 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             throw new NotImplementedException();
         }
-        #endregion
-        #endregion
+
+        
+        # endregion
+        
 
         #region -- Properties --
 
@@ -118,6 +122,7 @@ namespace QA.Automation.UITests.LG20.Pages
         }
         #endregion
 
+        #region -- Public Methods --
         public bool AddButtonClick()
         {
             try
@@ -137,6 +142,51 @@ namespace QA.Automation.UITests.LG20.Pages
             return true;
         }
 
+        // I not sure why this method is here and I don't think it is needed.
+        // If you are going to clear out the description for the playlist settings modal, you should just be able to set null to the description field and that should clear it out.
+        // 
+        public void ClearDescriptionTextbox()
+        {
+            Wait(2);
+            IWebElement clearDescription = Driver.FindElement(By.XPath(_playListDescription));
+            clearDescription.Clear();
+           
+        }
+
+        public string VerifyCreatedPlaylist(string createdPlaylistName)
+        {
+            Wait(2);
+
+            IList<IWebElement> List = Driver.FindElements(By.ClassName(_playerListNameCss));
+            foreach (IWebElement playList_List1 in List)
+            {
+                string toCompare = playList_List1.Text;
+                if (toCompare.Contains(createdPlaylistName))
+                {
+                    // Assert.IsTrue(toCompare.Contains(createdPlaylistName),"created playerlist not presnet in container");
+                    //toCompare.Should().Be(createdPlaylistName);
+                    break;
+
+                }
+                //Assert.IsTrue(toCompare.Contains(createdPlaylistName), "created playerlist not presnet in container");
+
+            }
+
+            return createdPlaylistName;
+        }
+        public IEnumerable<string> GetPlayLists 
+        {
+            get
+            {
+                IList<IWebElement> playListItems = Driver.FindElements(By.ClassName(_playerListNameCss));
+                var items = playListItems.Select(a => a.Text).ToList();
+                return items;
+            }
+        }
+
+        #endregion
+
+        #region -- Private Methods --
         private List<PlayListItem> GetPlayList(IWebDriver driver)
         {
             List<PlayListItem> pls = new List<PlayListItem>();
@@ -168,6 +218,8 @@ namespace QA.Automation.UITests.LG20.Pages
             
             return pls;
         }
+
+        #endregion
     }
 
 }

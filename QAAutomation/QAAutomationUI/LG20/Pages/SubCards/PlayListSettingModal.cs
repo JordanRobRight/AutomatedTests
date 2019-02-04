@@ -61,7 +61,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         #region --- Public Properties ---
 
-        public bool IsModalDisplay
+        public bool IsModalDisplayed
         {
             get
             {
@@ -81,7 +81,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             {
 
                 var getField = GetField("input", "name", _playListName);
-                getField?.SendKeys(value);
+                getField.SendKeysOrClear(value);
             }
         }
 
@@ -96,7 +96,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             set
             {
                 var getField = GetField("textarea", "name",_playListDescription);
-                getField?.SendKeys(value);
+                getField?.SendKeysOrClear(value);
             }
         }
 
