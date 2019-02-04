@@ -26,6 +26,7 @@ namespace QA.Automation.UITests
             caps.SetCapability("deviceOrientation", deviceOrientation);
             caps.SetCapability("username", _configuration.SauceLabsUser);
             caps.SetCapability("accessKey", _configuration.SauceLabsKey);
+            caps.SetCapability("maxDuration", _configuration.MaxDuration);
         }
 
         internal IWebDriver CreateBrowser(string testName, string testClassName, string testMethodName)
