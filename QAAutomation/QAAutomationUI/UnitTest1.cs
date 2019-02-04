@@ -83,10 +83,24 @@ namespace QA.Automation.UITests
             Assert.AreEqual($"https://portal.{_configuration.Environment.ToString()}.dcimliveguide.com/#playlists".ToLower(), _driver.Value.Url.Trim().ToLower());
         }
 
-        [TestCase]
+       // [TestCase]
         [Category("SmokeTests")]
         [Description("Login")]
         public void Login()
+        {
+            LoginTest();
+            ClientMenu cm = new ClientMenu(_driver.Value, _configuration);
+            if (!cm.CurrentClient.Equals("GM", StringComparison.OrdinalIgnoreCase))
+            {
+                cm.SelectClient("GM");
+                cm.Wait(3);
+            }
+        }
+
+        [TestCase]
+        [Category("SmokeTests")]
+        [Description("Login")]
+        public void LoginTest()
         {
             #region --- old code
             /*
@@ -1157,9 +1171,9 @@ namespace QA.Automation.UITests
 
             PlayList pl = new PlayList(_driver.Value, _configuration);// TestConfiguration.GetTestConfiguration());
             pl.Wait(2);
-
+            
             IWebElement videoButton = pl.PlayListWidets.FirstOrDefault(a => a.Text.ToLower().Contains("video"));
-
+            
             Assert.IsNotNull(videoButton);
 
             videoButton.Click();
@@ -1426,7 +1440,7 @@ namespace QA.Automation.UITests
 
             var ClientMenuTest = new ClientMenu(_driver.Value, _configuration);
 
-            ClientMenuTest.GetClientMenuItem("GM");
+            //ClientMenuTest.GetClientMenuItem("GM");
 
             ClientMenuTest.SelectClient("GM");
         }

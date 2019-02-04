@@ -82,7 +82,7 @@ namespace QA.Automation.UITests.LG20.Pages
         protected IWebElement GetModal()
         {
             var getModalWindow = SeleniumCommon.GetElement(_driver, SeleniumCommon.ByType.Id, _modalClassName);
-            var getActualModal = getModalWindow.FindElements(By.TagName("div")).FirstOrDefault(a => a.GetAttribute("class").Equals(_modalVisableClass)); //why does this seem to change the id i put in to widget-modal??
+            var getActualModal = getModalWindow.FindElements(By.TagName("div")).FirstOrDefault(a => a.GetAttribute("class").Equals(_modalVisableClass));//why does this seem to change the id i put in to widget-modal??
             return getActualModal;
         }
         protected IEnumerable<IWebElement> GetModalInputFields(string tagName)

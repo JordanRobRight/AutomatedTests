@@ -25,7 +25,7 @@ namespace QA.Automation.APITests.LG20
                 //{LGMServiceType.SSOAuthService,"" },
                 {LGMServiceType.ProgramVersionsService,"" },
                 {LGMServiceType.AssetsService,"" },
-                //{LGMServiceType.SOService,"" },
+                {LGMServiceType.SSOService,"" },
                 {LGMServiceType.PlaylistsService,"" },
                 {LGMServiceType.WeatherService,"" },
                 {LGMServiceType.WidgetsService,"" },
@@ -49,7 +49,8 @@ namespace QA.Automation.APITests.LG20
                 {LGMServiceType.Subaru_VehicleTrimsService,"" },
                 {LGMServiceType.LiveGuide1Service,"" },
                 {LGMServiceType.Subaru_TrimComparisonService,"" },
-          // "LG.LGM.ProfileService"
+                {LGMServiceType.ProfileService,"" },
+               // {LGMServiceType.ServiceAppointmentsService,"" }
       };
         private readonly string _url = string.Empty;
 

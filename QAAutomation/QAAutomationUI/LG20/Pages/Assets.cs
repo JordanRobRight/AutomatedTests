@@ -42,22 +42,22 @@ namespace QA.Automation.UITests.LG20.Pages
             throw new NotImplementedException();
         }
 
-        public override bool VerifyPage()
-        {
-            var assetsContainer = Driver.FindElement(By.Id("page-container"));
-            assetsContainer.Should().NotBeNull();
-            var assetsListContentWrapper = assetsContainer.GetElementFromCompoundClass(By.TagName("div"),
-                    "assets-content-wrapper js-assets-content");
-            assetsListContentWrapper.Should().NotBeNull();
-            var assetContents = assetsListContentWrapper.FindElement(By.ClassName("assets-content"));
-            assetContents.Should().NotBeNull();
-            var assetItems = assetContents.FindElements(By.TagName("div"))
-                .Where(a => a.GetAttribute("data-guid") != null).Select(a => a).ToList();
-            assetItems.Should().NotBeNull();
-            assetItems.Should().HaveCountGreaterThan(1);
+            public override bool VerifyPage()
+            {
+                var assetsContainer = Driver.FindElement(By.Id("page-container"));
+                assetsContainer.Should().NotBeNull();
+                var assetsListContentWrapper = assetsContainer.GetElementFromCompoundClass(By.TagName("div"),
+                        "assets-content-wrapper js-assets-content");
+                assetsListContentWrapper.Should().NotBeNull();
+                var assetContents = assetsListContentWrapper.FindElement(By.ClassName("assets-content"));
+                assetContents.Should().NotBeNull();
+                var assetItems = assetContents.FindElements(By.TagName("div"))
+                    .Where(a => a.GetAttribute("data-guid") != null).Select(a => a).ToList();
+                assetItems.Should().NotBeNull();
+                assetItems.Should().HaveCountGreaterThan(1);
 
-            return true;
-        }
+                return true;
+            }
         #endregion
 
         public IWebElement GetAssetSearchInput()
