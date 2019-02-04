@@ -41,11 +41,20 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
                 return clientMenuItem != null ? clientMenuItem.Text : string.Empty;
             }
         }
+        #endregion
+
+
+
+        #region --- Methods ---
+        #region Private Methods
+
         private IEnumerable<ClientMenuItem> ClientMenuItems => GetClientMenuItems();
 
         private IEnumerable<ClientMenuItem> GetClientMenuItems()
         {
             List<ClientMenuItem> menuList = new List<ClientMenuItem>();
+            
+            OpenCloseMenu();
 
             var ClientMenuItems = Driver.FindElement(By.ClassName("iibcuinow-menu-wrapper")).FindElements(By.TagName("a")).ToList();
 
@@ -57,18 +66,13 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             return menuList;
 
         }
-
-        #endregion
-
-        #region -- Methods --
-
-
-        public override void Perform()
+        private void OpenCloseMenu()
         {
-            //string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
-            //Driver.Navigate().GoToUrl(url);
+            var clientMenuItem = Driver.FindElement(By.ClassName("iibcu-img-name-of-wrapper"));
+            //Wait(1);
+            clientMenuItem.Click();
+            Wait(1);
         }
-
 
         private ClientMenuItem GetItems(string itemName)
         {
@@ -84,6 +88,28 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         //            return GetItems(ClientItem).Name;
         //        }
 
+
+        #endregion
+
+        #region -- Override Methods --
+
+
+        public override void Perform()
+        {
+            //string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
+            //Driver.Navigate().GoToUrl(url);
+        }
+
+
+       
+
+      
+        public override bool VerifyPage()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
         public void SelectClient(string clientName)
         {
             var ClientItem = GetItems(clientName);
@@ -94,13 +120,8 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
             }
         }
 
-        public override bool VerifyPage()
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
+        #endregion 
 
 
-        
     }
 }
