@@ -11,7 +11,7 @@ using QA.Automation.UITests.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages.SubCards
 {
-    public class ClientMenu: LGBasePage
+    public class ClientMenu : LGBasePage
     {
         public ClientMenu(IWebDriver driver, TestConfiguration config) : base(driver, config)
         {
@@ -21,15 +21,26 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         }
 
         #region -- Fields --
-        public static string UserDiv = "#interaction-info-bar-container > div > div";
-        public static string ClientDropDownDiv = "#interaction-info-bar-container > div > div > div > div.iibcuinow-menu-wrapper";
+        private static string UserDiv = "#interaction-info-bar-container > div > div";
+        private static string ClientDropDownDiv = "#interaction-info-bar-container > div > div > div > div.iibcuinow-menu-wrapper";
 
+        private static string _clientMenuWrapper = "#interaction-info-bar-container > div";
+        private static string _clientMenuItem = "iibcun-client";
 
 
         #endregion
 
         #region -- Properties --
 
+        public string CurrentClient
+        {
+            get
+            {
+                var wrapper = Driver.FindElement(By.CssSelector(_clientMenuWrapper));
+                var clientMenuItem = wrapper.FindElement(By.ClassName(_clientMenuItem));
+                return clientMenuItem != null ? clientMenuItem.Text : string.Empty;
+            }
+        }
         private IEnumerable<ClientMenuItem> ClientMenuItems => GetClientMenuItems();
 
         private IEnumerable<ClientMenuItem> GetClientMenuItems()
@@ -44,7 +55,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
                 menuList.Add(menuItem);
             }
             return menuList;
-            
+
         }
 
         #endregion
@@ -54,28 +65,28 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         public override void Perform()
         {
-            string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
-            Driver.Navigate().GoToUrl(url);
+            //string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
+            //Driver.Navigate().GoToUrl(url);
         }
 
 
-        private ClientMenuItem getItems(string itemName)
+        private ClientMenuItem GetItems(string itemName)
         {
             var li = ClientMenuItems.FirstOrDefault(x => x.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
             return li;
         }
 
-        public string GetClientMenuItem(string ClientItem)
-        {
-//            WaitFor(ClientItem);
-            Wait();
+        //        public string GetClientMenuItem(string ClientItem)
+        //        {
+        ////            WaitFor(ClientItem);
+        //            Wait();
 
-            return getItems(ClientItem).Name;
-        }
+        //            return GetItems(ClientItem).Name;
+        //        }
 
         public void SelectClient(string clientName)
         {
-            var ClientItem = getItems(clientName);
+            var ClientItem = GetItems(clientName);
 
             if (ClientItem != null)
             {
@@ -90,44 +101,6 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         #endregion
 
 
-        #region Old Code
-        //private void SelectItemFromCilentMenu(IWebDriver driver, string menuItemToSelect)
-        //{
- 
-            //string playlistDivCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div";
-
-            //IWebElement playlistDiv = _driver.Value.FindElement(By.CssSelector(playlistDivCssSelector));
-            //if playlists is empty find profile dropdown 
-
-            //IWebElement playerChannelDropdown = driver.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
-            //string clientName = "GM";
-
-            //if (!playerChannelDropdown.Text.Equals(menuItemToSelect, StringComparison.OrdinalIgnoreCase))
-            //{
-            //    playerChannelDropdown.Click();
-            //    System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(500));
-
-            //    var wrapper = GetElement(ByType.ClassName, "iibcuinow-menu-wrapper").FindElements(By.TagName("a"));
-            //    IWebElement gmChannelSelection = null;
-
-            //    foreach (var menuItem in wrapper)
-            //    {
-            //        if (menuItem.Text.Equals(menuItemToSelect, StringComparison.OrdinalIgnoreCase)) // == menuItemToSelect)
-            //        {
-            //            gmChannelSelection = menuItem;
-            //            break;
-            //        }
-            //    }
-
-            //    //gmChannelSelection = wrapper.FirstOrDefault();
-
-            //    gmChannelSelection = gmChannelSelection ?? wrapper.FirstOrDefault();
-
-            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-
-            //    gmChannelSelection.Click();
-            //}
-        //}
-        #endregion
+        
     }
 }
