@@ -21,6 +21,7 @@ using QA.Automation.UITests.Selenium;
 using FluentAssertions;
 using FluentAssertions.Collections;
 
+[assembly: LevelOfParallelism(2)]
 
 namespace QA.Automation.UITests
 {
