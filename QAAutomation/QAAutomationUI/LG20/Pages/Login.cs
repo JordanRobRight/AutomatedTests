@@ -38,8 +38,8 @@ namespace QA.Automation.UITests.LG20.Pages
         public override void GoToUrl()
         {
             string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
-            Wait(9);
             Driver.Navigate().GoToUrl(url);
+            Wait();
         }
 
         public override void Perform()
