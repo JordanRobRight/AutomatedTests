@@ -200,18 +200,19 @@ namespace QA.Automation.UITests.LG20.Pages
         /// <summary>
         /// verify popup being displayed and verify the success message
         /// </summary>
-        /* public string ContactNotificationMessage()
+        public string ContactNotificationMessage
         {
+            get
+            {
                 Wait(2);
                 IWebElement contactNotificationMessage = Driver.FindElement(By.CssSelector(contactNotificationMessageCss));
                 string successNotificationMessage = contactNotificationMessage.Text;
-               
+
                 return successNotificationMessage;
             }
 
         }
 
-       
         #region -- Rob Example --
         public bool IsNotificationPopupDisplayed2
         {
