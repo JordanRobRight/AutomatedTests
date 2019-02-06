@@ -363,8 +363,7 @@ namespace QA.Automation.UITests
             pls.PlayListModal.IsModalDisplayed.Should().BeTrue("Modal should be closed");
             pls.PlayListModal.PlayListDescriptionTextField = null;
 
-            
-           // pls.ClearDescriptionTextbox();
+            pls.PlayListModal.PlayListDescriptionTextField = null;
 
             //Step 12:  Enter a playlist name
             string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
@@ -372,7 +371,7 @@ namespace QA.Automation.UITests
             // playlistAddForm.SendKeys(playlistName);
 
             pls.PlayListModal.PlayListNameTextField = playlistName;
-           
+            
             pls.PlayListModal.PlayListDescriptionTextField = null;
             //pls.ModalNameEditField.SendKeys(playlistName);
 
@@ -1429,15 +1428,17 @@ namespace QA.Automation.UITests
             #endregion
         }
 
-        //[TestCase]
-        //[Description("LiveGuideClientMenu")]
+       // [TestCase]
+       // [Description("LiveGuideClientMenu")]
+
         public void ClientMenuTest()
         {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
             Login();
 
-            IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+         //   IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
 
-            playerChannelDropdown.Click();
+        //    playerChannelDropdown.Click();
 
             var ClientMenuTest = new ClientMenu(_driver.Value, _configuration);
 
@@ -1995,8 +1996,7 @@ namespace QA.Automation.UITests
         [Description("Test Case #1457")]
         public void ContactUsWithrequiredFields_POM()
         {
-            
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(11));
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(11));
             //Step 1
             Login();
 
@@ -2006,7 +2006,7 @@ namespace QA.Automation.UITests
             sb.SelectMenu("Contact Us");
             ContactUs cus = new ContactUs(_driver.Value, _configuration);
 
-             cus.Wait(4);
+            cus.Wait(4);
             cus.ClickSendButton();
             cus.Wait(2);
             cus.IsFullNameFieldError.Should().BeTrue();     
@@ -2014,7 +2014,7 @@ namespace QA.Automation.UITests
             cus.ContactFullNameTextField = "LG-AUTOTEST";
             cus.ClickSendButton();
             
-            
+           
             cus.ContactPhoneTextField = "Auto Test"; // non numeric data in phone number field  
             cus.ClickSendButton();
             
@@ -2174,7 +2174,6 @@ namespace QA.Automation.UITests
         [Description("Test Case #1459")]
         public void ContactUsWithAllFields_POM()
         {
-           
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
             //Step 1
             Login();
@@ -2919,6 +2918,17 @@ namespace QA.Automation.UITests
             //TODO: Assert here to validate items returned.
         }
 
+        private void DetermineErrorInput(IEnumerable<KeyValuePair<bool, string>> fieldList, string field)
+        {
+            foreach (KeyValuePair<bool, string> error in fieldList)
+            {
+                bool b = error.Key;
+                string s = error.Value;
+                b.Should().BeTrue();
+                s.Should().Be(field);
+            }
+        }
+       
         [TestCase]//TestCase 1991
         [Category("All")]
         [Description("TestCase 1991")]
@@ -2928,22 +2938,140 @@ namespace QA.Automation.UITests
             //step 1 sign in
             Login();
 
-            //step 2 select user dropdown menu (upper right corner)
             IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
             playerChannelDropdown.Click();
 
+            ClientMenu cm = new ClientMenu(_driver.Value, _configuration);
+            cm.Wait(3);
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(3));
+           // cm.GetClientMenuItem("GM");
+            //cm.SelectClient("GM");
+            cm.SelectClient("My Profile");
+
             //step 3 Spell check all values from dropdown box
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            cm.Wait();
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //step 4 Select My Profile myProfileButtonCssSelector
-            IWebElement myProfileButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileButtonCssSelector));
-            myProfileButton.Click();
-            //step 5 Spell check all content (fields/values, buttons), including placeholder text 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+           // IWebElement myProfileButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileButtonCssSelector));
+           // myProfileButton.Click();
+            //step 5 Spell check all content (fields/values, buttons), (including placeholder text : to do)
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            MyProfile mp = new MyProfile(_driver.Value, _configuration);
+
+           
+            
+            foreach (string MyProfilefields in mp.GetMyProfileFields)
+            {
+                MyProfilefields.Should().ContainAny("First Name", "Last Name", "Title", "Email Address", "Direct Phone Number", "Mobile Number", "Street Address", "City", "State", "Zip");
+            }
+
+            mp.IsEmailFieldExists.Should().BeTrue("Email field does not exists");//verify email field
+
+           // mp.VerifyMyProfileFields();
             //step 6 Select Save button
-            IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileSaveButtonCssSelector));
-            saveButton.Click();
+            mp.ClickSaveButton();
+
+            // IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileSaveButtonCssSelector));
+            // saveButton.Click();
             //step 7 Enter any First Name (there are not edit checks in place) and select Save\
-            IWebElement playerChannelDropdown1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            mp.ProfileFirstNameTextField = null;
+            mp.ProfileFirstNameTextField = "Automation";
+            mp.ClickSaveButton();
+
+            mp.ProfileLastNameTextField = null;
+            mp.ProfileLastNameTextField = "Tester";
+            mp.ClickSaveButton();
+            mp.ProfileTitleTextField = null;
+            mp.ProfileTitleTextField = "AutomationEngineer";
+            mp.ClickSaveButton();
+
+           // mp.ClearDirectPhoneTextbox();
+            mp.ProfileDirectPhoneTextField = null;//just to clear previous data to perform following validations
+            mp.ProfileDirectPhoneTextField = "1234";//invalid direct phone number
+            mp.ClickSaveButton();
+             DetermineErrorInput(mp.IsErrorInput, "Direct Phone Number");
+          //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Direct Phone Number");
+            
+            mp.ProfileDirectPhoneTextField = null;
+           // mp.ClearDirectPhoneTextbox();
+            mp.ProfileDirectPhoneTextField = "test1234";//invalid direct phone number
+            mp.ClickSaveButton();
+            // verify the key and value returned
+            DetermineErrorInput(mp.IsErrorInput, "Direct Phone Number");
+            //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Direct Phone Number");
+
+            // mp.IsErrorInput.Should().BeTrue("Error not found");
+            mp.ProfileDirectPhoneTextField = null;
+            //mp.ClearDirectPhoneTextbox();
+            mp.ProfileDirectPhoneTextField = "1234567890";//valid direct phone number
+            mp.ClickSaveButton();
+           
+            // mp.ClearMobileNumberTextbox();
+            mp.ProfileMobileNumberTextField = null;
+            mp.ProfileMobileNumberTextField = "1234";//invalid mobile number
+            //  mp.ProfileDirectPhoneTextField = "error";
+            mp.ClickSaveButton();
+            // verify the key and value returned
+            DetermineErrorInput(mp.IsErrorInput, "Mobile Number");
+            // DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Mobile Number");
+
+            // mp.IsErrorInput.Should().BeTrue("Error not found");
+            mp.ProfileMobileNumberTextField = null;
+            //mp.ClearMobileNumberTextbox();
+
+            mp.ProfileMobileNumberTextField = "test1234";//invalid mobile number
+            mp.ClickSaveButton();
+            // verify the key and value returned
+            DetermineErrorInput(mp.IsErrorInput, "Mobile Number");
+            //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Mobile Number");
+            //  mp.IsErrorInput.Should().BeTrue("Error not found");
+            mp.ProfileMobileNumberTextField = null;
+            // mp.ClearMobileNumberTextbox();
+
+            mp.ProfileMobileNumberTextField = "1234567890";// valid mobile number
+            mp.ClickSaveButton();
+          //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Mobile Number");
+            mp.ProfileStreetAddressTextField =  null;
+            mp.ProfileStreetAddressTextField = "testStreet";
+            mp.ClickSaveButton();
+
+            mp.ProfileCityTextField = null;
+            mp.ProfileCityTextField = "testCity";
+            mp.ClickSaveButton();
+
+            mp.ProfileStateTextField  = null;
+            mp.ProfileStateTextField = "TX";
+            mp.ClickSaveButton();
+
+          
+            mp.ProfileZipTextField = null;
+            mp.ProfileZipTextField = "1234";//invalid zip code data
+            mp.ClickSaveButton();
+            // verify the key and value returned
+            DetermineErrorInput(mp.IsErrorInput, "Zip");
+            //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Zip");
+
+            //  mp.IsErrorInput.Should().BeTrue("Error not found");
+            mp.ProfileZipTextField = null;
+            
+
+            mp.ProfileZipTextField = "12test";//invalid zip code data
+            mp.ClickSaveButton();
+            // verify the key and value returned
+            DetermineErrorInput(mp.IsErrorInput, "Zip");
+            // DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Zip");
+            // mp.IsErrorInput.Should().BeTrue("Error not found");
+            mp.ProfileZipTextField = null;
+            
+
+            mp.ProfileZipTextField = "12345";//valid data
+            mp.ClickSaveButton();
+
+           mp.IsSaveEnabledAfterSaved.Should().BeTrue("Save button still not enabled");//if save button is enabled then save is success, currently there is no success message displayed by application 
+
+
+            /*IWebElement playerChannelDropdown1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
             playerChannelDropdown1.Click();
             IWebElement myProfileButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileButtonCssSelector));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
@@ -2958,7 +3086,7 @@ namespace QA.Automation.UITests
             IWebElement myProfileTitle = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileTitleInput));
             myProfileTitle.SendKeys("Engineer");
             IWebElement saveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileSaveButtonCssSelector));
-            saveButton.Click();
+            saveButton.Click();*/
             //step 10 Enter an invalid Email Address and select Save 
             /*****Email is a locked imput for cbam right now 10/4/2018******/
             //IWebElement playerChannelDropdown2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
@@ -2973,56 +3101,59 @@ namespace QA.Automation.UITests
             //emailInput.SendKeys("test.com");
             //step 12 Enter a valid Email Address and select Save
             //step 13 Enter an invalid (letters, special characters-except for dash & parenthesis or less than 10 numbers) Direct Phone Number 
-            IWebElement directPhoneNumberInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfilePhoneInput));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            directPhoneNumberInput.SendKeys("test1234" + Keys.Enter);
-            //step 14 Repeat test step 13 with various invalid Direct Phone Number combinations
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            directPhoneNumberInput.Clear();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            directPhoneNumberInput.SendKeys("1234" + Keys.Enter);
-            //step 15 Enter a valid Direct Phone Number and select Save
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            directPhoneNumberInput.Clear();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            directPhoneNumberInput.SendKeys("4141231234" + Keys.Enter);
-            //step 16 Enter an invalid (letters, special characters-except for dash & parenthesis or less than 10 numbers) Mobile Number
-            IWebElement mobileNumberInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileMobileInput));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            mobileNumberInput.SendKeys("abc123" + Keys.Enter);
-            //step 17 Repeat test step 16 with various invalid Mobile Number combinations 
-            mobileNumberInput.Clear();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            mobileNumberInput.SendKeys("123" + Keys.Enter);
-            //step 18 Enter a valid Mobile Number and select Save
-            mobileNumberInput.Clear();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            mobileNumberInput.SendKeys("1234567890" + Keys.Enter);
-            //step 19 Enter any Street Address (there are not edit checks in place) and select Save   
-            IWebElement addressInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileAddressInput));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            addressInput.SendKeys("2727 Good Faith Rd" + Keys.Enter);
-            //step 20 Enter any City name (there are not edit checks in place) and select Save
-            IWebElement cityInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileCityInput));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            cityInput.SendKeys("Milwuakee" + Keys.Enter);
-            //step 21 Enter any State (there are not edit checks in place) and select Save
-            IWebElement stateInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileStateInput));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            stateInput.SendKeys("WI" + Keys.Enter);
-            //step 22 Enter an invalid Zip Code (letters, special characters or less or more than 5 numbers) and select Save
-            IWebElement zipCodeInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileZipInput));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            zipCodeInput.SendKeys("12345" + Keys.Enter);
-            //step 23 Repeat test step 22 with various invalid Zip Code combinations 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            zipCodeInput.Clear();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-            zipCodeInput.SendKeys("53209" + Keys.Enter);
+            /*  IWebElement directPhoneNumberInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfilePhoneInput));
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10)); 
+              directPhoneNumberInput.SendKeys("test1234" + Keys.Enter);
+              //step 14 Repeat test step 13 with various invalid Direct Phone Number combinations
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+              directPhoneNumberInput.Clear();
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+              directPhoneNumberInput.SendKeys("1234" + Keys.Enter);
+              //step 15 Enter a valid Direct Phone Number and select Save
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+              directPhoneNumberInput.Clear();
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+              directPhoneNumberInput.SendKeys("4141231234" + Keys.Enter);
+              //step 16 Enter an invalid (letters, special characters-except for dash & parenthesis or less than 10 numbers) Mobile Number
+              IWebElement mobileNumberInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileMobileInput));
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+              mobileNumberInput.SendKeys("abc123" + Keys.Enter);
+              //step 17 Repeat test step 16 with various invalid Mobile Number combinations 
+              mobileNumberInput.Clear();
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+              mobileNumberInput.SendKeys("123" + Keys.Enter);
+              //step 18 Enter a valid Mobile Number and select Save
+              mobileNumberInput.Clear();
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+              mobileNumberInput.SendKeys("1234567890" + Keys.Enter);
+              //step 19 Enter any Street Address (there are not edit checks in place) and select Save   
+              IWebElement addressInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileAddressInput));
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+              addressInput.SendKeys("2727 Good Faith Rd" + Keys.Enter);
+              //step 20 Enter any City name (there are not edit checks in place) and select Save
+              IWebElement cityInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileCityInput));
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+              cityInput.SendKeys("Milwuakee" + Keys.Enter);
+              //step 21 Enter any State (there are not edit checks in place) and select Save
+              IWebElement stateInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileStateInput));
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+              stateInput.SendKeys("WI" + Keys.Enter);
+              //step 22 Enter an invalid Zip Code (letters, special characters or less or more than 5 numbers) and select Save
+              IWebElement zipCodeInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileZipInput));
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+              zipCodeInput.SendKeys("12345" + Keys.Enter);
+              //step 23 Repeat test step 22 with various invalid Zip Code combinations 
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+              zipCodeInput.Clear();
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+              zipCodeInput.SendKeys("53209" + Keys.Enter); */
             //step 24 logout
             LogOutWithoutLogin();
 
         }
+
+        
+
 
         //public void RefreshPage()
         //{
