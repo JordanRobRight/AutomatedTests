@@ -87,9 +87,9 @@ namespace QA.Automation.UITests
        // [TestCase]
         [Category("SmokeTests")]
         [Description("Login")]
-        public void Login()
+        public void Login ()
         {
-            LoginTest();
+            LoginTest(_configuration.LGUser, _configuration.LGPassword);
             ClientMenu cm = new ClientMenu(_driver.Value, _configuration);
             if (!cm.CurrentClient.Equals("GM", StringComparison.OrdinalIgnoreCase))
             {
@@ -101,30 +101,18 @@ namespace QA.Automation.UITests
         [TestCase]
         [Category("SmokeTests")]
         [Description("Login")]
-        public void LoginTest()
+        public void LoginTest(string user, string password)
         {
-            #region --- old code
-            /*
-            string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
-            string currentURL = _driver.Value.Url;
-            _driver.Value.Navigate().GoToUrl(url);
-
-            IWebElement query = GetElement(ByType.Id, "login-email");
-
-            query.SendKeys("cbam.lgtest1@dciartform.com");
-            query = GetElement(ByType.Id, "login-password");
-            query.SendKeys("Cbam#test1");
-
-            query.Submit();
-            */
-            #endregion ---
-
             Login login = new Login(_driver.Value, _configuration);
             login.GoToUrl();
-            login.Perform();
+            login.UserName = user; // _configuration.LGUser;
+            login.Password = password; // _configuration.LGPassword;
+            login.Wait(2);
+            login.ClickSignIn("Sign In");
             login.WaitForElement();
-        }
 
+            login.GetCurrentUrl.Should().NotContain(".dcimliveguide.com/login/");
+        }
 
         [TestCase]//Test case 1994
         [Category("SmokeTests")]
@@ -3152,13 +3140,21 @@ namespace QA.Automation.UITests
 
         }
 
-        
+        [TestCase]
+        [Category("All")]
+        [Description("TestCase 3008")]
+        public void CBAM_Permissions()
+        {
+            //Thread.Sleep(TimeSpan.FromSeconds(10));
+            //step 1 sign in
+            Login();
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            string[] menuList = { "LiveGuide", "Playlists", "Assets", "Players", "Locations", "MY ACCOUNT", "", "CONTACT US", "LOG OUT", "MY PROFILE", "" };
+            var itemToCompare = sb.IsMenuItems;
 
-
-        //public void RefreshPage()
-        //{
-        //    _driver.Value.Navigate().Refresh();
-        //}
+            itemToCompare.Should().Contain(menuList).And.HaveCount(menuList.Length);
+            LogOutWithoutLogin();
+        }
 
         [TearDown]
         public void CleanUp()

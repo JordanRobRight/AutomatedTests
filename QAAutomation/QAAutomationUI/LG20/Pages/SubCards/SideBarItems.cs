@@ -7,13 +7,13 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 {
     class SideBarItem
     {
-        
 
+        IWebDriver driver;
         public SideBarItem(IWebDriver driver)
         {
-            
-        }
 
+        }
+                
         public string Name { get; set; }
         public IWebElement WebElement { get; set; }
     }
