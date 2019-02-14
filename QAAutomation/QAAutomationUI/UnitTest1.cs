@@ -262,37 +262,20 @@ namespace QA.Automation.UITests
             pls.Wait();
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
 
-            //Assert.IsFalse(pls.PlayListModal.IsModalDisplay);
-
             //Step 5 Select '+' to add new playlist
 
             pls.AddButtonClick();
 
             pls.Wait();
 
-            //try
-            //{
-            //    _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
-            //    //Step 6 Click outside the window to close it 
-            //    IWebElement offClick = _driver.Value.FindElement(By.CssSelector(BaseStrings.offClickCssSelector));
-            //    //offClick.Click();
-            //    SeleniumCommon.ClickOffScreen(this._driver.Value);
-            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e);
-            //}
-
-            //SeleniumCommon.ClickOffScreen(_driver.Value, string.Empty);
+            
             pls.PlayListModal.ClickOffScreen();
 
             pls.Wait();
              
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");// if IsModalDisplay is false then it means Modal was closed else display message
             //Step 7 Select '+' to add new playlist
-            //Assert.IsFalse(pls.PlayListModal.IsModalDisplay);
-
+            
             pls.AddButtonClick();
 
             pls.Wait();
@@ -303,47 +286,16 @@ namespace QA.Automation.UITests
 
             //pls.ModalCreateCustomPlaylistCheckbox.SendKeys(Keys.Space);
 
-
-            //var modalContainerCheckBox = modalContainer.FindElement(By.ClassName("lgfe-input-checkbox__custom-input"));
-            //modalContainerCheckBox.Click();
-
             //Step 9 Select Save
-            //IWebElement saveButton = null;
 
-            //_driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-
-            //foreach (var button in modalContainerButtons)
-            //{
-            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            //    _driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
-            //    if (button.Text.Contains("Save"))
-            //    {
-            //        saveButton = button;
-            //        break;
-            //    }
-            //}
-            //saveButton.Click();
-
-            //pls.ModalSaveButton.Click();
             pls.PlayListModal.ModalSaveButtonClick();
             pls.Wait(3);
           
 
             pls.PlayListModal.IsModalDisplayed.Should().BeTrue("Modal should be closed");
-            // Assert.IsTrue(pls.PlayListModal.IsModalDisplay);
 
             //Step 10 Select Ok
-            //try
-            //{
-            //    IAlert alert = _driver.Value.SwitchTo().Alert();
-            //    alert.Accept();
-            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e);
-            //    //throw;
-            //}
+            
 
             //step 11: Remove the Playlist Description 
             pls.PlayListModal.PlayListDescriptionTextField = "Automated Playlist Test Desc" + DateTime.Now.ToString();
@@ -355,19 +307,13 @@ namespace QA.Automation.UITests
 
             //Step 12:  Enter a playlist name
             string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
-            // IWebElement playlistAddForm = _driver.Value.FindElement(By.Id("form-name"));
-            // playlistAddForm.SendKeys(playlistName);
 
             pls.PlayListModal.PlayListNameTextField = playlistName;
             
             pls.PlayListModal.PlayListDescriptionTextField = null;
-            //pls.ModalNameEditField.SendKeys(playlistName);
-
 
             //Step 12 Select save
-            //saveButton.Click();
 
-            //pls.ModalSaveButton.Click();
             pls.PlayListModal.ModalSaveButtonClick();
             pls.Wait();
             
@@ -376,100 +322,32 @@ namespace QA.Automation.UITests
             //pls.VerifyCreatedPlaylist(playlistName).Should().Contain("Automated Playlist Test");
             if (pls.PlayListModal.IsModalDisplayed)
             {
-                // Assert.IsTrue(pls.PlayListModal.IsModalDisplay);
-
-                //IAlert mustSelectLocaiton = _driver.Value.SwitchTo().Alert();
-                //mustSelectLocaiton.Accept();
-                //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-
                 //Step 13 Enter location name (this is the first input field after the Custom checkbox)
-                //IWebElement locationInput = _driver.Value.FindElement(By.Id("select-filter-location"));
-                //locationInput.SendKeys("System Test Location Two Buick");
-
-                //pls.ModalChannelSelection.SendKeys("System Test Location Two Buick");
 
                 pls.PlayListModal.PlayListDescriptionTextField = "System Test Location Two Buick";
-
                 pls.Wait();
-                //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-
-                //locationInput.Submit();
-
-                // pls.ModalChannelSelection.Submit();
-
                 pls.PlayListModal.ModalSaveButtonClick();
-                
                 pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
 
             }
-            //IWebElement locationDropDown = GetElement(ByType.);
-            //var locationList = GetElement(ByType.);
-
-            // IWebElement selectLocationFromDropDown = _driver.Value.FindElement(By.CssSelector("#eac-container-select-filter-location > ul > li"));
-            //selectLocationFromDropDown.Click();
-
 
             //Step 14 Select save
-            //            saveButton.Click();
-
-            //pls.ModalSaveButton.Click();
-
-            //IAlert mustSelectLocaiton = _driver.Value.SwitchTo().Alert();
-            //try
-            //{
-            //    mustSelectLocaiton.Accept();
-            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e);
-            //    // throw;
-            //}
-
 
             //Step 15 Select device drop down
-            //IWebElement selectLocationDeviceFilter = _driver.Value.FindElement(By.Id("select-filter-location-device"));
-            //create select element object 
-            //var selectLocationDeviceElement = new SelectElement(selectLocationDeviceFilter);
 
             //Step 16 Select all devices
-            //selectLocationDeviceElement.SelectByValue("all");
             //Step 17 Select save
-            //saveButton.Click();
-            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 18 New playlist has been created
 
             //Step 19 Select '+' to add a new playlist
 
             //TODO: Need to check with Margie on this test. 
 
-            //foreach (var functionBarItem in functionBar)
-            //{
-            //    if (functionBarItem.Text.Contains("Add New Playlist"))//(functionBarItem.Text == "Add New Playlist") both work
-            //    {
-            //        addPlaylistButton = functionBarItem;
-            //        break;
-            //    }
-            //}
             //Step 20 Logout
             LogOutWithoutLogin();
 
-
-            //TODO: Assert to check if the playlist was actually playlist got created. 
-
-            //IWebElement newPlaylist = GetElement(ByType.ClassName, "lgfe-cm-card");          
-
-            //Assert.IsTrue(newPlaylist.Displayed);
-            //Assert.AreEqual(newPlaylist, "Automated Playlist Test");
-
             //TODO: Assert calling API.
             //string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
-
-            //Assert.AreEqual(newPlaylist, apiPlayList);
-
-            //TODO: Update this assert to take into account the environment.
-            //Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
-            //Assert.AreEqual("https://portal.test.dcimliveguide.com/#playlists", _driver.Url.Trim());
         }
 
         
@@ -484,16 +362,7 @@ namespace QA.Automation.UITests
             Login();
             PlayLists pls = new PlayLists(_driver.Value, _configuration);
 
-            //step 2
-
-           // SideBar sb = new SideBar(_driver.Value, _configuration);
-
-            //sb.SelectMenu("Playlists");
-
             //Step 2 select '+' to make a new playlist
-            // IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
-           // WaitForMaskModal();
-           // playlistsSideBarMenuButton.Click();
             WaitForMaskModal();
 
             pls.AddButtonClick();
