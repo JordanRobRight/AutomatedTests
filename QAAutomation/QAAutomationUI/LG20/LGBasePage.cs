@@ -37,7 +37,6 @@ namespace QA.Automation.UITests.LG20
         #endregion
 
         #region --- Virutal Methods ---
-
         public virtual void GoToUrl()
         {
             throw new NotImplementedException();
@@ -50,8 +49,9 @@ namespace QA.Automation.UITests.LG20
 
         public virtual void Wait(int numberOfSeconds = 5)
         {
-            Thread.Sleep(TimeSpan.FromSeconds(numberOfSeconds + _config.SlidingWaitFactor));
+            Thread.Sleep(TimeSpan.FromSeconds(numberOfSeconds));
         }
+
         #endregion
 
         #region --- Protected Methods ---
@@ -78,6 +78,26 @@ namespace QA.Automation.UITests.LG20
 
         #endregion
 
+        
+        #region --- Protected Properties ---
+
+        protected string PageContainerName { get; set; }
+
+        protected string PageFunctionBarContainerClassName { get; set; }
+
+        protected string PageUtilBarContainerClassName { get; set; }
+
+        /// <summary>
+        /// The Classname of the container section of the Search field container. This string will be used for the locator by ClassName.
+        /// </summary>
+        protected string PageSearchField { get; set; }
+
+        /// <summary>
+        /// The Id of the container section of the page content area. This string will be used for the locator by Id.
+        /// </summary>
+        protected string PageContentAreaId { get; set; }
+        #endregion
+
         #region --- Public Properties --- 
         public string SearchField
         {
@@ -99,32 +119,6 @@ namespace QA.Automation.UITests.LG20
             get { return _driver.Url; }
         }
 
-        #region --- Protected Properties ---
-        /// <summary>
-        /// The Id of the container section of the page. This string will be used for the locator by ID.
-        /// </summary>
-        protected string PageContainerName { get; set; }
-
-        /// <summary>
-        /// The Classname of the container section of the function bar container. This string will be used for the locator by ClassName.
-        /// </summary>
-        protected string PageFunctionBarContainerClassName { get; set; }
-
-        /// <summary>
-        /// The Classname of the container section of the utility bar container. This string will be used for the locator by ClassName.
-        /// </summary>
-        protected string PageUtilBarContainerClassName { get; set; }
-
-        /// <summary>
-        /// The Classname of the container section of the Search field container. This string will be used for the locator by ClassName.
-        /// </summary>
-        protected string PageSearchField { get; set; }
-
-        /// <summary>
-        /// The Id of the container section of the page content area. This string will be used for the locator by Id.
-        /// </summary>
-        protected string PageContentAreaId { get; set; }
-        #endregion
 
         public TestConfiguration Config => _config;
 

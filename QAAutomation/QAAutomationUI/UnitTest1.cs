@@ -20,6 +20,7 @@ using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
 using FluentAssertions;
 using FluentAssertions.Collections;
+using QA.Automation.UITests.LG20.Pages.SubCards.Player;
 
 [assembly: LevelOfParallelism(2)]
 
@@ -84,10 +85,10 @@ namespace QA.Automation.UITests
             Assert.AreEqual($"https://portal.{_configuration.Environment.ToString()}.dcimliveguide.com/#playlists".ToLower(), _driver.Value.Url.Trim().ToLower());
         }
 
-       // [TestCase]
+        // [TestCase]
         [Category("SmokeTests")]
         [Description("Login")]
-        public void Login ()
+        public void Login()
         {
             LoginTest(_configuration.LGUser, _configuration.LGPassword);
             ClientMenu cm = new ClientMenu(_driver.Value, _configuration);
@@ -272,7 +273,7 @@ namespace QA.Automation.UITests
             pls.PlayListModal.ClickOffScreen();
 
             pls.Wait();
-             
+
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");// if IsModalDisplay is false then it means Modal was closed else display message
             //Step 7 Select '+' to add new playlist
             
@@ -290,7 +291,7 @@ namespace QA.Automation.UITests
 
             pls.PlayListModal.ModalSaveButtonClick();
             pls.Wait(3);
-          
+
 
             pls.PlayListModal.IsModalDisplayed.Should().BeTrue("Modal should be closed");
 
@@ -309,14 +310,14 @@ namespace QA.Automation.UITests
             string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
 
             pls.PlayListModal.PlayListNameTextField = playlistName;
-            
+
             pls.PlayListModal.PlayListDescriptionTextField = null;
 
             //Step 12 Select save
 
             pls.PlayListModal.ModalSaveButtonClick();
             pls.Wait();
-            
+
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
             pls.GetPlayLists.Any(a => a.Equals(playlistName, StringComparison.OrdinalIgnoreCase)).Should().BeFalse("New Playlist wasn't created. ");
             //pls.VerifyCreatedPlaylist(playlistName).Should().Contain("Automated Playlist Test");
@@ -350,7 +351,7 @@ namespace QA.Automation.UITests
             //string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
         }
 
-        
+
         [TestCase]// test Case #583
         [Category("All")]
         [Category("SmokeTests")]
@@ -368,29 +369,29 @@ namespace QA.Automation.UITests
             pls.AddButtonClick();
             pls.Wait();
             //Step 3 enter playlist name
-           string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
-           pls.PlayListModal.PlayListNameTextField = playlistName;
+            string playlistName = "Automated Playlist Test " + DateTime.Now.ToString();
+            pls.PlayListModal.PlayListNameTextField = playlistName;
 
             //Step 4 Select a channel
 
-           /* pls.PlayListModal.FilterByClientProgramAndChannelCheckbox = true;
-            pls.Wait(1);
-            pls.PlayListModal.SelectClientProgramSelectBox = "Guest TV";
-            pls.Wait(1);
-            pls.PlayListModal.SelectYourChannelSelectBox = "Chevy TV";
-            pls.Wait();*/
+            /* pls.PlayListModal.FilterByClientProgramAndChannelCheckbox = true;
+             pls.Wait(1);
+             pls.PlayListModal.SelectClientProgramSelectBox = "Guest TV";
+             pls.Wait(1);
+             pls.PlayListModal.SelectYourChannelSelectBox = "Chevy TV";
+             pls.Wait();*/
 
             //Step 5  select save
 
             pls.PlayListModal.ModalSaveButtonClick();
-            
+
             pls.Wait(3);
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
             pls.Wait(2);
             //Step 6 select done---does not exist currently (09/26/2018)
             //Step 7 new playlist has been created
             pls.GetPlayLists.Any(a => a.Equals(playlistName, StringComparison.OrdinalIgnoreCase)).Should().BeFalse("New Playlist wasn't created. ");
-           // pls.VerifyCreatedPlaylist(playlistName);
+            // pls.VerifyCreatedPlaylist(playlistName);
 
             //Step 8 logout
             LogOutWithoutLogin();
@@ -1028,9 +1029,9 @@ namespace QA.Automation.UITests
 
             PlayList pl = new PlayList(_driver.Value, _configuration);// TestConfiguration.GetTestConfiguration());
             pl.Wait(2);
-            
+
             IWebElement videoButton = pl.PlayListWidets.FirstOrDefault(a => a.Text.ToLower().Contains("video"));
-            
+
             Assert.IsNotNull(videoButton);
 
             videoButton.Click();
@@ -1285,17 +1286,17 @@ namespace QA.Automation.UITests
             #endregion
         }
 
-       // [TestCase]
-       // [Description("LiveGuideClientMenu")]
+        // [TestCase]
+        // [Description("LiveGuideClientMenu")]
 
         public void ClientMenuTest()
         {
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
             Login();
 
-         //   IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+            //   IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
 
-        //    playerChannelDropdown.Click();
+            //    playerChannelDropdown.Click();
 
             var ClientMenuTest = new ClientMenu(_driver.Value, _configuration);
 
@@ -1728,153 +1729,153 @@ namespace QA.Automation.UITests
 
         }
 
-      /*  [TestCase]
-        [Category("All")]
-        public void ContactUsWithrequiredFields()
-        {
-            //step 1
-            Login();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            IWebElement contactUsLink = _driver.Value.FindElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
-            WaitForMaskModal();
+        /*  [TestCase]
+          [Category("All")]
+          public void ContactUsWithrequiredFields()
+          {
+              //step 1
+              Login();
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              IWebElement contactUsLink = _driver.Value.FindElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
+              WaitForMaskModal();
 
-            //step 2
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            contactUsLink.Click();
+              //step 2
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              contactUsLink.Click();
 
-            IWebElement sendButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
-            WaitForMaskModal();
+              IWebElement sendButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
+              WaitForMaskModal();
 
-            //step 3 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            sendButton.Click();
+              //step 3 
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              sendButton.Click();
 
-            // step 4
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            IWebElement EmailUsFullNameInput = _driver.Value.FindElement(By.Id("full-name"));
-            EmailUsFullNameInput.SendKeys("Automated Tester");
+              // step 4
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              IWebElement EmailUsFullNameInput = _driver.Value.FindElement(By.Id("full-name"));
+              EmailUsFullNameInput.SendKeys("Automated Tester");
 
-            //step 5
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
-            sendButton.Click();
+              //step 5
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              WaitForMaskModal();
+              sendButton.Click();
 
-            //Step 6
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            IWebElement EmailUsPhoneNumberInput = _driver.Value.FindElement(By.Id("phone"));
-            EmailUsPhoneNumberInput.SendKeys("Auto Test");
+              //Step 6
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              IWebElement EmailUsPhoneNumberInput = _driver.Value.FindElement(By.Id("phone"));
+              EmailUsPhoneNumberInput.SendKeys("Auto Test");
 
-            //step 7
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
-            sendButton.Click();
+              //step 7
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              WaitForMaskModal();
+              sendButton.Click();
 
-            //Step 8
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            EmailUsPhoneNumberInput.Clear();
-            EmailUsPhoneNumberInput.SendKeys("1234567890");
+              //Step 8
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              EmailUsPhoneNumberInput.Clear();
+              EmailUsPhoneNumberInput.SendKeys("1234567890");
 
-            //Step 9
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
-            sendButton.Click();
+              //Step 9
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              WaitForMaskModal();
+              sendButton.Click();
 
-            //Step 10
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
-            IWebElement EmailUsEmialInput = _driver.Value.FindElement(By.Id("email"));
-            EmailUsEmialInput.SendKeys("Automated Tester");
+              //Step 10
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              WaitForMaskModal();
+              IWebElement EmailUsEmialInput = _driver.Value.FindElement(By.Id("email"));
+              EmailUsEmialInput.SendKeys("Automated Tester");
 
-            //Step 11
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
-            sendButton.Click();
+              //Step 11
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              WaitForMaskModal();
+              sendButton.Click();
 
-            //Step 12
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            EmailUsEmialInput.Clear();
-            EmailUsEmialInput.SendKeys("test@");
+              //Step 12
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              EmailUsEmialInput.Clear();
+              EmailUsEmialInput.SendKeys("test@");
 
-            //Step 13
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
-            sendButton.Click();
+              //Step 13
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              WaitForMaskModal();
+              sendButton.Click();
 
-            //Step 14
-            EmailUsEmialInput.Clear();
-            EmailUsEmialInput.SendKeys("test@dci");
+              //Step 14
+              EmailUsEmialInput.Clear();
+              EmailUsEmialInput.SendKeys("test@dci");
 
-            //Step 15
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            WaitForMaskModal();
-            sendButton.Click();
+              //Step 15
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              WaitForMaskModal();
+              sendButton.Click();
 
-            //Step 16
-            EmailUsEmialInput.Clear();
-            EmailUsEmialInput.SendKeys("test@dci.");
+              //Step 16
+              EmailUsEmialInput.Clear();
+              EmailUsEmialInput.SendKeys("test@dci.");
 
-            //Step 17
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            sendButton.Click();
+              //Step 17
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              sendButton.Click();
 
-            //Step 18
-            EmailUsEmialInput.Clear();
-            EmailUsEmialInput.SendKeys("test@dci.c");
+              //Step 18
+              EmailUsEmialInput.Clear();
+              EmailUsEmialInput.SendKeys("test@dci.c");
 
-            //Step 19
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            sendButton.Click();
+              //Step 19
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              sendButton.Click();
 
-            //Step 20
-            EmailUsEmialInput.Clear();
-            EmailUsEmialInput.SendKeys("test@dci.com");
+              //Step 20
+              EmailUsEmialInput.Clear();
+              EmailUsEmialInput.SendKeys("test@dci.com");
 
-            //Step 21
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            sendButton.Click();
+              //Step 21
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              sendButton.Click();
 
-            //Step 22
-            IWebElement EmailUsCommentsInput = _driver.Value.FindElement(By.Id("comments"));
-            EmailUsCommentsInput.SendKeys("Automated Tester");
+              //Step 22
+              IWebElement EmailUsCommentsInput = _driver.Value.FindElement(By.Id("comments"));
+              EmailUsCommentsInput.SendKeys("Automated Tester");
 
-            //Step 23
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            sendButton.Click();
+              //Step 23
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+              sendButton.Click();
 
-            //Step 24
-            IWebElement ContactUsDoneButton = _driver.Value.FindElement(By.CssSelector("#notifications-form > div > button"));
-            ContactUsDoneButton.Click();
+              //Step 24
+              IWebElement ContactUsDoneButton = _driver.Value.FindElement(By.CssSelector("#notifications-form > div > button"));
+              ContactUsDoneButton.Click();
 
-            LogOutWithoutLogin();
-        }*/
+              LogOutWithoutLogin();
+          }*/
 
         [TestCase]
         [Category("All")]
         [Description("Test Case #1457")]
         public void ContactUsWithrequiredFields_POM()
         {
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(11));
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(11));
             //Step 1
             Login();
 
             //Step 2
             SideBar sb = new SideBar(_driver.Value, _configuration);
-           
+
             sb.SelectMenu("Contact Us");
             ContactUs cus = new ContactUs(_driver.Value, _configuration);
 
             cus.Wait(4);
             cus.ClickSendButton();
             cus.Wait(2);
-            cus.IsFullNameFieldError.Should().BeTrue();     
+            cus.IsFullNameFieldError.Should().BeTrue();
 
             cus.ContactFullNameTextField = "LG-AUTOTEST";
             cus.ClickSendButton();
-            
-           
+
+
             cus.ContactPhoneTextField = "Auto Test"; // non numeric data in phone number field  
             cus.ClickSendButton();
-            
+
             cus.ContactPhoneTextField = null;
             cus.ContactPhoneTextField = "1234567T"; // invalid data in phone number field
             cus.ContactPhoneTextField = null;
@@ -1883,32 +1884,32 @@ namespace QA.Automation.UITests
 
             cus.ContactEmailTextField = "test"; // invalid email data
             cus.ClickSendButton();
-            cus.IsEmailFieldError.Should().BeTrue(); 
+            cus.IsEmailFieldError.Should().BeTrue();
             cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@"; // invalid email data
             cus.ClickSendButton();
-            cus.IsEmailFieldError.Should().BeTrue(); 
+            cus.IsEmailFieldError.Should().BeTrue();
             cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@qa"; // invalid email data
             cus.ClickSendButton();
-            cus.IsEmailFieldError.Should().BeTrue(); 
+            cus.IsEmailFieldError.Should().BeTrue();
             cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@qa."; // invalid email data
             cus.ClickSendButton();
-            cus.IsEmailFieldError.Should().BeTrue(); 
+            cus.IsEmailFieldError.Should().BeTrue();
             cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@qa.c"; // invalid email data
             cus.ClickSendButton();
-            cus.IsEmailFieldError.Should().BeTrue(); 
+            cus.IsEmailFieldError.Should().BeTrue();
             cus.ContactEmailTextField = null;
 
             cus.ContactEmailTextField = "test@qa.co"; // valid email data
             cus.ClickSendButton();
-            
+
             cus.ContactCommentsTextField = "Automated Tester";
             cus.ClickSendButton();
             cus.Wait();
@@ -1923,108 +1924,108 @@ namespace QA.Automation.UITests
             LogOutWithoutLogin();
         }
 
-    /*    [TestCase]//Test Case #1459
-        [Category("All")]
-        [Description("Test Case #1459")]
-        public void ContactUsWithAllFields()
-        {
-            //Step 1
-            Login();
+        /*    [TestCase]//Test Case #1459
+            [Category("All")]
+            [Description("Test Case #1459")]
+            public void ContactUsWithAllFields()
+            {
+                //Step 1
+                Login();
 
-            //Step 2
-            IWebElement contactUsLink = _driver.Value.FindElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
-            WaitForMaskModal();
-            contactUsLink.Click();
+                //Step 2
+                IWebElement contactUsLink = _driver.Value.FindElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
+                WaitForMaskModal();
+                contactUsLink.Click();
 
-            //Step 3
-            IWebElement EmailUsFullNameInput = _driver.Value.FindElement(By.Id("full-name"));
-            EmailUsFullNameInput.SendKeys("Automated Tester");
+                //Step 3
+                IWebElement EmailUsFullNameInput = _driver.Value.FindElement(By.Id("full-name"));
+                EmailUsFullNameInput.SendKeys("Automated Tester");
 
-            //Step 4
-            IWebElement EmailUsTitleInput = _driver.Value.FindElement(By.Id("title"));
-            EmailUsTitleInput.SendKeys("Automated Tester");
+                //Step 4
+                IWebElement EmailUsTitleInput = _driver.Value.FindElement(By.Id("title"));
+                EmailUsTitleInput.SendKeys("Automated Tester");
 
-            //Step 5
-            IWebElement EmailUsCompanyInput = _driver.Value.FindElement(By.Id("company"));
-            EmailUsCompanyInput.SendKeys("Automated Tester");
+                //Step 5
+                IWebElement EmailUsCompanyInput = _driver.Value.FindElement(By.Id("company"));
+                EmailUsCompanyInput.SendKeys("Automated Tester");
 
-            //Step 6
-            IWebElement EmailUsPhoneNumberInput = _driver.Value.FindElement(By.Id("phone"));
-            EmailUsPhoneNumberInput.SendKeys("9876543210");
+                //Step 6
+                IWebElement EmailUsPhoneNumberInput = _driver.Value.FindElement(By.Id("phone"));
+                EmailUsPhoneNumberInput.SendKeys("9876543210");
 
-            //Step 7
-            IWebElement EmailUsEmialInput = _driver.Value.FindElement(By.Id("email"));
-            EmailUsEmialInput.SendKeys("AutomatedTester@dcim.com");
+                //Step 7
+                IWebElement EmailUsEmialInput = _driver.Value.FindElement(By.Id("email"));
+                EmailUsEmialInput.SendKeys("AutomatedTester@dcim.com");
 
-            //Step 8
-            IWebElement EmailUsCommentsInput = _driver.Value.FindElement(By.Id("comments"));
-            EmailUsCommentsInput.SendKeys("Automated Tester");
+                //Step 8
+                IWebElement EmailUsCommentsInput = _driver.Value.FindElement(By.Id("comments"));
+                EmailUsCommentsInput.SendKeys("Automated Tester");
 
-            IWebElement sendButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
-            WaitForMaskModal();
-            //Step 9
-            sendButton.Click();
+                IWebElement sendButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
+                WaitForMaskModal();
+                //Step 9
+                sendButton.Click();
 
-            //var newHtml = _driver.PageSource;
-
-
-            //newHtml.ToString();
+                //var newHtml = _driver.PageSource;
 
 
-
-            //if (newHtml.Contains("contactErrorInput"))
-            //{
-            //    EmailUsFullNameInput.Clear();
-            //    EmailUsFullNameInput.SendKeys("Automated Tester 2");
-
-            //    EmailUsTitleInput.Clear();
-            //    EmailUsTitleInput.SendKeys("AutomatedTester@mailinator.com");
-
-            //    EmailUsCompanyInput.Clear();
-            //    EmailUsCompanyInput.SendKeys("Automated Tester 2");
-
-            //    EmailUsPhoneNumberInput.Clear();
-            //    EmailUsPhoneNumberInput.SendKeys("123-123-1234");
-
-            //    EmailUsEmialInput.Clear();
-            //    EmailUsEmialInput.SendKeys("AutomatedTester@mailinator.com");
-
-            //    EmailUsCommentsInput.Clear();
-            //    EmailUsCommentsInput.SendKeys("Automated Tester 2");
-
-            //    sendButton.Click();
-            //}
-
-            WaitForMaskModal();
-
-            IWebElement ContactUsDoneButton = _driver.Value.FindElement(By.CssSelector("#notifications-form > div > button"));
-            //Step 10
-            ContactUsDoneButton.Click();
-
-            //if (EmailUsFullNameInput.Displayed)
-            //{
-            //    var errorFullName = _driver.Value.FindElement(By.CssSelector("#contact-us-container > form > div:nth-child(2)")).Text;
+                //newHtml.ToString();
 
 
 
-            //    if (errorFullName.Contains("error"))
-            //    {
+                //if (newHtml.Contains("contactErrorInput"))
+                //{
+                //    EmailUsFullNameInput.Clear();
+                //    EmailUsFullNameInput.SendKeys("Automated Tester 2");
 
-            //    }
-            //}
-            //else if (EmailUsTitleInput.Displayed)
-            //{
+                //    EmailUsTitleInput.Clear();
+                //    EmailUsTitleInput.SendKeys("AutomatedTester@mailinator.com");
 
-            //}
-            //else if (EmailUsPhoneNumberInput.Displayed)
-            //{
+                //    EmailUsCompanyInput.Clear();
+                //    EmailUsCompanyInput.SendKeys("Automated Tester 2");
 
-            //}
+                //    EmailUsPhoneNumberInput.Clear();
+                //    EmailUsPhoneNumberInput.SendKeys("123-123-1234");
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            //Step 11
-            LogOutWithoutLogin();
-        }*/
+                //    EmailUsEmialInput.Clear();
+                //    EmailUsEmialInput.SendKeys("AutomatedTester@mailinator.com");
+
+                //    EmailUsCommentsInput.Clear();
+                //    EmailUsCommentsInput.SendKeys("Automated Tester 2");
+
+                //    sendButton.Click();
+                //}
+
+                WaitForMaskModal();
+
+                IWebElement ContactUsDoneButton = _driver.Value.FindElement(By.CssSelector("#notifications-form > div > button"));
+                //Step 10
+                ContactUsDoneButton.Click();
+
+                //if (EmailUsFullNameInput.Displayed)
+                //{
+                //    var errorFullName = _driver.Value.FindElement(By.CssSelector("#contact-us-container > form > div:nth-child(2)")).Text;
+
+
+
+                //    if (errorFullName.Contains("error"))
+                //    {
+
+                //    }
+                //}
+                //else if (EmailUsTitleInput.Displayed)
+                //{
+
+                //}
+                //else if (EmailUsPhoneNumberInput.Displayed)
+                //{
+
+                //}
+
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                //Step 11
+                LogOutWithoutLogin();
+            }*/
 
         [TestCase]//Test Case #1459
         [Category("All")]
@@ -2059,13 +2060,13 @@ namespace QA.Automation.UITests
 
             cus.ClickSendButton();
             cus.Wait();
-           
+
             cus.IsNotificationPopupDisplayed.Should().BeTrue(); //verify notification popup being shown after send is clicked
-                       
+
             cus.ContactNotificationMessage.Should().Be("Mail sent and will be processed in the order it was received.");//verify success message in notification popup
 
             cus.ClickDone();
-            
+
             cus.Wait(4);
             LogOutWithoutLogin();
         }
@@ -2075,75 +2076,53 @@ namespace QA.Automation.UITests
         [Description("Test Case #1460")]
         public void PlayersStatus()
         {
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
             //Step 1
             Login();
-            
+
             ClientMenu client = new ClientMenu(_driver.Value, _configuration);
             client.Wait();
             client.SelectClient("GM");
 
             SideBar sb = new SideBar(_driver.Value, _configuration);
-            sb.SelectMenu("Players");
 
             Players player = new Players(_driver.Value, _configuration);
-            try
-            {
-                player.VerifyOnlineStatus.Should().BeTrue("No players were found to be online");
-                player.VerifyOfflineStatusPlayersPage.Should().BeTrue("No players were found to be offline");
-            }
-            catch (Exception e) { Console.Write(e); }
 
             //Step 2 select players tab
-            IWebElement playersTab = _driver.Value.FindElement(By.CssSelector("#interaction-nav-bar-container > div.inbc-menu-wrapper > ul > li:nth-child(3) > a > span"));
-            
-            WaitForMaskModal();
+            sb.SelectMenu("Players");
 
-            //Step 3 confirm that each player contains one status---needs work TODO
-            //TODO: Need to make this work for all players.
-            //            string playersGraph = _driver.Value.FindElement(By.CssSelector("#players-table > tbody")).Text;
-
-            //            String expectedMessage = "ONLINE";
-            //            Assert.True(playersGraph.Contains(expectedMessage));
+            //Step 3 confirm that each player contains one status
+            player.VerifyOnlineStatus.Should().BeTrue("No players were found to be online");
+            player.VerifyOfflineStatusPlayersPage.Should().BeTrue("No players were found to be offline");
 
             //Step 4 select a player
-            //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
-            var playerName = _envData.Player; //  @"LG-QAROB";
+            var playerName = _envData.Player;
+            player.SelectPlayer("LG-TEST1");
+            player.Wait(2);
 
-
-            //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
-
-            //playerSelect.Click();
-
-            player.SelectPlayer("LG-QAROB");
-            player.VerifyOfflineStatusPlayerPage.Should().BeTrue("player not found to be offline");// CK: currently  LG-QAROB is a offline player, need to work on online player
+            PlayerDetail playerDetail = new PlayerDetail(_driver.Value, _configuration);
+            playerDetail.IsPlayerOfflineStatus.Should().BeFalse("player not found to be online");
             player.Wait();
 
             //Step 5
-            playersTab.Click();
-            WaitForMaskModal();
+            sb.SelectMenu("Players");
             player.Wait();
+            player.SelectPlayer(playerName);
+            player.Wait(2);
+            playerDetail = new PlayerDetail(_driver.Value, _configuration);
+            playerDetail.IsPlayerOfflineStatus.Should().BeTrue("player not found to be offline");// CK: currently  LG-QAROB is a offline player, need to work on online player
 
             //Step 6
-            //IWebElement playerSelect2 = _driver.Value.FindElement(By.CssSelector("#player-player_QyvWE5pQCs55 > td.sorting_1"));
-            //TODO: need to select a different player
-            //IWebElement playerSelect2 = GetPlayer(_driver.Value, "LG-QAROB");
-            //playerSelect2.Click();
-           
-            player.SelectPlayer("LG-QAROB");
-
+            player.SelectPlayer(playerName);
             player.Wait();
 
             //Step 7
-            playersTab.Click();
-            WaitForMaskModal();
+            sb.SelectMenu("Players");
             player.Wait();
 
-            //Step 8 select a player that is not set up...---needs work TODO
+            //Step 8 select a player that is not set up...---needs work //TODO:Select a player that is not setup.
 
             //Step 9
-            playersTab.Click();
-            WaitForMaskModal();
+            sb.SelectMenu("Players");
             player.Wait();
 
             //Step 10
@@ -2502,58 +2481,66 @@ namespace QA.Automation.UITests
         [Description("Test case 1488")]
         public void PlayerScreenConnect()
         {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(11));
             //Step 1
             Login();
-            var beforeTabs = _driver.Value.WindowHandles;
 
+            PlayerDetail playerDetail = new PlayerDetail(_driver.Value, _configuration);
             Players player = new Players(_driver.Value, _configuration);
-
             //Step 2 select player tab
-            IWebElement playersTab = _driver.Value.FindElement(By.CssSelector(BaseStrings.playersTabCssSelector));
-            playersTab.Click();
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            sb.SelectMenu("Players");
             player.Wait(2);
+            player.PlayersSelectScreenConnect();
+            player.Wait(4);
+            player.GetCurrentTab().Should().ContainAny("screenconnect.com");
+            player.CloseScreenconnect();
+            player.Wait(2);
+            player.GetCurrentTab().Should().NotContainAny("screenconnect.com");
+            player.GetCurrentTab().Should().ContainAny("dcimliveguide.com");
             //Step 3 Hover over the screen connect icon
             //step 4
             var playName = _envData.Player; //@"LG-QAROB";
             player.SelectPlayer(playName);
-
+            player.Wait(2);
+            playerDetail.PlayerDetailSelectScreenConnect();
             //Step 5 Hover over screen connect icon
             //Step 6
-            IWebElement screenConnectButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.screenConnectCssSelector));
-            screenConnectButton.Click();
+            player.Wait(4);
+            playerDetail.GetCurrentTab().Should().ContainAny("screenconnect.com");
+
+            //start from playlist tab
+            playerDetail.PlayerDetailCloseScreenconnect();
+            player.Wait(2);
+            // verify url DCI url after closing screenconnect url
+            playerDetail.GetCurrentTab().Should().NotContainAny("screenconnect.com");
+            playerDetail.GetCurrentTab().Should().ContainAny("dcimliveguide.com");
+
+            playerDetail.SelectTab("PLAYLISTS");
+            playerDetail.PlayerDetailSelectScreenConnect();
+            player.Wait(2);
+            playerDetail.GetCurrentTab().Should().ContainAny("screenconnect.com");
+            playerDetail.PlayerDetailCloseScreenconnect();
+            playerDetail.Wait(2);
+            playerDetail.GetCurrentTab().Should().NotContainAny("screenconnect.com");
+            playerDetail.GetCurrentTab().Should().ContainAny("dcimliveguide.com");
             player.Wait(2);
 
-            var afterTabs = _driver.Value.WindowHandles;
-
-            if (beforeTabs.Count < afterTabs.Count)
-            {
-                _driver.Value.SwitchTo().Window(afterTabs[1]);
-            }
-
-            //TODO:Add assert to validate the URL is correct for screen connect
-            //Assert.AreEqual($"https://dciartform.screenconnect.com/Login?ReturnUrl=%2fHost&Reason=3#Access/All%20Machines/", _driver.Value.Url);
-            //Assert.AreEqual($"https://dciartform.screenconnect.com/Login?ReturnUrl=%2fHost&Reason=3#Access/All%20Machines/{playName}", _driver.Value.Url);
-
-            player.Wait();
-            _driver.Value.Close();
-            _driver.Value.SwitchTo().Window(beforeTabs[0]);
+            //start from configure tab
+            playerDetail.SelectTab("CONFIGURE");
+            playerDetail.PlayerDetailSelectScreenConnect();
+            player.Wait(2);
+            playerDetail.GetCurrentTab().Should().ContainAny("screenconnect.com");
+            playerDetail.PlayerDetailCloseScreenconnect();
+            playerDetail.Wait(2);
+            playerDetail.GetCurrentTab().Should().NotContainAny("screenconnect.com");
+            playerDetail.GetCurrentTab().Should().ContainAny("dcimliveguide.com");
+            player.Wait(2);
 
             //Step 7
-            //string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
-            //_driver.Value.Navigate().GoToUrl(url);
-
-            //TODO: Update this section to be a bit more flexible. 
-            //var tabs = _driver.Value.WindowHandles;
-            //if (tabs.Count > 1)
-            //{
-            //    _driver.Value.SwitchTo().Window(tabs[1]);
-            //    _driver.Value.Close();
-            //    _driver.Value.SwitchTo().Window(tabs[0]);
-            //}
 
             //Step 8
             LogOutWithoutLogin();
-
         }
 
 
@@ -2785,7 +2772,7 @@ namespace QA.Automation.UITests
                 s.Should().Be(field);
             }
         }
-       
+
         [TestCase]//TestCase 1991
         [Category("All")]
         [Description("TestCase 1991")]
@@ -2797,27 +2784,30 @@ namespace QA.Automation.UITests
 
             IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
             playerChannelDropdown.Click();
-
             ClientMenu cm = new ClientMenu(_driver.Value, _configuration);
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(3));
+            cm.SelectClient("My Profile");
+
+
             cm.Wait(3);
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(3));
-           // cm.GetClientMenuItem("GM");
+            // cm.GetClientMenuItem("GM");
             //cm.SelectClient("GM");
             cm.SelectClient("My Profile");
 
             //step 3 Spell check all values from dropdown box
-            cm.Wait();
-            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //step 4 Select My Profile myProfileButtonCssSelector
-           // IWebElement myProfileButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileButtonCssSelector));
-           // myProfileButton.Click();
+            // IWebElement myProfileButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileButtonCssSelector));
+            // myProfileButton.Click();
             //step 5 Spell check all content (fields/values, buttons), (including placeholder text : to do)
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
             MyProfile mp = new MyProfile(_driver.Value, _configuration);
 
-           
-            
+
+
             foreach (string MyProfilefields in mp.GetMyProfileFields)
             {
                 MyProfilefields.Should().ContainAny("First Name", "Last Name", "Title", "Email Address", "Direct Phone Number", "Mobile Number", "Street Address", "City", "State", "Zip");
@@ -2825,7 +2815,7 @@ namespace QA.Automation.UITests
 
             mp.IsEmailFieldExists.Should().BeTrue("Email field does not exists");//verify email field
 
-           // mp.VerifyMyProfileFields();
+            // mp.VerifyMyProfileFields();
             //step 6 Select Save button
             mp.ClickSaveButton();
 
@@ -2843,15 +2833,15 @@ namespace QA.Automation.UITests
             mp.ProfileTitleTextField = "AutomationEngineer";
             mp.ClickSaveButton();
 
-           // mp.ClearDirectPhoneTextbox();
+            // mp.ClearDirectPhoneTextbox();
             mp.ProfileDirectPhoneTextField = null;//just to clear previous data to perform following validations
             mp.ProfileDirectPhoneTextField = "1234";//invalid direct phone number
             mp.ClickSaveButton();
-             DetermineErrorInput(mp.IsErrorInput, "Direct Phone Number");
-          //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Direct Phone Number");
-            
+            DetermineErrorInput(mp.IsErrorInput, "Direct Phone Number");
+            //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Direct Phone Number");
+
             mp.ProfileDirectPhoneTextField = null;
-           // mp.ClearDirectPhoneTextbox();
+            // mp.ClearDirectPhoneTextbox();
             mp.ProfileDirectPhoneTextField = "test1234";//invalid direct phone number
             mp.ClickSaveButton();
             // verify the key and value returned
@@ -2863,7 +2853,7 @@ namespace QA.Automation.UITests
             //mp.ClearDirectPhoneTextbox();
             mp.ProfileDirectPhoneTextField = "1234567890";//valid direct phone number
             mp.ClickSaveButton();
-           
+
             // mp.ClearMobileNumberTextbox();
             mp.ProfileMobileNumberTextField = null;
             mp.ProfileMobileNumberTextField = "1234";//invalid mobile number
@@ -2888,8 +2878,8 @@ namespace QA.Automation.UITests
 
             mp.ProfileMobileNumberTextField = "1234567890";// valid mobile number
             mp.ClickSaveButton();
-          //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Mobile Number");
-            mp.ProfileStreetAddressTextField =  null;
+            //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Mobile Number");
+            mp.ProfileStreetAddressTextField = null;
             mp.ProfileStreetAddressTextField = "testStreet";
             mp.ClickSaveButton();
 
@@ -2897,11 +2887,11 @@ namespace QA.Automation.UITests
             mp.ProfileCityTextField = "testCity";
             mp.ClickSaveButton();
 
-            mp.ProfileStateTextField  = null;
+            mp.ProfileStateTextField = null;
             mp.ProfileStateTextField = "TX";
             mp.ClickSaveButton();
 
-          
+
             mp.ProfileZipTextField = null;
             mp.ProfileZipTextField = "1234";//invalid zip code data
             mp.ClickSaveButton();
@@ -2911,7 +2901,7 @@ namespace QA.Automation.UITests
 
             //  mp.IsErrorInput.Should().BeTrue("Error not found");
             mp.ProfileZipTextField = null;
-            
+
 
             mp.ProfileZipTextField = "12test";//invalid zip code data
             mp.ClickSaveButton();
@@ -2920,12 +2910,12 @@ namespace QA.Automation.UITests
             // DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Zip");
             // mp.IsErrorInput.Should().BeTrue("Error not found");
             mp.ProfileZipTextField = null;
-            
+
 
             mp.ProfileZipTextField = "12345";//valid data
             mp.ClickSaveButton();
 
-           mp.IsSaveEnabledAfterSaved.Should().BeTrue("Save button still not enabled");//if save button is enabled then save is success, currently there is no success message displayed by application 
+            mp.IsSaveEnabledAfterSaved.Should().BeTrue("Save button still not enabled");//if save button is enabled then save is success, currently there is no success message displayed by application 
 
 
             /*IWebElement playerChannelDropdown1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
@@ -3009,21 +2999,94 @@ namespace QA.Automation.UITests
 
         }
 
+        //public void RefreshPage()
+        //{
+        //    _driver.Value.Navigate().Refresh();
+        //}
         [TestCase]
-        [Category("All")]
-        [Description("TestCase 3008")]
-        public void CBAM_Permissions()
+       // [Category("All")]
+        [Description("Test")]
+        // RK 2/15/19 - Change the name to something like TestPlayerPage
+        // I understand that this test was just to debug the player, but it is useful to just go through the page for like a smoke test or something.
+        public void ToDebugPlayers()
         {
-            //Thread.Sleep(TimeSpan.FromSeconds(10));
-            //step 1 sign in
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(13));
             Login();
-            SideBar sb = new SideBar(_driver.Value, _configuration);
-            string[] menuList = { "LiveGuide", "Playlists", "Assets", "Players", "Locations", "MY ACCOUNT", "", "CONTACT US", "LOG OUT", "MY PROFILE", "" };
-            var itemToCompare = sb.IsMenuItems;
 
-            itemToCompare.Should().Contain(menuList).And.HaveCount(menuList.Length);
-            LogOutWithoutLogin();
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            sb.SelectMenu("Players");
+
+            Players player = new Players(_driver.Value, _configuration);
+            PlayerDetail playerDetail = new PlayerDetail(_driver.Value, _configuration);
+            PlayerPlaylistWhatsPlaying pwp = new PlayerPlaylistWhatsPlaying(_driver.Value, _configuration);
+            PlayerPlaylistInfo ppl = new PlayerPlaylistInfo(_driver.Value, _configuration);
+            PlayerConfigureChannel pc = new PlayerConfigureChannel(_driver.Value, _configuration);
+            var playerName = _envData.Player;
+            player.Wait(1);
+            player.SelectPlayer(playerName);
+            player.Wait(2);
+
+            playerDetail.SelectTab("CONFIGURE");
+
+            string[] tagsToCompare = new[] { "Select A Channel", "Chevy-Buick-GMC TV Chevy, Buick & GMC Lounge TV" };
+            pc.GetChannelFields.Should().Contain(tagsToCompare).And.HaveCount(tagsToCompare.Length);
+
+            playerDetail.SelectTab("PLAYLISTS");
+
+
+            player.Wait(2);
+
+            // RK - 2/20/19 - Need to rethink these asserts because they might change because of the dates. 
+            string[] tagsToComparePI = new[] { "Name: Rob Expire items", "Id: 69a84aff-3155-417f-97b9-658087a9df29", "Schedule: January 2, 2019 - February 1, 2019 12:00 am - 11:59 pm", "Author: RKos@dciartform.com", "Created: 11/2/2018 12:20:36 AM", "Updated: 1/31/2019 10:30:53 AM", "Estimated Duration: 00:11:17", "4", "2", "3", "7", "1", "1", "Name: Rob Defer Install", "Id: 9bbb9199-34f6-4030-b9bc-45719091c320", "Schedule: January 30, 2019 - January 30, 2023 12:00 am - 11:59 pm", "Author: RKos@dciartform.com", "Created: 1/31/2019 2:46:00 AM", "Updated: 2/13/2019 2:14:37 AM", "Estimated Duration: 00:01:45", "1", "1", "1", "Name: Scott Widget Test", "Id: 56d7406b-ef9b-48ed-b27e-4d7f83b15503", "Schedule: October 16, 2018 - October 18, 2018 12:00 am - 11:59 pm", "Author: lamers@dciartform.com", "Created: 10/16/2018 7:39:36 PM", "Updated: 2/15/2019 3:45:41 AM", "Estimated Duration: 00:03:15", "2", "2", "1" };
+            //ppl.GetPlaylistInfo.Should().Contain(tagsToComparePI).And.HaveCount(tagsToComparePI.Length);
+
+            string[] tagsToCompare2 = new[] { "Rob Expire items", "January 2, 2019 - February 1, 2019 12:00 am - 11:59 pm", "brand: Brand", "traffic: Traffic", "video: 0f6ee191-1127-47a2-89d3-5b397abc90c6 (1)...", "image: Lighthouse.jpg", "weather: Weather", "traffic: Traffic", "screenfeedvideo: WeatherNational", "screenfeedvideo: ReutersNews", "screenfeedvideo: Engadget", "weather: Weather", "traffic: Traffic", "screenfeedvideo: Destinations", "screenfeedvideo: BestBites", "screenfeedvideo: APNews", "image: Landing", "screenfeedvideo: BestBites (Copy 1)", "image: 878455-code-geass-simple-background.jpg", "image: ISS-Rim.jpg", "Rob Defer Install", "January 30, 2019 - January 30, 2023 12:00 am - 11:59 pm", "image: ISS-Rim.jpg", "traffic: Traffic", "weather: Weather", "Scott Widget Test", "October 16, 2018 - October 18, 2018 12:00 am - 11:59 pm", "brand: Brand", "traffic: Traffic", "weather: Weather", "traffic: Traffic", "weather: Weather" };
+            pwp.GetWhatsPlayingFields.Should().Contain(tagsToCompare2).And.HaveCount(tagsToCompare2.Length);
+
+            PlayerGeneralDevice pd = new PlayerGeneralDevice(_driver.Value, _configuration);
+
+            playerDetail.SelectTab("GENERAL");
+            string[] tagsToCompare3 = new[] { "Ping Device", "Refresh App", "Restart App", "Restart Device" };
+            pd.GetDeviceButtons.Should().Contain(tagsToCompare3).And.HaveCount(tagsToCompare3.Length);
+      
+            string[] strArrayKey = pd.GetDeviceFields.Select(x => (x.Key)).ToArray(); 
+            string[] strArrayValue = pd.GetDeviceFields.Select(x => (x.Value)).ToArray();            
+            string[] tagsToCompareKey = new[] { "Last Online:", "Model", "Computer Name:", "Ping Data:", "OS / Version", "Memory / Hard Drive", "Hard Line / Wifi Connected", "IP Address" };
+            string[] tagsToCompareValue = new[] { "2/15/2019 5:03:18 AM", "GA-N3050N", "LG-QAROB", "--", "Linux: Ubuntu 18.04 (bionic)", "1.8GB / 58GB (69% free)", "Connection: Ethernet", "216.206.142.2" };
+            // RK - 2/20/19 - Need to rethink these asserts because they might change because of the dates. 
+
+            // strArrayKey.Should().Contain(tagsToCompareKey).And.HaveCount(tagsToCompareKey.Length);
+            //strArrayValue.Should().Contain(tagsToCompareValue).And.HaveCount(tagsToCompareValue.Length);
+            
+            PlayerGeneralInstalledPrograms pgd = new PlayerGeneralInstalledPrograms(_driver.Value, _configuration);
+            string[] tagsToCompareD3 = new[] { "LCC", "LGP", "WidgetWeather", "WidgetImage", "WidgetTraffic", "WidgetVideo", "WidgetBrand", "WidgetStatusBoard", "WidgetAdBuilder", "WidgetPricing" };
+            pgd.GetInstalledProgramsLabel.Should().Contain(tagsToCompareD3).And.HaveCount(tagsToCompareD3.Length);
+
+            PlayerGeneralTags pt = new PlayerGeneralTags(_driver.Value, _configuration);
+            
+            string[] tagsToCompare4 = new[] { "Standard Tags", "Admin Tags", "System Tags", "", "", "" };
+            pt.GetSystemGeneratedListOfTags.Should().Contain(tagsToCompare4).And.HaveCount(tagsToCompare4.Length);
+
+            PlayerGeneralLocationDetails pld = new PlayerGeneralLocationDetails(_driver.Value, _configuration);
+
+            string[] tagsToCompare5 = new[] { "Phone:", "Dealer Code :", "" };
+            pld.GetPlayerLocationDetailsFields.Should().Contain(tagsToCompare5).And.HaveCount(tagsToCompare5.Length);
+
+            PlayerGeneralInformation pgi = new PlayerGeneralInformation(_driver.Value, _configuration);
+            // pgi.PlayerInformationEditButtonClick();
+            pgi.Wait(2);
+            
+            string[] tagsToCompare6 = new[] { "Player Name: LG-QAROB", "Description:", "ID:", "Product:", "Subscription:", "License Key:", "Expiration Date:", "Zone:", "Last Online:", "Created:", "Updated:", "Registered:", "Registered By:", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
+            pgi.GetPlayerInformationFields.Should().Contain(tagsToCompare6).And.HaveCount(tagsToCompare6.Length);
+
+            //  pgi.PlayerModal.PlayerNameTextField = "ds";
+            //pgi.PlayerModal.SelectZoneSelectBox = "Service";
+            //pgi.PlayerModal.ModalCancelButtonClick();
+            // pgi.PlayerModal.ModalContinueButtonClick();
+            //  pgi.PlayerModal.ModalSaveButtonClick();
+
         }
+
 
         [TearDown]
         public void CleanUp()

@@ -15,8 +15,8 @@ namespace QA.Automation.UITests.LG20.Pages
         private readonly string _playListinfoModal = @"playlist-info-modal";
         private readonly string _pmfbContainer = @"pmfb-container";
 
-       // private readonly string _modalContainer = @"lg-modal__container";
-       // private readonly string _modalSection = @"lg-modal__section";
+        // private readonly string _modalContainer = @"lg-modal__container";
+        // private readonly string _modalSection = @"lg-modal__section";
 
         private string _addPlayListButtonId = "";
         private string _searchPlayListField = "";
@@ -61,7 +61,7 @@ namespace QA.Automation.UITests.LG20.Pages
         //}
         #endregion
 
-      
+
 
         #region -- Overrides --
 
@@ -80,9 +80,9 @@ namespace QA.Automation.UITests.LG20.Pages
             throw new NotImplementedException();
         }
 
-        
-        # endregion
-        
+
+        #endregion
+
 
         #region -- Properties --
 
@@ -93,12 +93,12 @@ namespace QA.Automation.UITests.LG20.Pages
                 if (_playListModel == null)
                 {
                     _playListModel = new PlayListSettingModal(this.Driver);
-                    
+
                 }
                 return _playListModel;
             }
             set => _playListModel = value;
-        } 
+        }
 
         public List<PlayListItem> PlayListItems => GetPlayList(Driver);
 
@@ -150,7 +150,7 @@ namespace QA.Automation.UITests.LG20.Pages
             Wait(2);
             IWebElement clearDescription = Driver.FindElement(By.XPath(_playListDescription));
             clearDescription.Clear();
-           
+
         }
 
         public string VerifyCreatedPlaylist(string createdPlaylistName)
@@ -215,7 +215,7 @@ namespace QA.Automation.UITests.LG20.Pages
                 Console.WriteLine(e);
                 throw;
             }
-            
+
             return pls;
         }
 

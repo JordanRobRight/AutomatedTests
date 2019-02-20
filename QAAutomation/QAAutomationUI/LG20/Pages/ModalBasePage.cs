@@ -65,6 +65,28 @@ namespace QA.Automation.UITests.LG20.Pages
 
             return false;
         }
+        // Doesnt comes under _modalContainer
+        public bool ModalContinueButtonClick()
+        {
+            try
+            {
+                //_modalContainerName = modalContainerName;
+                var continueButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("type") != null &&
+                                                                       a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals("Continue", StringComparison.OrdinalIgnoreCase));
+                if (continueButton != null)
+                {
+                    continueButton.Click();
+                    return true;
+                }
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return false;
+        }
 
         public virtual void Wait(int numberOfSeconds = 5, int slideFactor = 0)
         {
@@ -82,7 +104,7 @@ namespace QA.Automation.UITests.LG20.Pages
         protected IWebElement GetModal()
         {
             var getModalWindow = SeleniumCommon.GetElement(_driver, SeleniumCommon.ByType.Id, _modalClassName);
-            var getActualModal = getModalWindow.FindElements(By.TagName("div")).FirstOrDefault(a => a.GetAttribute("class").Equals(_modalVisableClass));//why does this seem to change the id i put in to widget-modal??
+            var getActualModal = getModalWindow.FindElements(By.TagName("div")).FirstOrDefault(a => a.GetAttribute("class").Equals(_modalVisableClass)); //why does this seem to change the id i put in to widget-modal??
             return getActualModal;
         }
         protected IEnumerable<IWebElement> GetModalInputFields(string tagName)

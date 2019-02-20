@@ -36,11 +36,11 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #region -- Methods --
 
-        #region -- Overrides --
-        public override void Perform()
-        {
-            throw new NotImplementedException();
-        }
+            #region -- Overrides --
+            public override void Perform()
+            {
+                throw new NotImplementedException();
+            }
 
             public override bool VerifyPage()
             {
@@ -70,7 +70,7 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             var buttons = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, assetsFuncitonBar)
                 .FindElements(By.TagName("button"));
-            IWebElement button = buttons.FirstOrDefault(b => b.GetAttribute("title") != null && b.GetAttribute("title").Equals("Add New Asset", StringComparison.OrdinalIgnoreCase));
+            IWebElement button = buttons.FirstOrDefault(b=> b.GetAttribute("title") != null && b.GetAttribute("title").Equals("Add New Asset", StringComparison.OrdinalIgnoreCase));
             return button;
         }
 
@@ -80,12 +80,12 @@ namespace QA.Automation.UITests.LG20.Pages
         {
             List<AssetItem> displayOptions = new List<AssetItem>();
 
-            var displayOptionButtons = Driver.FindElement(By.ClassName("amub-layout-type")).FindElements(By.ClassName("amublt-field")).ToList();
+            var displayOptionButtons = Driver.FindElement(By.ClassName("amub-layout-type")).FindElements(By.ClassName("amublt-field")).ToList(); 
 
 
             foreach (IWebElement button in displayOptionButtons)
             {
-                AssetItem buttonItem = new AssetItem(Driver) { Name = button.Text, WebElement = button };
+                AssetItem buttonItem = new AssetItem(Driver) {Name = button.Text, WebElement = button};
                 displayOptions.Add(buttonItem);
             }
 
