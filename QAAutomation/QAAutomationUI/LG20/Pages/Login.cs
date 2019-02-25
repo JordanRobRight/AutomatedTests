@@ -47,6 +47,8 @@ namespace QA.Automation.UITests.LG20.Pages
             }
         }
 
+        public string GetCurrentUrl => Driver.Url.ToString();
+
         #endregion
 
         #region -- Constructors --

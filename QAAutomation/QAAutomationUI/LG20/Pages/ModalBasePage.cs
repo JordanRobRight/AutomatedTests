@@ -15,6 +15,7 @@ namespace QA.Automation.UITests.LG20.Pages
         private IWebDriver _driver = null;
         private readonly string _modalContainerName = string.Empty;
         private readonly string _modalVisableClass = string.Empty;
+       
 
         internal ModalBasePage(IWebDriver driver,  string modalClassName, string modalContainerName, string modalVisableClass)
         {
@@ -22,7 +23,10 @@ namespace QA.Automation.UITests.LG20.Pages
             _driver = driver;
             _modalContainerName = modalContainerName;
             _modalVisableClass = modalVisableClass;
+            
         }
+        
+
         public bool ModalCancelButtonClick()
         {
             try
@@ -93,13 +97,38 @@ namespace QA.Automation.UITests.LG20.Pages
             Thread.Sleep(TimeSpan.FromSeconds(numberOfSeconds + slideFactor));
         }
 
+        public bool ModalSubmitButtonClick(string buttonName)// pass buttonName as "Add" or "Save"
+        {
+            try
+            {
+                var submitButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("type") != null &&
+                                                                       a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals(buttonName, StringComparison.OrdinalIgnoreCase));
+                if (submitButton != null)
+                {
+                    submitButton.Click();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return false;
+        }
+
+        protected string FormID { get; set; }
+        protected IWebElement GetFormArea()
+        {
+            return _driver.FindElement(By.Id(FormID));
+        }
+
         protected IEnumerable<IWebElement> GetModalButtons()
         {
             var getModalDialog = GetModal();
             var modalContainer = getModalDialog.FindElement(By.ClassName(_modalContainerName));
             var modalContainerButtons = modalContainer.FindElements(By.TagName("button")).ToList();
             return modalContainerButtons;
-        }
+        }        
 
         protected IWebElement GetModal()
         {

@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 
 namespace QA.Automation.UITests.LG20.Pages.SubCards
 {
     class SideBarItem
     {
-
-        IWebDriver driver;
+        IWebDriver _driver;
         public SideBarItem(IWebDriver driver)
         {
-
+            _driver = driver;
         }
                 
         public string Name { get; set; }

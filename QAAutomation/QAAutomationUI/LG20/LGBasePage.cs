@@ -12,10 +12,10 @@ namespace QA.Automation.UITests.LG20
         #region --- Fields ---
         private readonly TestConfiguration _config = null;
         private IWebDriver _driver;
-        #endregion
+        #endregion 
 
+        #region --- Constructors ---
 
-        #region --- Constructores ---
         protected LGBasePage(IWebDriver driver, TestConfiguration config)
         {
             _config = config;
@@ -28,7 +28,8 @@ namespace QA.Automation.UITests.LG20
         {
 
         }
-        #endregion
+
+        #endregion 
 
         #region --- Abstract Methods ---
         public abstract void Perform();
@@ -61,12 +62,22 @@ namespace QA.Automation.UITests.LG20
             return _driver.FindElement(By.Id(PageContainerName));
         }
 
+        protected IWebElement GetModal()
+        {
+            return _driver.FindElement(By.Id(ModalID));
+        }        
+
         protected IWebElement GetPageFunctionBarContainer()
         {
             return GetPageContainer().FindElement(By.ClassName(PageFunctionBarContainerClassName));
         }
 
         protected IWebElement GetPageUtilityBarContainer()
+        {
+            return GetPageContainer().GetElementFromCompoundClass(By.TagName("div"), PageUtilBarContainerClassName);
+        }
+
+        protected IWebElement GetPageTableSarchField()
         {
             return GetPageContainer().GetElementFromCompoundClass(By.TagName("div"), PageUtilBarContainerClassName);
         }
@@ -78,23 +89,19 @@ namespace QA.Automation.UITests.LG20
 
         #endregion
 
-        
         #region --- Protected Properties ---
 
         protected string PageContainerName { get; set; }
+        protected string ModalID { get; set; }
+        //protected string FormID { get; set; }
 
         protected string PageFunctionBarContainerClassName { get; set; }
 
         protected string PageUtilBarContainerClassName { get; set; }
+       // protected string PageTableSearchClassName { get; set; }
 
-        /// <summary>
-        /// The Classname of the container section of the Search field container. This string will be used for the locator by ClassName.
-        /// </summary>
         protected string PageSearchField { get; set; }
 
-        /// <summary>
-        /// The Id of the container section of the page content area. This string will be used for the locator by Id.
-        /// </summary>
         protected string PageContentAreaId { get; set; }
         #endregion
 
@@ -110,19 +117,31 @@ namespace QA.Automation.UITests.LG20
             set
             {
                 var searchText = GetPageUtilityBarContainer().FindElements(By.Id(PageSearchField)).FirstOrDefault();
-                searchText?.SendKeys(value);
+
+               // searchText.SendKeysOrClear(value);
+                searchText.SendKeysOrClear(value);
             }
         }
 
-        public string GetCurrentUrl
+        public string SearchFieldLocations
         {
-            get { return _driver.Url; }
-        }
+            get
+            {
+                var searchText = GetPageTableSarchField().FindElements(By.TagName("input")).FirstOrDefault();
+                return searchText != null ? searchText.Text : string.Empty;
 
+            }
+            set
+            {
+                var searchText = GetPageTableSarchField().FindElements(By.TagName("input")).FirstOrDefault();
+                searchText.SendKeysOrClear(value);
+            }
+        }
 
         public TestConfiguration Config => _config;
 
         public IWebDriver Driver => _driver;
+
         #endregion
     }
 

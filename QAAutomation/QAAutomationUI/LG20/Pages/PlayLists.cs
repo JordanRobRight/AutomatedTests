@@ -142,38 +142,27 @@ namespace QA.Automation.UITests.LG20.Pages
             return true;
         }
 
-        // I not sure why this method is here and I don't think it is needed.
-        // If you are going to clear out the description for the playlist settings modal, you should just be able to set null to the description field and that should clear it out.
-        // 
-        public void ClearDescriptionTextbox()
-        {
-            Wait(2);
-            IWebElement clearDescription = Driver.FindElement(By.XPath(_playListDescription));
-            clearDescription.Clear();
+        //public string VerifyCreatedPlaylist(string createdPlaylistName)
+        //{
+        //    Wait(2);
 
-        }
+        //    IList<IWebElement> List = Driver.FindElements(By.ClassName(_playerListNameCss));
+        //    foreach (IWebElement playList_List1 in List)
+        //    {
+        //        string toCompare = playList_List1.Text;
+        //        if (toCompare.Contains(createdPlaylistName))
+        //        {
+        //            // Assert.IsTrue(toCompare.Contains(createdPlaylistName),"created playerlist not presnet in container");
+        //            //toCompare.Should().Be(createdPlaylistName);
+        //            break;
 
-        public string VerifyCreatedPlaylist(string createdPlaylistName)
-        {
-            Wait(2);
+        //        }
+        //        //Assert.IsTrue(toCompare.Contains(createdPlaylistName), "created playerlist not presnet in container");
 
-            IList<IWebElement> List = Driver.FindElements(By.ClassName(_playerListNameCss));
-            foreach (IWebElement playList_List1 in List)
-            {
-                string toCompare = playList_List1.Text;
-                if (toCompare.Contains(createdPlaylistName))
-                {
-                    // Assert.IsTrue(toCompare.Contains(createdPlaylistName),"created playerlist not presnet in container");
-                    //toCompare.Should().Be(createdPlaylistName);
-                    break;
+        //    }
 
-                }
-                //Assert.IsTrue(toCompare.Contains(createdPlaylistName), "created playerlist not presnet in container");
-
-            }
-
-            return createdPlaylistName;
-        }
+        //    return createdPlaylistName;
+        //}
         public IEnumerable<string> GetPlayLists 
         {
             get

@@ -20,6 +20,7 @@ using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
 using FluentAssertions;
 using FluentAssertions.Collections;
+using QA.Automation.UITests.LG20.Pages.SubCards.Location;
 using QA.Automation.UITests.LG20.Pages.SubCards.Player;
 
 [assembly: LevelOfParallelism(2)]
@@ -29,7 +30,7 @@ namespace QA.Automation.UITests
     //TODO: Need a better way to pass in these items. 
     [TestFixture("chrome", "63", "Windows 10", "", "")]
     [Parallelizable(ParallelScope.Children)]
-    public class UnitTest1
+    public class UnitTest1 
     {
         //private IWebDriver _driver;
         private ThreadLocal<IWebDriver> _driver = new ThreadLocal<IWebDriver>();
@@ -42,7 +43,6 @@ namespace QA.Automation.UITests
         private readonly TestConfiguration _configuration = null;
         private readonly EnvironmentData _envData;
         //private readonly EmailUsData _emailData;
-
 
         //private const string un = @"DCIArtform";
 
@@ -61,10 +61,7 @@ namespace QA.Automation.UITests
 
             var testDataFromFile = ConfigurationSettings.GetSettingsConfiguration<TestData>("TestData.json");
             //_emailData = testDataFromFile.EmailDetails.FirstOrDefault(b => b.FullName.Equals(_configuration.Environment.ToString(), StringComparison.OrdinalIgnoreCase));
-            _envData = testDataFromFile.Environment.FirstOrDefault(a => a.Name.Equals(_configuration.Environment.ToString(), StringComparison.OrdinalIgnoreCase)); // for json
-
-
-
+            _envData = testDataFromFile.Environment.FirstOrDefault(a => a.Name.Equals(_configuration.Environment.ToString(), StringComparison.OrdinalIgnoreCase));
         }
 
         [SetUp]
@@ -85,7 +82,7 @@ namespace QA.Automation.UITests
             Assert.AreEqual($"https://portal.{_configuration.Environment.ToString()}.dcimliveguide.com/#playlists".ToLower(), _driver.Value.Url.Trim().ToLower());
         }
 
-        // [TestCase]
+        [TestCase]
         [Category("SmokeTests")]
         [Description("Login")]
         public void Login()
@@ -99,7 +96,7 @@ namespace QA.Automation.UITests
             }
         }
 
-        [TestCase]
+        //[TestCase]
         [Category("SmokeTests")]
         [Description("Login")]
         public void LoginTest(string user, string password)
@@ -112,7 +109,7 @@ namespace QA.Automation.UITests
             login.ClickSignIn("Sign In");
             login.WaitForElement();
 
-            login.GetCurrentUrl.Should().NotContain(".dcimliveguide.com/login/");
+            login.GetCurrentUrl.Should().NotContain(".dcimliveguide.com/login");
         }
 
         [TestCase]//Test case 1994
@@ -170,12 +167,12 @@ namespace QA.Automation.UITests
             LogOutWithoutLogin();
         }
 
-        // [TestCase]
-        //  [Category("Debugonly")]
-        // [Ignore("This test case is for debugging only")]
-
+       // [TestCase]
+       // [Category("Debugonly")]
+       //  [Ignore("This test case is for debugging only")]        
         public void CreatePlaylistTest()
         {
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(8));
             //step 1 login
             Login();//remove to do full test
 
@@ -208,7 +205,7 @@ namespace QA.Automation.UITests
 
             pls.PlayListModal.PlayListDescriptionTextField = "Test description";
             var ch1 = pls.PlayListModal.FilterByClientProgramAndChannelCheckbox;
-
+            
             pls.PlayListModal.FilterByClientProgramAndChannelCheckbox = true;
             var ch2 = pls.PlayListModal.FilterByClientProgramAndChannelCheckbox;
 
@@ -269,14 +266,14 @@ namespace QA.Automation.UITests
 
             pls.Wait();
 
-            
+
             pls.PlayListModal.ClickOffScreen();
 
             pls.Wait();
 
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");// if IsModalDisplay is false then it means Modal was closed else display message
-            //Step 7 Select '+' to add new playlist
-            
+                                                                                          //Step 7 Select '+' to add new playlist
+
             pls.AddButtonClick();
 
             pls.Wait();
@@ -296,7 +293,7 @@ namespace QA.Automation.UITests
             pls.PlayListModal.IsModalDisplayed.Should().BeTrue("Modal should be closed");
 
             //Step 10 Select Ok
-            
+
 
             //step 11: Remove the Playlist Description 
             pls.PlayListModal.PlayListDescriptionTextField = "Automated Playlist Test Desc" + DateTime.Now.ToString();
@@ -351,8 +348,7 @@ namespace QA.Automation.UITests
             //string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
         }
 
-
-        [TestCase]// test Case #583
+        [TestCase]// test Case #46
         [Category("All")]
         [Category("SmokeTests")]
         [Description("Test Case #583")]
@@ -439,25 +435,25 @@ namespace QA.Automation.UITests
             //step 4 select playlists that contains widgets and select able to edit button 
             if (!duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
             {
-
+               
                 IWebElement playlistEditButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.editButtonCssSelector));
                 playlistEditButton2.Click();
-
+                
                 //TODO: Get the lement lgfe-card-matrix js-drag-drop-playlist lgfe-card-matrix--layout-row and see if there is more than one
                 PlayListSettingModal plsm = new PlayListSettingModal(_driver.Value);
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
                 plsm.ModalSaveButtonClick();
-                // System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+               // System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
                 //IWebElement saveButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
                 //saveButton2.Click();
             }
             //step 5 select playlists from main menu
             WaitForMaskModal();
-
+           
             //IWebElement playlistsSideBarMenuButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             sb.SelectMenu("Playlists");
             sb.Wait(2);
-
+           
             //playlistsSideBarMenuButton1.Click();
             //WaitForMaskModal();
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
@@ -643,11 +639,11 @@ namespace QA.Automation.UITests
             IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
             playlistsSideBarMenuButton.Click();
-
+            
             WaitForMaskModal();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //step 9 enter all required field values and select save
-
+            
             IWebElement addPlaylistButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.addPlaylistsButtonClass));
             pls.AddButtonClick();
             //addPlaylistButton.Click();
@@ -695,7 +691,7 @@ namespace QA.Automation.UITests
             playlistSelection.Click();
         }
 
-
+        
         //[TestCase]
         //public void EditWeatherWidget()
         //{
@@ -810,7 +806,7 @@ namespace QA.Automation.UITests
             //IWebElement trafficWidgetDescription = _driver.Value.FindElement(By.CssSelector(BaseStrings.trafficWidgetDescriptionCssSelector));
             //Assert.IsTrue(trafficWidgetDescription.Text.Contains("Current conditions of local routes and maps."));
             Assert.IsTrue(tr.TrafficDescription.Contains("Current conditions of local routes and maps."));
-
+            
 
             //step 6 weather pre-filled displays on lower section of window
             //step 7 do not enter zip code confirm placeholder text displays
@@ -1029,9 +1025,9 @@ namespace QA.Automation.UITests
 
             PlayList pl = new PlayList(_driver.Value, _configuration);// TestConfiguration.GetTestConfiguration());
             pl.Wait(2);
-
+            
             IWebElement videoButton = pl.PlayListWidets.FirstOrDefault(a => a.Text.ToLower().Contains("video"));
-
+            
             Assert.IsNotNull(videoButton);
 
             videoButton.Click();
@@ -1241,12 +1237,11 @@ namespace QA.Automation.UITests
 
         }
 
-
-        // [TestCase]
-        // [Description("LiveGuideAssets")]
+        
+       // [TestCase]
+       // [Description("LiveGuideAssets")]
         public void LiveguideAssets2()//just method calls 
         {
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
             Login();
 
             //IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(Base.playlistSideBarMenuCssSelector));
@@ -1286,17 +1281,15 @@ namespace QA.Automation.UITests
             #endregion
         }
 
-        // [TestCase]
-        // [Description("LiveGuideClientMenu")]
-
+        //[TestCase]
+        //[Description("LiveGuideClientMenu")]
         public void ClientMenuTest()
         {
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
             Login();
 
-            //   IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+          //  IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
 
-            //    playerChannelDropdown.Click();
+         //   playerChannelDropdown.Click();
 
             var ClientMenuTest = new ClientMenu(_driver.Value, _configuration);
 
@@ -1367,7 +1360,7 @@ namespace QA.Automation.UITests
             uploadFromButton.Click();
 
             //TODO: Need a better way to get a file to upload. Maybe define a data folder in the solution for now.
-            //MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\Toy_car.mov");
+            MiscLib.WindowsFormHelper.GetAutoIt("Open", @"C:\Users\enwright\Desktop\Toy_car.mov");
 
 
             IWebElement uploadDialogCloseButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.uploadDialogCloseButtonCssSelector));
@@ -1729,126 +1722,125 @@ namespace QA.Automation.UITests
 
         }
 
-        /*  [TestCase]
-          [Category("All")]
-          public void ContactUsWithrequiredFields()
-          {
-              //step 1
-              Login();
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              IWebElement contactUsLink = _driver.Value.FindElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
-              WaitForMaskModal();
+        /*    [TestCase]
+            [Category("All")]
+            public void ContactUsWithrequiredFields()
+            {
+                //step 1
+                Login();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                IWebElement contactUsLink = _driver.Value.FindElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
+                WaitForMaskModal();
 
-              //step 2
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              contactUsLink.Click();
+                //step 2
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                contactUsLink.Click();
 
-              IWebElement sendButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
-              WaitForMaskModal();
+                IWebElement sendButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
+                WaitForMaskModal();
 
-              //step 3 
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              sendButton.Click();
+                //step 3 
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                sendButton.Click();
 
-              // step 4
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              IWebElement EmailUsFullNameInput = _driver.Value.FindElement(By.Id("full-name"));
-              EmailUsFullNameInput.SendKeys("Automated Tester");
+                // step 4
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                IWebElement EmailUsFullNameInput = _driver.Value.FindElement(By.Id("full-name"));
+                EmailUsFullNameInput.SendKeys("Automated Tester");
 
-              //step 5
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              WaitForMaskModal();
-              sendButton.Click();
+                //step 5
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                WaitForMaskModal();
+                sendButton.Click();
 
-              //Step 6
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              IWebElement EmailUsPhoneNumberInput = _driver.Value.FindElement(By.Id("phone"));
-              EmailUsPhoneNumberInput.SendKeys("Auto Test");
+                //Step 6
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                IWebElement EmailUsPhoneNumberInput = _driver.Value.FindElement(By.Id("phone"));
+                EmailUsPhoneNumberInput.SendKeys("Auto Test");
 
-              //step 7
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              WaitForMaskModal();
-              sendButton.Click();
+                //step 7
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                WaitForMaskModal();
+                sendButton.Click();
 
-              //Step 8
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              EmailUsPhoneNumberInput.Clear();
-              EmailUsPhoneNumberInput.SendKeys("1234567890");
+                //Step 8
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                EmailUsPhoneNumberInput.Clear();
+                EmailUsPhoneNumberInput.SendKeys("1234567890");
 
-              //Step 9
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              WaitForMaskModal();
-              sendButton.Click();
+                //Step 9
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                WaitForMaskModal();
+                sendButton.Click();
 
-              //Step 10
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              WaitForMaskModal();
-              IWebElement EmailUsEmialInput = _driver.Value.FindElement(By.Id("email"));
-              EmailUsEmialInput.SendKeys("Automated Tester");
+                //Step 10
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                WaitForMaskModal();
+                IWebElement EmailUsEmialInput = _driver.Value.FindElement(By.Id("email"));
+                EmailUsEmialInput.SendKeys("Automated Tester");
 
-              //Step 11
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              WaitForMaskModal();
-              sendButton.Click();
+                //Step 11
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                WaitForMaskModal();
+                sendButton.Click();
 
-              //Step 12
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              EmailUsEmialInput.Clear();
-              EmailUsEmialInput.SendKeys("test@");
+                //Step 12
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                EmailUsEmialInput.Clear();
+                EmailUsEmialInput.SendKeys("test@");
 
-              //Step 13
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              WaitForMaskModal();
-              sendButton.Click();
+                //Step 13
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                WaitForMaskModal();
+                sendButton.Click();
 
-              //Step 14
-              EmailUsEmialInput.Clear();
-              EmailUsEmialInput.SendKeys("test@dci");
+                //Step 14
+                EmailUsEmialInput.Clear();
+                EmailUsEmialInput.SendKeys("test@dci");
 
-              //Step 15
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              WaitForMaskModal();
-              sendButton.Click();
+                //Step 15
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                WaitForMaskModal();
+                sendButton.Click();
 
-              //Step 16
-              EmailUsEmialInput.Clear();
-              EmailUsEmialInput.SendKeys("test@dci.");
+                //Step 16
+                EmailUsEmialInput.Clear();
+                EmailUsEmialInput.SendKeys("test@dci.");
 
-              //Step 17
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              sendButton.Click();
+                //Step 17
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                sendButton.Click();
 
-              //Step 18
-              EmailUsEmialInput.Clear();
-              EmailUsEmialInput.SendKeys("test@dci.c");
+                //Step 18
+                EmailUsEmialInput.Clear();
+                EmailUsEmialInput.SendKeys("test@dci.c");
 
-              //Step 19
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              sendButton.Click();
+                //Step 19
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                sendButton.Click();
 
-              //Step 20
-              EmailUsEmialInput.Clear();
-              EmailUsEmialInput.SendKeys("test@dci.com");
+                //Step 20
+                EmailUsEmialInput.Clear();
+                EmailUsEmialInput.SendKeys("test@dci.com");
 
-              //Step 21
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              sendButton.Click();
+                //Step 21
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                sendButton.Click();
 
-              //Step 22
-              IWebElement EmailUsCommentsInput = _driver.Value.FindElement(By.Id("comments"));
-              EmailUsCommentsInput.SendKeys("Automated Tester");
+                //Step 22
+                IWebElement EmailUsCommentsInput = _driver.Value.FindElement(By.Id("comments"));
+                EmailUsCommentsInput.SendKeys("Automated Tester");
 
-              //Step 23
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-              sendButton.Click();
+                //Step 23
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                sendButton.Click();
 
-              //Step 24
-              IWebElement ContactUsDoneButton = _driver.Value.FindElement(By.CssSelector("#notifications-form > div > button"));
-              ContactUsDoneButton.Click();
+                //Step 24
+                IWebElement ContactUsDoneButton = _driver.Value.FindElement(By.CssSelector("#notifications-form > div > button"));
+                ContactUsDoneButton.Click();
 
-              LogOutWithoutLogin();
-          }*/
-
+                LogOutWithoutLogin();
+            } */
         [TestCase]
         [Category("All")]
         [Description("Test Case #1457")]
@@ -1924,108 +1916,108 @@ namespace QA.Automation.UITests
             LogOutWithoutLogin();
         }
 
-        /*    [TestCase]//Test Case #1459
-            [Category("All")]
-            [Description("Test Case #1459")]
-            public void ContactUsWithAllFields()
-            {
-                //Step 1
-                Login();
+        /*[TestCase]//Test Case #1459
+        [Category("All")]
+        [Description("Test Case #1459")]
+        public void ContactUsWithAllFields()
+        {
+            //Step 1
+            Login();
 
-                //Step 2
-                IWebElement contactUsLink = _driver.Value.FindElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
-                WaitForMaskModal();
-                contactUsLink.Click();
+            //Step 2
+            IWebElement contactUsLink = _driver.Value.FindElement(By.CssSelector(BaseStrings.contactUsLinkCssSelector));
+            WaitForMaskModal();
+            contactUsLink.Click();
 
-                //Step 3
-                IWebElement EmailUsFullNameInput = _driver.Value.FindElement(By.Id("full-name"));
-                EmailUsFullNameInput.SendKeys("Automated Tester");
+            //Step 3
+            IWebElement EmailUsFullNameInput = _driver.Value.FindElement(By.Id("full-name"));
+            EmailUsFullNameInput.SendKeys("Automated Tester");
 
-                //Step 4
-                IWebElement EmailUsTitleInput = _driver.Value.FindElement(By.Id("title"));
-                EmailUsTitleInput.SendKeys("Automated Tester");
+            //Step 4
+            IWebElement EmailUsTitleInput = _driver.Value.FindElement(By.Id("title"));
+            EmailUsTitleInput.SendKeys("Automated Tester");
 
-                //Step 5
-                IWebElement EmailUsCompanyInput = _driver.Value.FindElement(By.Id("company"));
-                EmailUsCompanyInput.SendKeys("Automated Tester");
+            //Step 5
+            IWebElement EmailUsCompanyInput = _driver.Value.FindElement(By.Id("company"));
+            EmailUsCompanyInput.SendKeys("Automated Tester");
 
-                //Step 6
-                IWebElement EmailUsPhoneNumberInput = _driver.Value.FindElement(By.Id("phone"));
-                EmailUsPhoneNumberInput.SendKeys("9876543210");
+            //Step 6
+            IWebElement EmailUsPhoneNumberInput = _driver.Value.FindElement(By.Id("phone"));
+            EmailUsPhoneNumberInput.SendKeys("9876543210");
 
-                //Step 7
-                IWebElement EmailUsEmialInput = _driver.Value.FindElement(By.Id("email"));
-                EmailUsEmialInput.SendKeys("AutomatedTester@dcim.com");
+            //Step 7
+            IWebElement EmailUsEmialInput = _driver.Value.FindElement(By.Id("email"));
+            EmailUsEmialInput.SendKeys("AutomatedTester@dcim.com");
 
-                //Step 8
-                IWebElement EmailUsCommentsInput = _driver.Value.FindElement(By.Id("comments"));
-                EmailUsCommentsInput.SendKeys("Automated Tester");
+            //Step 8
+            IWebElement EmailUsCommentsInput = _driver.Value.FindElement(By.Id("comments"));
+            EmailUsCommentsInput.SendKeys("Automated Tester");
 
-                IWebElement sendButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
-                WaitForMaskModal();
-                //Step 9
-                sendButton.Click();
+            IWebElement sendButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.sendButtonCssSelector));
+            WaitForMaskModal();
+            //Step 9
+            sendButton.Click();
 
-                //var newHtml = _driver.PageSource;
-
-
-                //newHtml.ToString();
+            //var newHtml = _driver.PageSource;
 
 
-
-                //if (newHtml.Contains("contactErrorInput"))
-                //{
-                //    EmailUsFullNameInput.Clear();
-                //    EmailUsFullNameInput.SendKeys("Automated Tester 2");
-
-                //    EmailUsTitleInput.Clear();
-                //    EmailUsTitleInput.SendKeys("AutomatedTester@mailinator.com");
-
-                //    EmailUsCompanyInput.Clear();
-                //    EmailUsCompanyInput.SendKeys("Automated Tester 2");
-
-                //    EmailUsPhoneNumberInput.Clear();
-                //    EmailUsPhoneNumberInput.SendKeys("123-123-1234");
-
-                //    EmailUsEmialInput.Clear();
-                //    EmailUsEmialInput.SendKeys("AutomatedTester@mailinator.com");
-
-                //    EmailUsCommentsInput.Clear();
-                //    EmailUsCommentsInput.SendKeys("Automated Tester 2");
-
-                //    sendButton.Click();
-                //}
-
-                WaitForMaskModal();
-
-                IWebElement ContactUsDoneButton = _driver.Value.FindElement(By.CssSelector("#notifications-form > div > button"));
-                //Step 10
-                ContactUsDoneButton.Click();
-
-                //if (EmailUsFullNameInput.Displayed)
-                //{
-                //    var errorFullName = _driver.Value.FindElement(By.CssSelector("#contact-us-container > form > div:nth-child(2)")).Text;
+            //newHtml.ToString();
 
 
 
-                //    if (errorFullName.Contains("error"))
-                //    {
+            //if (newHtml.Contains("contactErrorInput"))
+            //{
+            //    EmailUsFullNameInput.Clear();
+            //    EmailUsFullNameInput.SendKeys("Automated Tester 2");
 
-                //    }
-                //}
-                //else if (EmailUsTitleInput.Displayed)
-                //{
+            //    EmailUsTitleInput.Clear();
+            //    EmailUsTitleInput.SendKeys("AutomatedTester@mailinator.com");
 
-                //}
-                //else if (EmailUsPhoneNumberInput.Displayed)
-                //{
+            //    EmailUsCompanyInput.Clear();
+            //    EmailUsCompanyInput.SendKeys("Automated Tester 2");
 
-                //}
+            //    EmailUsPhoneNumberInput.Clear();
+            //    EmailUsPhoneNumberInput.SendKeys("123-123-1234");
 
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-                //Step 11
-                LogOutWithoutLogin();
-            }*/
+            //    EmailUsEmialInput.Clear();
+            //    EmailUsEmialInput.SendKeys("AutomatedTester@mailinator.com");
+
+            //    EmailUsCommentsInput.Clear();
+            //    EmailUsCommentsInput.SendKeys("Automated Tester 2");
+
+            //    sendButton.Click();
+            //}
+
+            WaitForMaskModal();
+
+            IWebElement ContactUsDoneButton = _driver.Value.FindElement(By.CssSelector("#notifications-form > div > button"));
+            //Step 10
+            ContactUsDoneButton.Click();
+
+            //if (EmailUsFullNameInput.Displayed)
+            //{
+            //    var errorFullName = _driver.Value.FindElement(By.CssSelector("#contact-us-container > form > div:nth-child(2)")).Text;
+
+
+
+            //    if (errorFullName.Contains("error"))
+            //    {
+
+            //    }
+            //}
+            //else if (EmailUsTitleInput.Displayed)
+            //{
+
+            //}
+            //else if (EmailUsPhoneNumberInput.Displayed)
+            //{
+
+            //}
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            //Step 11
+            LogOutWithoutLogin();
+        } */
 
         [TestCase]//Test Case #1459
         [Category("All")]
@@ -2070,6 +2062,7 @@ namespace QA.Automation.UITests
             cus.Wait(4);
             LogOutWithoutLogin();
         }
+
 
         [TestCase]//Test Case #1460
         [Category("All")]
@@ -2156,7 +2149,7 @@ namespace QA.Automation.UITests
             player.SelectPlayer(playerName);
 
             player.Wait();
-
+            
             //Step 4 
             IWebElement playerInfoDownArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerInfoDownArrowCssSelectors));
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
@@ -2165,26 +2158,26 @@ namespace QA.Automation.UITests
 
             //Step 5
             IWebElement playerInfoUpArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerInfoUpArrowCssSelector));
-            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             player.Wait(2);
             playerInfoUpArrow.Click();
 
             //Step 6
             IWebElement playerInfoX = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerInfoXCssSelector));
-            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             player.Wait(2);
             playerInfoX.Click();
 
             //Step 7,8,& 9 are skipped since there isnt a products section right now
             //Step 10
             IWebElement deviceDownArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.deviceDownArrowCssSelector));
-            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             player.Wait(2);
             deviceDownArrow.Click();
 
             //Step 11
             IWebElement deviceUpArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.deviceUpArrowCssSelector));
-            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             player.Wait(2);
             deviceUpArrow.Click();
 
@@ -2233,25 +2226,25 @@ namespace QA.Automation.UITests
             //Step 19
             IWebElement whatsPlayingXButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.whatsPlayingXButtonCssSelector));
             player.Wait(2);
-            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             whatsPlayingXButton.Click();
 
             //Step 20
             IWebElement playlistInfoDownArrow = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistInfoDownArrowCssSelector));
             player.Wait(2);
-            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistInfoDownArrow.Click();
 
             //Step 21
             IWebElement playlistInfoUpArrow = _driver.Value.FindElement(By.XPath(BaseStrings.playlistInfoUpArrowXpath));
             player.Wait(2);
-            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistInfoUpArrow.Click();
 
             //Step 22
             IWebElement playlistInfoXButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistInfoXButtonCssSelector));
             player.Wait(2);
-            //            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+//            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             playlistInfoXButton.Click();
 
             //Step 23,24,25,26,27,28,29,30,31 are not present on frontend that i can see as of 09/18/18
@@ -2426,7 +2419,7 @@ namespace QA.Automation.UITests
         {
             //step 1
             Login();
-
+            
             Players player = new Players(_driver.Value, _configuration);
 
             //Step 2 select player tab
@@ -2481,7 +2474,7 @@ namespace QA.Automation.UITests
         [Description("Test case 1488")]
         public void PlayerScreenConnect()
         {
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(11));
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(11));
             //Step 1
             Login();
 
@@ -2629,12 +2622,12 @@ namespace QA.Automation.UITests
             SeleniumCommon.RefreshPage(_driver.Value);
             //step 7 confirm all playlist display in date added order
             //pls.Wait();
-
+            
             //Step 13 logout
             LogOutWithoutLogin();
         }
 
-
+       
         [TestCase]// test case 1988
         [Category("All")]
         [Description("Test case 1988")]
@@ -2732,7 +2725,6 @@ namespace QA.Automation.UITests
         [Description("Test case 2150")]
         public void CBAM_AssetsSearchBox()
         {
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(8));
             //Step 1
             Login();
 
@@ -2746,7 +2738,7 @@ namespace QA.Automation.UITests
 
             //Step 3
             Assets assetPage = new Assets(_driver.Value, _configuration);
-
+            
             //TODO: Move this method to a property in order to get and set data.
             //IWebElement assetSearchInput = _driver.Value.FindElement(By.Id("assets-search"));
             IWebElement assetSearchInput = assetPage.GetAssetSearchInput();
@@ -2761,7 +2753,6 @@ namespace QA.Automation.UITests
 
             //TODO: Assert here to validate items returned.
         }
-
         private void DetermineErrorInput(IEnumerable<KeyValuePair<bool, string>> fieldList, string field)
         {
             foreach (KeyValuePair<bool, string> error in fieldList)
@@ -2917,7 +2908,7 @@ namespace QA.Automation.UITests
 
             mp.IsSaveEnabledAfterSaved.Should().BeTrue("Save button still not enabled");//if save button is enabled then save is success, currently there is no success message displayed by application 
 
-
+            #region --- old code ---
             /*IWebElement playerChannelDropdown1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
             playerChannelDropdown1.Click();
             IWebElement myProfileButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileButtonCssSelector));
@@ -2994,17 +2985,15 @@ namespace QA.Automation.UITests
               zipCodeInput.Clear();
               System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
               zipCodeInput.SendKeys("53209" + Keys.Enter); */
+            #endregion
+            
             //step 24 logout
             LogOutWithoutLogin();
 
-        }
 
-        //public void RefreshPage()
-        //{
-        //    _driver.Value.Navigate().Refresh();
-        //}
+        }
         [TestCase]
-       // [Category("All")]
+        // [Category("All")]
         [Description("Test")]
         // RK 2/15/19 - Change the name to something like TestPlayerPage
         // I understand that this test was just to debug the player, but it is useful to just go through the page for like a smoke test or something.
@@ -3048,22 +3037,22 @@ namespace QA.Automation.UITests
             playerDetail.SelectTab("GENERAL");
             string[] tagsToCompare3 = new[] { "Ping Device", "Refresh App", "Restart App", "Restart Device" };
             pd.GetDeviceButtons.Should().Contain(tagsToCompare3).And.HaveCount(tagsToCompare3.Length);
-      
-            string[] strArrayKey = pd.GetDeviceFields.Select(x => (x.Key)).ToArray(); 
-            string[] strArrayValue = pd.GetDeviceFields.Select(x => (x.Value)).ToArray();            
+
+            string[] strArrayKey = pd.GetDeviceFields.Select(x => (x.Key)).ToArray();
+            string[] strArrayValue = pd.GetDeviceFields.Select(x => (x.Value)).ToArray();
             string[] tagsToCompareKey = new[] { "Last Online:", "Model", "Computer Name:", "Ping Data:", "OS / Version", "Memory / Hard Drive", "Hard Line / Wifi Connected", "IP Address" };
             string[] tagsToCompareValue = new[] { "2/15/2019 5:03:18 AM", "GA-N3050N", "LG-QAROB", "--", "Linux: Ubuntu 18.04 (bionic)", "1.8GB / 58GB (69% free)", "Connection: Ethernet", "216.206.142.2" };
             // RK - 2/20/19 - Need to rethink these asserts because they might change because of the dates. 
 
             // strArrayKey.Should().Contain(tagsToCompareKey).And.HaveCount(tagsToCompareKey.Length);
             //strArrayValue.Should().Contain(tagsToCompareValue).And.HaveCount(tagsToCompareValue.Length);
-            
+
             PlayerGeneralInstalledPrograms pgd = new PlayerGeneralInstalledPrograms(_driver.Value, _configuration);
             string[] tagsToCompareD3 = new[] { "LCC", "LGP", "WidgetWeather", "WidgetImage", "WidgetTraffic", "WidgetVideo", "WidgetBrand", "WidgetStatusBoard", "WidgetAdBuilder", "WidgetPricing" };
             pgd.GetInstalledProgramsLabel.Should().Contain(tagsToCompareD3).And.HaveCount(tagsToCompareD3.Length);
 
             PlayerGeneralTags pt = new PlayerGeneralTags(_driver.Value, _configuration);
-            
+
             string[] tagsToCompare4 = new[] { "Standard Tags", "Admin Tags", "System Tags", "", "", "" };
             pt.GetSystemGeneratedListOfTags.Should().Contain(tagsToCompare4).And.HaveCount(tagsToCompare4.Length);
 
@@ -3075,7 +3064,7 @@ namespace QA.Automation.UITests
             PlayerGeneralInformation pgi = new PlayerGeneralInformation(_driver.Value, _configuration);
             // pgi.PlayerInformationEditButtonClick();
             pgi.Wait(2);
-            
+
             string[] tagsToCompare6 = new[] { "Player Name: LG-QAROB", "Description:", "ID:", "Product:", "Subscription:", "License Key:", "Expiration Date:", "Zone:", "Last Online:", "Created:", "Updated:", "Registered:", "Registered By:", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
             pgi.GetPlayerInformationFields.Should().Contain(tagsToCompare6).And.HaveCount(tagsToCompare6.Length);
 
@@ -3087,6 +3076,247 @@ namespace QA.Automation.UITests
 
         }
 
+        [TestCase]
+        //[Category("All")]
+        [Description("Test")]
+        public void TODebug_Location()
+        {
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(8));
+            Login();
+
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            ClientMenu cm = new ClientMenu(_driver.Value, _configuration);
+            cm.SelectClient("GM");
+            cm.Wait();
+            LocationDetail ld = new LocationDetail(_driver.Value,_configuration);
+            Locations loc = new Locations(_driver.Value, _configuration);
+            GeneralLocationDetailsSection lds = new GeneralLocationDetailsSection(_driver.Value, _configuration);
+            GeneralLicenseAndSubscriptionsSection ls = new GeneralLicenseAndSubscriptionsSection(_driver.Value, _configuration);
+            GeneralTags GeneralTags = new GeneralTags(_driver.Value,_configuration);
+            ConfigureGeneralSection ConfigureGeneralSection = new ConfigureGeneralSection(_driver.Value,_configuration);
+            ConfigureTickersSection tickers = new ConfigureTickersSection(_driver.Value, _configuration);
+            ConfigureSalesAppointments sales = new ConfigureSalesAppointments(_driver.Value,_configuration);
+            ConfigureSMCSettings smc = new ConfigureSMCSettings(_driver.Value,_configuration);
+            GeneralSDSPriceLists GeneralSDSPriceLists = new GeneralSDSPriceLists(_driver.Value, _configuration);
+            SalesAppointmentManagementModal SalesAppointmentManagementModal = new SalesAppointmentManagementModal(_driver.Value);
+            TagManagementModal TagManagement = new TagManagementModal(_driver.Value);
+            ConfigureSDSSettingsSection ConfigureSDSSettingsSection = new ConfigureSDSSettingsSection(_driver.Value,_configuration);
+            sb.SelectMenu("Locations");                     
+            sb.Wait(6);
+            //sb.Wait(3);
+            //loc.IsLocationHeader.Should().ContainAny("");            
+            String[] tagsToCompareLoc = new[] { "Name", "", "Location Code", "", "# of License", "", "Address", "", "City", "", "State", "", "Zip", "", "Client Programs", "" };
+            loc.GetLocationColumn.Should().Contain(tagsToCompareLoc).And.HaveCount(tagsToCompareLoc.Length);
+
+      
+           
+            loc.SearchFieldLocations = "KUDICK CHEVROLET BUICK";//search the location by name 
+            loc.Wait(6);
+            loc.SelectLocation("KUDICK CHEVROLET BUICK");//currently clicking location name
+            lds.Wait(3);
+           // ld.GetModals.Should().Contain(new[] { "Name", "Location Code", "# of License", "Address", "City", "State", "Zip", "Client Programs", "" });
+            /*  GeneralTags.LocationTagsEditButtonClick();
+              GeneralTags.Wait(2);
+
+
+              // lds.IsLocationSettingsFieldValue.Should().Contain(new[] { "Phone", "Client", "BAC", "Location Code(s)", "Reportable", "Status", "Updated", "Registered", "Registered By", "Sales District Code", "Zone Code", "Region Code", "Dealer Key", "Appointment Date", "Facing Warehouse Code", "Created" });
+              TagManagement.TagManagementTextField = "test";
+              //ld.LocationModal.TagManagementTextField = "test";
+
+              GeneralTags.AddTagManagementButton();*/
+            ld.SelectTab_LocationDetail("CONFIGURE");
+
+            
+            sales.SalesAppointmentEditButtonClick();
+           
+            // ld.SelectConfigureTab_LocationDetail();
+            //ld.SelectTab("GENERAL");
+
+
+            //sales.SalesAppointmentEditButtonClick();
+            SalesAppointmentManagementModal.AddGreetingAppointmentModalPlusButton();
+            //sales.ClickAddGreetingAppointmentButton();
+            // ld.LocationModal.SaleAppointmentCustomerName = "cus";
+            ld.Wait(2);
+            SalesAppointmentManagementModal.CustomerNameTextBox = "customer";
+            SalesAppointmentManagementModal.VehicleTextBox = "customer8989";
+            SalesAppointmentManagementModal.SalespersonTextBox = "customer11111";
+            SalesAppointmentManagementModal.CustomMessageTextBox = "customer3232";
+            ld.Wait(3);
+            SalesAppointmentManagementModal.SelectAppointmentDay();
+            ld.Wait(2);
+            // SalesAppointmentManagement.ClickAppointmentTime();
+            SalesAppointmentManagementModal.AppointmentTimeSelectBox = "5:00 am";
+            ld.Wait(2);
+           
+            sales.SaleAppointmentModal.ModalSubmitButtonClick("Add");
+            sales.Wait(3);
+
+            sales.SaleAppointmentModal.ModalSubmitButtonClick("Save");
+            sales.Wait(4);
+            ld.SelectTab_LocationDetail("GENERAL");
+            lds.Wait(2);
+
+            String[] tagsToCompareLDS = new[] { "Phone:", "Client:", "BAC:", "Location Code(s):", "Reportable:", "Status:", "Created:", "Updated:", "Registered:", "Registered By:", "Sales District Code:", "Zone Code:", "Region Code:", "Dealer Key:", "Appointment Date:", "Facing Warehouse Code:" };
+            lds.GetLocationDetailsSectionFields.Should().Contain(tagsToCompareLDS).And.HaveCount(tagsToCompareLDS.Length);
+
+            
+            lds.LocationDetailsEditButtonClick();
+            lds.Wait(2);            
+            lds.GeneralLocationDetailsSectionModal.IsModalDisplay.Should().BeTrue();
+            String[] tagsToCompare = new[] { "Name", "Address", "City", "State", "Zip", "Primary Phone Number", "Website", "Client", "BAC", "Location Code(s)", "Reportable", "Status", "Sales District Code", "Zone Code", "Region Code", "Dealer Key", "Appointment Date", "Facing Warehouse Code" };
+            lds.GetLocationSettingsFieldValue.Should().Contain(tagsToCompare).And.HaveCount(tagsToCompare.Length);
+
+
+            String[] tagsToCompareTimeStamp = new[] { "Created:", "Registered:", "Updated:", "Registered By:" };
+            lds.GetTimeStampFields.Should().Contain(tagsToCompareTimeStamp).And.HaveCount(tagsToCompareTimeStamp.Length);
+
+            lds.GeneralLocationDetailsSectionModal.ModalCancelButtonClick();
+            lds.Wait(2);
+
+            //GeneralTags.GetLocationTagsFields.Should().Contain(new[] { "Standard Tags", "Admin Tags Code", "System Tags", "" });
+            String[] tagsToCompareTags = new[] { "Standard Tags", "Admin Tags", "System Tags" };
+            GeneralTags.GetLocationTagsFields.Should().Contain(tagsToCompareTags).And.HaveCount(tagsToCompareTags.Length);
+
+            GeneralTags.LocationTagsEditButtonClick();
+            GeneralTags.Wait(2);
+
+
+            // lds.IsLocationSettingsFieldValue.Should().Contain(new[] { "Phone", "Client", "BAC", "Location Code(s)", "Reportable", "Status", "Updated", "Registered", "Registered By", "Sales District Code", "Zone Code", "Region Code", "Dealer Key", "Appointment Date", "Facing Warehouse Code", "Created" });
+            TagManagement.TagManagementTextField = "test";
+            //ld.LocationModal.TagManagementTextField = "test";
+            GeneralTags.TagManagementModal.ModalSubmitButtonClick("Add");
+            GeneralTags.TagManagementModal.ClickOffScreen();
+            GeneralTags.Wait(2);
+           // GeneralTags.tagManagementModal.ModalCancelButtonClick();
+           // GeneralTags.AddTagManagementButton();
+           ld.SelectTab_LocationDetail("CONFIGURE");
+            // sales.CreateSalesAppointmentsLink();
+
+
+            String[] tagsToCompareSMC = new[] { "Sales Appointments", "Menu Pricing", "Default Settings" };
+            smc.GetSMCSettingsField.Should().Contain(tagsToCompareSMC).And.HaveCount(tagsToCompareSMC.Length);
+
+            String[] tagsToCompareTicker = new[] { "", "", "JB Active Ticker Test", "", "", "JB Inactive Ticker Test", "", "", "JB Active Ticker Lonnnnnnnnnnng Teeeeeeeeest TessssssssT", "", "", "JB Active Ticker Looooonnnnnnnnnnnger TeeeeeeeeeesT Strrrrrrrrrrrrriiiiiiiiiing" };
+            tickers.GetTickersFields.Should().Contain(tagsToCompareTicker).And.HaveCount(tagsToCompareTicker.Length);
+
+            ConfigureGeneralSection.WelcomeMessageTextField = "Automation message";
+            ls.Wait(2);
+
+            ld.SelectTab_LocationDetail("GENERAL");
+
+            ls.Wait(3);
+
+            String[] tagsToCompareTickerLic = new[] { "", "", "License Key", "Client Program", "Zone", "Subscription", "Registration Date", "Expires", "Player Name", "" };
+            ls.GetLicensesAndSubscriptionsFields.Should().Contain(tagsToCompareTickerLic).And.HaveCount(tagsToCompareTickerLic.Length);
+
+
+
+
+            // lds.LocationDetailsEditButtonClick();           
+            // ld.SelectConfigureTab_LocationDetail();
+            // ld.SelectGeneralTab_LocationDetail();
+            loc.Wait(2);
+
+
+        }
+
+        [TestCase]
+        //[Category("All")]
+        [Description("Test")]
+        public void TODebug_Location2()
+        {
+           // System.Threading.Thread.Sleep(TimeSpan.FromSeconds(11));
+            Login();
+            ClientMenu cm = new ClientMenu(_driver.Value, _configuration);
+            cm.SelectClient("Subaru");
+            cm.Wait();
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            Locations loc = new Locations(_driver.Value, _configuration);
+            LocationDetail ld = new LocationDetail(_driver.Value, _configuration);
+            GeneralSDSPriceLists GeneralSDSPriceLists = new GeneralSDSPriceLists(_driver.Value,_configuration);
+            ConfigureSMCSettings smc = new ConfigureSMCSettings(_driver.Value, _configuration);
+            ConfigureSalesAppointments sales = new ConfigureSalesAppointments(_driver.Value, _configuration);
+            AccessoryPricingModal AccessoryPricingModal = new AccessoryPricingModal(_driver.Value);
+            TickerManagementModal TickerManagementModal = new TickerManagementModal(_driver.Value);
+            ConfigureTickersSection ConfigureTickersSection = new ConfigureTickersSection(_driver.Value,_configuration);
+            ConfigurePriceListsSection ConfigurePriceListsSection = new ConfigurePriceListsSection(_driver.Value,_configuration);
+            ConfigureSDSSettingsSection ConfigureSDSSettingsSection = new ConfigureSDSSettingsSection(_driver.Value, _configuration);
+            ConfigureServiceAppointments ConfigureServiceAppointments = new ConfigureServiceAppointments(_driver.Value,_configuration);
+            sb.SelectMenu("Locations");
+            sb.Wait(6);
+            loc.SearchFieldLocations = "Sommer's Subaru";//search the location by name 
+            loc.Wait(7);
+            loc.SelectLocation("Sommer's Subaru");//currently clicking location name
+            loc.Wait(2);
+            ld.SelectTab_LocationDetail("CONFIGURE");
+            loc.Wait(2);
+
+            String[] tagsToCompareTicker = new[] { "", "", "", "General", "Price Lists", "SDS Price Lists", "Tickers", "Service Appointments", "SMC Settings", "SDS Settings" };
+            ld.GetModals.Should().Contain(tagsToCompareTicker).And.HaveCount(tagsToCompareTicker.Length);
+
+
+
+            ConfigureServiceAppointments.ServiceAppointmentEditButtonClick();
+            ConfigureServiceAppointments.Wait(2);
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.AddGreetingAppointmentModalPlusButton();
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.CustomerNameTextBox = "name1";
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.MakeTextBox = "111e";
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.ModelTextBox = "rx";
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.AdvisorTextBox = "testPerson";
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.SelectAppointmentDay();
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.CustomMessageTextBox = "automation test";
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.AppointmentTimeSelectBox="5:00 am";
+            //ConfigureServiceAppointments.ServiceAppointmentManagementModal.YearSelectBox("1962");
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.YearSelectBox("1965");
+            ConfigureServiceAppointments.Wait(2);
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.ModalSubmitButtonClick("Add");
+            ConfigureServiceAppointments.Wait(4);
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.ModalSubmitButtonClick("Save");
+            ConfigureServiceAppointments.Wait(4);
+
+            String[] tagsToCompareSDS = new[] { "Financial Calculator", "Display Accessory MSRP Pricing", "Default Settings", "BCC Email:" };
+            ConfigureSDSSettingsSection.GetSDSSettingsTexts.Should().Contain(tagsToCompareSDS).And.HaveCount(tagsToCompareSDS.Length);
+
+            ConfigureSDSSettingsSection.BCCEmailTextField = null;
+            ConfigureSDSSettingsSection.BCCEmailTextField = "brodsko@dciartform.com";
+            ConfigureSDSSettingsSection.Wait(3);
+
+            ConfigurePriceListsSection.SelectPriceListsOption ( "Edit Default SMC Service Price List");
+            ConfigurePriceListsSection.Wait(2);
+            ConfigurePriceListsSection.PriceListModal.AddCustomPricePlusButton();
+            ConfigurePriceListsSection.PriceListModal.CustomPriceDescriptionText("automation test");
+            ConfigurePriceListsSection.PriceListModal.CustomPriceInputText("500.00");
+            ConfigurePriceListsSection.PriceListModal.ModalSubmitButtonClick("Save");
+            ConfigurePriceListsSection.Wait(4);
+            ConfigureTickersSection.TickersEditButtonClick();
+            ConfigureTickersSection.Wait(2);
+            ConfigureTickersSection.TickerManagementModal.AddTickerItemModalPlusButton();
+            ConfigureTickersSection.Wait(2);
+            ConfigureTickersSection.TickerManagementModal.TickerFeedText("ticker automation");
+            //ConfigureTickersSection.tickerManagementModal.TickersTextField = "test";
+            ConfigureTickersSection.TickerManagementModal.ClickSaveTickerManagementButton();
+            ConfigureTickersSection.Wait(3);
+
+            GeneralSDSPriceLists.SelectPriceOption("Edit SDS Price Options");
+            loc.Wait(2);
+            GeneralSDSPriceLists.GeneralSDSPriceListsModal.AccessoryPricingCheckboxValue = "factory";
+            GeneralSDSPriceLists.GeneralSDSPriceListsModal.SelectCheckbox = true;
+            // GeneralSDSPriceLists.GeneralSDSPriceListsModal.AccessoryPricing = "kit";
+            // GeneralSDSPriceLists.GeneralSDSPriceListsModal.FactoryCheckbox = true;
+            GeneralSDSPriceLists.GeneralSDSPriceListsModal.ModalSubmitButtonClick("Save");
+            GeneralSDSPriceLists.Wait(2);
+            //GeneralSDSPriceLists.GeneralSDSPriceListsModal.ClickSaveCancelSaleAppointmentButton("Save");
+            //AccessoryPricingModal.IsModalDisplay.Should().BeTrue();
+            //smc.IsSMCSettingsField.Should().Contain(new[] { "Default Settings", "Custom Ads", "Dare to Compare (Competitive Pricing)", "Service Menu" });
+
+
+        }
+
+        //public void RefreshPage()
+        //{
+        //    _driver.Value.Navigate().Refresh();
+        //}
 
         [TearDown]
         public void CleanUp()
@@ -3127,4 +3357,5 @@ namespace QA.Automation.UITests
 
         #endregion
     }
+
 }
