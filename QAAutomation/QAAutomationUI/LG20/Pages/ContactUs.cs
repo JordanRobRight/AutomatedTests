@@ -33,7 +33,7 @@ namespace QA.Automation.UITests.LG20.Pages
         #endregion
 
         #region --- Constructor ---
-        internal ContactUs(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        internal ContactUs(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
             PageContainerName = "contact-us-container"; // This is property is in the base class which is the string to the id attribute for the content container. 
         }

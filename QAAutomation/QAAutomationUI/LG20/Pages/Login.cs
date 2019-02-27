@@ -52,7 +52,7 @@ namespace QA.Automation.UITests.LG20.Pages
         #endregion
 
         #region -- Constructors --
-        public Login(IWebDriver driver , TestConfiguration config) : base(driver, config)
+        public Login(IWebDriver driver , TestSystemConfiguration config) : base(driver, config)
         {
             PageContainerName = _loginContainer;
             PageFunctionBarContainerClassName = _loginContentArea;

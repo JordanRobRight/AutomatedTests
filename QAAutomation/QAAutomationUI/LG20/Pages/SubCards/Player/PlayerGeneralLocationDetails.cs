@@ -16,7 +16,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards.Player
         private static readonly string _editButtonTags = @"//span[contains(text(),'player information')]/ancestor::h4/preceding-sibling::div//div//i";
         #endregion
         #region --- Constructor ---
-        public PlayerGeneralLocationDetails(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        public PlayerGeneralLocationDetails(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
 
             PageContainerName = _playerContainer; //Element Div By: Id

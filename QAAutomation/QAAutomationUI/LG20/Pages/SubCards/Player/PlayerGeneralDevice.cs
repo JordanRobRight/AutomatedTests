@@ -24,7 +24,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards.Player
         
         #endregion
         #region --- Constructor ---
-        public PlayerGeneralDevice(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        public PlayerGeneralDevice(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
 
             PageContainerName = _playerContainer; //Element Div By: Id

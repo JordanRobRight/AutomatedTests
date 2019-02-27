@@ -11,7 +11,7 @@ namespace QA.Automation.UITests.LG20.Pages
     public class SideBar : LGBasePage
     {
 
-        public SideBar(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        public SideBar(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
 
         }

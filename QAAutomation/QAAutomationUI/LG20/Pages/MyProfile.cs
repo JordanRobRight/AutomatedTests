@@ -32,7 +32,7 @@ namespace QA.Automation.UITests.LG20.Pages
         #endregion
 
         #region --- Constructor ---
-        internal MyProfile(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        internal MyProfile(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
             PageContainerName = "profile-container"; // This is property is in the base class which is the string to the id attribute for the content container. 
         }

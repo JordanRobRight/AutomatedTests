@@ -28,7 +28,7 @@ namespace QA.Automation.UITests.LG20.Pages
 
         #region -- Constructors -- 
 
-        public Assets(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        public Assets(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
         }
 

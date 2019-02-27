@@ -44,7 +44,7 @@ namespace QA.Automation.UITests.LG20.Pages
         #region -- Constructors --
        
 
-        public Logout(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        public Logout(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
 
         }

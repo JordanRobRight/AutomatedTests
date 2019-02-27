@@ -1,17 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Reflection;
 using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 using QA.Automation.Common;
 using QA.Automation.UITests.LG20.Pages;
@@ -32,42 +25,38 @@ namespace QA.Automation.UITests
     [Parallelizable(ParallelScope.Children)]
     public class UnitTest1 
     {
-        //private IWebDriver _driver;
         private ThreadLocal<IWebDriver> _driver = new ThreadLocal<IWebDriver>();
 
-        private String browser;
-        private String version;
-        private String os;
-        private String deviceName;
-        private String deviceOrientation;
-        private readonly TestConfiguration _configuration = null;
-        private readonly EnvironmentData _envData;
-        //private readonly EmailUsData _emailData;
+        private readonly string _browser;
+        private readonly string _version;
+        private readonly string _os;
+        private readonly string _deviceName;
+        private readonly string _deviceOrientation;
+        private readonly TestSystemConfiguration _configuration = null;
+        private readonly TestDataConfiguration _testDataConfiguration;
 
         //private const string un = @"DCIArtform";
-
         //private const string ak = @"a4277bd1-3492-4562-99bc-53dd349c52e1";
 
-        public UnitTest1(String browser, String version, String os, String deviceName, String deviceOrientation)
+        public UnitTest1(string browser, string version, string os, string deviceName, string deviceOrientation)
         {
-            this.browser = browser;
-            this.version = version;
-            this.os = os;
-            this.deviceName = deviceName;
-            this.deviceOrientation = deviceOrientation;
-            //_configuration = TestConfiguration.GetTestConfiguration();
-            _configuration = ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>();
-            // _emailData = ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>();
+            this._browser = browser;
+            this._version = version;
+            this._os = os;
+            this._deviceName = deviceName;
+            this._deviceOrientation = deviceOrientation;
+            _configuration = ConfigurationSettings.GetSettingsConfiguration<TestSystemConfiguration>();
 
-            var testDataFromFile = ConfigurationSettings.GetSettingsConfiguration<TestData>("TestData.json");
-            //_emailData = testDataFromFile.EmailDetails.FirstOrDefault(b => b.FullName.Equals(_configuration.Environment.ToString(), StringComparison.OrdinalIgnoreCase));
-            _envData = testDataFromFile.Environment.FirstOrDefault(a => a.Name.Equals(_configuration.Environment.ToString(), StringComparison.OrdinalIgnoreCase));
+            //var testDataFromFile = ConfigurationSettings.GetSettingsConfiguration<TestData>("TestData.json");
+
+            _testDataConfiguration = new TestDataConfiguration(_configuration.TestDataFolder, _configuration.Environment);
         }
+
 
         [SetUp]
         public void Init()
         {
-            _driver.Value = new ChromeBrowser(browser, version, os, deviceName, deviceOrientation, _configuration)
+            _driver.Value = new ChromeBrowser(_browser, _version, _os, _deviceName, _deviceOrientation, _configuration)
                                 .CreateBrowser(TestContext.CurrentContext.Test.Name, TestContext.CurrentContext.Test.ClassName, TestContext.CurrentContext.Test.MethodName);
         }
 
@@ -118,7 +107,7 @@ namespace QA.Automation.UITests
         public void Logout()
         {
             // Login();
-            Logout logout = new Logout(_driver.Value, ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>());
+            Logout logout = new Logout(_driver.Value, ConfigurationSettings.GetSettingsConfiguration<TestSystemConfiguration>());
 
             //SelectItemFromCilentMenu(_driver.Value, "logout");
 
@@ -348,7 +337,8 @@ namespace QA.Automation.UITests
             //string apiPlayList = APITests.LG20.SmokeTest.GetPlayListByName("newPlaylist", "username", "password", _configuration.Environment);
         }
 
-        [TestCase]// test Case #46
+
+        [TestCase]// test Case #583
         [Category("All")]
         [Category("SmokeTests")]
         [Description("Test Case #583")]
@@ -1846,6 +1836,7 @@ namespace QA.Automation.UITests
         [Description("Test Case #1457")]
         public void ContactUsWithrequiredFields_POM()
         {
+            EnvironmentTestData td = _testDataConfiguration.GetDataFromFile("TestContactUs.json");
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(11));
             //Step 1
             Login();
@@ -1861,48 +1852,49 @@ namespace QA.Automation.UITests
             cus.Wait(2);
             cus.IsFullNameFieldError.Should().BeTrue();
 
-            cus.ContactFullNameTextField = "LG-AUTOTEST";
+            
+            cus.ContactFullNameTextField = td.TestAnswers["FullName"];
             cus.ClickSendButton();
 
 
-            cus.ContactPhoneTextField = "Auto Test"; // non numeric data in phone number field  
+            cus.ContactPhoneTextField = td.TestAnswers["InvalidPhoneNumber1"]; // non numeric data in phone number field  
             cus.ClickSendButton();
 
             cus.ContactPhoneTextField = null;
-            cus.ContactPhoneTextField = "1234567T"; // invalid data in phone number field
+            cus.ContactPhoneTextField = td.TestAnswers["InvalidPhoneNumber2"]; // invalid data in phone number field
             cus.ContactPhoneTextField = null;
-            cus.ContactPhoneTextField = "1234567890"; //valid data
+            cus.ContactPhoneTextField = td.TestAnswers["PhoneNumber"]; //valid data
             cus.ClickSendButton();
 
-            cus.ContactEmailTextField = "test"; // invalid email data
-            cus.ClickSendButton();
-            cus.IsEmailFieldError.Should().BeTrue();
-            cus.ContactEmailTextField = null;
-
-            cus.ContactEmailTextField = "test@"; // invalid email data
+            cus.ContactEmailTextField = td.TestAnswers["InvalidEmail1"]; // invalid email data
             cus.ClickSendButton();
             cus.IsEmailFieldError.Should().BeTrue();
             cus.ContactEmailTextField = null;
 
-            cus.ContactEmailTextField = "test@qa"; // invalid email data
+            cus.ContactEmailTextField = td.TestAnswers["InvalidEmail2"]; // invalid email data
             cus.ClickSendButton();
             cus.IsEmailFieldError.Should().BeTrue();
             cus.ContactEmailTextField = null;
 
-            cus.ContactEmailTextField = "test@qa."; // invalid email data
+            cus.ContactEmailTextField = td.TestAnswers["InvalidEmail3"]; // invalid email data
             cus.ClickSendButton();
             cus.IsEmailFieldError.Should().BeTrue();
             cus.ContactEmailTextField = null;
 
-            cus.ContactEmailTextField = "test@qa.c"; // invalid email data
+            cus.ContactEmailTextField = td.TestAnswers["InvalidEmail4"]; // invalid email data
             cus.ClickSendButton();
             cus.IsEmailFieldError.Should().BeTrue();
             cus.ContactEmailTextField = null;
 
-            cus.ContactEmailTextField = "test@qa.co"; // valid email data
+            cus.ContactEmailTextField = td.TestAnswers["InvalidEmail5"]; // invalid email data
+            cus.ClickSendButton();
+            cus.IsEmailFieldError.Should().BeTrue();
+            cus.ContactEmailTextField = null;
+
+            cus.ContactEmailTextField = td.TestAnswers["Email"]; // valid email data
             cus.ClickSendButton();
 
-            cus.ContactCommentsTextField = "Automated Tester";
+            cus.ContactCommentsTextField = td.TestAnswers["Comments"];
             cus.ClickSendButton();
             cus.Wait();
 
@@ -2025,6 +2017,7 @@ namespace QA.Automation.UITests
         public void ContactUsWithAllFields_POM()
         {
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
+            EnvironmentTestData td = _testDataConfiguration.GetDataFromFile("TestContactUs.json");
             //Step 1
             Login();
 
@@ -2034,18 +2027,18 @@ namespace QA.Automation.UITests
             sb.SelectMenu("Contact Us");
             ContactUs cus = new ContactUs(_driver.Value, _configuration);
             cus.Wait();
-
-            cus.ContactFullNameTextField = "LG-AUTOTEST";
+            cus.ContactFullNameTextField = td.TestAnswers["FullName"];
+            //cus.ContactFullNameTextField = "LG-AUTOTEST";
             cus.ContactFullNameTextField.Should().Be("LG-AUTOTEST", "It should be: LG-AUTOTEST");
-            cus.ContactTitleTextField = "Automated Tester";
+            cus.ContactTitleTextField = td.TestAnswers["Title"];
             cus.ContactTitleTextField.Should().Be("Automated Tester", "It should be: Automated Tester");
-            cus.ContactCompanyTextField = "TestCompany";
+            cus.ContactCompanyTextField = td.TestAnswers["Company"];
             cus.ContactCompanyTextField.Should().Be("TestCompany", "It should be: TestCompany");
-            cus.ContactPhoneTextField = "1234567890";
+            cus.ContactPhoneTextField = td.TestAnswers["PhoneNumber"];
             cus.ContactPhoneTextField.Should().Be("1234567890", "It should be: 1234567890");
-            cus.ContactEmailTextField = "autotest@test.com";
+            cus.ContactEmailTextField = td.TestAnswers["Email"];
             cus.ContactEmailTextField.Should().Be("autotest@test.com", "It should be: autotest@test.com");
-            cus.ContactCommentsTextField = "Automated Tester";
+            cus.ContactCommentsTextField = td.TestAnswers["Comments"];
             cus.ContactCommentsTextField.Should().Be("Automated Tester", "It should be: Automated Tester");
 
             cus.Wait(2);
@@ -2069,6 +2062,8 @@ namespace QA.Automation.UITests
         [Description("Test Case #1460")]
         public void PlayersStatus()
         {
+            EnvironmentTestData td = _testDataConfiguration.GetDataFromFile("Test1460.json");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(9));
             //Step 1
             Login();
 
@@ -2088,7 +2083,7 @@ namespace QA.Automation.UITests
             player.VerifyOfflineStatusPlayersPage.Should().BeTrue("No players were found to be offline");
 
             //Step 4 select a player
-            var playerName = _envData.Player;
+            var playerName = td.TestAnswers["Player"]; // _envData.Player;
             player.SelectPlayer("LG-TEST1");
             player.Wait(2);
 
@@ -2127,6 +2122,7 @@ namespace QA.Automation.UITests
         [Description("Test case #1463")]
         public void PlayerEdits()
         {
+            EnvironmentTestData td = _testDataConfiguration.GetDataFromFile("TestData.json");
             //Step 1
             Login();
 
@@ -2139,7 +2135,7 @@ namespace QA.Automation.UITests
 
             //Step 3 
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
-            var playerName = _envData.Player; // "LG-QAROB";
+            var playerName = td.TestAnswers["Player"];
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
@@ -2257,6 +2253,7 @@ namespace QA.Automation.UITests
         [Category("All")]
         public void PlayerEditDevice()
         {
+            EnvironmentTestData td = _testDataConfiguration.GetDataFromFile("TestData.json");
             //Step 1
             Login();
 
@@ -2276,7 +2273,7 @@ namespace QA.Automation.UITests
             //IWebElement playerSelect = trs.FirstOrDefault(a => a).FindElements(By.TagName("td"))
             //    .FirstOrDefault(b => b.Text.Equals(playerName, StringComparison.OrdinalIgnoreCase));
 
-            var playerName = _envData.Player; // @"LG-QAROB";
+            var playerName = td.TestAnswers["Player"];
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
@@ -2349,6 +2346,7 @@ namespace QA.Automation.UITests
         [Description("Test case #1469")]
         public void PlayerAddNewChannel()
         {
+            EnvironmentTestData td = _testDataConfiguration.GetDataFromFile("TestData.json");
             //TODO: No asserts and no adding of channel and checking for it ??
             //step 1
             Login();
@@ -2361,7 +2359,7 @@ namespace QA.Automation.UITests
             //Step 3 Select Any player
             //IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1 > span"));
 
-            var playerName = _envData.Player; // @"LG-QAROB";
+            var playerName = td.TestAnswers["Player"];
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
@@ -2417,6 +2415,7 @@ namespace QA.Automation.UITests
         [Description("Test case 1487")]
         public void PlayerDeleteChannel()
         {
+            EnvironmentTestData td = _testDataConfiguration.GetDataFromFile("TestData.json");
             //step 1
             Login();
             
@@ -2428,7 +2427,7 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //Step 3 Select Any player
             // IWebElement playerSelect = _driver.Value.FindElement(By.CssSelector("#player-player_BgY5XvhVfYEv > td.sorting_1"));
-            var playerName = _envData.Player; //@"LG-QAROB";
+            var playerName = td.TestAnswers["Player"];
 
             //IWebElement playerSelect = GetPlayer(_driver.Value, "LG-QAROB");
 
@@ -2474,7 +2473,7 @@ namespace QA.Automation.UITests
         [Description("Test case 1488")]
         public void PlayerScreenConnect()
         {
-            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(11));
+            EnvironmentTestData td = _testDataConfiguration.GetDataFromFile("TestData.json");
             //Step 1
             Login();
 
@@ -2493,7 +2492,7 @@ namespace QA.Automation.UITests
             player.GetCurrentTab().Should().ContainAny("dcimliveguide.com");
             //Step 3 Hover over the screen connect icon
             //step 4
-            var playName = _envData.Player; //@"LG-QAROB";
+            var playName = td.TestAnswers["Player"]; //_envData.Player; //@"LG-QAROB";
             player.SelectPlayer(playName);
             player.Wait(2);
             playerDetail.PlayerDetailSelectScreenConnect();
@@ -2770,6 +2769,8 @@ namespace QA.Automation.UITests
         public void PlaylistMyProfile()
         {
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(8));
+
+            EnvironmentTestData ta = _testDataConfiguration.GetDataFromFiles("TestMyProfile.json", "Test1991.json");
             //step 1 sign in
             Login();
 
@@ -2787,207 +2788,113 @@ namespace QA.Automation.UITests
             cm.SelectClient("My Profile");
 
             //step 3 Spell check all values from dropdown box
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            cm.Wait();
             //step 4 Select My Profile myProfileButtonCssSelector
-            // IWebElement myProfileButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileButtonCssSelector));
-            // myProfileButton.Click();
             //step 5 Spell check all content (fields/values, buttons), (including placeholder text : to do)
-            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
             MyProfile mp = new MyProfile(_driver.Value, _configuration);
-
-
-
-            foreach (string MyProfilefields in mp.GetMyProfileFields)
-            {
-                MyProfilefields.Should().ContainAny("First Name", "Last Name", "Title", "Email Address", "Direct Phone Number", "Mobile Number", "Street Address", "City", "State", "Zip");
-            }
+            List<string> tagsToCompare1 = _testDataConfiguration.ConvertStringToList(ta.TestAnswers["tagsToCompare"]) ;
+           // mp.GetMyProfileFields.Should().Contain(tagsToCompare1);
+            mp.GetMyProfileFields.Should().Contain(tagsToCompare1).And.HaveCount(tagsToCompare1.Count);
 
             mp.IsEmailFieldExists.Should().BeTrue("Email field does not exists");//verify email field
 
-            // mp.VerifyMyProfileFields();
             //step 6 Select Save button
             mp.ClickSaveButton();
 
-            // IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileSaveButtonCssSelector));
-            // saveButton.Click();
             //step 7 Enter any First Name (there are not edit checks in place) and select Save\
+          
             mp.ProfileFirstNameTextField = null;
-            mp.ProfileFirstNameTextField = "Automation";
+            mp.ProfileFirstNameTextField = ta.TestAnswers["FirstName"];
             mp.ClickSaveButton();
-
+            
             mp.ProfileLastNameTextField = null;
-            mp.ProfileLastNameTextField = "Tester";
+            mp.ProfileLastNameTextField = ta.TestAnswers["LastName"];          
             mp.ClickSaveButton();
+            
             mp.ProfileTitleTextField = null;
-            mp.ProfileTitleTextField = "AutomationEngineer";
-            mp.ClickSaveButton();
-
-            // mp.ClearDirectPhoneTextbox();
+            mp.ProfileTitleTextField = ta.TestAnswers["Title"]; 
+            mp.ClickSaveButton();     
+           
             mp.ProfileDirectPhoneTextField = null;//just to clear previous data to perform following validations
-            mp.ProfileDirectPhoneTextField = "1234";//invalid direct phone number
+            mp.ProfileDirectPhoneTextField = ta.TestAnswers["InvalidDirectPhoneNumber1"]; //invalid direct phone number
             mp.ClickSaveButton();
             DetermineErrorInput(mp.IsErrorInput, "Direct Phone Number");
             //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Direct Phone Number");
-
-            mp.ProfileDirectPhoneTextField = null;
-            // mp.ClearDirectPhoneTextbox();
-            mp.ProfileDirectPhoneTextField = "test1234";//invalid direct phone number
+                        
+            mp.ProfileDirectPhoneTextField = null;       
+            mp.ProfileDirectPhoneTextField = ta.TestAnswers["InvalidDirectPhoneNumber2"]; //invalid direct phone number
             mp.ClickSaveButton();
+
             // verify the key and value returned
             DetermineErrorInput(mp.IsErrorInput, "Direct Phone Number");
             //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Direct Phone Number");
-
+                       
             // mp.IsErrorInput.Should().BeTrue("Error not found");
             mp.ProfileDirectPhoneTextField = null;
             //mp.ClearDirectPhoneTextbox();
-            mp.ProfileDirectPhoneTextField = "1234567890";//valid direct phone number
+            mp.ProfileDirectPhoneTextField = ta.TestAnswers["ValidDirectPhoneNumber"]; //valid direct phone number
             mp.ClickSaveButton();
-
-            // mp.ClearMobileNumberTextbox();
+          
             mp.ProfileMobileNumberTextField = null;
-            mp.ProfileMobileNumberTextField = "1234";//invalid mobile number
+            mp.ProfileMobileNumberTextField = ta.TestAnswers["InvalidMobileNumber1"];//invalid mobile number
             //  mp.ProfileDirectPhoneTextField = "error";
             mp.ClickSaveButton();
             // verify the key and value returned
             DetermineErrorInput(mp.IsErrorInput, "Mobile Number");
             // DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Mobile Number");
-
+           
             // mp.IsErrorInput.Should().BeTrue("Error not found");
             mp.ProfileMobileNumberTextField = null;
-            //mp.ClearMobileNumberTextbox();
+            
 
-            mp.ProfileMobileNumberTextField = "test1234";//invalid mobile number
+            mp.ProfileMobileNumberTextField = ta.TestAnswers["InvalidMobileNumber2"]; //invalid mobile number
             mp.ClickSaveButton();
             // verify the key and value returned
             DetermineErrorInput(mp.IsErrorInput, "Mobile Number");
             //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Mobile Number");
             //  mp.IsErrorInput.Should().BeTrue("Error not found");
-            mp.ProfileMobileNumberTextField = null;
-            // mp.ClearMobileNumberTextbox();
-
-            mp.ProfileMobileNumberTextField = "1234567890";// valid mobile number
-            mp.ClickSaveButton();
-            //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Mobile Number");
+                       
+            mp.ProfileMobileNumberTextField = null;         
+            mp.ProfileMobileNumberTextField = ta.TestAnswers["ValidMobileNumber"]; // valid mobile number
+            mp.ClickSaveButton();            
+                      
             mp.ProfileStreetAddressTextField = null;
-            mp.ProfileStreetAddressTextField = "testStreet";
+            mp.ProfileStreetAddressTextField = ta.TestAnswers["StreetAddress"]; 
             mp.ClickSaveButton();
 
             mp.ProfileCityTextField = null;
-            mp.ProfileCityTextField = "testCity";
+            mp.ProfileCityTextField = ta.TestAnswers["City"]; 
             mp.ClickSaveButton();
-
+          
             mp.ProfileStateTextField = null;
-            mp.ProfileStateTextField = "TX";
+            mp.ProfileStateTextField = ta.TestAnswers["State"]; 
             mp.ClickSaveButton();
-
-
+           
             mp.ProfileZipTextField = null;
-            mp.ProfileZipTextField = "1234";//invalid zip code data
+            mp.ProfileZipTextField = ta.TestAnswers["InvalidZip1"]; //invalid zip code data
             mp.ClickSaveButton();
             // verify the key and value returned
             DetermineErrorInput(mp.IsErrorInput, "Zip");
             //  DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Zip");
 
             //  mp.IsErrorInput.Should().BeTrue("Error not found");
+            
             mp.ProfileZipTextField = null;
-
-
-            mp.ProfileZipTextField = "12test";//invalid zip code data
+            mp.ProfileZipTextField = ta.TestAnswers["InvalidZip2"]; //invalid zip code data
             mp.ClickSaveButton();
+
             // verify the key and value returned
             DetermineErrorInput(mp.IsErrorInput, "Zip");
             // DetermineErrorInput(mp.IsErrorInput.Select(a => a.Key).ToList(), "Zip");
             // mp.IsErrorInput.Should().BeTrue("Error not found");
+
             mp.ProfileZipTextField = null;
-
-
-            mp.ProfileZipTextField = "12345";//valid data
+            mp.ProfileZipTextField = ta.TestAnswers["ValidZip"]; //valid data
             mp.ClickSaveButton();
 
             mp.IsSaveEnabledAfterSaved.Should().BeTrue("Save button still not enabled");//if save button is enabled then save is success, currently there is no success message displayed by application 
 
-            #region --- old code ---
-            /*IWebElement playerChannelDropdown1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
-            playerChannelDropdown1.Click();
-            IWebElement myProfileButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileButtonCssSelector));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            myProfileButton1.Click();
-
-            IWebElement myProfileFirstName = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileFirstNameInput));
-            myProfileFirstName.SendKeys("Automated");
-            //step 8 Enter any Last Name (there are not edit checks in place) and select Save
-            IWebElement myProfileLastName = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileLastNameInput));
-            myProfileLastName.SendKeys("Tester");
-            //step 9 Enter any Title (there are not edit checks in place) and select Save 
-            IWebElement myProfileTitle = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileTitleInput));
-            myProfileTitle.SendKeys("Engineer");
-            IWebElement saveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileSaveButtonCssSelector));
-            saveButton.Click();*/
-            //step 10 Enter an invalid Email Address and select Save 
-            /*****Email is a locked imput for cbam right now 10/4/2018******/
-            //IWebElement playerChannelDropdown2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
-            //playerChannelDropdown2.Click();
-            //IWebElement myProfileButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileButtonCssSelector));
-            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //myProfileButton1.Click();
-            //IWebElement emailInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileEmailInput));
-            //emailInput.SendKeys("test");
-            //step 11 Repeat test step 10 with various invalid Email combinations
-            //emailInput.Clear();
-            //emailInput.SendKeys("test.com");
-            //step 12 Enter a valid Email Address and select Save
-            //step 13 Enter an invalid (letters, special characters-except for dash & parenthesis or less than 10 numbers) Direct Phone Number 
-            /*  IWebElement directPhoneNumberInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfilePhoneInput));
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10)); 
-              directPhoneNumberInput.SendKeys("test1234" + Keys.Enter);
-              //step 14 Repeat test step 13 with various invalid Direct Phone Number combinations
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-              directPhoneNumberInput.Clear();
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-              directPhoneNumberInput.SendKeys("1234" + Keys.Enter);
-              //step 15 Enter a valid Direct Phone Number and select Save
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-              directPhoneNumberInput.Clear();
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-              directPhoneNumberInput.SendKeys("4141231234" + Keys.Enter);
-              //step 16 Enter an invalid (letters, special characters-except for dash & parenthesis or less than 10 numbers) Mobile Number
-              IWebElement mobileNumberInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileMobileInput));
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-              mobileNumberInput.SendKeys("abc123" + Keys.Enter);
-              //step 17 Repeat test step 16 with various invalid Mobile Number combinations 
-              mobileNumberInput.Clear();
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-              mobileNumberInput.SendKeys("123" + Keys.Enter);
-              //step 18 Enter a valid Mobile Number and select Save
-              mobileNumberInput.Clear();
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-              mobileNumberInput.SendKeys("1234567890" + Keys.Enter);
-              //step 19 Enter any Street Address (there are not edit checks in place) and select Save   
-              IWebElement addressInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileAddressInput));
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-              addressInput.SendKeys("2727 Good Faith Rd" + Keys.Enter);
-              //step 20 Enter any City name (there are not edit checks in place) and select Save
-              IWebElement cityInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileCityInput));
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-              cityInput.SendKeys("Milwuakee" + Keys.Enter);
-              //step 21 Enter any State (there are not edit checks in place) and select Save
-              IWebElement stateInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileStateInput));
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-              stateInput.SendKeys("WI" + Keys.Enter);
-              //step 22 Enter an invalid Zip Code (letters, special characters or less or more than 5 numbers) and select Save
-              IWebElement zipCodeInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.myProfileZipInput));
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-              zipCodeInput.SendKeys("12345" + Keys.Enter);
-              //step 23 Repeat test step 22 with various invalid Zip Code combinations 
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-              zipCodeInput.Clear();
-              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-              zipCodeInput.SendKeys("53209" + Keys.Enter); */
-            #endregion
-            
-            //step 24 logout
             LogOutWithoutLogin();
 
 
@@ -3000,6 +2907,7 @@ namespace QA.Automation.UITests
         public void ToDebugPlayers()
         {
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(13));
+            EnvironmentTestData td = _testDataConfiguration.GetDataFromFile("TestData.json");
             Login();
 
             SideBar sb = new SideBar(_driver.Value, _configuration);
@@ -3010,7 +2918,7 @@ namespace QA.Automation.UITests
             PlayerPlaylistWhatsPlaying pwp = new PlayerPlaylistWhatsPlaying(_driver.Value, _configuration);
             PlayerPlaylistInfo ppl = new PlayerPlaylistInfo(_driver.Value, _configuration);
             PlayerConfigureChannel pc = new PlayerConfigureChannel(_driver.Value, _configuration);
-            var playerName = _envData.Player;
+            var playerName = td.TestAnswers["Player"]; //  _envData.Player;
             player.Wait(1);
             player.SelectPlayer(playerName);
             player.Wait(2);

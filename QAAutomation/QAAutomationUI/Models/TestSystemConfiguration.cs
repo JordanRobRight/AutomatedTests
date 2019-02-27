@@ -1,11 +1,9 @@
-﻿using System.IO;
-using System.Reflection;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace QA.Automation.UITests.Models
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class TestConfiguration
+    public class TestSystemConfiguration
     {
         [JsonProperty]
         //public string Environment { get; set; }
@@ -33,16 +31,9 @@ namespace QA.Automation.UITests.Models
         [JsonProperty]
         public int MaxDuration { get; set; }
 
-
-        //public static TestConfiguration GetTestConfiguration()
-        //{
-        //    JsonSerializer serializer = new JsonSerializer();
-        //    FileInfo fi = new FileInfo(Path.Combine(Assembly.GetExecutingAssembly().Location));
-
-        //    string data = File.ReadAllText(Path.Combine(fi.DirectoryName, "Settings.json"));
-        //    TestConfiguration deserializedProduct = JsonConvert.DeserializeObject<TestConfiguration>(data);
-        //    return deserializedProduct;
-        //}
+        [JsonProperty]
+        public string TestDataFolder { get; set; }
+       
     }
 }
 

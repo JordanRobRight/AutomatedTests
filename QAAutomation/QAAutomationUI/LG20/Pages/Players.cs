@@ -30,7 +30,7 @@ namespace QA.Automation.UITests.LG20.Pages
         #endregion
 
         #region --- Constructor ---
-        internal Players(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        internal Players(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
              
         }

@@ -13,10 +13,10 @@ namespace QA.Automation.UITests
     {
         private IWebDriver _driver;
         private DesiredCapabilities caps = new DesiredCapabilities();
-        private readonly TestConfiguration _configuration = new TestConfiguration();
+        private readonly TestSystemConfiguration _configuration = new TestSystemConfiguration();
 
         internal ChromeBrowser(string browser, string version, string os, string deviceName, string deviceOrientation,
-            TestConfiguration configuration)
+            TestSystemConfiguration configuration)
         {
             this._configuration = configuration;
             caps.SetCapability(CapabilityType.BrowserName, browser);

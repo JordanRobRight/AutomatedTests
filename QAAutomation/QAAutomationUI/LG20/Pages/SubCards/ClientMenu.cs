@@ -13,7 +13,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 {
     public class ClientMenu : LGBasePage
     {
-        public ClientMenu(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        public ClientMenu(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
             // Remove this property and use the base class driver property.
             // Replace all other instances of driver in this class.

@@ -51,9 +51,10 @@
     <None Update="Settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestData.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /y /s &quot;$(ProjectDir)TestData&quot; &quot;$(ProjectDir)$(OutDir)TestData\&quot;" />
+  </Target>
 
 </Project>

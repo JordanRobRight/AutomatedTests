@@ -26,7 +26,7 @@ namespace QA.Automation.UITests.LG20.Pages
         #endregion
 
         #region -- Constructors --
-        public PlayList(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        public PlayList(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
         }
 

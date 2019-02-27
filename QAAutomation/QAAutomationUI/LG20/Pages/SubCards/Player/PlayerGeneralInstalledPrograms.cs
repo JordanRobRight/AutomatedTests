@@ -20,7 +20,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards.Player
 
         #endregion
         #region --- Constructor ---
-        public PlayerGeneralInstalledPrograms(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        public PlayerGeneralInstalledPrograms(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
             PageContainerName = _playerContainer; //Element Div By: Id
             PageFunctionBarContainerClassName = _lgfeContainer;

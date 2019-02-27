@@ -10,13 +10,14 @@ namespace QA.Automation.UITests.LG20
     public abstract class LGBasePage : IDisposable
     {
         #region --- Fields ---
-        private readonly TestConfiguration _config = null;
+        private readonly TestSystemConfiguration _config = null;
         private IWebDriver _driver;
         #endregion 
 
         #region --- Constructors ---
 
-        protected LGBasePage(IWebDriver driver, TestConfiguration config)
+        #region --- Constructores ---
+        protected LGBasePage(IWebDriver driver, TestSystemConfiguration config)
         {
             _config = config;
             _driver = driver;
@@ -138,7 +139,8 @@ namespace QA.Automation.UITests.LG20
             }
         }
 
-        public TestConfiguration Config => _config;
+
+        public TestSystemConfiguration Config => _config;
 
         public IWebDriver Driver => _driver;
 

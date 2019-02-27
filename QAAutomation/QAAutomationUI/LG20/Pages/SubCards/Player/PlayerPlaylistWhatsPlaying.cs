@@ -19,7 +19,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards.Player
         #endregion
 
         #region --- Constructor ---
-        public PlayerPlaylistWhatsPlaying(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        public PlayerPlaylistWhatsPlaying(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
 
             PageContainerName = _playerContainer; //Element Div By: Id

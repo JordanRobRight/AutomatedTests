@@ -16,7 +16,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards.Player
         private static readonly string _channelLabelXpath = @"//div[@class='lgfe-tile-grid-item-group']//span[contains(text(),'channels')]/ancestor::h4/following-sibling::div//div[@class='lgfe-tile-grid-item-label']";
         #endregion
         #region --- Constructor ---
-        public PlayerConfigureChannel(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        public PlayerConfigureChannel(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
 
             PageContainerName = _playerContainer; //Element Div By: Id
