@@ -101,23 +101,26 @@ namespace QA.Automation.UITests
             login.GetCurrentUrl.Should().NotContain(".dcimliveguide.com/login");
         }
 
-        [TestCase]//Test case 1994
-        [Category("SmokeTests")]
-        [Description("Test case 1994")]
-        public void Logout()
-        {
-            // Login();
-            Logout logout = new Logout(_driver.Value, ConfigurationSettings.GetSettingsConfiguration<TestSystemConfiguration>());
+        // RK - 2/26/19 - Commented out this test because a newer test replaces this one. TC #1456
 
-            //SelectItemFromCilentMenu(_driver.Value, "logout");
+        //[TestCase]//Test case 1994
+        //[Category("SmokeTests")]
+        //[Description("Test case 1994")]
+        //public void Logout()
+        //{
+        //    Login();
 
-            logout.CancelButtonClick();
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            //SelectItemFromCilentMenu(_driver.Value, "logout");
+        //    Logout logout = new Logout(_driver.Value, ConfigurationSettings.GetSettingsConfiguration<TestConfiguration>());
+        //    logout.Wait(2);
+        //    //SelectItemFromCilentMenu(_driver.Value, "logout");
 
-            logout.LogoutAcceptButtonClick();
-            //logout.Perform();
-        }
+        //    logout.CancelButtonClick();
+        //    logout.Wait(1);
+        //    logout.LogoutModal.IsModalDisplay.Should().BeTrue();
+        //    //SelectItemFromCilentMenu(_driver.Value, "logout");
+
+        //    logout.LogoutAcceptButtonClick();
+        //}
 
         [TestCase]//test case 1987
         [Category("SmokeTests")]
@@ -223,7 +226,7 @@ namespace QA.Automation.UITests
             var type1 = pls.PlayListModal.SelectYouTagTypeSelectBox;
             var type2 = pls.PlayListModal.SelectYouTagSelectBox;
             pls.Wait();
-            pls.PlayListModal.ModalSaveButtonClick();
+            pls.PlayListModal.ClickModalSaveButton();
             pls.Wait();
         }
 
@@ -275,7 +278,7 @@ namespace QA.Automation.UITests
 
             //Step 9 Select Save
 
-            pls.PlayListModal.ModalSaveButtonClick();
+            pls.PlayListModal.ClickModalSaveButton();
             pls.Wait(3);
 
 
@@ -286,7 +289,7 @@ namespace QA.Automation.UITests
 
             //step 11: Remove the Playlist Description 
             pls.PlayListModal.PlayListDescriptionTextField = "Automated Playlist Test Desc" + DateTime.Now.ToString();
-            pls.PlayListModal.ModalSaveButtonClick();
+            pls.PlayListModal.ClickModalSaveButton();
             pls.PlayListModal.IsModalDisplayed.Should().BeTrue("Modal should be closed");
             pls.PlayListModal.PlayListDescriptionTextField = null;
 
@@ -301,7 +304,7 @@ namespace QA.Automation.UITests
 
             //Step 12 Select save
 
-            pls.PlayListModal.ModalSaveButtonClick();
+            pls.PlayListModal.ClickModalSaveButton();
             pls.Wait();
 
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
@@ -313,7 +316,7 @@ namespace QA.Automation.UITests
 
                 pls.PlayListModal.PlayListDescriptionTextField = "System Test Location Two Buick";
                 pls.Wait();
-                pls.PlayListModal.ModalSaveButtonClick();
+                pls.PlayListModal.ClickModalSaveButton();
                 pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
 
             }
@@ -369,7 +372,7 @@ namespace QA.Automation.UITests
 
             //Step 5  select save
 
-            pls.PlayListModal.ModalSaveButtonClick();
+            pls.PlayListModal.ClickModalSaveButton();
 
             pls.Wait(3);
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
@@ -409,7 +412,7 @@ namespace QA.Automation.UITests
                 playlistEditButton1.Click();
                 PlayListSettingModal plsm = new PlayListSettingModal(_driver.Value);
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-                plsm.ModalSaveButtonClick();
+                plsm.ClickModalSaveButton();
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
                 //TODO: Get element playlist-no-content and get the text from it to compare to.
                 //IWebElement saveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
@@ -432,7 +435,7 @@ namespace QA.Automation.UITests
                 //TODO: Get the lement lgfe-card-matrix js-drag-drop-playlist lgfe-card-matrix--layout-row and see if there is more than one
                 PlayListSettingModal plsm = new PlayListSettingModal(_driver.Value);
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-                plsm.ModalSaveButtonClick();
+                plsm.ClickModalSaveButton();
                // System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
                 //IWebElement saveButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
                 //saveButton2.Click();
@@ -655,7 +658,7 @@ namespace QA.Automation.UITests
             // System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             // IWebElement saveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
             // saveButton.Click();
-            pls.PlayListModal.ModalSaveButtonClick();
+            pls.PlayListModal.ClickModalSaveButton();
             //Step 10 Select favorite icon for new playlist created in test step 7 
             IWebElement favoritIconHeart4 = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
@@ -803,7 +806,7 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             //step 8 select save
 
-            tr.ModalSaveButtonClick();
+            tr.ClickModalSaveButton();
             //IWebElement trafficWidgetSaveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.trafficWidgetSaveButtonCssSelector));
             //WaitForMaskModal();
             //trafficWidgetSaveButton.Click();
@@ -829,7 +832,7 @@ namespace QA.Automation.UITests
             //step 11 select buick brand
             //step 12 select save
             // IWebElement trafficWidgetSaveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.trafficWidgetSaveButtonCssSelector));
-            tr.ModalSaveButtonClick();
+            tr.ClickModalSaveButton();
             WaitForMaskModal();
             //trafficWidgetSaveButton1.Click();
             //TODO: Check to see if the widget was saved.
@@ -846,7 +849,7 @@ namespace QA.Automation.UITests
             tr.TrafficZipCodeTextBox = "53";
             pl.Wait(2);
 
-            tr.ModalSaveButtonClick();
+            tr.ClickModalSaveButton();
             pl.Wait(2);
             Assert.IsTrue(tr.TrafficZipCodeError);
             //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
@@ -860,7 +863,7 @@ namespace QA.Automation.UITests
             tr.TrafficZipCodeTextBox = "53142";
             //step 16 select save
             IWebElement trafficWidgetSaveButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.trafficWidgetSaveButtonCssSelector));
-            tr.ModalSaveButtonClick();
+            tr.ClickModalSaveButton();
             //WaitForMaskModal();
             //trafficWidgetSaveButton2.Click();
             //step 17 create all brands
@@ -1399,7 +1402,7 @@ namespace QA.Automation.UITests
             //step 8 Select Save
             //IWebElement weatherWidgetSaveButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetSaveButtonCSSSelector));
             //weatherWidgetSaveButton.Click();
-            weatherWidget.ModalSaveButtonClick();
+            weatherWidget.ClickModalSaveButton();
             pl.Wait(2);
 
             //step 9 Select Add Weather Widget
@@ -1426,7 +1429,7 @@ namespace QA.Automation.UITests
             //WaitForMaskModal();
             //weatherSaveButton.Click();
 
-            weatherWidget.ModalSaveButtonClick();
+            weatherWidget.ClickModalSaveButton();
             pl.Wait(2);
             //step 13 Select Add Weather Widget
             // IWebElement weatherWidget2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetCSSSelector));
@@ -1444,7 +1447,7 @@ namespace QA.Automation.UITests
             weatherWidget.WeatherZipCodeTextBox = "531";
             pl.Wait(2);
 
-            weatherWidget.ModalSaveButtonClick();
+            weatherWidget.ClickModalSaveButton();
             pl.Wait(1);
             Assert.IsTrue(weatherWidget.WeatherZipCodeError);
 
@@ -1463,7 +1466,7 @@ namespace QA.Automation.UITests
             //IWebElement weatherSaveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.weatherWidgetSaveButtonCSSSelector));
             //WaitForMaskModal();
             //weatherSaveButton1.Click();
-            weatherWidget.ModalSaveButtonClick();
+            weatherWidget.ClickModalSaveButton();
 
             //step 17 Create all brands ---I am not sure what this means---
 
@@ -1480,8 +1483,8 @@ namespace QA.Automation.UITests
 
         public void LogOutWithoutLogin()
         {
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
+            #region -- old code --
+            /*
             IWebElement logOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logOutButtonCssSelector));
             WaitForMaskModal();
             logOutButton.Click();
@@ -1490,81 +1493,128 @@ namespace QA.Automation.UITests
 
             IWebElement confirmLogOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector));
             WaitForMaskModal();
-            confirmLogOutButton.Click();
+            confirmLogOutButton.Click();*/
+            #endregion -- old code --
+                
+            Logout logout = new Logout(_driver.Value, _configuration);
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            sb.Wait(1);
+            sb.SelectMenu("Log Out");//select log out from left navigation bar
+            sb.Wait(2);
+            logout.LogoutModal.IsModalDisplay.Should().BeTrue();                  
+            logout.LogoutModal.ClickModalButton("Logout");
         }
 
         [TestCase]
         [Description("Test for Test case 1456")]
         public void LogoutAfterLogin()//postive test for Test case 1456
         {
-            //step 1
+            #region --old code--
+            /* //step 1
+              Login();
+
+              string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
+              string currentURL = _driver.Value.Url;
+              _driver.Value.Navigate().GoToUrl(url);
+
+              IWebElement logOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logOutButtonCssSelector));
+              WaitForMaskModal();
+              //step 2
+              logOutButton.Click();
+
+              IWebElement logOutCancelButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logOutCancelButtonCssSelector));
+              WaitForMaskModal();
+              //step 3
+              logOutCancelButton.Click();
+
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+              //Step 4
+              logOutButton.Click();
+
+
+              IWebElement confirmLogOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector));
+              WaitForMaskModal();
+              //step 5
+              confirmLogOutButton.Click();
+
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+              //step 6
+              Login();
+
+              IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
+
+              WaitForMaskModal();
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+              //step 7
+              playerChannelDropdown.Click();
+
+              IWebElement LogOutChannelSelection = _driver.Value.FindElement(By.XPath(BaseStrings.logOutChannelSelectionXPath));
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+              //step 8
+              LogOutChannelSelection.Click();
+
+
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+              IWebElement logOutCancelButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.logOutCancelButtonCssSelector2));
+              WaitForMaskModal();
+              logOutCancelButton2.Click();//step 9
+
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+              playerChannelDropdown.Click();
+              IWebElement LogOutChannelSelection2 = _driver.Value.FindElement(By.XPath(BaseStrings.logOutChannelSelectionXPath2));
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+              LogOutChannelSelection2.Click();//step 10
+
+              IWebElement confirmLogOutButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector2));
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+              confirmLogOutButton2.Click();//step 11 
+
+              System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+
+              Login();//step 12
+
+              _driver.Value.Quit();*/
+            #endregion
+
+
+            ClientMenu cm = new ClientMenu(_driver.Value, _configuration);
+            Logout logout = new Logout(_driver.Value, _configuration);
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            Login login = new Login(_driver.Value, _configuration);
+            Login();
+            //sb.Wait(3);
+
+            sb.SelectMenu("Log Out");
+            sb.Wait(1);
+            logout.LogoutModal.IsModalDisplay.Should().BeTrue();
+            logout.LogoutModal.ClickModalButton("cancel");
+
+            logout.Wait(2);
+            logout.LogoutModal.IsModalDisplay.Should().BeFalse();
+            sb.SelectMenu("Log Out");
+            sb.Wait(1);
+
+            //logout.LogoutModal.ClickModalButton("Logout");
+            logout.LogoutModal.ClickModalButton("Logout");
+            string[] tagsToCompare = new[] { "Sign In", "" };
+            login.GetSignInButton.Should().Contain(tagsToCompare).And.HaveCount(tagsToCompare.Length);
+
             Login();
 
-            string url = Common.LgUtils.GetUrlBaseUrl(_configuration.Environment.ToString(), _configuration.BaseUrl, true);
-            string currentURL = _driver.Value.Url;
-            _driver.Value.Navigate().GoToUrl(url);
+            cm.SelectClient("Logout");
+            cm.Wait(1);
+            logout.LogoutModal.IsModalDisplay.Should().BeTrue();
+            logout.LogoutModal.ClickModalButton("cancel");
+            logout.Wait(2);
+            logout.LogoutModal.IsModalDisplay.Should().BeFalse();
+            cm.SelectClient("Logout");
+            cm.Wait(1);
 
-            IWebElement logOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logOutButtonCssSelector));
-            WaitForMaskModal();
-            //step 2
-            logOutButton.Click();
+            logout.LogoutModal.ClickModalButton("Logout");
+            
+            login.GetSignInButton.Should().Contain(tagsToCompare).And.HaveCount(tagsToCompare.Length);
 
-            IWebElement logOutCancelButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logOutCancelButtonCssSelector));
-            WaitForMaskModal();
-            //step 3
-            logOutCancelButton.Click();
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //Step 4
-            logOutButton.Click();
-
-
-            IWebElement confirmLogOutButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector));
-            WaitForMaskModal();
-            //step 5
-            confirmLogOutButton.Click();
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //step 6
-            Login();
-
-            IWebElement playerChannelDropdown = _driver.Value.FindElement(By.CssSelector(BaseStrings.playerChannelDropdownCssSelector));
-
-            WaitForMaskModal();
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //step 7
-            playerChannelDropdown.Click();
-
-            IWebElement LogOutChannelSelection = _driver.Value.FindElement(By.XPath(BaseStrings.logOutChannelSelectionXPath));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            //step 8
-            LogOutChannelSelection.Click();
-
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-
-            IWebElement logOutCancelButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.logOutCancelButtonCssSelector2));
-            WaitForMaskModal();
-            logOutCancelButton2.Click();//step 9
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            playerChannelDropdown.Click();
-            IWebElement LogOutChannelSelection2 = _driver.Value.FindElement(By.XPath(BaseStrings.logOutChannelSelectionXPath2));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            LogOutChannelSelection2.Click();//step 10
-
-            IWebElement confirmLogOutButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.logoutConfirmCssSelector2));
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            confirmLogOutButton2.Click();//step 11 
-
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-
-            Login();//step 12
-
-            _driver.Value.Quit();
-
-
-            //TODO: Assert that we are logged out based on URL and maybe the Username/password fields.
         }
         [TestCase]//Test case 585
         [Category("All")]
@@ -2983,7 +3033,7 @@ namespace QA.Automation.UITests
             //  pgi.PlayerModal.ModalSaveButtonClick();
 
         }
-
+       
         [TestCase]
         //[Category("All")]
         [Description("Test")]
@@ -3057,10 +3107,10 @@ namespace QA.Automation.UITests
             SalesAppointmentManagementModal.AppointmentTimeSelectBox = "5:00 am";
             ld.Wait(2);
            
-            sales.SaleAppointmentModal.ModalSubmitButtonClick("Add");
+            sales.SaleAppointmentModal.ClickModalSubmitButton("Add");
             sales.Wait(3);
 
-            sales.SaleAppointmentModal.ModalSubmitButtonClick("Save");
+            sales.SaleAppointmentModal.ClickModalSubmitButton("Save");
             sales.Wait(4);
             ld.SelectTab_LocationDetail("GENERAL");
             lds.Wait(2);
@@ -3093,7 +3143,7 @@ namespace QA.Automation.UITests
             // lds.IsLocationSettingsFieldValue.Should().Contain(new[] { "Phone", "Client", "BAC", "Location Code(s)", "Reportable", "Status", "Updated", "Registered", "Registered By", "Sales District Code", "Zone Code", "Region Code", "Dealer Key", "Appointment Date", "Facing Warehouse Code", "Created" });
             TagManagement.TagManagementTextField = "test";
             //ld.LocationModal.TagManagementTextField = "test";
-            GeneralTags.TagManagementModal.ModalSubmitButtonClick("Add");
+            GeneralTags.TagManagementModal.ClickModalSubmitButton("Add");
             GeneralTags.TagManagementModal.ClickOffScreen();
             GeneralTags.Wait(2);
            // GeneralTags.tagManagementModal.ModalCancelButtonClick();
@@ -3178,9 +3228,9 @@ namespace QA.Automation.UITests
             //ConfigureServiceAppointments.ServiceAppointmentManagementModal.YearSelectBox("1962");
             ConfigureServiceAppointments.ServiceAppointmentManagementModal.YearSelectBox("1965");
             ConfigureServiceAppointments.Wait(2);
-            ConfigureServiceAppointments.ServiceAppointmentManagementModal.ModalSubmitButtonClick("Add");
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.ClickModalSubmitButton("Add");
             ConfigureServiceAppointments.Wait(4);
-            ConfigureServiceAppointments.ServiceAppointmentManagementModal.ModalSubmitButtonClick("Save");
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.ClickModalSubmitButton("Save");
             ConfigureServiceAppointments.Wait(4);
 
             String[] tagsToCompareSDS = new[] { "Financial Calculator", "Display Accessory MSRP Pricing", "Default Settings", "BCC Email:" };
@@ -3195,7 +3245,7 @@ namespace QA.Automation.UITests
             ConfigurePriceListsSection.PriceListModal.AddCustomPricePlusButton();
             ConfigurePriceListsSection.PriceListModal.CustomPriceDescriptionText("automation test");
             ConfigurePriceListsSection.PriceListModal.CustomPriceInputText("500.00");
-            ConfigurePriceListsSection.PriceListModal.ModalSubmitButtonClick("Save");
+            ConfigurePriceListsSection.PriceListModal.ClickModalSubmitButton("Save");
             ConfigurePriceListsSection.Wait(4);
             ConfigureTickersSection.TickersEditButtonClick();
             ConfigureTickersSection.Wait(2);
@@ -3212,7 +3262,7 @@ namespace QA.Automation.UITests
             GeneralSDSPriceLists.GeneralSDSPriceListsModal.SelectCheckbox = true;
             // GeneralSDSPriceLists.GeneralSDSPriceListsModal.AccessoryPricing = "kit";
             // GeneralSDSPriceLists.GeneralSDSPriceListsModal.FactoryCheckbox = true;
-            GeneralSDSPriceLists.GeneralSDSPriceListsModal.ModalSubmitButtonClick("Save");
+            GeneralSDSPriceLists.GeneralSDSPriceListsModal.ClickModalSubmitButton("Save");
             GeneralSDSPriceLists.Wait(2);
             //GeneralSDSPriceLists.GeneralSDSPriceListsModal.ClickSaveCancelSaleAppointmentButton("Save");
             //AccessoryPricingModal.IsModalDisplay.Should().BeTrue();

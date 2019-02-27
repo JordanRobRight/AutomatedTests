@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -20,6 +21,21 @@ namespace QA.Automation.UITests.LG20.Pages
         #endregion
 
         #region -- Properties ---
+        //get the list of button in sign in page, can be used to validate after logout
+        public List<string> GetSignInButton
+        {
+            get
+            {
+                var wrapper = GetPageContainer();
+                var buttons = wrapper.FindElements(By.TagName("button"));
+                List<string> buttonList = new List<string>();
+                foreach (var button in buttons)
+                {
+                    buttonList.Add(button.Text);
+                }
+                return buttonList;
+            }
+        }
         public string UserName
         {
             get
@@ -73,7 +89,7 @@ namespace QA.Automation.UITests.LG20.Pages
 
         public override void Perform()
         {
-           
+
             //byte[] data = Convert.FromBase64String(Config.LGPassword);
             //string password = Encoding.UTF8.GetString(data);
             //UserName.SendKeys(Config.LGUser);
@@ -106,9 +122,9 @@ namespace QA.Automation.UITests.LG20.Pages
 
 
         #endregion
-        
+
         #endregion
 
-       
+
     }
 }

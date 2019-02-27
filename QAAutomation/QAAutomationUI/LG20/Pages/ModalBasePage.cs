@@ -49,28 +49,34 @@ namespace QA.Automation.UITests.LG20.Pages
             return false;
         }
 
-        public bool ModalSaveButtonClick()
+
+        public bool ClickModalSaveButton()
         {
-            try
-            {
-                var saveButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("type") != null &&
-                                                                       a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals("Save", StringComparison.OrdinalIgnoreCase));
-                if (saveButton != null)
-                {
-                    saveButton.Click();
-                    return true;
-                }
-
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return false;
+            return ClickModalSubmitButton("Save");
         }
+
+        //public bool ModalSaveButtonClick()
+        //{
+        //    try
+        //    {
+        //        var saveButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("type") != null &&
+        //                                                               a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals("Save", StringComparison.OrdinalIgnoreCase));
+        //        if (saveButton != null)
+        //        {
+        //            saveButton.Click();
+        //            return true;
+        //        }
+
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //    }
+
+        //    return false;
+        //}
         // Doesnt comes under _modalContainer
-        public bool ModalContinueButtonClick()
+        private bool ClickModalContinueButton()
         {
             try
             {
@@ -92,12 +98,26 @@ namespace QA.Automation.UITests.LG20.Pages
             return false;
         }
 
+        public bool IsModalDisplay
+        {
+            get
+            {
+                var getModal = GetModal();
+                return getModal != null;
+            }
+        }
+
         public virtual void Wait(int numberOfSeconds = 5, int slideFactor = 0)
         {
             Thread.Sleep(TimeSpan.FromSeconds(numberOfSeconds + slideFactor));
         }
 
-        public bool ModalSubmitButtonClick(string buttonName)// pass buttonName as "Add" or "Save"
+        public bool ClickModalButton(string buttonName)
+        {
+            return ClickModalSubmitButton(buttonName);
+        }
+
+        public bool ClickModalSubmitButton(string buttonName)// pass buttonName as "Add" or "Save"
         {
             try
             {
