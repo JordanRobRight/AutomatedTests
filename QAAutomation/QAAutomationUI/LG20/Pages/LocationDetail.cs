@@ -36,7 +36,7 @@ namespace QA.Automation.UITests.LG20.Pages
         #endregion
 
         #region --- Constructor ---
-        internal LocationDetail(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        internal LocationDetail(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
             PageContainerName = _locationContainer;
         }

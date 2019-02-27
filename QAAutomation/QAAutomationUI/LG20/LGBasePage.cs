@@ -14,8 +14,6 @@ namespace QA.Automation.UITests.LG20
         private IWebDriver _driver;
         #endregion 
 
-        #region --- Constructors ---
-
         #region --- Constructores ---
         protected LGBasePage(IWebDriver driver, TestSystemConfiguration config)
         {

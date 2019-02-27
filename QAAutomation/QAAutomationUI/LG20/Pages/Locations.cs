@@ -25,7 +25,7 @@ namespace QA.Automation.UITests.LG20.Pages
         #endregion
 
         #region --- Constructor ---
-        internal Locations(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        internal Locations(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
             PageContainerName = _locationsContainer; //Element Div By: Id
             PageFunctionBarContainerClassName = _lgfeContainer;

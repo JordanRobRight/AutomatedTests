@@ -24,7 +24,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards.Location
         #endregion
 
         #region --- Constructor ---
-        internal ConfigureGeneralSection(IWebDriver driver, TestConfiguration config) : base(driver, config)
+        internal ConfigureGeneralSection(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
             PageContainerName = _locationsContainer; //Element Div By: Id
         }

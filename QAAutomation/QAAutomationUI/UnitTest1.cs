@@ -13,6 +13,7 @@ using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
 using FluentAssertions;
 using FluentAssertions.Collections;
+using QA.Automation.Common.Models;
 using QA.Automation.UITests.LG20.Pages.SubCards.Location;
 using QA.Automation.UITests.LG20.Pages.SubCards.Player;
 
