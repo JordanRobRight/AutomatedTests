@@ -1,0 +1,14 @@
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\bin\Debug\netcoreapp2.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\bin\Debug\netcoreapp2.1\xunit.runner.reporters.netcoreapp10.dll
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\bin\Debug\netcoreapp2.1\xunit.runner.utility.netcoreapp10.dll
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\bin\Debug\netcoreapp2.1\XUnitPriority.deps.json
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\bin\Debug\netcoreapp2.1\XUnitPriority.runtimeconfig.json
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\bin\Debug\netcoreapp2.1\XUnitPriority.runtimeconfig.dev.json
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\bin\Debug\netcoreapp2.1\XUnitPriority.dll
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\bin\Debug\netcoreapp2.1\XUnitPriority.pdb
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\obj\Debug\netcoreapp2.1\XUnitPriority.csprojAssemblyReference.cache
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\obj\Debug\netcoreapp2.1\XUnitPriority.csproj.CoreCompileInputs.cache
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\obj\Debug\netcoreapp2.1\XUnitPriority.AssemblyInfoInputs.cache
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\obj\Debug\netcoreapp2.1\XUnitPriority.AssemblyInfo.cs
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\obj\Debug\netcoreapp2.1\XUnitPriority.dll
+C:\Users\rkos\source\repos\QAAutomation\QAAutomation\XUnitPriority\obj\Debug\netcoreapp2.1\XUnitPriority.pdb

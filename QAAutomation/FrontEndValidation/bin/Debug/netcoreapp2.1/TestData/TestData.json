@@ -1,0 +1,47 @@
+{
+  "version": "1",
+  "Data": [
+    {
+      "EnvironmentName": "Test",
+      "TestAnswers": {
+        "PlayerGM": "LG-QAROB",
+        "PlayerSubaru": "LG-SDSTEST",
+        "PlayListSendKeysValue": "a",
+        "LocationClientGM": "kudick",
+        "LocationClientSubaru": "030291",
+        "PlayersGMItemsHit": "player information, location details, tags, device,installed programs, what's playing, playlist info, channels for guest tv",
+        "PlayersSubaruItemsHit": "player information, location details, tags, device, installed programs, what's playing, playlist info, channels sds",
+        "LocationsGMItemsHit": "location details, licenses & subscriptions, tags, general, smc settings, price list, tickers, sale appointments",
+        "LocationsSubaruItemsHit": "location details, licenses & subscriptions, tags, general, smc settings, price list, sds price list, sds settings, tickers, service appointments"
+      }
+    },
+    {
+      "EnvironmentName": "PreProd",
+      "TestAnswers": {
+        "PlayerGM": "LG-GREGDEV",
+        "PlayerSubaru": "LG-SDSPREPROD",
+        "PlayListSendKeysValue": "a",
+        "LocationClientGM": "kudick",
+        "LocationClientSubaru": "030291",
+        "PlayersGMItemsHit": "player information, location details, tags, device, installed programs, what's playing, playlist info, channels for guest tv",
+        "PlayersSubaruItemsHit": "player information, location details, tags, device, installed programs, what's playing, playlist info, channels sds",
+        "LocationsGMItemsHit": "location details, licenses & subscriptions, tags, general, smc settings, price list, tickers, sale appointments",
+        "LocationsSubaruItemsHit": "location details, licenses & subscriptions, tags, general, smc settings, price list, sds price list, sds settings, tickers, service appointments"
+      }
+    },
+    {
+      "EnvironmentName": "Prod",
+      "TestAnswers": {
+        "PlayerGM": "LG-18725",
+        "PlayerSubaru": "LG-SDSPROD",
+        "PlayListSendKeysValue": "a",
+        "LocationClientGM": "System Test Location",
+        "LocationClientSubaru": "Subaru Test",
+        "PlayersGMItemsHit": "player information, location details, tags, device, installed programs, what's playing, playlist info, channels for guest tv",
+        "PlayersSubaruItemsHit": "player information, location details, tags, device, installed programs, what's playing, playlist info, channels sds",
+        "LocationsGMItemsHit": "location details, licenses & subscriptions, tags, general, smc settings, price list, tickers, sale appointments",
+        "LocationsSubaruItemsHit": "location details, licenses & subscriptions, tags, general, smc settings, price list, sds price list, sds settings, tickers, service appointments"
+      }
+    }
+  ]
+}
