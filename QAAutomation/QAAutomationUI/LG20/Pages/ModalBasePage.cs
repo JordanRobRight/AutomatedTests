@@ -108,6 +108,7 @@ namespace QA.Automation.UITests.LG20.Pages
                     if (button.Text == "Continue")
                     {
                         button.Click();
+                        break;
                     }
                 }
             }
@@ -124,6 +125,15 @@ namespace QA.Automation.UITests.LG20.Pages
             {
                 var getModal = GetModal();
                 return getModal != null;
+            }
+        }
+
+        public bool IsModalConfirmationDisplayed
+        {
+            get
+            {
+                var confirmModal = GlobalConfirmModal().GetElementFromCompoundClass(By.TagName("div"), "lg-modal lg-modal--confirm lg-modal--visible");
+                return confirmModal != null;
             }
         }
 
