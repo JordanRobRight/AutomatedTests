@@ -175,19 +175,11 @@ namespace QA.Automation.UITests.LG20.Pages
             }
         }
 
-
-
         public void ClickSendButton()
         {
-            //click send button
-            /*var sendButton = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, contactSendClass)
-                .FindElements(By.TagName("button"));
-            IWebElement button = sendButton.FirstOrDefault(b => b.GetAttribute("type") != null && b.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase));
-            button.Click(); */
-            IWebElement send = Driver.FindElement(By.CssSelector(contactSendCss));
-            send.Click();// click send
-            Wait(5);
-
+            Wait(2);
+            var button = GetPageContainer().FindElement(By.TagName("button"));
+            button.Click();
         }
 
         public void ClickDone()

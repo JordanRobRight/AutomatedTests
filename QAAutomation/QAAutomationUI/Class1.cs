@@ -12,7 +12,7 @@ namespace QA.Automation.UITests
         public static string addPlaylistsButtonClass = "#playlists-container > div.pm-function-bar.js-playlists-function-bar > div > button";
         public static string saveButtonCSSSelector = "#playlist-info-form > div.lg-modal__actions > button";
         public static string playlistSaveButtonCssSelector = "#playlist-container > div.playlist-content-wrapper.js-playlist-content > div > div.pm-action-bar.pm-action-bar-upper > button:nth-child(1)";
-        public static string playlistOpenButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2)";
+        public static string playlistOpenButtonCSSSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > div:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2)";
         public static string weatherWidgetCSSSelector = "#playlist-container > div.pm-function-bar.js-playlist-function-bar > div > div.pmfbc-favorite-widgets.js-drag-drop-favorite-widgets > button:nth-child(1)";
         public static string weatherBrandDropdownXpath = "//*[@id='widget-modal']/div/div/div[1]/div[2]/form/div[1]/div/div[1]/select/*[@id='select-brand']";
         public static string weatherZipCodeInputID = "weather-widget-zip";
@@ -116,11 +116,11 @@ namespace QA.Automation.UITests
         public static string copyPlaylistButtonCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button:nth-child(4)";
         public static string playlistCopyTitleNameCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-information > h3";
         public static string playlistSearchInputCssSelector = "#playlists-search";
-        public static string durationSectionCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-information > p.lgfe-cm-duration > span.pmppid-time";
-        public static string editButtonCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(1) > button.lgfe-cm-utility-button.button-unstyled.js-playlist-edit > span.\\5b.fa.fa-pencil.\\5d";
-        public static string filterButtonCssSelector = "#select-filter";
+        public static string durationSectionCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > div:nth-child(1) > div > a > p.lgfe-cm-duration > span.pmppid-time";//"#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-information > p.lgfe-cm-duration > span.pmppid-time";
+        public static string editButtonCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > div:nth-child(1) > div > div > div:nth-child(1) > button.lgfe-cm-utility-button.button-unstyled.js-playlist-edit > span";
+        public static string filterButtonCssSelector = "#PlaylistsService-select-order";
         public static string gridIconButtonCssSelector = "#playlists-container > div.pm-utility-bar.js-playlists-utility-bar > div > div:nth-child(2) > label > span.\\5b.fa.fa-th-large.\\5d";
-        public static string gridOpenButtonCssSelector = "#playlists-container > div.playlists-content-wrapper.js-playlists-content > div > div > a:nth-child(1) > div > div.lgfe-cm-utilities > div:nth-child(2) > button";
+        public static string gridOpenButtonCssSelector = "//label[@title='Display as Full Grid']";
         public static string rowOpenButtonCssSelector = "#playlists-container > div.pm-utility-bar.js-playlists-utility-bar > div > div:nth-child(1) > label";
         public static string myProfileButtonCssSelector = "#interaction-info-bar-container > div > div > div > div.iibcuinow-menu-wrapper > ul > li:nth-child(1) > a > span";
         public static string myProfileSaveButtonCssSelector = "#profile-container > div.pc-personal-details-fields > div > div > div.lg-modal__actions > button";

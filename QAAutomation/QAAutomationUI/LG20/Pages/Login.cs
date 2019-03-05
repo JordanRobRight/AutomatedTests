@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using OpenQA.Selenium;
 using QA.Automation.UITests.Models;
 using QA.Automation.UITests.Selenium;
@@ -82,7 +80,7 @@ namespace QA.Automation.UITests.LG20.Pages
         public override void GoToUrl()
         {
             string url = Common.LgUtils.GetUrlBaseUrl(Config.Environment.ToString(), Config.BaseUrl, true);
-            Wait(4);
+            Wait(11);
             Driver.Navigate().GoToUrl(url);
             Wait();
         }

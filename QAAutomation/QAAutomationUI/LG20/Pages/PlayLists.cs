@@ -53,6 +53,9 @@ namespace QA.Automation.UITests.LG20.Pages
         #region -- Constructors --
         public PlayLists(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
+            PageUtilBarContainerClassName = "pm-utility-bar js-playlists-utility-bar";
+            PageSearchField = "playlists-search";
+            PageContainerName = "playlists-container";
         }
 
         //private void Test()

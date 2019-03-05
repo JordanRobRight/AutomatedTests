@@ -21,6 +21,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
         private static string _modalSection = @"lg-modal__section";
 
         // Modal popup - Update to support new filter changes
+        private static string _globalConfirmID2 = @"global-confirm-modal";//ID
         private static string _playListSettingModal = @"playlist-settings-modal"; // Element: Div By: Id
         private static string _playListSettingModalVisiableClass = @"lg-modal lg-modal--large lg-modal--visible"; // Element: N/A By: ClassName
         private static string _playListName = @"playlist-info-field-name"; // Element: Input By: Name
@@ -242,10 +243,11 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         #region --- Constructor ---
 
-        internal PlayListSettingModal(IWebDriver driver) : base(driver, _playListSettingModal, _modalContainer, _playListSettingModalVisiableClass)
+        internal PlayListSettingModal(IWebDriver driver) : base(driver, _playListSettingModal, _modalContainer, _playListSettingModalVisiableClass, _globalConfirmID2)
         {
             _driver = driver;
         }
+
         #endregion
 
         #region --- Methods ---

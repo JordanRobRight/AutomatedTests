@@ -15,18 +15,41 @@ namespace QA.Automation.UITests.LG20.Pages
         private IWebDriver _driver = null;
         private readonly string _modalContainerName = string.Empty;
         private readonly string _modalVisableClass = string.Empty;
-       
+        private readonly string _globalConfirmID = string.Empty;
 
-        internal ModalBasePage(IWebDriver driver,  string modalClassName, string modalContainerName, string modalVisableClass)
+        internal ModalBasePage(IWebDriver driver,  string modalClassName, string modalContainerName, string modalVisableClass, string globalConfirmID = "")
         {
             _modalClassName = modalClassName;
             _driver = driver;
             _modalContainerName = modalContainerName;
             _modalVisableClass = modalVisableClass;
-            
-        }
-        
+            _globalConfirmID = globalConfirmID;
+        }        
 
+        // Doesnt comes under _modalContainer
+        /*
+        public bool ClickModalContinueButton()
+        {
+            try
+            {
+                //_modalContainerName = modalContainerName;
+                var continueButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("type") != null &&
+                                                                       a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals("Continue", StringComparison.OrdinalIgnoreCase));
+                if (continueButton != null)
+                {
+                    continueButton.Click();
+                    return true;
+                }
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return false;
+        }
+        */
         public bool ModalCancelButtonClick()
         {
             try
@@ -75,26 +98,23 @@ namespace QA.Automation.UITests.LG20.Pages
 
         //    return false;
         //}
-        // Doesnt comes under _modalContainer
-        private bool ClickModalContinueButton()
+        public bool ClickConfirmModalContinueButton()
         {
             try
-            {
-                //_modalContainerName = modalContainerName;
-                var continueButton = GetModalButtons().FirstOrDefault(a => a.GetAttribute("type") != null &&
-                                                                       a.GetAttribute("type").Equals("submit", StringComparison.OrdinalIgnoreCase) && a.Text.Equals("Continue", StringComparison.OrdinalIgnoreCase));
-                if (continueButton != null)
+            {          
+                var buttons = GlobalConfirmModal().FindElements(By.TagName("button"));
+                foreach (var button in buttons)
                 {
-                    continueButton.Click();
-                    return true;
+                    if (button.Text == "Continue")
+                    {
+                        button.Click();
+                    }
                 }
-
             }
             catch (Exception)
             {
                 return false;
             }
-
             return false;
         }
 
@@ -135,7 +155,10 @@ namespace QA.Automation.UITests.LG20.Pages
             }
             return false;
         }
-
+        protected IWebElement GlobalConfirmModal()
+        {
+            return _driver.FindElement(By.Id(_globalConfirmID));
+        }
         protected string FormID { get; set; }
         protected IWebElement GetFormArea()
         {

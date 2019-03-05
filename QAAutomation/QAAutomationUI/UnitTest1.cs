@@ -129,6 +129,7 @@ namespace QA.Automation.UITests
         [Description("Test case 1987")]
         public void PlaylistDisplayAsGrid()
         {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //step 1 login
             Login();
             //step 2 hover over grid icon
@@ -144,7 +145,7 @@ namespace QA.Automation.UITests
             IWebElement playlistSearchInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
             playlistSearchInput.SendKeys("Automated");
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            IWebElement openButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.gridOpenButtonCssSelector));
+            IWebElement openButton = _driver.Value.FindElement(By.XPath(BaseStrings.gridOpenButtonCssSelector));
             openButton.Click();
             //step 6 select playlists from main menu
             IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
@@ -251,6 +252,8 @@ namespace QA.Automation.UITests
 
             pls.PlayListModal.ModalCancelButtonClick();
             pls.Wait();
+            pls.PlayListModal.ClickConfirmModalContinueButton();
+            pls.Wait(3);
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
 
             //Step 5 Select '+' to add new playlist
@@ -263,7 +266,7 @@ namespace QA.Automation.UITests
             pls.PlayListModal.ClickOffScreen();
 
             pls.Wait();
-
+            pls.PlayListModal.ClickConfirmModalContinueButton();
             pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");// if IsModalDisplay is false then it means Modal was closed else display message
                                                                                           //Step 7 Select '+' to add new playlist
 
@@ -283,14 +286,15 @@ namespace QA.Automation.UITests
             pls.Wait(3);
 
 
-            pls.PlayListModal.IsModalDisplayed.Should().BeTrue("Modal should be closed");
-
+            pls.PlayListModal.IsModalDisplayed.Should().BeFalse("Modal should be closed");
+            pls.Wait();
             //Step 10 Select Ok
-
-
+            pls.AddButtonClick();
+            pls.Wait(3);
             //step 11: Remove the Playlist Description 
             pls.PlayListModal.PlayListDescriptionTextField = "Automated Playlist Test Desc" + DateTime.Now.ToString();
             pls.PlayListModal.ClickModalSaveButton();
+            pls.Wait(3);
             pls.PlayListModal.IsModalDisplayed.Should().BeTrue("Modal should be closed");
             pls.PlayListModal.PlayListDescriptionTextField = null;
 
@@ -393,6 +397,7 @@ namespace QA.Automation.UITests
         [Description("Test case 1985")]
         public void AbleToEditPlaylist()
         {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //step 1 loging
             Login();
             //SelectAutomatedPlaylist
@@ -402,13 +407,13 @@ namespace QA.Automation.UITests
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             playlistSearchInput.SendKeys("Automated");
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            IWebElement durationSection = _driver.Value.FindElement(By.CssSelector(BaseStrings.durationSectionCssSelector));
-            string duration = durationSection.Text;
+          //  IWebElement durationSection = _driver.Value.FindElement(By.CssSelector(BaseStrings.durationSectionCssSelector));
+        //    string duration = durationSection.Text;
             WaitForMaskModal();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //Assert.IsTrue(duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"));
-            if (duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
-            {
+        //    if (duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
+        //    {
                 IWebElement playlistEditButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.editButtonCssSelector));
                 playlistEditButton1.Click();
                 PlayListSettingModal plsm = new PlayListSettingModal(_driver.Value);
@@ -418,7 +423,7 @@ namespace QA.Automation.UITests
                 //TODO: Get element playlist-no-content and get the text from it to compare to.
                 //IWebElement saveButton1 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
                 //saveButton1.Click();
-            }
+        //    }
             //step 3 select playlists from main menu
             //IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
             WaitForMaskModal();
@@ -427,20 +432,20 @@ namespace QA.Automation.UITests
             //playlistsSideBarMenuButton.Click();
             //WaitForMaskModal();
             //step 4 select playlists that contains widgets and select able to edit button 
-            if (!duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
-            {
+         //   if (!duration.Contains("<span class='pmppid-time'><span class='lgfe-cm-duration-time-unit'>00<span class=visually-hidden'>hours,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'>minutes,</span></span><span class='lgfe-cm-duration-time-unit'>00<span class='visually-hidden'> seconds</span></span></span>"))
+        //    {
                
                 IWebElement playlistEditButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.editButtonCssSelector));
                 playlistEditButton2.Click();
                 
                 //TODO: Get the lement lgfe-card-matrix js-drag-drop-playlist lgfe-card-matrix--layout-row and see if there is more than one
-                PlayListSettingModal plsm = new PlayListSettingModal(_driver.Value);
+                PlayListSettingModal plsm2 = new PlayListSettingModal(_driver.Value);
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
                 plsm.ClickModalSaveButton();
                // System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
                 //IWebElement saveButton2 = _driver.Value.FindElement(By.CssSelector(BaseStrings.saveButtonCSSSelector));
                 //saveButton2.Click();
-            }
+      //      }
             //step 5 select playlists from main menu
             WaitForMaskModal();
            
@@ -463,6 +468,7 @@ namespace QA.Automation.UITests
         [Description("Test case #1984")]
         public void OpenPlaylist()
         {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //Step 1
             Login();
             //Step 2 Select any playlist that contains no widgets and select the open button
@@ -594,15 +600,20 @@ namespace QA.Automation.UITests
         //    new Actions(_driver.Value).MoveToElement(element).Click().Perform();
         //}
 
+        /*
         [TestCase] //Test Case 1982
+        // RK - 3/5/19 - Favorite icon was removed from the playlist section. Turning off the test.
+        
         [Category("All")]
         [Description("Test Case 1982")]
         public void FavoritePlaylist()
         {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(8));
             //Step 1 login
             Login();
             IWebElement playlistSearch = _driver.Value.FindElement(By.Id("playlists-search"));
             playlistSearch.SendKeys("Automated Playlist Test");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //Step 2 Hover over a Favorite icon (heart) thats in black
             IWebElement favoritIconHeart = _driver.Value.FindElement(By.CssSelector(BaseStrings.favoriteIconHeartCssSelector));
             Actions action = new Actions(_driver.Value);
@@ -672,7 +683,7 @@ namespace QA.Automation.UITests
             //Step 14 logout
             LogOutWithoutLogin();
         }
-
+        */
 
 
         public void SelectAutomatedPlaylist()
@@ -770,6 +781,7 @@ namespace QA.Automation.UITests
         //[Category("SmokeTests")]
         public void AddTrafficWidget()
         {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(8));
             //step 1 sign in 
             Login();
             //step 2 select an existing playlist
@@ -1371,6 +1383,7 @@ namespace QA.Automation.UITests
         [Description("Test case 737")]
         public void AddWeatherWidget()
         {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(8));
             //step 1 login   
             Login();
             //step 2 Select an existing Playlist
@@ -1947,7 +1960,7 @@ namespace QA.Automation.UITests
 
             cus.ContactCommentsTextField = td.TestAnswers["Comments"];
             cus.ClickSendButton();
-            cus.Wait();
+            cus.Wait(8);
 
             cus.IsNotificationPopupDisplayed.Should().BeTrue(); //verify notification popup being shown after send is clicked
             cus.ContactNotificationMessage.Should().Be("Mail sent and will be processed in the order it was received.");//verify success message in notification popup;
@@ -2092,10 +2105,10 @@ namespace QA.Automation.UITests
             cus.ContactCommentsTextField = td.TestAnswers["Comments"];
             cus.ContactCommentsTextField.Should().Be("Automated Tester", "It should be: Automated Tester");
 
-            cus.Wait(2);
+           // cus.Wait(2);
 
             cus.ClickSendButton();
-            cus.Wait();
+            cus.Wait(8);
 
             cus.IsNotificationPopupDisplayed.Should().BeTrue(); //verify notification popup being shown after send is clicked
 
@@ -2648,6 +2661,7 @@ namespace QA.Automation.UITests
         [Description("Test case 1986")]
         public void PlaylistFilters()
         {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //step 1 signin
             Login();
 
@@ -2683,6 +2697,7 @@ namespace QA.Automation.UITests
         [Description("Test case 1988")]
         public void PlaylistDisplayAsRow()
         {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
             //step 1 login
             Login();
             //step 2 hover over grid icon
@@ -2698,7 +2713,7 @@ namespace QA.Automation.UITests
             IWebElement playlistSearchInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
             playlistSearchInput.SendKeys("Automated");
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
-            IWebElement openButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.gridOpenButtonCssSelector));
+            IWebElement openButton = _driver.Value.FindElement(By.XPath(BaseStrings.gridOpenButtonCssSelector));
             openButton.Click();
             //step 6 select playlists from main menu
             IWebElement playlistsSideBarMenuButton = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSideBarMenuCssSelector));
@@ -2719,25 +2734,35 @@ namespace QA.Automation.UITests
         [Description("TestCase 1989")]
         public void PlaylistSearchBox()
         {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(8));
             //step 1 signin
             Login();
+            PlayLists pls = new PlayLists(_driver.Value, _configuration);
             //step 2 place curser in search box
             IWebElement playlistSearchInput = _driver.Value.FindElement(By.CssSelector(BaseStrings.playlistSearchInputCssSelector));
             //step 3 Spell check Search box placeholder text
-
+            pls.SearchField = "123456";
             //step 4 Enter invalid names (only Playlist names are considered valid entries) in Search box
-            playlistSearchInput.SendKeys("123456");
+            //playlistSearchInput.SendKeys("123456"); old code
             //step 5 Enter spaces in Search box
-            playlistSearchInput.Clear();
-            playlistSearchInput.SendKeys("     ");
+            pls.SearchField = null;
+            //playlistSearchInput.Clear(); old code
+            // playlistSearchInput.SendKeys("     "); old code
+            pls.SearchField = "     ";
             //step 6 Enter a valid Playlist name (only Playlist names are considered valid entries) in Search box
-            playlistSearchInput.Clear();
-            playlistSearchInput.SendKeys("Automated");
+            // playlistSearchInput.Clear(); old code
+            pls.SearchField = null;
+            pls.SearchField = "Automated";
+            //playlistSearchInput.SendKeys("Automated"); old code
             //step 7 Enter a valid Playlist name that consist of letters, numbers and special characters
-            playlistSearchInput.Clear();
-            playlistSearchInput.SendKeys("Automated Playlist Test 9/6/2018");
+            //playlistSearchInput.Clear();old code
+            pls.SearchField = null;
+            // playlistSearchInput.SendKeys("Automated Playlist Test 9/6/2018");//old code // failing here, because the search functionality will search for playlist as an when its typed
+
+            pls.SearchField = "test 05-";
             //step 8 From Search box, remove text from test step 6 above
-            playlistSearchInput.Clear();
+            // playlistSearchInput.Clear(); old code
+            pls.SearchField = null;
             //step 9 logout
             LogOutWithoutLogin();
         }
