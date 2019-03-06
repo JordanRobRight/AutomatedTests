@@ -243,10 +243,15 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards
 
         #region --- Constructor ---
 
-        internal PlayListSettingModal(IWebDriver driver) : base(driver, _playListSettingModal, _modalContainer, _playListSettingModalVisiableClass, _globalConfirmID2)
+        internal PlayListSettingModal(IWebDriver driver) : base(driver, _playListSettingModal, _modalContainer, _playListSettingModalVisiableClass)
         {
             _driver = driver;
+            _globalConfirmID = _globalConfirmID2;
         }
+
+       
+
+        
 
         #endregion
 

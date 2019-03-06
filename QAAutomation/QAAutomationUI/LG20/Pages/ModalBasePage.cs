@@ -15,15 +15,15 @@ namespace QA.Automation.UITests.LG20.Pages
         private IWebDriver _driver = null;
         private readonly string _modalContainerName = string.Empty;
         private readonly string _modalVisableClass = string.Empty;
-        private readonly string _globalConfirmID = string.Empty;
+        
 
-        internal ModalBasePage(IWebDriver driver,  string modalClassName, string modalContainerName, string modalVisableClass, string globalConfirmID = "")
+        internal ModalBasePage(IWebDriver driver,  string modalClassName, string modalContainerName, string modalVisableClass)
         {
             _modalClassName = modalClassName;
             _driver = driver;
             _modalContainerName = modalContainerName;
             _modalVisableClass = modalVisableClass;
-            _globalConfirmID = globalConfirmID;
+            
         }        
 
         // Doesnt comes under _modalContainer
@@ -98,6 +98,7 @@ namespace QA.Automation.UITests.LG20.Pages
 
         //    return false;
         //}
+        public string _globalConfirmID = string.Empty;
         public bool ClickConfirmModalContinueButton()
         {
             try
@@ -108,7 +109,6 @@ namespace QA.Automation.UITests.LG20.Pages
                     if (button.Text == "Continue")
                     {
                         button.Click();
-                        break;
                     }
                 }
             }
@@ -125,15 +125,6 @@ namespace QA.Automation.UITests.LG20.Pages
             {
                 var getModal = GetModal();
                 return getModal != null;
-            }
-        }
-
-        public bool IsModalConfirmationDisplayed
-        {
-            get
-            {
-                var confirmModal = GlobalConfirmModal().GetElementFromCompoundClass(By.TagName("div"), "lg-modal lg-modal--confirm lg-modal--visible");
-                return confirmModal != null;
             }
         }
 

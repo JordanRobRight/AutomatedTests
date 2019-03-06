@@ -2155,7 +2155,7 @@ namespace QA.Automation.UITests
 
             //Step 4 select a player
             var playerName = td.TestAnswers["Player"]; // _envData.Player;
-            player.SelectPlayer("LG-TEST1");
+            player.SelectPlayer(td.TestAnswers["Player"]);
             player.Wait(2);
 
             PlayerDetail playerDetail = new PlayerDetail(_driver.Value, _configuration);
