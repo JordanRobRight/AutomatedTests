@@ -3281,6 +3281,328 @@ namespace QA.Automation.UITests
             playerGeneralInformation.Wait(3);
             LogOutWithoutLogin();
 
+
+        }
+        [TestCase]
+        // [Category("All")]
+        [Description("Test")]
+        // RK 2/15/19 - Change the name to something like TestPlayerPage
+        // I understand that this test was just to debug the player, but it is useful to just go through the page for like a smoke test or something.
+        public void ToDebugPlayers()
+        {
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(13));
+            EnvironmentTestData td = _testDataConfiguration.GetDataFromFile("TestData.json");
+            Login();
+
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            sb.SelectMenu("Players");
+
+            Players player = new Players(_driver.Value, _configuration);
+            PlayerDetail playerDetail = new PlayerDetail(_driver.Value, _configuration);
+            PlayerPlaylistWhatsPlaying pwp = new PlayerPlaylistWhatsPlaying(_driver.Value, _configuration);
+            PlayerPlaylistInfo ppl = new PlayerPlaylistInfo(_driver.Value, _configuration);
+            PlayerConfigureChannel pc = new PlayerConfigureChannel(_driver.Value, _configuration);
+            var playerName = td.TestAnswers["Player"]; //  _envData.Player;
+            player.Wait(1);
+            player.SelectPlayer(playerName);
+            player.Wait(2);
+
+            playerDetail.SelectTab("CONFIGURE");
+
+            string[] tagsToCompare = new[] { "Select A Channel", "Chevy-Buick-GMC TV Chevy, Buick & GMC Lounge TV" };
+            pc.GetChannelFields.Should().Contain(tagsToCompare).And.HaveCount(tagsToCompare.Length);
+
+            playerDetail.SelectTab("PLAYLISTS");
+
+
+            player.Wait(2);
+
+            // RK - 2/20/19 - Need to rethink these asserts because they might change because of the dates. 
+            string[] tagsToComparePI = new[] { "Name: Rob Expire items", "Id: 69a84aff-3155-417f-97b9-658087a9df29", "Schedule: January 2, 2019 - February 1, 2019 12:00 am - 11:59 pm", "Author: RKos@dciartform.com", "Created: 11/2/2018 12:20:36 AM", "Updated: 1/31/2019 10:30:53 AM", "Estimated Duration: 00:11:17", "4", "2", "3", "7", "1", "1", "Name: Rob Defer Install", "Id: 9bbb9199-34f6-4030-b9bc-45719091c320", "Schedule: January 30, 2019 - January 30, 2023 12:00 am - 11:59 pm", "Author: RKos@dciartform.com", "Created: 1/31/2019 2:46:00 AM", "Updated: 2/13/2019 2:14:37 AM", "Estimated Duration: 00:01:45", "1", "1", "1", "Name: Scott Widget Test", "Id: 56d7406b-ef9b-48ed-b27e-4d7f83b15503", "Schedule: October 16, 2018 - October 18, 2018 12:00 am - 11:59 pm", "Author: lamers@dciartform.com", "Created: 10/16/2018 7:39:36 PM", "Updated: 2/15/2019 3:45:41 AM", "Estimated Duration: 00:03:15", "2", "2", "1" };
+            //ppl.GetPlaylistInfo.Should().Contain(tagsToComparePI).And.HaveCount(tagsToComparePI.Length);
+
+            string[] tagsToCompare2 = new[] { "Rob Expire items", "January 2, 2019 - February 1, 2019 12:00 am - 11:59 pm", "brand: Brand", "traffic: Traffic", "video: 0f6ee191-1127-47a2-89d3-5b397abc90c6 (1)...", "image: Lighthouse.jpg", "weather: Weather", "traffic: Traffic", "screenfeedvideo: WeatherNational", "screenfeedvideo: ReutersNews", "screenfeedvideo: Engadget", "weather: Weather", "traffic: Traffic", "screenfeedvideo: Destinations", "screenfeedvideo: BestBites", "screenfeedvideo: APNews", "image: Landing", "screenfeedvideo: BestBites (Copy 1)", "image: 878455-code-geass-simple-background.jpg", "image: ISS-Rim.jpg", "Rob Defer Install", "January 30, 2019 - January 30, 2023 12:00 am - 11:59 pm", "image: ISS-Rim.jpg", "traffic: Traffic", "weather: Weather", "Scott Widget Test", "October 16, 2018 - October 18, 2018 12:00 am - 11:59 pm", "brand: Brand", "traffic: Traffic", "weather: Weather", "traffic: Traffic", "weather: Weather" };
+            pwp.GetWhatsPlayingFields.Should().Contain(tagsToCompare2).And.HaveCount(tagsToCompare2.Length);
+
+            PlayerGeneralDevice pd = new PlayerGeneralDevice(_driver.Value, _configuration);
+
+            playerDetail.SelectTab("GENERAL");
+            string[] tagsToCompare3 = new[] { "Ping Device", "Refresh App", "Restart App", "Restart Device" };
+            pd.GetDeviceButtons.Should().Contain(tagsToCompare3).And.HaveCount(tagsToCompare3.Length);
+
+            string[] strArrayKey = pd.GetDeviceFields.Select(x => (x.Key)).ToArray();
+            string[] strArrayValue = pd.GetDeviceFields.Select(x => (x.Value)).ToArray();
+            string[] tagsToCompareKey = new[] { "Last Online:", "Model", "Computer Name:", "Ping Data:", "OS / Version", "Memory / Hard Drive", "Hard Line / Wifi Connected", "IP Address" };
+            string[] tagsToCompareValue = new[] { "2/15/2019 5:03:18 AM", "GA-N3050N", "LG-QAROB", "--", "Linux: Ubuntu 18.04 (bionic)", "1.8GB / 58GB (69% free)", "Connection: Ethernet", "216.206.142.2" };
+            // RK - 2/20/19 - Need to rethink these asserts because they might change because of the dates. 
+
+            // strArrayKey.Should().Contain(tagsToCompareKey).And.HaveCount(tagsToCompareKey.Length);
+            //strArrayValue.Should().Contain(tagsToCompareValue).And.HaveCount(tagsToCompareValue.Length);
+
+            PlayerGeneralInstalledPrograms pgd = new PlayerGeneralInstalledPrograms(_driver.Value, _configuration);
+            string[] tagsToCompareD3 = new[] { "LCC", "LGP", "WidgetWeather", "WidgetImage", "WidgetTraffic", "WidgetVideo", "WidgetBrand", "WidgetStatusBoard", "WidgetAdBuilder", "WidgetPricing" };
+            pgd.GetInstalledProgramsLabel.Should().Contain(tagsToCompareD3).And.HaveCount(tagsToCompareD3.Length);
+
+            PlayerGeneralTags pt = new PlayerGeneralTags(_driver.Value, _configuration);
+
+            string[] tagsToCompare4 = new[] { "Standard Tags", "Admin Tags", "System Tags", "", "", "" };
+            pt.GetSystemGeneratedListOfTags.Should().Contain(tagsToCompare4).And.HaveCount(tagsToCompare4.Length);
+
+            PlayerGeneralLocationDetails pld = new PlayerGeneralLocationDetails(_driver.Value, _configuration);
+
+            string[] tagsToCompare5 = new[] { "Phone:", "Dealer Code :", "" };
+            pld.GetPlayerLocationDetailsFields.Should().Contain(tagsToCompare5).And.HaveCount(tagsToCompare5.Length);
+
+            PlayerGeneralInformation pgi = new PlayerGeneralInformation(_driver.Value, _configuration);
+            // pgi.PlayerInformationEditButtonClick();
+            pgi.Wait(2);
+
+            string[] tagsToCompare6 = new[] { "Player Name: LG-QAROB", "Description:", "ID:", "Product:", "Subscription:", "License Key:", "Expiration Date:", "Zone:", "Last Online:", "Created:", "Updated:", "Registered:", "Registered By:", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
+            pgi.GetPlayerInformationFields.Should().Contain(tagsToCompare6).And.HaveCount(tagsToCompare6.Length);
+
+            //  pgi.PlayerModal.PlayerNameTextField = "ds";
+            //pgi.PlayerModal.SelectZoneSelectBox = "Service";
+            //pgi.PlayerModal.ModalCancelButtonClick();
+            // pgi.PlayerModal.ModalContinueButtonClick();
+            //  pgi.PlayerModal.ModalSaveButtonClick();
+
+        }
+       
+        [TestCase]
+        //[Category("All")]
+        [Description("Test")]
+        public void TODebug_Location()
+        {
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(8));
+            Login();
+
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            ClientMenu cm = new ClientMenu(_driver.Value, _configuration);
+            cm.SelectClient("GM");
+            cm.Wait();
+            LocationDetail ld = new LocationDetail(_driver.Value,_configuration);
+            Locations loc = new Locations(_driver.Value, _configuration);
+            GeneralLocationDetailsSection lds = new GeneralLocationDetailsSection(_driver.Value, _configuration);
+            GeneralLicenseAndSubscriptionsSection ls = new GeneralLicenseAndSubscriptionsSection(_driver.Value, _configuration);
+            GeneralTags GeneralTags = new GeneralTags(_driver.Value,_configuration);
+            ConfigureGeneralSection ConfigureGeneralSection = new ConfigureGeneralSection(_driver.Value,_configuration);
+            ConfigureTickersSection tickers = new ConfigureTickersSection(_driver.Value, _configuration);
+            ConfigureSalesAppointments sales = new ConfigureSalesAppointments(_driver.Value,_configuration);
+            ConfigureSMCSettings smc = new ConfigureSMCSettings(_driver.Value,_configuration);
+            GeneralSDSPriceLists GeneralSDSPriceLists = new GeneralSDSPriceLists(_driver.Value, _configuration);
+            SalesAppointmentManagementModal SalesAppointmentManagementModal = new SalesAppointmentManagementModal(_driver.Value);
+            TagManagementModal TagManagement = new TagManagementModal(_driver.Value);
+            ConfigureSDSSettingsSection ConfigureSDSSettingsSection = new ConfigureSDSSettingsSection(_driver.Value,_configuration);
+            sb.SelectMenu("Locations");                     
+            sb.Wait(6);
+            //sb.Wait(3);
+            //loc.IsLocationHeader.Should().ContainAny("");            
+            String[] tagsToCompareLoc = new[] { "Name", "", "Location Code", "", "# of License", "", "Address", "", "City", "", "State", "", "Zip", "", "Client Programs", "" };
+            loc.GetLocationColumn.Should().Contain(tagsToCompareLoc).And.HaveCount(tagsToCompareLoc.Length);
+
+      
+           
+            loc.SearchFieldLocations = "KUDICK CHEVROLET BUICK";//search the location by name 
+            loc.Wait(6);
+            loc.SelectLocation("KUDICK CHEVROLET BUICK");//currently clicking location name
+            lds.Wait(3);
+           // ld.GetModals.Should().Contain(new[] { "Name", "Location Code", "# of License", "Address", "City", "State", "Zip", "Client Programs", "" });
+            /*  GeneralTags.LocationTagsEditButtonClick();
+              GeneralTags.Wait(2);
+
+
+              // lds.IsLocationSettingsFieldValue.Should().Contain(new[] { "Phone", "Client", "BAC", "Location Code(s)", "Reportable", "Status", "Updated", "Registered", "Registered By", "Sales District Code", "Zone Code", "Region Code", "Dealer Key", "Appointment Date", "Facing Warehouse Code", "Created" });
+              TagManagement.TagManagementTextField = "test";
+              //ld.LocationModal.TagManagementTextField = "test";
+
+              GeneralTags.AddTagManagementButton();*/
+            ld.SelectTab_LocationDetail("CONFIGURE");
+
+            
+            sales.SalesAppointmentEditButtonClick();
+           
+            // ld.SelectConfigureTab_LocationDetail();
+            //ld.SelectTab("GENERAL");
+
+
+            //sales.SalesAppointmentEditButtonClick();
+            SalesAppointmentManagementModal.AddGreetingAppointmentModalPlusButton();
+            //sales.ClickAddGreetingAppointmentButton();
+            // ld.LocationModal.SaleAppointmentCustomerName = "cus";
+            ld.Wait(2);
+            SalesAppointmentManagementModal.CustomerNameTextBox = "customer";
+            SalesAppointmentManagementModal.VehicleTextBox = "customer8989";
+            SalesAppointmentManagementModal.SalespersonTextBox = "customer11111";
+            SalesAppointmentManagementModal.CustomMessageTextBox = "customer3232";
+            ld.Wait(3);
+            SalesAppointmentManagementModal.SelectAppointmentDay();
+            ld.Wait(2);
+            // SalesAppointmentManagement.ClickAppointmentTime();
+            SalesAppointmentManagementModal.AppointmentTimeSelectBox = "5:00 am";
+            ld.Wait(2);
+           
+            sales.SaleAppointmentModal.ClickModalSubmitButton("Add");
+            sales.Wait(3);
+
+            sales.SaleAppointmentModal.ClickModalSubmitButton("Save");
+            sales.Wait(4);
+            ld.SelectTab_LocationDetail("GENERAL");
+            lds.Wait(2);
+
+            String[] tagsToCompareLDS = new[] { "Phone:", "Client:", "BAC:", "Location Code(s):", "Reportable:", "Status:", "Created:", "Updated:", "Registered:", "Registered By:", "Sales District Code:", "Zone Code:", "Region Code:", "Dealer Key:", "Appointment Date:", "Facing Warehouse Code:" };
+            lds.GetLocationDetailsSectionFields.Should().Contain(tagsToCompareLDS).And.HaveCount(tagsToCompareLDS.Length);
+
+            
+            lds.LocationDetailsEditButtonClick();
+            lds.Wait(2);            
+            lds.GeneralLocationDetailsSectionModal.IsModalDisplay.Should().BeTrue();
+            String[] tagsToCompare = new[] { "Name", "Address", "City", "State", "Zip", "Primary Phone Number", "Website", "Client", "BAC", "Location Code(s)", "Reportable", "Status", "Sales District Code", "Zone Code", "Region Code", "Dealer Key", "Appointment Date", "Facing Warehouse Code" };
+            lds.GetLocationSettingsFieldValue.Should().Contain(tagsToCompare).And.HaveCount(tagsToCompare.Length);
+
+
+            String[] tagsToCompareTimeStamp = new[] { "Created:", "Registered:", "Updated:", "Registered By:" };
+            lds.GetTimeStampFields.Should().Contain(tagsToCompareTimeStamp).And.HaveCount(tagsToCompareTimeStamp.Length);
+
+            lds.GeneralLocationDetailsSectionModal.ModalCancelButtonClick();
+            lds.Wait(2);
+
+            //GeneralTags.GetLocationTagsFields.Should().Contain(new[] { "Standard Tags", "Admin Tags Code", "System Tags", "" });
+            String[] tagsToCompareTags = new[] { "Standard Tags", "Admin Tags", "System Tags" };
+            GeneralTags.GetLocationTagsFields.Should().Contain(tagsToCompareTags).And.HaveCount(tagsToCompareTags.Length);
+
+            GeneralTags.LocationTagsEditButtonClick();
+            GeneralTags.Wait(2);
+
+
+            // lds.IsLocationSettingsFieldValue.Should().Contain(new[] { "Phone", "Client", "BAC", "Location Code(s)", "Reportable", "Status", "Updated", "Registered", "Registered By", "Sales District Code", "Zone Code", "Region Code", "Dealer Key", "Appointment Date", "Facing Warehouse Code", "Created" });
+            TagManagement.TagManagementTextField = "test";
+            //ld.LocationModal.TagManagementTextField = "test";
+            GeneralTags.TagManagementModal.ClickModalSubmitButton("Add");
+            GeneralTags.TagManagementModal.ClickOffScreen();
+            GeneralTags.Wait(2);
+           // GeneralTags.tagManagementModal.ModalCancelButtonClick();
+           // GeneralTags.AddTagManagementButton();
+           ld.SelectTab_LocationDetail("CONFIGURE");
+            // sales.CreateSalesAppointmentsLink();
+
+
+            String[] tagsToCompareSMC = new[] { "Sales Appointments", "Menu Pricing", "Default Settings" };
+            smc.GetSMCSettingsField.Should().Contain(tagsToCompareSMC).And.HaveCount(tagsToCompareSMC.Length);
+
+            String[] tagsToCompareTicker = new[] { "", "", "JB Active Ticker Test", "", "", "JB Inactive Ticker Test", "", "", "JB Active Ticker Lonnnnnnnnnnng Teeeeeeeeest TessssssssT", "", "", "JB Active Ticker Looooonnnnnnnnnnnger TeeeeeeeeeesT Strrrrrrrrrrrrriiiiiiiiiing" };
+            tickers.GetTickersFields.Should().Contain(tagsToCompareTicker).And.HaveCount(tagsToCompareTicker.Length);
+
+            ConfigureGeneralSection.WelcomeMessageTextField = "Automation message";
+            ls.Wait(2);
+
+            ld.SelectTab_LocationDetail("GENERAL");
+
+            ls.Wait(3);
+
+            String[] tagsToCompareTickerLic = new[] { "", "", "License Key", "Client Program", "Zone", "Subscription", "Registration Date", "Expires", "Player Name", "" };
+            ls.GetLicensesAndSubscriptionsFields.Should().Contain(tagsToCompareTickerLic).And.HaveCount(tagsToCompareTickerLic.Length);
+
+
+
+
+            // lds.LocationDetailsEditButtonClick();           
+            // ld.SelectConfigureTab_LocationDetail();
+            // ld.SelectGeneralTab_LocationDetail();
+            loc.Wait(2);
+
+
+        }
+
+        [TestCase]
+        //[Category("All")]
+        [Description("Test")]
+        public void TODebug_Location2()
+        {
+           // System.Threading.Thread.Sleep(TimeSpan.FromSeconds(11));
+            Login();
+            ClientMenu cm = new ClientMenu(_driver.Value, _configuration);
+            cm.SelectClient("Subaru");
+            cm.Wait();
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            Locations loc = new Locations(_driver.Value, _configuration);
+            LocationDetail ld = new LocationDetail(_driver.Value, _configuration);
+            GeneralSDSPriceLists GeneralSDSPriceLists = new GeneralSDSPriceLists(_driver.Value,_configuration);
+            ConfigureSMCSettings smc = new ConfigureSMCSettings(_driver.Value, _configuration);
+            ConfigureSalesAppointments sales = new ConfigureSalesAppointments(_driver.Value, _configuration);
+            AccessoryPricingModal AccessoryPricingModal = new AccessoryPricingModal(_driver.Value);
+            TickerManagementModal TickerManagementModal = new TickerManagementModal(_driver.Value);
+            ConfigureTickersSection ConfigureTickersSection = new ConfigureTickersSection(_driver.Value,_configuration);
+            ConfigurePriceListsSection ConfigurePriceListsSection = new ConfigurePriceListsSection(_driver.Value,_configuration);
+            ConfigureSDSSettingsSection ConfigureSDSSettingsSection = new ConfigureSDSSettingsSection(_driver.Value, _configuration);
+            ConfigureServiceAppointments ConfigureServiceAppointments = new ConfigureServiceAppointments(_driver.Value,_configuration);
+            sb.SelectMenu("Locations");
+            sb.Wait(6);
+            loc.SearchFieldLocations = "Sommer's Subaru";//search the location by name 
+            loc.Wait(7);
+            loc.SelectLocation("Sommer's Subaru");//currently clicking location name
+            loc.Wait(2);
+            ld.SelectTab_LocationDetail("CONFIGURE");
+            loc.Wait(2);
+
+            String[] tagsToCompareTicker = new[] { "", "", "", "General", "Price Lists", "SDS Price Lists", "Tickers", "Service Appointments", "SMC Settings", "SDS Settings" };
+            ld.GetModals.Should().Contain(tagsToCompareTicker).And.HaveCount(tagsToCompareTicker.Length);
+
+
+
+            ConfigureServiceAppointments.ServiceAppointmentEditButtonClick();
+            ConfigureServiceAppointments.Wait(2);
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.AddGreetingAppointmentModalPlusButton();
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.CustomerNameTextBox = "name1";
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.MakeTextBox = "111e";
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.ModelTextBox = "rx";
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.AdvisorTextBox = "testPerson";
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.SelectAppointmentDay();
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.CustomMessageTextBox = "automation test";
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.AppointmentTimeSelectBox="5:00 am";
+            //ConfigureServiceAppointments.ServiceAppointmentManagementModal.YearSelectBox("1962");
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.YearSelectBox("1965");
+            ConfigureServiceAppointments.Wait(2);
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.ClickModalSubmitButton("Add");
+            ConfigureServiceAppointments.Wait(4);
+            ConfigureServiceAppointments.ServiceAppointmentManagementModal.ClickModalSubmitButton("Save");
+            ConfigureServiceAppointments.Wait(4);
+
+            String[] tagsToCompareSDS = new[] { "Financial Calculator", "Display Accessory MSRP Pricing", "Default Settings", "BCC Email:" };
+            ConfigureSDSSettingsSection.GetSDSSettingsTexts.Should().Contain(tagsToCompareSDS).And.HaveCount(tagsToCompareSDS.Length);
+
+            ConfigureSDSSettingsSection.BCCEmailTextField = null;
+            ConfigureSDSSettingsSection.BCCEmailTextField = "brodsko@dciartform.com";
+            ConfigureSDSSettingsSection.Wait(3);
+
+            ConfigurePriceListsSection.SelectPriceListsOption ( "Edit Default SMC Service Price List");
+            ConfigurePriceListsSection.Wait(2);
+            ConfigurePriceListsSection.PriceListModal.AddCustomPricePlusButton();
+            ConfigurePriceListsSection.PriceListModal.CustomPriceDescriptionText("automation test");
+            ConfigurePriceListsSection.PriceListModal.CustomPriceInputText("500.00");
+            ConfigurePriceListsSection.PriceListModal.ClickModalSubmitButton("Save");
+            ConfigurePriceListsSection.Wait(4);
+            ConfigureTickersSection.TickersEditButtonClick();
+            ConfigureTickersSection.Wait(2);
+            ConfigureTickersSection.TickerManagementModal.AddTickerItemModalPlusButton();
+            ConfigureTickersSection.Wait(2);
+            ConfigureTickersSection.TickerManagementModal.TickerFeedText("ticker automation");
+            //ConfigureTickersSection.tickerManagementModal.TickersTextField = "test";
+            ConfigureTickersSection.TickerManagementModal.ClickSaveTickerManagementButton();
+            ConfigureTickersSection.Wait(3);
+
+            GeneralSDSPriceLists.SelectPriceOption("Edit SDS Price Options");
+            loc.Wait(2);
+            GeneralSDSPriceLists.GeneralSDSPriceListsModal.AccessoryPricingCheckboxValue = "factory";
+            GeneralSDSPriceLists.GeneralSDSPriceListsModal.SelectCheckbox = true;
+            // GeneralSDSPriceLists.GeneralSDSPriceListsModal.AccessoryPricing = "kit";
+            // GeneralSDSPriceLists.GeneralSDSPriceListsModal.FactoryCheckbox = true;
+            GeneralSDSPriceLists.GeneralSDSPriceListsModal.ClickModalSubmitButton("Save");
+            GeneralSDSPriceLists.Wait(2);
+            //GeneralSDSPriceLists.GeneralSDSPriceListsModal.ClickSaveCancelSaleAppointmentButton("Save");
+            //AccessoryPricingModal.IsModalDisplay.Should().BeTrue();
+            //smc.IsSMCSettingsField.Should().Contain(new[] { "Default Settings", "Custom Ads", "Dare to Compare (Competitive Pricing)", "Service Menu" });
+
+
         }
         [TestCase]
         //[Category("All")]

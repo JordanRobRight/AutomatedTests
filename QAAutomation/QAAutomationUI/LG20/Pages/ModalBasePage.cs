@@ -181,7 +181,7 @@ namespace QA.Automation.UITests.LG20.Pages
             var modalContainer = getModalDialog.FindElement(By.ClassName(_modalContainerName));
             var modalContainerButtons = modalContainer.FindElements(By.TagName("button")).ToList();
             return modalContainerButtons;
-        }
+        }        
 
         protected IWebElement GetModal()
         {
