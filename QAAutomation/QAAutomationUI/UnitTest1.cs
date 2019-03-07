@@ -3067,7 +3067,7 @@ namespace QA.Automation.UITests
 
         }
         [TestCase]
-        [Category("All")]
+        [Category("Pending")]
         [Description("TestCase 2138")]
         public void CBAMPlayerSearchBox()
         {
