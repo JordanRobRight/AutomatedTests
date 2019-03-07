@@ -1,0 +1,36 @@
+{
+  "version": "1",
+  "Data": [
+    {
+      "EnvironmentName": "Test",
+      "TestAnswers": {
+        "PlayerDetailTitle": "Player Details",
+        "PlayerMenu": "Players",
+        "PlayerName": "LG-QAROB",
+        "InvalidPlayerName": "test invalid",
+        "LocationName": "KUDICK CHEVROLET BUICK",
+        "zoneName": "N/A",
+        "ClientProgram": "Guest TV",
+        "Subscription": "premium",
+        "LastOnline": "2/23/2019 3:08:50 AM",
+        "tagsToCompare": "No matching records"
+      }
+    },
+    {
+      "EnvironmentName": "PreProd",
+      "TestAnswers": {
+        "Player": "LG-GREGDEV",
+        "PlayerDetailTitle": "Player Details",
+        "PlayerMenu": "Players",
+        "PlayerName": "LG-GREGDEV",
+        "InvalidPlayerName": "test invalid",
+        "LocationName": "HANSEN MOTOR COMPANY",
+        "zoneName": "N/A",
+        "ClientProgram": "Guest TV",
+        "Subscription": "standard",
+        "LastOnline": "12/12/2018 2:01:00 PM",
+        "tagsToCompare": "No matching records"
+      }
+    }
+  ]
+}

@@ -14,7 +14,8 @@ namespace QA.Automation.UITests.LG20
         private IWebDriver _driver;
         #endregion 
 
-        #region --- Constructores ---
+        #region --- Constructors ---
+
         protected LGBasePage(IWebDriver driver, TestSystemConfiguration config)
         {
             _config = config;
@@ -122,7 +123,8 @@ namespace QA.Automation.UITests.LG20
             }
         }
 
-        public string SearchFieldLocations
+        //can be used for pages players, location
+        public string SearchBox
         {
             get
             {
@@ -136,7 +138,7 @@ namespace QA.Automation.UITests.LG20
                 searchText.SendKeysOrClear(value);
             }
         }
-
+        
 
         public TestSystemConfiguration Config => _config;
 

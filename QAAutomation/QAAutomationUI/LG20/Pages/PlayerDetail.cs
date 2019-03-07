@@ -20,13 +20,21 @@ namespace QA.Automation.UITests.LG20.Pages
         private static readonly string _pdwurtStatusWrapper = @"pdwurt-status-wrapper";
         private static readonly string _pdwurButtons = @"pdwur-item-text";
         private static readonly string xpathPlugPlayerName = @"//a[contains(@href,'LG-QA')]";
-       
+        private static readonly string _pageSearchField = @"VueTables__search-field";// search field class name
+        private static readonly string _pageUtilBarContainerClassName = @"form-group form-inline pull-left VueTables__search";
+        private static string _playerContainer = @"player-container";
+        private static string _playerName = @"//span[text()='ReplaceText']";
+        private static string _playerDetailTitle = @"//div[text()='ReplaceText']";
+        public string PlayerName { get; set; }
+
         #endregion
 
         #region --- Constructor ---
         internal PlayerDetail(IWebDriver driver, TestSystemConfiguration config) : base(driver, config)
         {
-
+            PageContainerName = _playerContainer; //Element Div By: Id
+            PageSearchField = _pageSearchField;
+            PageUtilBarContainerClassName = _pageUtilBarContainerClassName;
         }
 
         #endregion
@@ -52,7 +60,7 @@ namespace QA.Automation.UITests.LG20.Pages
 
 
 
-//        public bool VerifyOfflineStatusPlayerDetailPage
+        //        public bool VerifyOfflineStatusPlayerDetailPage
         public bool IsPlayerOfflineStatus
         {
             get
@@ -67,23 +75,23 @@ namespace QA.Automation.UITests.LG20.Pages
                 {
                     offlinePlayerStatus = Driver.FindElement(By.CssSelector(_playerOnlineStatusPlayersPage));
                 }
-                
+
                 return offlinePlayerStatus?.Displayed ?? false;
             }
         }
-       
+
 
         public string GetCurrentTab()
         {
             var tabs = Driver.WindowHandles;
-            if(tabs.Count == 2)
+            if (tabs.Count == 2)
             {
                 var secondTab = Driver.SwitchTo().Window(tabs[1]);
                 string url2 = secondTab.Url;
-                return url2;                
+                return url2;
             }
-            Driver.SwitchTo().Window(tabs[0]);           
-            string url = Driver.Url;            
+            Driver.SwitchTo().Window(tabs[0]);
+            string url = Driver.Url;
             return url;
         }
 
@@ -97,20 +105,33 @@ namespace QA.Automation.UITests.LG20.Pages
         }
 
         public void PlayerDetailSelectScreenConnect()
-        {            
-                var links = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _pdwurtStatusWrapper).FindElements(By.TagName("i"));
-                IWebElement link = links.FirstOrDefault(a => a.GetAttribute("class") != null &&
-                                                                 a.GetAttribute("class").Equals("fa fa-plug", StringComparison.OrdinalIgnoreCase));
-                link.Click(); 
+        {
+            var links = SeleniumCommon.GetElement(this.Driver, SeleniumCommon.ByType.ClassName, _pdwurtStatusWrapper).FindElements(By.TagName("i"));
+            IWebElement link = links.FirstOrDefault(a => a.GetAttribute("class") != null &&
+                                                             a.GetAttribute("class").Equals("fa fa-plug", StringComparison.OrdinalIgnoreCase));
+            link.Click();
         }
-       
+
         public void PlayerDetailCloseScreenconnect()
         {
             var currentTab = Driver.WindowHandles;
-            Driver.Close();          
+            Driver.Close();
         }
 
-        public bool VerifyNotSetupPlayer()
+        //gets page title, "Player Details"
+        public string PlayerDetailTitle {get;set;}
+        public bool IsPageTitle
+        {
+            get
+            {
+                var getPageTitle = GetPageContainer().FindElement(By.XPath(_playerDetailTitle.Replace("ReplaceText", PlayerDetailTitle)));
+                bool pageTitle = getPageTitle.Enabled;          
+                return pageTitle;
+            }
+           
+    }
+
+    public bool VerifyNotSetupPlayer()
         {
             throw new NotImplementedException();
         }

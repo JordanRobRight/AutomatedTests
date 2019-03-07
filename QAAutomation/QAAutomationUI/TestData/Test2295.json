@@ -1,0 +1,21 @@
+{
+  "version": "1",
+  "Data": [
+    {
+      "EnvironmentName": "Test",
+      "TestAnswers": {
+        "LocationName": "KUDICK CHEVROLET BUICK",
+        "tagsToCompare": "Phone:,Dealer Code :"
+      }
+
+    },
+    {
+      "EnvironmentName": "PreProd",
+      "TestAnswers": {
+        "Player": "LG-TEST3",
+        "LocationName": "SELLERS BUICK GMC INC.",
+        "tagsToCompare": "Phone:,Dealer Code :"
+      }
+    }
+  ]
+}

@@ -19,6 +19,8 @@ namespace QA.Automation.UITests.LG20.Pages
         private static readonly string _pdwurButtons = @"pdwur-item-text";//class name
         private static string _locationContainer = @"location-container";
         private static string _modalSpanText = @"lgfe-tile-grid-item-header-text";
+        private static string _locationName = @"//div[contains(text(),'ReplaceLocationName')]";
+        
         //  private LocationsSettingModal _locationsModal = null;
         /*  internal SubCards.LocationsSettingModal LocationModal
           {
@@ -44,6 +46,7 @@ namespace QA.Automation.UITests.LG20.Pages
         #endregion
 
         #region --- Override Methods ---
+        public string locationName { get; set; }
         public override void Perform()
         {
             throw new NotImplementedException();
@@ -83,7 +86,27 @@ namespace QA.Automation.UITests.LG20.Pages
                 }
                 return modalList;
             }
+        }
+        public List<string> GetLocationName
+        {
+            get
+            {
+                var locationName = GetPageContainer().FindElements(By.XPath(_locationName.Replace("ReplaceLocationName", this.locationName)));
+                List<string> list = new List<string>();
+                foreach (var name in locationName)
+                {
+                    list.Add(name.Text);
+                }               
+               
+                return list;
+            }
+        }
 
+        public void BackNavigation()
+        {
+            Wait(3);
+            Driver.Navigate().Back();
+        }
             #endregion
 
             #region --- Private Methods ---
@@ -91,6 +114,6 @@ namespace QA.Automation.UITests.LG20.Pages
 
 
             #endregion
-        }
+        
     }
 }

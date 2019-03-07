@@ -2155,7 +2155,7 @@ namespace QA.Automation.UITests
 
             //Step 4 select a player
             var playerName = td.TestAnswers["Player"]; // _envData.Player;
-            player.SelectPlayer(td.TestAnswers["Player"]);
+            player.SelectPlayer(td.TestAnswers["PlayerOnline"]);
             player.Wait(2);
 
             PlayerDetail playerDetail = new PlayerDetail(_driver.Value, _configuration);
@@ -3066,7 +3066,222 @@ namespace QA.Automation.UITests
             //  pgi.PlayerModal.ModalSaveButtonClick();
 
         }
-       
+        [TestCase]
+        [Category("All")]
+        [Description("TestCase 2138")]
+        public void CBAMPlayerSearchBox()
+        {
+            EnvironmentTestData td = _testDataConfiguration.GetDataFromFiles("TestPlayers.json", "Test2138.json");
+
+      
+            Login();
+            SideBar sb = new SideBar(_driver.Value, _configuration);         
+            Players player = new Players(_driver.Value, _configuration);
+
+            sb.SelectMenu(td.TestAnswers["PlayerMenu"]);
+            player.Wait(9);
+
+            string stringBefore = null;
+            foreach (var recordCount in player.GetTotalRecordCount)
+            {
+                stringBefore = recordCount.ToString();
+            }
+            player.Wait(2);
+            char countBefore = stringBefore[0]; //get the first char 
+
+            player.SearchBox = td.TestAnswers["InvalidPlayerName"];// invalid player name
+            player.Wait(3);
+
+            List<string> tagsToCompare = _testDataConfiguration.ConvertStringToList(td.TestAnswers["tagsToCompare"]);
+
+            player.GetNoMatchingRecordText.Should().Contain(tagsToCompare).And.HaveCount(tagsToCompare.Count);
+
+          //  string[] tagsToCompare = new[] { "No matching records" };
+          //  player.GetNoMatchingRecordText.Should().Contain(tagsToCompare).And.HaveCount(tagsToCompare.Length);//validate after invalid data entered
+            player.Wait();
+
+            player.SearchBox = null;
+            player.SearchBox = td.TestAnswers["PlayerName"];//valid player name
+            // player.SearchBox = "LG-QAROB";//valid player name
+            player.Wait(7);
+            player.PlayerName = "LG-QAROB";//send data to getter and setter property, it is used in xpath under GetPlayerDisplayed method
+            //string[] tagsToCompare1 = new[] { "LG-QAROB" };
+            List<string> tagsToCompare2 = _testDataConfiguration.ConvertStringToList(td.TestAnswers["tagsToCompare2"]);
+           // player.GetPlayerNameDisplayed.Should().Contain(tagsToCompare1).And.HaveCount(tagsToCompare1.Length);//validate player is shown after search
+            player.GetPlayerNameDisplayed.Should().Contain(tagsToCompare2).And.HaveCount(tagsToCompare2.Count);//validate player is shown after search
+            player.Wait(2);
+
+            player.SearchBox = null;
+            player.SearchBox = td.TestAnswers["LocationName"];//search by location
+            player.GetPlayerNameDisplayed.Should().Contain(tagsToCompare2).And.HaveCount(tagsToCompare2.Count);//validate player is shown after search
+
+            player.SearchBox = null;
+            player.SearchBox = td.TestAnswers["zoneName"];//search by zone
+            player.GetPlayerNameDisplayed.Should().Contain(tagsToCompare2).And.HaveCount(tagsToCompare2.Count);//validate player is shown after search
+
+            player.SearchBox = null;
+            player.SearchBox = td.TestAnswers["ClientProgram"];//search by client program
+            player.GetPlayerNameDisplayed.Should().Contain(tagsToCompare2).And.HaveCount(tagsToCompare2.Count);//validate player is shown after search
+
+            player.SearchBox = null;
+            player.SearchBox = td.TestAnswers["Subscription"];//search by subscription
+            player.GetPlayerNameDisplayed.Should().Contain(tagsToCompare2).And.HaveCount(tagsToCompare2.Count);//validate player is shown after search
+
+            player.SearchBox = null;
+            player.SearchBox = td.TestAnswers["LastOnline"]; //search by last online
+            player.GetPlayerNameDisplayed.Should().Contain(tagsToCompare2).And.HaveCount(tagsToCompare2.Count);//validate player is shown after search
+
+            player.SearchBox = null;
+            player.Wait(4);
+            string stringAfter = null;
+            foreach (var recordCount in player.GetTotalRecordCount)
+            {
+                stringAfter = recordCount.ToString();
+            }
+            player.Wait(2);
+            //char countAfter = stringBefore[0];  //get the first char          
+            stringAfter.Should().BeEquivalentTo(stringBefore);
+
+            LogOutWithoutLogin();
+        }
+
+        [TestCase]
+        [Category("Pending")]
+        [Description("TestCase 2295")]
+        public void CBAMPlayerGeneralLocationDetailsCard()
+        {
+
+            Login();
+             EnvironmentTestData td = _testDataConfiguration.GetDataFromFiles("TestPlayers.json", "Test2295.json");
+            
+            Players player = new Players(_driver.Value, _configuration);        
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            PlayerGeneralLocationDetails playerGeneralLocationDetails = new PlayerGeneralLocationDetails(_driver.Value,_configuration);
+            //PlayerGeneralLocationDetails pldPlayerGeneralLocationDetails = new PlayerGeneralLocationDetails(_driver.Value, _configuration);
+            LocationDetail locationDetail = new LocationDetail(_driver.Value,_configuration);
+            PlayerDetail PlayerDetail = new PlayerDetail(_driver.Value,_configuration);
+
+            sb.SelectMenu(td.TestAnswers["PlayerMenu"]);
+            
+            player.Wait(9);
+
+            player.SearchBox = td.TestAnswers["PlayerName"];
+            player.Wait(7);
+            player.SelectPlayer(td.TestAnswers["PlayerName"]);
+            player.Wait(2);
+
+            //validate player details title
+            PlayerDetail.PlayerDetailTitle = td.TestAnswers["PlayerDetailTitle"];
+            PlayerDetail.IsPageTitle.Should().BeTrue();
+
+            //validate the location details fields
+            List<string> tagsToCompare = _testDataConfiguration.ConvertStringToList(td.TestAnswers["tagsToCompare"]);
+            playerGeneralLocationDetails.GetPlayerLocationDetailsFields.Should().Contain(tagsToCompare).And.HaveCount(tagsToCompare.Count);
+            
+            
+            //playerGeneralLocationDetails.LocationName = td.TestAnswers["LocationName"];//set value of location name to be clicked on
+            playerGeneralLocationDetails.ClickLocation(td.TestAnswers["LocationName"]);
+            player.Wait();
+
+            //validate location name KUDICK CHEVROLET BUICK navigated to
+            locationDetail.locationName = td.TestAnswers["LocationName"];
+            List<string> tagsToCompare2 = _testDataConfiguration.ConvertStringToList(td.TestAnswers["LocationName"]);
+            locationDetail.GetLocationName.Should().Contain(tagsToCompare2).And.HaveCount(tagsToCompare2.Count);
+
+            sb.SelectMenu(td.TestAnswers["PlayerMenu"]);
+            player.SelectPlayer(td.TestAnswers["PlayerName"]);
+            PlayerDetail.IsPageTitle.Should().BeTrue();
+
+            playerGeneralLocationDetails.ClickLocation(td.TestAnswers["LocationName"]);
+
+            //Step 10 under review
+
+            locationDetail.BackNavigation();
+            PlayerDetail.Wait(2);
+            PlayerDetail.IsPageTitle.Should().BeTrue();
+
+            LogOutWithoutLogin();
+        }
+
+        [TestCase]
+        [Category("Pending")]
+        [Description("TestCase 2293")]
+        public void CBAMPlayerGeneralEditPlayerInformationCard()
+        {
+            EnvironmentTestData td = _testDataConfiguration.GetDataFromFiles("TestPlayers.json", "Test2293.json");
+         
+            Login();
+            SideBar sb = new SideBar(_driver.Value, _configuration);
+            sb.SelectMenu(td.TestAnswers["PlayerMenu"]);
+            Players player = new Players(_driver.Value, _configuration);
+            PlayerGeneralInformation playerGeneralInformation = new PlayerGeneralInformation(_driver.Value, _configuration);
+            player.Wait(6);
+            player.SearchBox = td.TestAnswers["PlayerName"];
+            player.Wait(7);
+            player.SelectPlayer(td.TestAnswers["PlayerName"]);
+            
+            playerGeneralInformation.Wait(1);
+            playerGeneralInformation.PlayerInformationEditButtonClick();
+            playerGeneralInformation.Wait(2);
+            playerGeneralInformation.PlayerInformationModal.IsModalDisplay.Should().BeTrue();
+
+            List<string> tagsToCompare = _testDataConfiguration.ConvertStringToList(td.TestAnswers["PlayerGeneralInformationFields"]);
+            playerGeneralInformation.GetPlayerInformationFields.Should().Contain(tagsToCompare).And.HaveCount(tagsToCompare.Count);
+                      
+            playerGeneralInformation.PlayerInformationModal.ModalCancelButtonClick();
+            playerGeneralInformation.Wait(1);
+            playerGeneralInformation.PlayerInformationModal.IsModalDisplay.Should().BeFalse();
+
+            playerGeneralInformation.Wait(1);
+            playerGeneralInformation.PlayerInformationEditButtonClick();
+            playerGeneralInformation.Wait(2);
+            playerGeneralInformation.PlayerInformationModal.IsModalDisplay.Should().BeTrue();
+
+            playerGeneralInformation.PlayerInformationModal.PlayerNameTextField = null;
+            playerGeneralInformation.PlayerInformationModal.PlayerNameTextField = td.TestAnswers["InvalidPlayerName"];
+            playerGeneralInformation.PlayerInformationModal.ClickModalSubmitButton("Save");
+            playerGeneralInformation.Wait(3);
+
+            string toCompareAfterNameChange = td.TestAnswers["ToCompareAfterNameChange"];
+            string afterPlayerNameChange = playerGeneralInformation.GetPlayerInformationFields.FirstOrDefault().ToString();
+            afterPlayerNameChange.Should().Contain(toCompareAfterNameChange).And.HaveLength(toCompareAfterNameChange.Length);//validate after name of player is changed
+            
+            playerGeneralInformation.Wait(1);
+            playerGeneralInformation.PlayerInformationEditButtonClick();
+            playerGeneralInformation.Wait(2);
+            playerGeneralInformation.PlayerInformationModal.IsModalDisplay.Should().BeTrue();
+            List<string> tagsToCompare2 = _testDataConfiguration.ConvertStringToList(td.TestAnswers["PlayerDescriptionPlaceHolder"]);
+            playerGeneralInformation.PlayerInformationModal.GetDescriptionPlaceHolder.Should().Contain(tagsToCompare2).And.HaveCount(tagsToCompare2.Count);
+
+            playerGeneralInformation.Wait(2);
+            playerGeneralInformation.PlayerInformationModal.PlayerDescriptionTextField = td.TestAnswers["PlayerDescription"];
+            playerGeneralInformation.PlayerInformationModal.ClickModalSubmitButton("Save");
+            playerGeneralInformation.Wait(3);
+
+            playerGeneralInformation.PlayerInformationEditButtonClick();
+            playerGeneralInformation.Wait(2);
+            playerGeneralInformation.PlayerInformationModal.IsModalDisplay.Should().BeTrue();
+            List<string> tagsToCompare3 = _testDataConfiguration.ConvertStringToList(td.TestAnswers["DisableFieldsValue"]);
+            playerGeneralInformation.PlayerInformationModal.GetLockedFields.Should().Contain(tagsToCompare3).And.HaveCount(tagsToCompare3.Count);
+            playerGeneralInformation.PlayerInformationModal.ClickOffScreen();
+            
+            playerGeneralInformation.Wait(1);
+            playerGeneralInformation.PlayerInformationEditButtonClick();
+            playerGeneralInformation.Wait(2);
+            playerGeneralInformation.PlayerInformationModal.IsModalDisplay.Should().BeTrue();
+
+            //set back data to previous state
+            playerGeneralInformation.Wait(2);
+            //RK 3/6/19 - Not sure why this the description doesn't get cleared out either. That is weird. 
+            playerGeneralInformation.PlayerInformationModal.PlayerDescriptionTextField = "";
+            playerGeneralInformation.PlayerInformationModal.PlayerNameTextField = null;//not sure why description field is not getting cleared after save
+            playerGeneralInformation.PlayerInformationModal.PlayerNameTextField = td.TestAnswers["PlayerName"];
+           // playerGeneralInformation.PlayerInformationModal.PlayerDescriptionTextField = "";
+            playerGeneralInformation.PlayerInformationModal.ClickModalSubmitButton("Save");
+            playerGeneralInformation.Wait(3);
+            LogOutWithoutLogin();
+
+        }
         [TestCase]
         //[Category("All")]
         [Description("Test")]
@@ -3101,7 +3316,7 @@ namespace QA.Automation.UITests
 
       
            
-            loc.SearchFieldLocations = "KUDICK CHEVROLET BUICK";//search the location by name 
+            loc.SearchBox = "KUDICK CHEVROLET BUICK";//search the location by name 
             loc.Wait(6);
             loc.SelectLocation("KUDICK CHEVROLET BUICK");//currently clicking location name
             lds.Wait(3);
@@ -3236,7 +3451,7 @@ namespace QA.Automation.UITests
             ConfigureServiceAppointments ConfigureServiceAppointments = new ConfigureServiceAppointments(_driver.Value,_configuration);
             sb.SelectMenu("Locations");
             sb.Wait(6);
-            loc.SearchFieldLocations = "Sommer's Subaru";//search the location by name 
+            loc.SearchBox = "Sommer's Subaru";//search the location by name 
             loc.Wait(7);
             loc.SelectLocation("Sommer's Subaru");//currently clicking location name
             loc.Wait(2);

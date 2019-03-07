@@ -22,7 +22,7 @@ namespace QA.Automation.UITests.LG20.Pages.SubCards.Location
         private static readonly string timeStamps = "time-stamps";//class name
         private static readonly string locationModalID = @"location-information-modal";//ID
         private GeneralLocationDetailsSectionModal _generalLocationDetailsSectionModal = null;
-        internal GeneralLocationDetailsSectionModal GeneralLocationDetailsSectionModal
+        internal SubCards.GeneralLocationDetailsSectionModal GeneralLocationDetailsSectionModal
         {
             get
             {

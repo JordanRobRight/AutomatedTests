@@ -31,7 +31,27 @@
     {
       "EnvironmentName": "PreProd",
       "TestAnswers": {
-        "Player": "LG-Test3"
+        "Player": "LG-Test3",
+        "FirstName": "Automation",
+
+        "LastName": "Tester",
+
+        "Title": "Automation Engineer",
+
+        "ValidDirectPhoneNumber": "1234567890",
+        "InvalidDirectPhoneNumber1": "1234",
+        "InvalidDirectPhoneNumber2": "test1234",
+
+        "ValidMobileNumber": "1234567890",
+        "InvalidMobileNumber1": "1234",
+        "InvalidMobileNumber2": "test1234",
+
+        "StreetAddress": "Good Faith Rd2727",
+        "City": "Milwuakee",
+        "State": "TX",
+        "ValidZip": "12345",
+        "InvalidZip1": "1234",
+        "InvalidZip2": "12test"
       }
     }
   ]

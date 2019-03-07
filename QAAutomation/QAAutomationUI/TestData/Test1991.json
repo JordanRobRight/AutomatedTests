@@ -11,7 +11,8 @@
     {
       "EnvironmentName": "PreProd",
       "TestAnswers": {
-        "Player": "LG-Test3"
+        "Player": "LG-TEST3",
+        "tagsToCompare": "First Name,Last Name,Title,Direct Phone Number,Mobile Number,Street Address,City,State,Zip"
       }
     }
   ]

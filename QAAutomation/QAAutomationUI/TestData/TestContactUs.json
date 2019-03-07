@@ -34,8 +34,7 @@
         "InvalidEmail3": "test@qa",
         "InvalidEmail4": "test@qa.",
         "InvalidEmail5": "test@qa.c",
-        "Comments": "Automated Tester",
-        "Player": "LG-Test3"
+        "Comments": "Automated Tester"
       }
     },
     {
@@ -53,8 +52,7 @@
         "InvalidEmail3": "test@qa",
         "InvalidEmail4": "test@qa.",
         "InvalidEmail5": "test@qa.c",
-        "Comments": "Automated Tester",
-        "Player": "LG-Test3"
+        "Comments": "Automated Tester"
       }
     }
   ]

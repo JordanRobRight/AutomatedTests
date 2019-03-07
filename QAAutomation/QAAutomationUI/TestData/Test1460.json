@@ -4,13 +4,15 @@
     {
       "EnvironmentName": "Test",
       "TestAnswers": {
-        "Player": "LG-QAROB"
+        "Player": "LG-QAROB",
+        "PlayerOnline" :  "LG-TEST1" 
       }
     },
     {
       "EnvironmentName": "PreProd",
       "TestAnswers": {
-        "Player": "LG-Test3"
+        "Player": "LG-GREGDEV",
+        "PlayerOnline": "LG-TEST3"
       }
     }
   ]
