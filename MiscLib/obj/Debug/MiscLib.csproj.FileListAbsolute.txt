@@ -1,0 +1,14 @@
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\bin\Debug\AutoItX3.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\bin\Debug\AutoItX3_x64.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\bin\Debug\QA.Automation.MiscLib.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\bin\Debug\QA.Automation.MiscLib.pdb
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\bin\Debug\AutoItX3.Assembly.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\bin\Debug\AutoItX3.Assembly.xml
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\obj\Debug\MiscLib.csproj.CoreCompileInputs.cache
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\obj\Debug\MiscLib.csproj.CopyComplete
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\obj\Debug\QA.Automation.MiscLib.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\obj\Debug\QA.Automation.MiscLib.pdb
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\obj\Debug\MiscLib.csprojAssemblyReference.cache
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\bin\Debug\FluentAssertions.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\bin\Debug\FluentAssertions.pdb
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\MiscLib\bin\Debug\FluentAssertions.xml

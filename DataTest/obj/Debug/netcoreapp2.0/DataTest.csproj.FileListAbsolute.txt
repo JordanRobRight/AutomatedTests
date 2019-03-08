@@ -1,0 +1,9 @@
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\DataTest\bin\Debug\netcoreapp2.0\QA.Automation.DataTest.deps.json
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\DataTest\bin\Debug\netcoreapp2.0\QA.Automation.DataTest.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\DataTest\bin\Debug\netcoreapp2.0\QA.Automation.DataTest.pdb
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\DataTest\obj\Debug\netcoreapp2.0\DataTest.csprojAssemblyReference.cache
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\DataTest\obj\Debug\netcoreapp2.0\DataTest.csproj.CoreCompileInputs.cache
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\DataTest\obj\Debug\netcoreapp2.0\DataTest.AssemblyInfoInputs.cache
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\DataTest\obj\Debug\netcoreapp2.0\DataTest.AssemblyInfo.cs
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\DataTest\obj\Debug\netcoreapp2.0\QA.Automation.DataTest.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\DataTest\obj\Debug\netcoreapp2.0\QA.Automation.DataTest.pdb

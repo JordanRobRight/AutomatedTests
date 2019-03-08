@@ -1,0 +1,15 @@
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\bin\Debug\netcoreapp2.0\test.runsettings
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\bin\Debug\netcoreapp2.0\QA.Automation.LGRegressionTests.deps.json
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\bin\Debug\netcoreapp2.0\QA.Automation.LGRegressionTests.runtimeconfig.json
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\bin\Debug\netcoreapp2.0\QA.Automation.LGRegressionTests.runtimeconfig.dev.json
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\bin\Debug\netcoreapp2.0\QA.Automation.LGRegressionTests.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\bin\Debug\netcoreapp2.0\QA.Automation.LGRegressionTests.pdb
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\obj\Debug\netcoreapp2.0\LGRegressionTests.csprojAssemblyReference.cache
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\obj\Debug\netcoreapp2.0\LGRegressionTests.csproj.CoreCompileInputs.cache
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\obj\Debug\netcoreapp2.0\LGRegressionTests.AssemblyInfoInputs.cache
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\obj\Debug\netcoreapp2.0\LGRegressionTests.AssemblyInfo.cs
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\obj\Debug\netcoreapp2.0\QA.Automation.LGRegressionTests.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\LGRegressionTests\obj\Debug\netcoreapp2.0\QA.Automation.LGRegressionTests.pdb

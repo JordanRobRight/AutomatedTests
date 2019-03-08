@@ -1,0 +1,11 @@
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\Common\bin\Debug\netcoreapp2.0\QA.Automation.Common.deps.json
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\Common\bin\Debug\netcoreapp2.0\QA.Automation.Common.runtimeconfig.json
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\Common\bin\Debug\netcoreapp2.0\QA.Automation.Common.runtimeconfig.dev.json
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\Common\bin\Debug\netcoreapp2.0\QA.Automation.Common.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\Common\bin\Debug\netcoreapp2.0\QA.Automation.Common.pdb
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\Common\obj\Debug\netcoreapp2.0\Common.csprojAssemblyReference.cache
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\Common\obj\Debug\netcoreapp2.0\Common.csproj.CoreCompileInputs.cache
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\Common\obj\Debug\netcoreapp2.0\Common.AssemblyInfoInputs.cache
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\Common\obj\Debug\netcoreapp2.0\Common.AssemblyInfo.cs
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\Common\obj\Debug\netcoreapp2.0\QA.Automation.Common.dll
+C:\Users\theSTIHG\Source\Repos\QAAutomation\QAAutomation\Common\obj\Debug\netcoreapp2.0\QA.Automation.Common.pdb

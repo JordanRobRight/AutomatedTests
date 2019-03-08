@@ -1,0 +1,21 @@
+{
+  "version": "1",
+  "Data": [
+    {
+      "EnvironmentName": "Test",
+      "TestAnswers": {
+        "PlayerName": "LG-QAROB",
+        "tagsToCompare": "No matching records",
+        "tagsToCompare2": "LG-QAROB"
+      }
+    },
+    {
+      "EnvironmentName": "PreProd",
+      "TestAnswers": {
+        "Player": "LG-Test3",
+        "tagsToCompare": "No matching records",
+        "tagsToCompare2": "LG-TEST3"
+      }
+    }
+  ]
+}

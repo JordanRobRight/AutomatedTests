@@ -1,0 +1,59 @@
+{
+  "version": "1",
+  "Data": [
+    {
+      "EnvironmentName": "Test",
+      "TestAnswers": {
+        "FullName": "LG-AUTOTEST",
+        "Title": "Automated Tester",
+        "Company": "TestCompany",
+        "PhoneNumber": "1234567890",
+        "InvalidPhoneNumber1": "Auto Test",
+        "InvalidPhoneNumber2": "1234567T",
+        "Email": "autotest@test.com",
+        "InvalidEmail1": "test",
+        "InvalidEmail2": "test@",
+        "InvalidEmail3": "test@qa",
+        "InvalidEmail4": "test@qa.",
+        "InvalidEmail5": "test@qa.c",
+        "Comments": "Automated Tester"
+      }
+    },
+    {
+      "EnvironmentName": "PreProd",
+      "TestAnswers": {
+        "FullName": "LG-AUTOTEST",
+        "Title": "Automated Tester",
+        "Company": "TestCompany",
+        "PhoneNumber": "1234567890",
+        "InvalidPhoneNumber1": "Auto Test",
+        "InvalidPhoneNumber2": "1234567T",
+        "Email": "autotest@test.com",
+        "InvalidEmail1": "test",
+        "InvalidEmail2": "test@",
+        "InvalidEmail3": "test@qa",
+        "InvalidEmail4": "test@qa.",
+        "InvalidEmail5": "test@qa.c",
+        "Comments": "Automated Tester"
+      }
+    },
+    {
+      "EnvironmentName": "Prod",
+      "TestAnswers": {
+        "FullName": "LG-AUTOTEST",
+        "Title": "Automated Tester",
+        "Company": "TestCompany",
+        "PhoneNumber": "1234567890",
+        "InvalidPhoneNumber1": "Auto Test",
+        "InvalidPhoneNumber2": "1234567T",
+        "Email": "autotest@test.com",
+        "InvalidEmail1": "test",
+        "InvalidEmail2": "test@",
+        "InvalidEmail3": "test@qa",
+        "InvalidEmail4": "test@qa.",
+        "InvalidEmail5": "test@qa.c",
+        "Comments": "Automated Tester"
+      }
+    }
+  ]
+}

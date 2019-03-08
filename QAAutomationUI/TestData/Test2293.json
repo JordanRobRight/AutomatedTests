@@ -1,0 +1,30 @@
+{
+  "version": "1",
+  "Data": [
+    {
+      "EnvironmentName": "Test",
+      "TestAnswers": {
+        "PlayerName": "LG-QAROB",
+        "PlayerDescription": "Automation Description",
+        "PlayerGeneralInformationFields": "Player Name: LG-QAROB,Description:,ID:,Product:,Subscription:,License Key:,Expiration Date:,Zone:,Last Online:,Created:,Updated:,Registered:,Registered By:",
+        "InvalidPlayerName": "Automation tester@123",
+        "ToCompareAfterNameChange": "Player Name: Automation tester@123",
+        "PlayerDescriptionPlaceHolder": "Description of player goes here.",
+        "DisableFieldsValue": "true,true,true,true"
+
+      }
+    },
+    {
+      "EnvironmentName": "PreProd",
+      "TestAnswers": {
+        "Player": "LG-GREGDEV",
+        "PlayerDescription": "Automation Description",
+        "PlayerGeneralInformationFields": "Player Name: LG-GREGDEV,Description:,ID:,Product:,Subscription:,License Key:,Expiration Date:,Zone:,Last Online:,Created:,Updated:,Registered:,Registered By:",
+        "InvalidPlayerName": "Automation tester@123",
+        "ToCompareAfterNameChange": "Player Name: Automation tester@123",
+        "PlayerDescriptionPlaceHolder": "Description of player goes here.",
+        "DisableFieldsValue": "true,true,true,true"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "version": "1",
+  "Data": [
+    {
+      "EnvironmentName": "Test",
+      "TestAnswers": {
+        "Player": "LG-QAROB",
+        "PlayerOnline" :  "LG-TEST1" 
+      }
+    },
+    {
+      "EnvironmentName": "PreProd",
+      "TestAnswers": {
+        "Player": "LG-GREGDEV",
+        "PlayerOnline": "LG-TEST3"
+      }
+    }
+  ]
+}

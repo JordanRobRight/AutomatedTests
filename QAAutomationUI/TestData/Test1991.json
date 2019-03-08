@@ -1,0 +1,19 @@
+{
+  "version": "1",
+  "Data": [
+    {
+      "EnvironmentName": "Test",
+      "TestAnswers": {
+        "tagsToCompare": "First Name,Last Name,Title,Direct Phone Number,Mobile Number,Street Address,City,State,Zip"
+      }
+
+    },
+    {
+      "EnvironmentName": "PreProd",
+      "TestAnswers": {
+        "Player": "LG-TEST3",
+        "tagsToCompare": "First Name,Last Name,Title,Direct Phone Number,Mobile Number,Street Address,City,State,Zip"
+      }
+    }
+  ]
+}
